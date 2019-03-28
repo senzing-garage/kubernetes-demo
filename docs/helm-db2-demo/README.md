@@ -180,7 +180,11 @@ This repository assumes a working knowledge of:
     kubectl get namespaces
     ```
     
-1.     
+1. Create namespace
+
+    ```console
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml    
+    ```
 
 1. Example:
 
