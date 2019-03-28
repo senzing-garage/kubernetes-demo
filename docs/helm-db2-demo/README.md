@@ -277,15 +277,15 @@ to retrieve the images.
 1. Add Senzing repository.  Example:
 
     ```console
-    helm repo add senzing 'https://senzing.github.io/charts/'
+    helm repo add senzing https://senzing.github.io/charts/
     ```
 
 1. Add IBM repository.  Example:
 
     ```console
-    rancher catalog add \
-      ibm \
-      https://github.com/IBM/charts
+    helm repo add ibm "https://github.com/IBM/charts"
+    
+    helm repo add ibm https://github.com/IBM/charts/repo/stable
     ```
 
 1. Update repositories. 
@@ -304,78 +304,14 @@ to retrieve the images.
 
 ### Install Kafka
 
-1. Find Kafka helm package. Example
-
-   ```console
-   helm search kafka
-   ```
-
 1. Example:
 
     ```console
     helm install \
-      --values values.yaml \
       --values ${HELM_VALUES_DIR}/kafka.yaml \
+      --name ${K8S_PREFIX}-kafka \
       --namespace ${K8S_NAMESPACE_NAME} \
       bitnami/kafka
-    ```
-    
-    helm install \
-      --name ${K8S_PREFIX}-bitnami-kafka \
-      --namespace ${K8S_NAMESPACE_NAME} \
-      bitnami/kafka    
-    
-    helm list
-    helm delete sartorial-wombat
-
-# ##############################################################################
-# #############################################################################
-# ##############################################################################
-
-### Set default context
-
-1. Switch context.  Example:
-
-    ```console
-    rancher context switch \
-      Default
-    ```
-
-
-
-### Create project
-
-1. Example:
-
-    ```console
-    rancher projects create \
-      --cluster ${RANCHER_CLUSTER_NAME} \
-      --description "Project for ${RANCHER_PROJECT_NAME}" \
-      ${RANCHER_PROJECT_NAME}
-    ```
-
-### Switch context
-
-1. Example:
-
-    ```console
-    rancher context switch \
-      ${RANCHER_PROJECT_NAME}
-    ```
-
-
-
-
-### Install Kafka
-
-1. Example:
-
-    ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/kafka.yaml \
-      --namespace ${K8S_NAMESPACE_NAME} \
-      library-kafka \
-      ${K8S_PREFIX}-kafka
     ```
 
 ### Install Kafka test client
@@ -383,11 +319,11 @@ to retrieve the images.
 1. Install Kafka test client app. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/kafka-test-client.yaml \
+    helm install \
+      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
+      --name ${K8S_PREFIX}-kafka-test-client \
       --namespace ${K8S_NAMESPACE_NAME} \
-      senzing-kafka-test-client \
-      ${K8S_PREFIX}-kafka-test-client
+      senzing/kafka-test-client
     ```
 
 1. Run the test client. Run in a separate terminal window. Example:
@@ -396,37 +332,60 @@ to retrieve the images.
     export K8S_PREFIX=my
     export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
-    rancher kubectl exec \
+    kubectl exec \
       -it \
       -n ${K8S_NAMESPACE_NAME} \
       ${K8S_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${K8S_PREFIX}-kafka-kafka:9092 \
+        --bootstrap-server ${K8S_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
-    ```
+    ```  
 
 ### Install DB2
 
 1. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
+    helm install \
+      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
+      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
       --namespace ${K8S_NAMESPACE_NAME} \
-      ibm-ibm-db2oltp-dev \
-      ${K8S_PREFIX}-ibm-db2oltp-dev
+      ibm/ibm-db2oltp-dev
     ```
+
+1. Work-around:
+
+    ```console
+    helm install \
+      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
+      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
+      --namespace ${K8S_NAMESPACE_NAME} \
+      https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
+    ```
+
 
 ### Initialize database
 
 1. Bring up a DB2 client. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/db2-client.yaml \
+    helm install \
+      --values ${HELM_VALUES_DIR}/db2-client.yaml \
+      --name ${K8S_PREFIX}-senzing-db2-client \
       --namespace ${K8S_NAMESPACE_NAME} \
-      senzing-db2-client \
-      ${K8S_PREFIX}-db2-client
+      senzing/db2-client
+    ```
+
+1. X
+
+    ```console
+    export K8S_PREFIX=my
+    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+
+    kubectl exec \
+      -it \
+      -n ${K8S_NAMESPACE_NAME} \
+      ${K8S_PREFIX}-senzing-db2-client -- /bin/bash
     ```
 
 1. Catalog "remote" database.
@@ -466,12 +425,20 @@ to retrieve the images.
 1. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/mock-data-generator.yaml \
+    helm install \
+      --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
+      --name ${K8S_PREFIX}-senzing-mock-data-generator \
       --namespace ${K8S_NAMESPACE_NAME} \
-      senzing-senzing-mock-data-generator \
-      ${K8S_PREFIX}-senzing-mock-data-generator
+      senzing/senzing-mock-data-generator
     ```
+
+# ##############################################################################
+# #############################################################################
+# ##############################################################################
+
+
+
+
 
 ### Install stream-loader
 
