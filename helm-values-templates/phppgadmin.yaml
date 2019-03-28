@@ -1,0 +1,5 @@
+image.repository: senzing/phppgadmin
+image.tag: latest
+phppgadmin.serverHost: "${K8S_PREFIX}-postgresql-postgresql"
+service.type: ClusterIP
+ingress.enabled: true

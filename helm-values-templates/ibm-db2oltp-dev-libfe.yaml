@@ -1,0 +1,9 @@
+db2inst.instname: "db2inst1"
+db2inst.password: "db2inst1"
+options.databaseName: "G2"
+dataVolume.existingClaimName: "db2-data-stor-claim"
+persistence.enabled: "false"
+persistence.useDynamicProvisioning: "false"
+service.name: "ibm-db2oltp-dev-libfe"
+service.port: 50002
+service.tsport: 55002

@@ -157,6 +157,19 @@ This repository assumes a working knowledge of:
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
+### Create custom helm values.yaml files
+
+1. Variation #1. Quick method using `envsubst`.
+
+    ```console
+    export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
+    do \
+      envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
+    done
+    ```
 
 ### Create custom kubernetes configuration files
 
@@ -231,7 +244,8 @@ to retrieve the images.
 1. Review persistent volumes.
 
     ```
-    kubectl get persistentvolumes
+    kubectl get persistentvolumes \
+      --namespace ${K8S_NAMESPACE_NAME}
     ```
 
 1. Create persistent volume claims. Example:
@@ -239,6 +253,65 @@ to retrieve the images.
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    ```
+
+1. Review persistent volumes.
+
+    ```
+    kubectl get persistentvolumes \
+      --namespace ${K8S_NAMESPACE_NAME}
+      
+    kubectl get persistentvolumeClaims \
+      --namespace ${K8S_NAMESPACE_NAME}      
+    ```
+
+### Add helm repositories
+
+
+1. Add Bitnami repository. Example:
+
+    ```console
+    helm repo add bitnami https://charts.bitnami.com 
+    ```
+    
+1. Add Senzing repository.  Example:
+
+    ```console
+    helm repo add senzing 'https://senzing.github.io/charts/'
+    ```
+
+1. Add IBM repository.  Example:
+
+    ```console
+    rancher catalog add \
+      ibm \
+      https://github.com/IBM/charts
+    ```
+
+1. Review repositories
+
+    ```console
+    helm repo list
+    ```
+
+1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
+
+### Install Kafka
+
+1. Find Kafka helm package. Example
+
+   ```console
+   helm search kafka
+   ```
+
+1. Example:
+
+    ```console
+    helm install \
+      --values ${RANCHER_ANSWERS_DIR}/kafka.yaml \
+      --namespace ${RANCHER_NAMESPACE_NAME} \
+      bitnami-kafka \
+      ${K8S_PREFIX}-kafka
     ```
 
 ###############################################################################
@@ -254,23 +327,7 @@ to retrieve the images.
       Default
     ```
 
-### Add catalogs
 
-1. Add Senzing catalog.  Example:
-
-    ```console
-    rancher catalog add \
-      senzing \
-      https://github.com/senzing/charts
-    ```
-
-1. Add IBM catalog.  Example:
-
-    ```console
-    rancher catalog add \
-      ibm \
-      https://github.com/IBM/charts
-    ```
 
 ### Create project
 
@@ -304,7 +361,7 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/kafka.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       library-kafka \
-      ${RANCHER_PREFIX}-kafka
+      ${K8S_PREFIX}-kafka
     ```
 
 ### Install Kafka test client
@@ -316,20 +373,20 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/kafka-test-client.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       senzing-kafka-test-client \
-      ${RANCHER_PREFIX}-kafka-test-client
+      ${K8S_PREFIX}-kafka-test-client
     ```
 
 1. Run the test client. Run in a separate terminal window. Example:
 
     ```console
-    export RANCHER_PREFIX=my
-    export RANCHER_NAMESPACE_NAME=${RANCHER_PREFIX}-namespace
+    export K8S_PREFIX=my
+    export RANCHER_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
     rancher kubectl exec \
       -it \
       -n ${RANCHER_NAMESPACE_NAME} \
-      ${RANCHER_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${RANCHER_PREFIX}-kafka-kafka:9092 \
+      ${K8S_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
+        --bootstrap-server ${K8S_PREFIX}-kafka-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
     ```
@@ -343,7 +400,7 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/ibm-db2oltp-dev.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       ibm-ibm-db2oltp-dev \
-      ${RANCHER_PREFIX}-ibm-db2oltp-dev
+      ${K8S_PREFIX}-ibm-db2oltp-dev
     ```
 
 ### Initialize database
@@ -355,7 +412,7 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/db2-client.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       senzing-db2-client \
-      ${RANCHER_PREFIX}-db2-client
+      ${K8S_PREFIX}-db2-client
     ```
 
 1. Catalog "remote" database.
@@ -367,8 +424,8 @@ to retrieve the images.
     ```console
     su - db2inst1
 
-    export RANCHER_PREFIX=my
-    export DB2_HOST=${RANCHER_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
+    export K8S_PREFIX=my
+    export DB2_HOST=${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
 
     db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
     db2 catalog database G2 at node G2_node
@@ -399,7 +456,7 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/mock-data-generator.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       senzing-senzing-mock-data-generator \
-      ${RANCHER_PREFIX}-senzing-mock-data-generator
+      ${K8S_PREFIX}-senzing-mock-data-generator
     ```
 
 ### Install stream-loader
@@ -411,7 +468,7 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/stream-loader-db2.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       senzing-senzing-stream-loader \
-      ${RANCHER_PREFIX}-senzing-stream-loader
+      ${K8S_PREFIX}-senzing-stream-loader
     ```
 
 ### Install senzing-api-server
@@ -423,16 +480,16 @@ to retrieve the images.
       --answers ${RANCHER_ANSWERS_DIR}/senzing-api-server-db2.yaml \
       --namespace ${RANCHER_NAMESPACE_NAME} \
       senzing-senzing-api-server \
-      ${RANCHER_PREFIX}-senzing-api-server
+      ${K8S_PREFIX}-senzing-api-server
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
 
     ```console
-    export RANCHER_PREFIX=my
-    export RANCHER_NAMESPACE_NAME=${RANCHER_PREFIX}-namespace
+    export K8S_PREFIX=my
+    export RANCHER_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
-    rancher kubectl port-forward --namespace ${RANCHER_NAMESPACE_NAME} svc/${RANCHER_PREFIX}-senzing-api-server 8889:80
+    rancher kubectl port-forward --namespace ${RANCHER_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server

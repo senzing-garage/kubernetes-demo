@@ -1,0 +1,7 @@
+image.repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-api-server"
+image.tag: "latest"
+senzing.bindAddr: "all"
+senzing.concurrency: 8
+senzing.databaseUrl: "db2://db2inst1:db2inst1@${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
+senzing.iniFile: "/opt/senzing/g2/python/G2Module.ini"
+senzing.optSenzingClaim: "opt-senzing-claim"

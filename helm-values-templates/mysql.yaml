@@ -1,0 +1,12 @@
+defaultImage: true
+image: mysql
+imageTag: 5.7.14
+mysqlDatabase: G2
+mysqlUser: g2
+mysqlPassword: g2
+persistence.enabled: 'false'
+persistence.size: 8Gi
+persistence.storageClass: ""
+service.port: '3306'
+service.type: ClusterIP
+service.nodePort: ""

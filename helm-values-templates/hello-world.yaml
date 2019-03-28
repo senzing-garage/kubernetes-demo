@@ -1,0 +1,3 @@
+image.repository: "${DOCKER_REGISTRY_URL}/senzing/hello-world"
+image.tag: "latest"
+senzing.sleepTime: 60

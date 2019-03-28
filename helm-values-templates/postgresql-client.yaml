@@ -1,0 +1,6 @@
+postgresql.username: "postgres"
+postgresql.password: "postgres"
+postgresql.host: "${K8S_PREFIX}-postgresql-postgresql"
+postgresql.database: "G2"
+postgresql.file: "g2/data/g2core-schema-postgresql-create.sql"
+postgresql.storageClaim: "opt-senzing-claim"

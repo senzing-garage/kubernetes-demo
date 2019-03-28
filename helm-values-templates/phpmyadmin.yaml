@@ -1,0 +1,2 @@
+db.host: "${K8S_PREFIX}-mysql-mysql"
+service.port: 80
