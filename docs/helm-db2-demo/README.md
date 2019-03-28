@@ -152,7 +152,7 @@ This repository assumes a working knowledge of:
 
     ```console
     export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace    
+    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -190,7 +190,7 @@ This repository assumes a working knowledge of:
 1. Create namespace.
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml    
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 1. Review namespaces.
@@ -229,6 +229,7 @@ to retrieve the images.
     kubectl get secrets \
       --namespace ${K8S_NAMESPACE_NAME}
     ```
+
 ### Create persistent volume
 
 1. If you do not already have an `/opt/senzing` directory on your system, visit
@@ -243,7 +244,7 @@ to retrieve the images.
 
 1. Review persistent volumes.
 
-    ```
+    ```console
     kubectl get persistentvolumes \
       --namespace ${K8S_NAMESPACE_NAME}
     ```
@@ -257,23 +258,22 @@ to retrieve the images.
 
 1. Review persistent volumes.
 
-    ```
+    ```console
     kubectl get persistentvolumes \
       --namespace ${K8S_NAMESPACE_NAME}
-      
+
     kubectl get persistentvolumeClaims \
-      --namespace ${K8S_NAMESPACE_NAME}      
+      --namespace ${K8S_NAMESPACE_NAME}
     ```
 
 ### Add helm repositories
 
-
 1. Add Bitnami repository. Example:
 
     ```console
-    helm repo add bitnami https://charts.bitnami.com 
+    helm repo add bitnami https://charts.bitnami.com
     ```
-    
+
 1. Add Senzing repository.  Example:
 
     ```console
@@ -284,11 +284,11 @@ to retrieve the images.
 
     ```console
     helm repo add ibm "https://github.com/IBM/charts"
-    
+
     helm repo add ibm https://github.com/IBM/charts/repo/stable
     ```
 
-1. Update repositories. 
+1. Update repositories.
 
     ```console
     helm repo update
@@ -363,7 +363,6 @@ to retrieve the images.
       https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
     ```
 
-
 ### Initialize database
 
 1. Bring up a DB2 client. Example:
@@ -432,13 +431,9 @@ to retrieve the images.
       senzing/senzing-mock-data-generator
     ```
 
-# ##############################################################################
-# #############################################################################
-# ##############################################################################
-
-
-
-
+### ##############################################################################
+### #############################################################################
+### ##############################################################################
 
 ### Install stream-loader
 
@@ -496,11 +491,15 @@ See `rancher kubectl port-forward ...` above.
 
     ```console
 
-    helm delete ${K8S_PREFIX}-bitnami-kafka
+    helm delete --purge ${K8S_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${K8S_PREFIX}-senzing-db2-client
+    helm delete --purge ${K8S_PREFIX}-ibm-db2oltp-dev
+    helm delete --purge ${K8S_PREFIX}-kafka-test-client
+    helm delete --purge ${K8S_PREFIX}-kafka
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
-    kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml 
+    kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
 
 ### Delete catalogs
