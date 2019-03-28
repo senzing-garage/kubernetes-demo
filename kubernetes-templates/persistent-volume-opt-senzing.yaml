@@ -4,6 +4,7 @@ metadata:
   name: opt-senzing-volume
   labels:
     type: local
+  namespace: ${K8S_NAMESPACE_NAME}
 spec:
   storageClassName: manual
   capacity:

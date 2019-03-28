@@ -4,6 +4,7 @@ metadata:
   name: db2-data-stor-volume
   labels:
     assign-to: "data-stor"
+  namespace: ${K8S_NAMESPACE_NAME}
 spec:
   storageClassName: manual
   capacity:

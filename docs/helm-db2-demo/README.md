@@ -224,21 +224,21 @@ to retrieve the images.
 1. Create persistent volumes. Example:
 
     ```console
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    ```
 
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+1. Review persistent volumes.
+
+    ```
+    kubectl get persistentvolumes
     ```
 
 1. Create persistent volume claims. Example:
 
     ```console
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
-
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
 ###############################################################################
@@ -458,7 +458,8 @@ See `rancher kubectl port-forward ...` above.
 
     ```console
 
-
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml 
     ```  
