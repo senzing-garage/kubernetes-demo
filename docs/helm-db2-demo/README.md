@@ -288,6 +288,12 @@ to retrieve the images.
       https://github.com/IBM/charts
     ```
 
+1. Update repositories. 
+
+    ```console
+    helm repo update
+    ```
+
 1. Review repositories
 
     ```console
@@ -308,15 +314,23 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${RANCHER_ANSWERS_DIR}/kafka.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
-      bitnami-kafka \
-      ${K8S_PREFIX}-kafka
+      --values values.yaml \
+      --values ${HELM_VALUES_DIR}/kafka.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
+      bitnami/kafka
     ```
+    
+    helm install \
+      --name ${K8S_PREFIX}-bitnami-kafka \
+      --namespace ${K8S_NAMESPACE_NAME} \
+      bitnami/kafka    
+    
+    helm list
+    helm delete sartorial-wombat
 
-###############################################################################
-###############################################################################
-###############################################################################
+# ##############################################################################
+# #############################################################################
+# ##############################################################################
 
 ### Set default context
 
@@ -358,8 +372,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/kafka.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/kafka.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       library-kafka \
       ${K8S_PREFIX}-kafka
     ```
@@ -370,8 +384,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/kafka-test-client.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/kafka-test-client.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       senzing-kafka-test-client \
       ${K8S_PREFIX}-kafka-test-client
     ```
@@ -380,11 +394,11 @@ to retrieve the images.
 
     ```console
     export K8S_PREFIX=my
-    export RANCHER_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
     rancher kubectl exec \
       -it \
-      -n ${RANCHER_NAMESPACE_NAME} \
+      -n ${K8S_NAMESPACE_NAME} \
       ${K8S_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
         --bootstrap-server ${K8S_PREFIX}-kafka-kafka:9092 \
         --topic senzing-kafka-topic \
@@ -397,8 +411,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/ibm-db2oltp-dev.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       ibm-ibm-db2oltp-dev \
       ${K8S_PREFIX}-ibm-db2oltp-dev
     ```
@@ -409,8 +423,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/db2-client.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/db2-client.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       senzing-db2-client \
       ${K8S_PREFIX}-db2-client
     ```
@@ -453,8 +467,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/mock-data-generator.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/mock-data-generator.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       senzing-senzing-mock-data-generator \
       ${K8S_PREFIX}-senzing-mock-data-generator
     ```
@@ -465,8 +479,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/stream-loader-db2.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       senzing-senzing-stream-loader \
       ${K8S_PREFIX}-senzing-stream-loader
     ```
@@ -477,8 +491,8 @@ to retrieve the images.
 
     ```console
     rancher app install \
-      --answers ${RANCHER_ANSWERS_DIR}/senzing-api-server-db2.yaml \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
+      --answers ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
+      --namespace ${K8S_NAMESPACE_NAME} \
       senzing-senzing-api-server \
       ${K8S_PREFIX}-senzing-api-server
     ```
@@ -487,9 +501,9 @@ to retrieve the images.
 
     ```console
     export K8S_PREFIX=my
-    export RANCHER_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
-    rancher kubectl port-forward --namespace ${RANCHER_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
+    rancher kubectl port-forward --namespace ${K8S_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
@@ -515,6 +529,7 @@ See `rancher kubectl port-forward ...` above.
 
     ```console
 
+    helm delete ${K8S_PREFIX}-bitnami-kafka
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
