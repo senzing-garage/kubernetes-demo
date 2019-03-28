@@ -174,24 +174,71 @@ This repository assumes a working knowledge of:
 
 ### Create namespace
 
-1. Review existing namespaces.
-
-    ```console
-    kubectl get namespaces
-    ```
-    
-1. Create namespace
+1. Create namespace.
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml    
     ```
 
-1. Example:
+1. Review namespaces.
 
     ```console
-    rancher namespace create \
-      --description "Namespace for ${RANCHER_PROJECT_NAME}" \
-      ${RANCHER_NAMESPACE_NAME}
+    kubectl get namespaces
+    ```
+
+### Add registries
+
+Because IBM docker images required acceptance of terms in
+[IBM docker images](#ibm-docker-images) step,
+Rancher/Kubernetes needs username/password to hub.docker.com
+to retrieve the images.
+
+1. Add docker.io registry.
+   :warning: hub.docker.com username and password used in previous
+   [IBM docker images](#ibm-docker-images)
+   step need to be supplied.
+   Example:
+
+    ```console
+    export DOCKER_USERNAME=me@example.com
+    export DOCKER_PASSWORD=fake-password
+
+    kubectl create secret docker-registry ${K8S_PREFIX}-docker-io \
+      --namespace ${K8S_NAMESPACE_NAME} \
+      --docker-server=docker.io \
+      --docker-username=${DOCKER_USERNAME} \
+      --docker-password=${DOCKER_PASSWORD}
+    ```
+
+1. Review secrets.
+
+    ```console
+    kubectl get secrets \
+      --namespace ${K8S_NAMESPACE_NAME}
+    ```
+### Create persistent volume
+
+1. If you do not already have an `/opt/senzing` directory on your system, visit
+   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
+
+1. Create persistent volumes. Example:
+
+    ```console
+    rancher kubectl create \
+      -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
+
+    rancher kubectl create \
+      -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    ```
+
+1. Create persistent volume claims. Example:
+
+    ```console
+    rancher kubectl create \
+      -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
+
+    rancher kubectl create \
+      -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
 ###############################################################################
@@ -247,54 +294,6 @@ This repository assumes a working knowledge of:
 
 
 
-### Add registries
-
-Because IBM docker images required acceptance of terms in
-[IBM docker images](#ibm-docker-images) step,
-Rancher/Kubernetes needs username/password to hub.docker.com
-to retrieve the images.
-
-1. Add docker.io registry.
-   :warning: hub.docker.com username and password used in previous
-   [IBM docker images](#ibm-docker-images)
-   step need to be supplied.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=me@example.com
-    export DOCKER_PASSWORD=fake-password
-
-    rancher kubectl create secret docker-registry ${RANCHER_PREFIX}-docker-io \
-      --namespace ${RANCHER_NAMESPACE_NAME} \
-      --docker-server=docker.io \
-      --docker-username=${DOCKER_USERNAME} \
-      --docker-password=${DOCKER_PASSWORD}
-    ```
-
-### Create persistent volume
-
-1. If you do not already have an `/opt/senzing` directory on your system, visit
-   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
-
-1. Create persistent volumes. Example:
-
-    ```console
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
-
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
-    ```
-
-1. Create persistent volume claims. Example:
-
-    ```console
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
-
-    rancher kubectl create \
-      -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    ```
 
 ### Install Kafka
 
@@ -453,43 +452,16 @@ See `rancher kubectl port-forward ...` above.
 
 ## Cleanup
 
-### Switch context for delete
-
-1. Example:
-
-    ```console
-    rancher context switch \
-      ${RANCHER_PROJECT_NAME}
-    ```
-
 ### Delete everything in project
 
 1. Example:
 
     ```console
-    rancher app delete ${RANCHER_PREFIX}-senzing-api-server
-    rancher app delete ${RANCHER_PREFIX}-senzing-stream-loader
-    rancher app delete ${RANCHER_PREFIX}-senzing-mock-data-generator
-    rancher app delete ${RANCHER_PREFIX}-db2-client
-    rancher app delete ${RANCHER_PREFIX}-ibm-db2oltp-dev
-    rancher app delete ${RANCHER_PREFIX}-kafka-test-client
-    rancher app delete ${RANCHER_PREFIX}-kafka
-    rancher kubectl delete -f ${GIT_REPOSITORY_DIR}/kubernetes/persistent-volume-claim-opt-senzing.yaml
-    rancher kubectl delete -f ${GIT_REPOSITORY_DIR}/kubernetes/persistent-volume-claim-db2-data-stor.yaml
-    rancher kubectl delete -f ${GIT_REPOSITORY_DIR}/kubernetes/persistent-volume-opt-senzing.yaml
-    rancher kubectl delete -f ${GIT_REPOSITORY_DIR}/kubernetes/persistent-volume-db2-data-stor.yaml
-    # rancher kubectl delete secret docker-registry ${RANCHER_PREFIX}-docker-io
-    rancher namespace delete ${RANCHER_NAMESPACE_NAME}
-    rancher projects delete ${RANCHER_PROJECT_NAME}
+
+
+    # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
+    kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml 
     ```  
-
-### Default context after cleanup
-
-1. Switch context.  Example:
-
-    ```console
-    rancher context switch Default
-    ```
 
 ### Delete catalogs
 
