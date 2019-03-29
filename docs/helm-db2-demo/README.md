@@ -202,7 +202,7 @@ This repository assumes a working knowledge of:
 
 Because IBM docker images required acceptance of terms in
 [IBM docker images](#ibm-docker-images) step,
-Rancher/Kubernetes needs username/password to hub.docker.com
+Kubernetes needs username/password to hub.docker.com
 to retrieve the images.
 
 1. Add docker.io registry.
@@ -272,11 +272,10 @@ to retrieve the images.
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
-1. Add IBM repository.  Example:
+1. FIXME: Add IBM repository.  Example:
 
     ```console
-    helm repo add ibm "https://github.com/IBM/charts"
-
+    helm repo add ibm https://github.com/IBM/charts
     helm repo add ibm https://github.com/IBM/charts/repo/stable
     helm repo add ibm https://github.com/IBM/charts/tree/master/repo/stable
     ```
@@ -433,7 +432,7 @@ to retrieve the images.
     ```
 
 ### ##############################################################################
-### #############################################################################
+### ##############################################################################
 ### ##############################################################################
 
 ### Install stream-loader
@@ -441,11 +440,11 @@ to retrieve the images.
 1. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
+    helm install \
+      --name ${K8S_PREFIX}-senzing-stream-loader \
       --namespace ${K8S_NAMESPACE_NAME} \
-      senzing-senzing-stream-loader \
-      ${K8S_PREFIX}-senzing-stream-loader
+      --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
+      senzing/senzing-stream-loader
     ```
 
 ### Install senzing-api-server
@@ -453,11 +452,11 @@ to retrieve the images.
 1. Example:
 
     ```console
-    rancher app install \
-      --answers ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
+    helm install \
+      --name ${K8S_PREFIX}-senzing-api-server \
       --namespace ${K8S_NAMESPACE_NAME} \
-      senzing-senzing-api-server \
-      ${K8S_PREFIX}-senzing-api-server
+      --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
+      senzing-senzing-api-server
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
@@ -466,13 +465,13 @@ to retrieve the images.
     export K8S_PREFIX=my
     export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
 
-    rancher kubectl port-forward --namespace ${K8S_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
+    kubectl port-forward --namespace ${K8S_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
 
 *Note:* port 8889 on the localhost has been mapped to port 80 in the docker container.
-See `rancher kubectl port-forward ...` above.
+See `kubectl port-forward ...` above.
 
 1. Example:
 
@@ -505,11 +504,10 @@ See `rancher kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
 
-### Delete catalogs
+### Delete helm repositories
 
 1. Delete Senzing catalog. Example:
 
     ```console
-    rancher catalog delete ibm
-    rancher catalog delete senzing
+    helm repo ...
     ```
