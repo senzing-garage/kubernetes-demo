@@ -1,6 +1,7 @@
-mysql.username: "g2"
-mysql.password: "g2"
-mysql.host: "${K8S_PREFIX}-mysql-mysql"
-mysql.database: "G2"
-mysql.file: "g2/data/g2core-schema-mysql-create.sql"
-mysql.storageClaim: "opt-senzing-claim"
+mysql:
+  username: "g2"
+  password: "g2"
+  host: "${K8S_PREFIX}-mysql-mysql"
+  database: "G2"
+  file: "g2/data/g2core-schema-mysql-create.sql"
+  storageClaim: "opt-senzing-claim"

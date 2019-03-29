@@ -1,6 +1,7 @@
-postgresql.username: "postgres"
-postgresql.password: "postgres"
-postgresql.host: "${K8S_PREFIX}-postgresql-postgresql"
-postgresql.database: "G2"
-postgresql.file: "g2/data/g2core-schema-postgresql-create.sql"
-postgresql.storageClaim: "opt-senzing-claim"
+postgresql:
+  username: "postgres"
+  password: "postgres"
+  host: "${K8S_PREFIX}-postgresql-postgresql"
+  database: "G2"
+  file: "g2/data/g2core-schema-postgresql-create.sql"
+  storageClaim: "opt-senzing-claim"

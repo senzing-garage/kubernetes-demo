@@ -1,13 +1,16 @@
-image.repository: "${DOCKER_REGISTRY_URL}/senzing/stream-loader"
-image.tag: "latest"
-senzing.subcommand: "kafka"
-senzing.databaseUrl: "db2://db2inst1:db2inst1@${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
-senzing.dataSource: "PEOPLE"
-senzing.entityType: "PEOPLE"
-senzing.kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka-kafka"
-senzing.kafkaBootstrapServerPort: 9092
-senzing.kafkaTopic: "senzing-kafka-topic"
-senzing.logLevel: "info"
-senzing.monitoringPeriod: 60
-senzing.optSenzingClaim: "opt-senzing-claim"
-senzing.threadsPerProcess: 4
+image:
+  repository: "${DOCKER_REGISTRY_URL}/senzing/stream-loader"
+  tag: "latest"
+
+senzing:
+  subcommand: "kafka"
+  databaseUrl: "db2://db2inst1:db2inst1@${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
+  dataSource: "PEOPLE"
+  entityType: "PEOPLE"
+  kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka-kafka"
+  kafkaBootstrapServerPort: 9092
+  kafkaTopic: "senzing-kafka-topic"
+  logLevel: "info"
+  monitoringPeriod: 60
+  optSenzingClaim: "opt-senzing-claim"
+  threadsPerProcess: 4

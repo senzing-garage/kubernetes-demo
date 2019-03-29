@@ -1,4 +1,8 @@
-persistence.existingClaim: postgresql-claim
+persistence:
+  existingClaim: postgresql-claim
+
 postgresqlDatabase: G2
 postgresqlPassword: postgres
-securityContext.enabled: false
+
+securityContext:
+  enabled: false

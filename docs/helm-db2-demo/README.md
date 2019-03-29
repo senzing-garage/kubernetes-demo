@@ -242,13 +242,6 @@ to retrieve the images.
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
-1. Review persistent volumes.
-
-    ```console
-    kubectl get persistentvolumes \
-      --namespace ${K8S_NAMESPACE_NAME}
-    ```
-
 1. Create persistent volume claims. Example:
 
     ```console
@@ -256,7 +249,7 @@ to retrieve the images.
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
-1. Review persistent volumes.
+1. Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \

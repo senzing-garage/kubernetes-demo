@@ -1,1 +1,2 @@
-senzing.sleepTime: 60
+senzing:
+  sleepTime: 60
