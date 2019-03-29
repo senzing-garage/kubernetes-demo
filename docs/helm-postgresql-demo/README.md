@@ -293,18 +293,48 @@ This repository assumes a working knowledge of:
 
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
-1. Example:
+1. Install Postgresql. Example:
 
     ```console
     helm install \
       --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${RANCHER_ANSWERS_DIR}/postgresql.yaml \
-      postgresql \
-      
+      --values ${HELM_VALUES_DIR}/postgresql.yaml \
+      bitnami/postgresql
     ```
 
 ### Install phpPgAdmin
+
+1. Install phpPgAdmin app. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-phppgadmin-chart \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
+      senzing/phppgadmin-chart
+    ```
+
+1. Optional:  Background information on
+    [senzing/phppgadmin](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/build-docker-senzing-phppgadmin.md)
+    docker image.
+
+1. Port forward to local machine.  Run in a separate terminal window. Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+
+    kubectl port-forward \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-phppgadmin-phppgadmin-chart 8081:8080
+    ```
+
+1. Open browser to [localhost:8081](http://localhost:8081)
+    1. Login
+       1. See `rancher-answers/postgresql.yaml` for postgresqlUsername and postgresqlPassword
+       1. Default: username: `postgres`  password: `postgres`
+    1. On left-hand navigation, select "G2" database to explore.
 
 ### Initialize database
 
