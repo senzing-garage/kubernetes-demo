@@ -279,6 +279,7 @@ to retrieve the images.
     helm repo add ibm "https://github.com/IBM/charts"
 
     helm repo add ibm https://github.com/IBM/charts/repo/stable
+    helm repo add ibm https://github.com/IBM/charts/tree/master/repo/stable
     ```
 
 1. Update repositories.
