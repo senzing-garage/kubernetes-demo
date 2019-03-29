@@ -300,9 +300,9 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${HELM_VALUES_DIR}/kafka.yaml \
       --name ${K8S_PREFIX}-kafka \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --values ${HELM_VALUES_DIR}/kafka.yaml \
       bitnami/kafka
     ```
 
@@ -312,9 +312,9 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       --name ${K8S_PREFIX}-kafka-test-client \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       senzing/kafka-test-client
     ```
 
@@ -339,9 +339,9 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       --name ${K8S_PREFIX}-ibm-db2oltp-dev \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       ibm/ibm-db2oltp-dev
     ```
 
@@ -349,9 +349,9 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       --name ${K8S_PREFIX}-ibm-db2oltp-dev \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
     ```
 
@@ -425,9 +425,9 @@ to retrieve the images.
 
     ```console
     helm install \
-      --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
       --name ${K8S_PREFIX}-senzing-mock-data-generator \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
       senzing/senzing-mock-data-generator
     ```
 
