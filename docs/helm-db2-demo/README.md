@@ -56,7 +56,6 @@ This repository assumes a working knowledge of:
 1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
 1. [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
 1. [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
-1. [Rancher](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/rancher.md)
 
 ## Demonstrate
 
