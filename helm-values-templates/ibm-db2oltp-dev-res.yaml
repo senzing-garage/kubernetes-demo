@@ -1,9 +1,22 @@
-db2inst.instname: "db2inst1"
-db2inst.password: "db2inst1"
-options.databaseName: "G2"
-dataVolume.existingClaimName: "db2-data-stor-claim"
-persistence.enabled: "false"
-persistence.useDynamicProvisioning: "false"
-service.name: "ibm-db2oltp-dev-res"
-service.port: 50001
-service.tsport: 55001
+dataVolume:
+  existingClaimName: "db2-data-stor-claim"
+
+db2inst:
+  instname: "db2inst1"
+  password: "db2inst1"
+
+global:
+  image:
+    secretName: ${K8S_PREFIX}-docker-io
+
+options:
+  databaseName: "G2"
+
+persistence:
+  enabled: "false"
+  useDynamicProvisioning: "false"
+
+service:
+  name: "ibm-db2oltp-dev-res"
+  port: 50001
+  tsport: 55001

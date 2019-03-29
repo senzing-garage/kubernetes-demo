@@ -1,7 +1,7 @@
 postgresql:
-  username: "postgres"
-  password: "postgres"
-  host: "${K8S_PREFIX}-postgresql-postgresql"
   database: "G2"
   file: "g2/data/g2core-schema-postgresql-create.sql"
+  host: "${K8S_PREFIX}-postgresql-postgresql"
+  password: "postgres"
   storageClaim: "opt-senzing-claim"
+  username: "postgres"

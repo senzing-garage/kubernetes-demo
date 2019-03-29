@@ -2,11 +2,11 @@ image:
   repository: senzing/phppgadmin
   tag: latest
 
+ingress:
+  enabled: true
+
 phppgadmin:
   serverHost: "${K8S_PREFIX}-postgresql-postgresql"
 
 service:
   type: ClusterIP
-
-ingress:
-  enabled: true

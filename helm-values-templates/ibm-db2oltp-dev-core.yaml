@@ -1,16 +1,16 @@
-global:
-  image:
-    secretName: ${K8S_PREFIX}-docker-io
+dataVolume:
+  existingClaimName: "db2-data-stor-claim"
 
 db2inst:
   instname: "db2inst1"
   password: "db2inst1"
 
+global:
+  image:
+    secretName: ${K8S_PREFIX}-docker-io
+
 options:
   databaseName: "G2"
-
-dataVolume:
-  existingClaimName: "db2-data-stor-claim"
 
 persistence:
   enabled: "false"

@@ -1,7 +1,17 @@
-dataVolume.existingClaimName: "db2-data-stor-claim"
-db2inst.instname: "db2inst1"
-db2inst.password: "db2inst1"
-global.image.secretName: ${K8S_PREFIX}-docker.io
-options.databaseName: "G2"
-persistence.enabled: "false"
-persistence.useDynamicProvisioning: "false"
+dataVolume:
+  existingClaimName: "db2-data-stor-claim"
+
+db2inst:
+  instname: "db2inst1"
+  password: "db2inst1"
+
+global:
+  image:
+    secretName: ${K8S_PREFIX}-docker-io
+
+options:
+  databaseName: "G2"
+
+persistence:
+  enabled: "false"
+  useDynamicProvisioning: "false"
