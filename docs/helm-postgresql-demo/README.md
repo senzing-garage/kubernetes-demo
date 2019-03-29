@@ -323,10 +323,10 @@ This repository assumes a working knowledge of:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-phppgadmin-chart \
+      --name ${DEMO_PREFIX}-phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin-chart.yaml \
-      senzing/phppgadmin-chart
+      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
+      senzing/phppgadmin
     ```
 
 1. Optional:  Background information on
@@ -342,7 +342,7 @@ This repository assumes a working knowledge of:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin-chart-phppgadmin-chart 8081:8080
+      svc/${DEMO_PREFIX}-phppgadmin-phppgadmin 8081:8080
     ```
 
 1. Open browser to [localhost:8081](http://localhost:8081)
@@ -375,7 +375,7 @@ This repository assumes a working knowledge of:
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-postgresql.yaml \
       senzing/senzing-stream-loader
     ```
 
@@ -387,7 +387,7 @@ This repository assumes a working knowledge of:
     helm install \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
       senzing-senzing-api-server
     ```
 
@@ -428,7 +428,7 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-phppgadmin-chart
+    helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
