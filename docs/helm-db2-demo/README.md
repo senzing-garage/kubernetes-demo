@@ -496,6 +496,8 @@ See `rancher kubectl port-forward ...` above.
     helm delete --purge ${K8S_PREFIX}-ibm-db2oltp-dev
     helm delete --purge ${K8S_PREFIX}-kafka-test-client
     helm delete --purge ${K8S_PREFIX}-kafka
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}

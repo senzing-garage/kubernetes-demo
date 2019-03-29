@@ -1,9 +1,11 @@
-image.repository: "${DOCKER_REGISTRY_URL}/senzing/mock-data-generator"
-image.tag: "latest"
-senzing.subcommand: "url-to-kafka"
-senzing.kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka"
-senzing.kafkaBootstrapServerPort: 9092
-senzing.kafkaTopic: "senzing-kafka-topic"
-senzing.inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-senzing.recordMax: 10000
-senzing.recordMonitor: 100
+image:
+  repository: "${DOCKER_REGISTRY_URL}/senzing/mock-data-generator"
+  tag: "latest"
+senzing:
+  subcommand: "url-to-kafka"
+  kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka"
+  kafkaBootstrapServerPort: 9092
+  kafkaTopic: "senzing-kafka-topic"
+  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
+  recordMax: 9999
+  recordMonitor: 100
