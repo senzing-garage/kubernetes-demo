@@ -217,9 +217,15 @@ to retrieve the images.
 
     kubectl create secret docker-registry ${K8S_PREFIX}-docker-io \
       --namespace ${K8S_NAMESPACE_NAME} \
+      --docker-server="https://index.docker.io/v1/" \
+      --docker-username=${DOCKER_USERNAME} \
+      --docker-password=${DOCKER_PASSWORD}
+
+    kubectl create secret docker-registry ${K8S_PREFIX}-docker-io \
       --docker-server=docker.io \
       --docker-username=${DOCKER_USERNAME} \
       --docker-password=${DOCKER_PASSWORD}
+
     ```
 
 1. Review secrets.
@@ -490,7 +496,6 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
-
     helm delete --purge ${K8S_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${K8S_PREFIX}-senzing-db2-client
     helm delete --purge ${K8S_PREFIX}-ibm-db2oltp-dev
