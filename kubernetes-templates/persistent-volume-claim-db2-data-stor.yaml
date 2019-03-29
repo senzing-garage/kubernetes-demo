@@ -6,7 +6,7 @@ metadata:
   labels:
     cattle.io/creator: norman
   name: db2-data-stor-claim
-  namespace: ${K8S_NAMESPACE_NAME}  
+  namespace: ${K8S_NAMESPACE_NAME}
 spec:
   accessModes:
   - ReadWriteMany
