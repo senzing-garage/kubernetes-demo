@@ -303,6 +303,20 @@ This repository assumes a working knowledge of:
       bitnami/postgresql
     ```
 
+### Initialize database
+
+**FIXME:** Does not work.  Use phpPgAdmin, the next step, to initialize database.
+
+1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-postgresql-client \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
+      senzing/postgresql-client
+    ```
+
 ### Install phpPgAdmin
 
 1. Install phpPgAdmin app. Example:
@@ -311,7 +325,7 @@ This repository assumes a working knowledge of:
     helm install \
       --name ${DEMO_PREFIX}-phppgadmin-chart \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
+      --values ${HELM_VALUES_DIR}/phppgadmin-chart.yaml \
       senzing/phppgadmin-chart
     ```
 
@@ -326,8 +340,9 @@ This repository assumes a working knowledge of:
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     kubectl port-forward \
+      --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin-phppgadmin-chart 8081:8080
+      svc/${DEMO_PREFIX}-phppgadmin-chart-phppgadmin-chart 8081:8080
     ```
 
 1. Open browser to [localhost:8081](http://localhost:8081)
@@ -335,68 +350,6 @@ This repository assumes a working knowledge of:
        1. See `rancher-answers/postgresql.yaml` for postgresqlUsername and postgresqlPassword
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
-
-### Initialize database
-
-1. Bring up a DB2 client. Example:
-
-    ```console
-    helm install \
-      --values ${HELM_VALUES_DIR}/db2-client.yaml \
-      --name ${DEMO_PREFIX}-senzing-db2-client \
-      --namespace ${DEMO_NAMESPACE} \
-      senzing/db2-client
-    ```
-
-1. X
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
-    kubectl exec \
-      -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-senzing-db2-client -- /bin/bash
-    ```
-
-1. Catalog "remote" database.
-   :warning: Look at the results of the
-   "[Initialize database](#initialize-database)"
-   step for the correct value of `DB2_HOST`.
-   In the DB2 client docker container, run
-
-    ```console
-    su - db2inst1
-
-    export DEMO_PREFIX=my
-    export DB2_HOST=${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
-
-    db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
-    db2 catalog database G2 at node G2_node
-    db2 terminate
-    ```
-
-    ```console
-    kubectl get pods --namespace ${DEMO_PREFIX}-namespace
-
-    kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0
-    ```
-
-1. Populate database. In docker container, run
-
-    ```console
-    db2 connect to g2 user db2inst1 using db2inst1
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    ```
-
-1. Exit docker container.
-
-    ```console
-    db2 connect reset
-    exit
-    exit
-    ```
 
 ### Install mock-data-generator
 
@@ -444,7 +397,10 @@ This repository assumes a working knowledge of:
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    kubectl port-forward --namespace ${DEMO_NAMESPACE} svc/${DEMO_PREFIX}-senzing-api-server 8889:80
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
@@ -469,24 +425,19 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-api-server
+    helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
+    helm delete --purge ${DEMO_PREFIX}-phppgadmin-chart
+    helm delete --purge ${DEMO_PREFIX}-postgresql-client
+    helm delete --purge ${DEMO_PREFIX}-postgresql
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
+    helm repo remove senzing
+    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl delete secret my-docker-io
-    # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
-
-### Delete helm repositories
-
-1. Delete Senzing catalog. Example:
-
-    ```console
-    helm repo ...
-    ```
