@@ -6,7 +6,7 @@ metadata:
   labels:
     cattle.io/creator: norman
   name: opt-senzing-claim
-  namespace: ${K8S_NAMESPACE_NAME}
+  namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:
   - ReadWriteMany

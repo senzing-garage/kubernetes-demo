@@ -1,5 +1,5 @@
 db:
-  host: "${K8S_PREFIX}-mysql-mysql"
+  host: "${DEMO_PREFIX}-mysql-mysql"
 
 service:
   port: 80

@@ -4,7 +4,7 @@ image:
 
 senzing:
   subcommand: "url-to-kafka"
-  kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka"
+  kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"
   kafkaBootstrapServerPort: 9092
   kafkaTopic: "senzing-kafka-topic"
   inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"

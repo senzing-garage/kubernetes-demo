@@ -148,8 +148,8 @@ This repository assumes a working knowledge of:
 1. Environment variables that need customization.  Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -214,8 +214,8 @@ to retrieve the images.
     export DOCKER_USERNAME=my-username
     export DOCKER_PASSWORD=my-password
 
-    kubectl create secret docker-registry ${K8S_PREFIX}-docker-io \
-      --namespace ${K8S_NAMESPACE_NAME} \
+    kubectl create secret docker-registry ${DEMO_PREFIX}-docker-io \
+      --namespace ${DEMO_NAMESPACE} \
       --docker-server=docker.io \
       --docker-username=${DOCKER_USERNAME} \
       --docker-password=${DOCKER_PASSWORD}
@@ -225,7 +225,7 @@ to retrieve the images.
 
     ```console
     kubectl get secrets \
-      --namespace ${K8S_NAMESPACE_NAME}
+      --namespace ${DEMO_NAMESPACE}
     ```
 
 ### Create persistent volume
@@ -251,10 +251,10 @@ to retrieve the images.
 
     ```console
     kubectl get persistentvolumes \
-      --namespace ${K8S_NAMESPACE_NAME}
+      --namespace ${DEMO_NAMESPACE}
 
     kubectl get persistentvolumeClaims \
-      --namespace ${K8S_NAMESPACE_NAME}
+      --namespace ${DEMO_NAMESPACE}
     ```
 
 ### Add helm repositories
@@ -299,8 +299,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       ibm/ibm-db2oltp-dev
     ```
@@ -309,8 +309,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
     ```
@@ -321,8 +321,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-kafka \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-kafka \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka.yaml \
       bitnami/kafka
     ```
@@ -333,8 +333,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-kafka-test-client \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-kafka-test-client \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       senzing/kafka-test-client
     ```
@@ -342,14 +342,14 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 1. Run the test client. Run in a separate terminal window. Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     kubectl exec \
       -it \
-      -n ${K8S_NAMESPACE_NAME} \
-      ${K8S_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${K8S_PREFIX}-kafka:9092 \
+      -n ${DEMO_NAMESPACE} \
+      ${DEMO_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
+        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
     ```  
@@ -361,21 +361,21 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```console
     helm install \
       --values ${HELM_VALUES_DIR}/db2-client.yaml \
-      --name ${K8S_PREFIX}-senzing-db2-client \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-db2-client \
+      --namespace ${DEMO_NAMESPACE} \
       senzing/db2-client
     ```
 
 1. X
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     kubectl exec \
       -it \
-      -n ${K8S_NAMESPACE_NAME} \
-      ${K8S_PREFIX}-senzing-db2-client -- /bin/bash
+      -n ${DEMO_NAMESPACE} \
+      ${DEMO_PREFIX}-senzing-db2-client -- /bin/bash
     ```
 
 1. Catalog "remote" database.
@@ -387,8 +387,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```console
     su - db2inst1
 
-    export K8S_PREFIX=my
-    export DB2_HOST=${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
+    export DEMO_PREFIX=my
+    export DB2_HOST=${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
 
     db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
     db2 catalog database G2 at node G2_node
@@ -396,7 +396,7 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```
 
     ```console
-    kubectl get pods --namespace ${K8S_PREFIX}-namespace
+    kubectl get pods --namespace ${DEMO_PREFIX}-namespace
 
     kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0
     ```
@@ -422,8 +422,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-mock-data-generator \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-mock-data-generator \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
       senzing/senzing-mock-data-generator
     ```
@@ -438,8 +438,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-stream-loader \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-stream-loader \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
       senzing/senzing-stream-loader
     ```
@@ -450,8 +450,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-api-server \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-api-server \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
       senzing-senzing-api-server
     ```
@@ -459,10 +459,10 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 1. Port forward to local machine.  Run in a separate terminal window. Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    kubectl port-forward --namespace ${K8S_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
+    kubectl port-forward --namespace ${DEMO_NAMESPACE} svc/${DEMO_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
@@ -487,17 +487,17 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
-    helm delete --purge ${K8S_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${K8S_PREFIX}-senzing-db2-client
-    helm delete --purge ${K8S_PREFIX}-ibm-db2oltp-dev
-    helm delete --purge ${K8S_PREFIX}-kafka-test-client
-    helm delete --purge ${K8S_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
+    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
+    helm delete --purge ${DEMO_PREFIX}-kafka
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     kubectl delete secret my-docker-io
-    # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
+    # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
 

@@ -4,10 +4,10 @@ image:
 
 senzing:
   subcommand: "kafka"
-  databaseUrl: "db2://db2inst1:db2inst1@${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
   dataSource: "PEOPLE"
   entityType: "PEOPLE"
-  kafkaBootstrapServerHost: "${K8S_PREFIX}-kafka-kafka"
+  kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka-kafka"
   kafkaBootstrapServerPort: 9092
   kafkaTopic: "senzing-kafka-topic"
   logLevel: "info"

@@ -4,7 +4,7 @@ metadata:
   name: postgresql-volume
   labels:
     type: local
-  namespace: ${K8S_NAMESPACE_NAME}
+  namespace: ${DEMO_NAMESPACE}
 spec:
   storageClassName: manual
   capacity:

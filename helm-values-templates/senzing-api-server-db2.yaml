@@ -5,6 +5,6 @@ image:
 senzing:
   bindAddr: "all"
   concurrency: 8
-  databaseUrl: "db2://db2inst1:db2inst1@${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
   iniFile: "/opt/senzing/g2/python/G2Module.ini"
   optSenzingClaim: "opt-senzing-claim"

@@ -7,7 +7,7 @@ db2inst:
 
 global:
   image:
-    secretName: ${K8S_PREFIX}-docker-io
+    secretName: ${DEMO_PREFIX}-docker-io
 
 options:
   databaseName: "G2"

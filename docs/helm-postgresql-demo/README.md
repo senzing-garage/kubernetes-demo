@@ -1,4 +1,4 @@
-# kubernetes-helm-db2-demo
+# kubernetes-helm-postgresql-demo
 
 ## Overview
 
@@ -23,7 +23,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Add registries](#add-registries)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Install DB2](#install-db2)
+    1. [Install Postgresql](#install-postgresql)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
     1. [Initialize database](#initialize-database)
@@ -77,13 +77,6 @@ This repository assumes a working knowledge of:
 
 ### Prerequisites
 
-#### IBM docker images
-
-1. Authorize [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Visit [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Click "Proceed to Checkout" button.
-   1. Agree to terms and click "Get Content" button.
-
 #### kubectl
 
 1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
@@ -109,8 +102,6 @@ This repository assumes a working knowledge of:
 1. Make Senzing docker images.
 
     ```console
-    sudo docker build --tag senzing/db2                 https://github.com/senzing/docker-db2.git
-    sudo docker build --tag senzing/db2express-c        https://github.com/senzing/docker-db2express-c.git
     sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     ```
@@ -131,8 +122,6 @@ This repository assumes a working knowledge of:
 
     ```console
     for GIT_REPOSITORY in \
-      "db2" \
-      "db2express-c" \
       "mock-data-generator" \
       "senzing-api-server" \
       "stream-loader"; \
@@ -148,8 +137,8 @@ This repository assumes a working knowledge of:
 1. Environment variables that need customization.  Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -196,38 +185,6 @@ This repository assumes a working knowledge of:
     kubectl get namespaces
     ```
 
-### Add registries
-
-Because IBM docker images required acceptance of terms in
-[IBM docker images](#ibm-docker-images) step,
-Kubernetes needs username/password to hub.docker.com
-to retrieve the images.
-
-1. Add docker.io registry.
-   :warning: hub.docker.com username and password used in previous
-   [IBM docker images](#ibm-docker-images)
-   step need to be supplied.
-   **Note:** The DockerHub username, not email address, is required.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=my-username
-    export DOCKER_PASSWORD=my-password
-
-    kubectl create secret docker-registry ${K8S_PREFIX}-docker-io \
-      --namespace ${K8S_NAMESPACE_NAME} \
-      --docker-server=docker.io \
-      --docker-username=${DOCKER_USERNAME} \
-      --docker-password=${DOCKER_PASSWORD}
-    ```
-
-1. Review secrets.
-
-    ```console
-    kubectl get secrets \
-      --namespace ${K8S_NAMESPACE_NAME}
-    ```
-
 ### Create persistent volume
 
 1. If you do not already have an `/opt/senzing` directory on your system, visit
@@ -236,14 +193,14 @@ to retrieve the images.
 1. Create persistent volumes. Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims. Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
@@ -251,10 +208,10 @@ to retrieve the images.
 
     ```console
     kubectl get persistentvolumes \
-      --namespace ${K8S_NAMESPACE_NAME}
+      --namespace ${DEMO_NAMESPACE}
 
     kubectl get persistentvolumeClaims \
-      --namespace ${K8S_NAMESPACE_NAME}
+      --namespace ${DEMO_NAMESPACE}
     ```
 
 ### Add helm repositories
@@ -271,12 +228,6 @@ to retrieve the images.
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
-1. Add IBM repository.  Example:
-
-    ```console
-    helm repo add ibm https://raw.githubusercontent.com/IBM/charts/master/repo/stable/    
-    ```
-
 1. Update repositories.
 
     ```console
@@ -291,38 +242,14 @@ to retrieve the images.
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Install DB2
-
-Since this takes the longest to reach the "running" state, we'll install it first.
-
-1. Example:
-
-    ```console
-    helm install \
-      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${K8S_NAMESPACE_NAME} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      ibm/ibm-db2oltp-dev
-    ```
-
-1. Work-around:
-
-    ```console
-    helm install \
-      --name ${K8S_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${K8S_NAMESPACE_NAME} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
-    ```
-
 ### Install Kafka
 
 1. Example:
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-kafka \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-kafka \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka.yaml \
       bitnami/kafka
     ```
@@ -333,8 +260,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-kafka-test-client \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-kafka-test-client \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       senzing/kafka-test-client
     ```
@@ -342,17 +269,42 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 1. Run the test client. Run in a separate terminal window. Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     kubectl exec \
       -it \
-      -n ${K8S_NAMESPACE_NAME} \
-      ${K8S_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${K8S_PREFIX}-kafka:9092 \
+      -n ${DEMO_NAMESPACE} \
+      ${DEMO_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
+        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
     ```  
+
+### Install Postgresql
+
+1. Create Configmap for `pg_hba.conf`. Example
+
+    ```console
+    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
+      --namespace ${DEMO_NAMESPACE} \
+      --from-file=${KUBERNETES_DIR}/pg_hba.conf
+    ```
+
+    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
+
+1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-postgresql \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${RANCHER_ANSWERS_DIR}/postgresql.yaml \
+      postgresql \
+      
+    ```
+
+### Install phpPgAdmin
 
 ### Initialize database
 
@@ -361,21 +313,21 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```console
     helm install \
       --values ${HELM_VALUES_DIR}/db2-client.yaml \
-      --name ${K8S_PREFIX}-senzing-db2-client \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-db2-client \
+      --namespace ${DEMO_NAMESPACE} \
       senzing/db2-client
     ```
 
 1. X
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     kubectl exec \
       -it \
-      -n ${K8S_NAMESPACE_NAME} \
-      ${K8S_PREFIX}-senzing-db2-client -- /bin/bash
+      -n ${DEMO_NAMESPACE} \
+      ${DEMO_PREFIX}-senzing-db2-client -- /bin/bash
     ```
 
 1. Catalog "remote" database.
@@ -387,8 +339,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```console
     su - db2inst1
 
-    export K8S_PREFIX=my
-    export DB2_HOST=${K8S_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
+    export DEMO_PREFIX=my
+    export DB2_HOST=${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
 
     db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
     db2 catalog database G2 at node G2_node
@@ -396,7 +348,7 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     ```
 
     ```console
-    kubectl get pods --namespace ${K8S_PREFIX}-namespace
+    kubectl get pods --namespace ${DEMO_PREFIX}-namespace
 
     kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0
     ```
@@ -422,8 +374,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-mock-data-generator \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-mock-data-generator \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
       senzing/senzing-mock-data-generator
     ```
@@ -438,8 +390,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-stream-loader \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-stream-loader \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
       senzing/senzing-stream-loader
     ```
@@ -450,8 +402,8 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 
     ```console
     helm install \
-      --name ${K8S_PREFIX}-senzing-api-server \
-      --namespace ${K8S_NAMESPACE_NAME} \
+      --name ${DEMO_PREFIX}-senzing-api-server \
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
       senzing-senzing-api-server
     ```
@@ -459,10 +411,10 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 1. Port forward to local machine.  Run in a separate terminal window. Example:
 
     ```console
-    export K8S_PREFIX=my
-    export K8S_NAMESPACE_NAME=${K8S_PREFIX}-namespace
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    kubectl port-forward --namespace ${K8S_NAMESPACE_NAME} svc/${K8S_PREFIX}-senzing-api-server 8889:80
+    kubectl port-forward --namespace ${DEMO_NAMESPACE} svc/${DEMO_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
@@ -487,17 +439,17 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
-    helm delete --purge ${K8S_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${K8S_PREFIX}-senzing-db2-client
-    helm delete --purge ${K8S_PREFIX}-ibm-db2oltp-dev
-    helm delete --purge ${K8S_PREFIX}-kafka-test-client
-    helm delete --purge ${K8S_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
+    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
+    helm delete --purge ${DEMO_PREFIX}-kafka
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete secret my-docker-io
-    # kubectl get secrets ${K8S_PREFIX}-docker-io --namespace ${K8S_NAMESPACE_NAME}
+    # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
 
