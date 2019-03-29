@@ -97,7 +97,7 @@ This repository assumes a working knowledge of:
 1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
 
     ```console
-    minikube start
+    minikube start --cpus 4 --memory 8192
     ```
 
 #### Helm/Tiller
@@ -403,6 +403,14 @@ to retrieve the images.
     db2 catalog database G2 at node G2_node
     db2 terminate
     ```
+
+
+    ```console
+    kubectl get pods --namespace ${K8S_PREFIX}-namespace
+    
+    kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0 
+    ```
+
 
 1. Populate database. In docker container, run
 
