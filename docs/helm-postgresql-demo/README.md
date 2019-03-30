@@ -126,7 +126,7 @@ This repository assumes a working knowledge of:
       "senzing-api-server" \
       "stream-loader" \
     )
-    
+
     for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
     do \
       sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
@@ -197,14 +197,16 @@ This repository assumes a working knowledge of:
    Since `minikube` uses a virtual machine, a `hostPath` Persistent Volume will be within the virtual machine.
    `minikube` does have
    [support for Persistent Volumes for hostPath](https://kubernetes.io/docs/setup/minikube/#persistent-volumes).
-   The `/opt/senzing` path needs to be changed to `/data/opt/senzing` on the local host.  Example:
-   
+   The `/opt/senzing` path needs to be changed to `/data/senzing` on the local host.
+   **Caveat:** This doesn't work if KVM driver used (e.g. `minikube start --vm-driver kvm2`)
+   Example:
+
    ```console
    sudo mkdir -p /data
    sudo mv /opt/senzing /data
-   ``` 
+   ```
 
-1. Create persistent volumes. 
+1. Create persistent volumes.
 
     Minikube example:
 
@@ -214,7 +216,7 @@ This repository assumes a working knowledge of:
     ```
 
     Example:
-    
+
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
@@ -462,6 +464,6 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/minikube-persistent-volume-opt-senzing.yaml    
+    kubectl delete -f ${KUBERNETES_DIR}/minikube-persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
