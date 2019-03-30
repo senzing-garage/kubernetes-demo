@@ -8,7 +8,7 @@ senzing:
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql-postgresql:5432/G2"
   dataSource: PEOPLE
   entityType: PEOPLE
-  entrypointSleep: 0
+  entrypointSleep: "0"
   kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka-kafka"
   kafkaBootstrapServerPort: 9092
   kafkaTopic: senzing-kafka-topic

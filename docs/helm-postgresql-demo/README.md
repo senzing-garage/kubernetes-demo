@@ -193,8 +193,28 @@ This repository assumes a working knowledge of:
 1. If you do not already have an `/opt/senzing` directory on your system, visit
    [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
-1. Create persistent volumes. Example:
+1. **If using minikube:**
+   Since `minikube` uses a virtual machine, a `hostPath` Persistent Volume will be within the virtual machine.
+   `minikube` does have
+   [support for Persistent Volumes for hostPath](https://kubernetes.io/docs/setup/minikube/#persistent-volumes).
+   The `/opt/senzing` path needs to be changed to `/data/opt/senzing` on the local host.  Example:
+   
+   ```console
+   sudo mkdir -p /data/opt
+   sudo mv /opt/senzing /data/opt
+   ``` 
 
+1. Create persistent volumes. 
+
+    Minikube example:
+
+    ```console
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
+    kubectl create -f ${KUBERNETES_DIR}/minikube-persistent-volume-opt-senzing.yaml
+    ```
+
+    Example:
+    
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
