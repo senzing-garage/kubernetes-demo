@@ -121,10 +121,13 @@ This repository assumes a working knowledge of:
 1. Add Senzing docker images to private docker registry.
 
     ```console
-    for GIT_REPOSITORY in \
+    export GIT_REPOSITORIES=( \
       "mock-data-generator" \
       "senzing-api-server" \
-      "stream-loader"; \
+      "stream-loader" \
+    )
+    
+    for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
     do \
       sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
       sudo docker push ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
