@@ -6,11 +6,9 @@ metadata:
     type: local
   namespace: ${DEMO_NAMESPACE}
 spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: 10Gi
   hostPath:
-    path: "/data/opt/senzing"
+    path: /data/senzing
