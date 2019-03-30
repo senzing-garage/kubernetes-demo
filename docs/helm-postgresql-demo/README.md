@@ -200,8 +200,8 @@ This repository assumes a working knowledge of:
    The `/opt/senzing` path needs to be changed to `/data/opt/senzing` on the local host.  Example:
    
    ```console
-   sudo mkdir -p /data/opt
-   sudo mv /opt/senzing /data/opt
+   sudo mkdir -p /data
+   sudo mv /opt/senzing /data
    ``` 
 
 1. Create persistent volumes. 
