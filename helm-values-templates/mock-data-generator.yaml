@@ -1,6 +1,7 @@
 image:
   repository: "${DOCKER_REGISTRY_URL}/senzing/mock-data-generator"
   tag: "latest"
+  pullPolicy: Always
 
 senzing:
   subcommand: "url-to-kafka"

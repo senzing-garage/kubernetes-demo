@@ -1,6 +1,7 @@
 image:
   repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
   tag: "latest"
+  pullPolicy: Always
 
 senzing:
-  subcommand: "install"
+  subcommand: "replace"

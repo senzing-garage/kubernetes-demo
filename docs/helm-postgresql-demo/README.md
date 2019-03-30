@@ -192,32 +192,7 @@ This repository assumes a working knowledge of:
 
 ### Create persistent volume
 
-1. If you do not already have an `/opt/senzing` directory on your system, visit
-   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
-
-1. **If using minikube:**
-   Since `minikube` uses a virtual machine, a `hostPath` Persistent Volume will be within the virtual machine.
-   `minikube` does have
-   [support for Persistent Volumes for hostPath](https://kubernetes.io/docs/setup/minikube/#persistent-volumes).
-   The `/opt/senzing` path needs to be changed to `/data/senzing` on the local host.
-   **Caveat:** This doesn't work if KVM driver used (e.g. `minikube start --vm-driver kvm2`)
-   Example:
-
-   ```console
-   sudo mkdir -p /data
-   sudo mv /opt/senzing /data
-   ```
-
-1. Create persistent volumes.
-
-    Minikube example:
-
-    ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl create -f ${KUBERNETES_DIR}/minikube-persistent-volume-opt-senzing.yaml
-    ```
-
-    Example:
+1. Create persistent volumes.  Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
@@ -466,6 +441,7 @@ See `kubectl port-forward ...` above.
     ```console
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
+    helm delete --purge ${DEMO_PREFIX}-senzing-package    
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
