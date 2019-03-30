@@ -98,6 +98,7 @@ This repository assumes a working knowledge of:
 #### Senzing docker images
 
 1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
+1. Build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 1. Make Senzing docker images.
 
@@ -124,6 +125,7 @@ This repository assumes a working knowledge of:
     export GIT_REPOSITORIES=( \
       "mock-data-generator" \
       "senzing-api-server" \
+      "senzing-package" \
       "stream-loader" \
     )
 
@@ -391,6 +393,18 @@ This repository assumes a working knowledge of:
 ### ------------------------------------------------------------------------------
 ### The work below is not ready
 ### ------------------------------------------------------------------------------
+
+### deploy Senzing_API.tgz
+
+1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-package \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
+      senzing/senzing-package
+    ```
 
 ### Install stream-loader
 

@@ -1,0 +1,6 @@
+image:
+  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
+  tag: "latest"
+
+senzing:
+  subcommand: "install"
