@@ -369,7 +369,7 @@ This repository assumes a working knowledge of:
 ### The work below is not ready
 ### ------------------------------------------------------------------------------
 
-### deploy Senzing_API.tgz
+### Deploy Senzing_API.tgz
 
 1. Example:
 
@@ -454,6 +454,5 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/minikube-persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
