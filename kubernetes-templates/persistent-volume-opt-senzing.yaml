@@ -12,3 +12,4 @@ spec:
     storage: 10Gi
   hostPath:
     path: /opt/senzing
+  storageClassName: manual

@@ -13,4 +13,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
+  storageClassName: "manual"
   volumeName: opt-senzing-volume
