@@ -16,26 +16,23 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Clone repository](#clone-repository)
     1. [Prerequisites](#prerequisites)
     1. [Set environment variables](#set-environment-variables)
-    1. [Create custom helm values.yaml files](#create-custom-answer-files)
+    1. [Create custom helm values.yaml files](#create-custom-helm-valuesyaml-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
-    1. [Set default context](#set-default-context)
-    1. [Add catalogs](#add-catalogs)
     1. [Create namespace](#create-namespace)
-    1. [Add registries](#add-registries)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Install Postgresql](#install-postgresql)
+    1. [Add helm repositories](#add-helm-repositories)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
+    1. [Install Postgresql](#install-postgresql)
     1. [Initialize database](#initialize-database)
+    1. [Install phpPgAdmin](#install-phppgadmin)
     1. [Install mock-data-generator](#install-mock-data-generator)
+    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Install stream-loader](#install-stream-loader)
     1. [Install senzing-api-server](#install-senzing-api-server)
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
-    1. [Switch context for delete](#switch-context-for-delete)
     1. [Delete everything in project](#delete-everything-in-project)
-    1. [Default context after cleanup](#default-context-after-cleanup)
-    1. [Delete catalogs](#delete-catalogs)
 
 ## Expectations
 
@@ -437,7 +434,7 @@ See `kubectl port-forward ...` above.
     ```console
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --purge ${DEMO_PREFIX}-senzing-package    
+    helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
