@@ -305,7 +305,18 @@ to retrieve the images.
 
 Since this takes the longest to reach the "running" state, we'll install it first.
 
+
 1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-ibm-express-c \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
+      ~/senzing.git/charts/charts/ibm-db2express-c/ibm-db2express-c
+    ```
+
+1. OLD  Example:
 
     ```console
     helm install \
@@ -314,6 +325,35 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       ibm/ibm-db2oltp-dev
     ```
+
+1. Work-around.
+
+    In a minikube environment, this Helm chart may time out because IBM has 
+    [livenessProbe and readinessProbe](https://github.com/IBM/charts/blob/4e65eb1f7425e6f74aca6a12d63e938fd6a291bb/stable/ibm-db2oltp-dev/templates/db2-statefulset.yaml#L212-L233)
+    set up so minikube may timeout."
+    
+    To work around this,  
+    
+    1. Clone the IBM repository.
+    
+        ```console
+        mkdir ~/ibm.git
+        cd ~/ibm.git
+        git clone https://github.com/IBM/charts.git
+        ```
+
+    1. Delete the `livenessProbe:` and `readinessProbe:` YAML stanzas in
+       `~/ibm.git/charts/stable/ibm-db2oltp-dev/templates/db2-statefulset.yaml`
+
+    1. Run with local chart.
+    
+        ```console
+        helm install \
+          --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
+          --namespace ${DEMO_NAMESPACE} \
+          --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
+          ~/ibm.git/charts/stable/ibm-db2oltp-dev
+        ```
 
 ### Install Kafka
 
@@ -501,7 +541,6 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
-    kubectl delete secret my-docker-io
-    # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
+    kubectl delete secret my-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
