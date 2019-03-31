@@ -304,9 +304,10 @@ to retrieve the images.
 ### Install DB2
 
 Since this takes the longest to reach the "running" state, we'll install it first.
+Choose one of the DB2 Helm charts.
 
 
-1. Example:
+1. IBM DB2 Express-C example:
 
     ```console
     helm install \
@@ -316,7 +317,7 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       ~/senzing.git/charts/charts/ibm-db2express-c/ibm-db2express-c
     ```
 
-1. OLD  Example:
+1. IBM DB2 OLTP example:
 
     ```console
     helm install \
@@ -399,46 +400,11 @@ Since this takes the longest to reach the "running" state, we'll install it firs
 1. Bring up a DB2 client. Example:
 
     ```console
-    helm install \
-      --values ${HELM_VALUES_DIR}/db2-client.yaml \
-      --name ${DEMO_PREFIX}-senzing-db2-client \
-      --namespace ${DEMO_NAMESPACE} \
-      senzing/db2-client
-    ```
-
-1. X
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
-    kubectl exec \
-      -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-senzing-db2-client -- /bin/bash
-    ```
-
-1. Catalog "remote" database.
-   :warning: Look at the results of the
-   "[Initialize database](#initialize-database)"
-   step for the correct value of `DB2_HOST`.
-   In the DB2 client docker container, run
-
-    ```console
     su - db2inst1
-
-    export DEMO_PREFIX=my
-    export DB2_HOST=${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
-
-    db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
-    db2 catalog database G2 at node G2_node
-    db2 terminate
-    ```
-
-    ```console
-    kubectl get pods --namespace ${DEMO_PREFIX}-namespace
-
-    kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0
+    db2 create database g2 using codeset utf-8 territory us
+    db2 connect to g2
+    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
+    db2 connect reset
     ```
 
 1. Populate database. In docker container, run
@@ -534,6 +500,8 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm delete --purge ${DEMO_PREFIX}-ibm-express-c
+    
     helm repo remove ibm
     helm repo remove senzing
     helm repo remove bitnami
