@@ -252,6 +252,7 @@ This repository assumes a working knowledge of:
       --values ${HELM_VALUES_DIR}/senzing-package.yaml \
       senzing/senzing-package
     ```
+
 ### Install Kafka
 
 1. Example:

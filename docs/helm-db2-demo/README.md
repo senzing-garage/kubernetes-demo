@@ -16,26 +16,22 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Clone repository](#clone-repository)
     1. [Prerequisites](#prerequisites)
     1. [Set environment variables](#set-environment-variables)
-    1. [Create custom helm values.yaml files](#create-custom-answer-files)
+    1. [Create custom helm values.yaml files](#create-custom-helm-valuesyaml-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
-    1. [Set default context](#set-default-context)
-    1. [Add catalogs](#add-catalogs)
     1. [Create namespace](#create-namespace)
-    1. [Add registries](#add-registries)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Install DB2](#install-db2)
+    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
+    1. [Add helm repositories](#add-helm-repositories)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
+    1. [Install Postgresql](#install-postgresql)
     1. [Initialize database](#initialize-database)
     1. [Install mock-data-generator](#install-mock-data-generator)
     1. [Install stream-loader](#install-stream-loader)
     1. [Install senzing-api-server](#install-senzing-api-server)
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
-    1. [Switch context for delete](#switch-context-for-delete)
     1. [Delete everything in project](#delete-everything-in-project)
-    1. [Default context after cleanup](#default-context-after-cleanup)
-    1. [Delete catalogs](#delete-catalogs)
 
 ## Expectations
 
@@ -105,6 +101,7 @@ This repository assumes a working knowledge of:
 #### Senzing docker images
 
 1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
+1. Build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 1. Make Senzing docker images.
 
@@ -130,12 +127,16 @@ This repository assumes a working knowledge of:
 1. Add Senzing docker images to private docker registry.
 
     ```console
-    for GIT_REPOSITORY in \
+    export GIT_REPOSITORIES=( \
       "db2" \
-      "db2express-c" \
+      "db2express-c" \    
       "mock-data-generator" \
       "senzing-api-server" \
-      "stream-loader"; \
+      "senzing-package" \
+      "stream-loader" \
+    )
+
+    for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
     do \
       sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
       sudo docker push ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
@@ -230,10 +231,7 @@ to retrieve the images.
 
 ### Create persistent volume
 
-1. If you do not already have an `/opt/senzing` directory on your system, visit
-   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
-
-1. Create persistent volumes. Example:
+1. Create persistent volumes.  Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
@@ -290,6 +288,18 @@ to retrieve the images.
     ```
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
+
+### Deploy Senzing_API.tgz
+
+1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-package \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
+      senzing/senzing-package
+    ```
 
 ### Install DB2
 
@@ -428,10 +438,6 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       senzing/senzing-mock-data-generator
     ```
 
-### ------------------------------------------------------------------------------
-### The work below is not ready
-### ------------------------------------------------------------------------------
-
 ### Install stream-loader
 
 1. Example:
@@ -462,7 +468,10 @@ Since this takes the longest to reach the "running" state, we'll install it firs
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    kubectl port-forward --namespace ${DEMO_NAMESPACE} svc/${DEMO_PREFIX}-senzing-api-server 8889:80
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-api-server 8889:80
     ```
 
 ### Test Senzing REST API server
@@ -487,11 +496,16 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-api-server
+    helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
     helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm repo remove senzing
+    helm repo remove bitnami    
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
