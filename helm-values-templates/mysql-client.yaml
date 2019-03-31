@@ -1,0 +1,7 @@
+mysql:
+  database: "G2"
+  file: "g2/data/g2core-schema-mysql-create.sql"
+  host: "${DEMO_PREFIX}-mysql-mysql"
+  password: "g2"
+  storageClaim: "opt-senzing-claim"
+  username: "g2"

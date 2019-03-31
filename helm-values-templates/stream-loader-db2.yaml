@@ -1,0 +1,16 @@
+image:
+  repository: "${DOCKER_REGISTRY_URL}/senzing/stream-loader"
+  tag: "latest"
+
+senzing:
+  subcommand: "kafka"
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2:50000/G2"
+  dataSource: "PEOPLE"
+  entityType: "PEOPLE"
+  kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka-kafka"
+  kafkaBootstrapServerPort: 9092
+  kafkaTopic: "senzing-kafka-topic"
+  logLevel: "info"
+  monitoringPeriod: 60
+  optSenzingClaim: "opt-senzing-claim"
+  threadsPerProcess: 4

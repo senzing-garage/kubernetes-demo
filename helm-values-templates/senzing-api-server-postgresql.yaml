@@ -1,0 +1,11 @@
+image:
+  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-api-server"
+  tag: "latest"
+  pullPolicy: Always
+
+senzing:
+  bindAddr: "all"
+  concurrency: 8
+  databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql-postgresql:5432/G2"
+  iniFile: "/opt/senzing/g2/python/G2Module.ini"
+  optSenzingClaim: "opt-senzing-claim"
