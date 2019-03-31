@@ -314,7 +314,7 @@ Choose one of the DB2 Helm charts.
       --name ${DEMO_PREFIX}-ibm-express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
-      ~/senzing.git/charts/charts/ibm-db2express-c/ibm-db2express-c
+      senzing/ibm-db2express-c
     ```
 
 1. IBM DB2 OLTP example:
@@ -401,6 +401,7 @@ Choose one of the DB2 Helm charts.
 
     ```console
     su - db2inst1
+    db2start
     db2 create database g2 using codeset utf-8 territory us
     db2 connect to g2
     db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
