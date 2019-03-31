@@ -20,6 +20,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
+    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
@@ -27,7 +28,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Initialize database](#initialize-database)
     1. [Install phpPgAdmin](#install-phppgadmin)
     1. [Install mock-data-generator](#install-mock-data-generator)
-    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Install stream-loader](#install-stream-loader)
     1. [Install senzing-api-server](#install-senzing-api-server)
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
@@ -241,6 +241,17 @@ This repository assumes a working knowledge of:
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
+### Deploy Senzing_API.tgz
+
+1. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-package \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
+      senzing/senzing-package
+    ```
 ### Install Kafka
 
 1. Example:
@@ -362,18 +373,6 @@ This repository assumes a working knowledge of:
       senzing/senzing-mock-data-generator
     ```
 
-### Deploy Senzing_API.tgz
-
-1. Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-senzing-package \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
-      senzing/senzing-package
-    ```
-
 ### Install stream-loader
 
 1. Example:
@@ -434,13 +433,13 @@ See `kubectl port-forward ...` above.
     ```console
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
@@ -449,3 +448,12 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
+
+### Delete minikube
+
+1. If `minikube` was used,  
+
+    ```console
+    minikube stop
+    minikube delete    
+    ```
