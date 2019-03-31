@@ -365,10 +365,6 @@ This repository assumes a working knowledge of:
       senzing/senzing-mock-data-generator
     ```
 
-### ------------------------------------------------------------------------------
-### The work below is not ready
-### ------------------------------------------------------------------------------
-
 ### Deploy Senzing_API.tgz
 
 1. Example:
@@ -402,7 +398,7 @@ This repository assumes a working knowledge of:
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
-      senzing-senzing-api-server
+      senzing/senzing-api-server
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
