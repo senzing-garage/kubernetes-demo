@@ -272,7 +272,7 @@ to retrieve the images.
 1. Add IBM repository.  Example:
 
     ```console
-    helm repo add ibm https://raw.githubusercontent.com/IBM/charts/master/repo/stable/    
+    helm repo add ibm https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
     ```
 
 1. Update repositories.
@@ -313,16 +313,6 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
       ibm/ibm-db2oltp-dev
-    ```
-
-1. Work-around:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
     ```
 
 ### Install Kafka
@@ -459,7 +449,7 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
-      senzing-senzing-api-server
+      senzing/senzing-api-server
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
@@ -504,8 +494,9 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm repo remove ibm
     helm repo remove senzing
-    helm repo remove bitnami    
+    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
@@ -514,11 +505,3 @@ See `kubectl port-forward ...` above.
     # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
-
-### Delete helm repositories
-
-1. Delete Senzing catalog. Example:
-
-    ```console
-    helm repo ...
-    ```
