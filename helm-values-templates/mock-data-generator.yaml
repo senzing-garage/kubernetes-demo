@@ -9,5 +9,5 @@ senzing:
   kafkaBootstrapServerPort: 9092
   kafkaTopic: senzing-kafka-topic
   inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-  recordMax: 9999
+  recordMax: 50
   recordMonitor: 100
