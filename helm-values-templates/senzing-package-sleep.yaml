@@ -3,4 +3,5 @@ image:
   tag: latest
 
 senzing:
-  subcommand: replace
+  subcommand: sleep
+  sleepTime: 31536000
