@@ -20,12 +20,12 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
+    1. [Install DB2](#install-db2)
+    1. [Initialize database](#initialize-database)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
-    1. [Install Postgresql](#install-postgresql)
-    1. [Initialize database](#initialize-database)
     1. [Install mock-data-generator](#install-mock-data-generator)
     1. [Install stream-loader](#install-stream-loader)
     1. [Install senzing-api-server](#install-senzing-api-server)
@@ -73,13 +73,6 @@ This repository assumes a working knowledge of:
 
 ### Prerequisites
 
-#### IBM docker images
-
-1. Authorize [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Visit [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Click "Proceed to Checkout" button.
-   1. Agree to terms and click "Get Content" button.
-
 #### kubectl
 
 1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
@@ -106,8 +99,6 @@ This repository assumes a working knowledge of:
 1. Make Senzing docker images.
 
     ```console
-    sudo docker build --tag senzing/db2                 https://github.com/senzing/docker-db2.git
-    sudo docker build --tag senzing/db2express-c        https://github.com/senzing/docker-db2express-c.git
     sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     ```
@@ -128,8 +119,6 @@ This repository assumes a working knowledge of:
 
     ```console
     export GIT_REPOSITORIES=( \
-      "db2" \
-      "db2express-c" \    
       "mock-data-generator" \
       "senzing-api-server" \
       "senzing-package" \
@@ -249,7 +238,7 @@ This repository assumes a working knowledge of:
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Deploy Senzing_API.tgz
+### Deploy Senzing_API.tgz package
 
 1. Example:
 
@@ -269,38 +258,25 @@ This repository assumes a working knowledge of:
 
 ### Install DB2
 
-Since this takes the longest to reach the "running" state, we'll install it first.
-Choose one of the DB2 Helm charts.
-
-
-1. IBM DB2 Express-C example:
+1. Install IBM DB2 Express-C.  Example:
 
     ```console
     helm install \
       --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
-      ~/senzing.git/charts/charts/ibm-db2express-c/ibm-db2express-c
-      
-      
-      
-      
       senzing/ibm-db2express-c
     ```
 
-1. XXX
-
-   ```console
-   kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
-   ```
-
 ### Initialize database
 
-1. In IBM DB2 express-c container, run the following:
+1. Using the directions shown in the output from the previous step,
+   log into the IBM DB2 Express-C container.
+
+1. In the IBM DB2 Express-C container, run the following:
 
     ```console
     su - db2inst1
-    db2start
     db2 create database g2 using codeset utf-8 territory us
     db2 connect to g2
     db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
@@ -332,6 +308,7 @@ Choose one of the DB2 Helm charts.
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       senzing/kafka-test-client
     ```
+
 1. Wait for pods to run. Example:
 
     ```console
