@@ -86,10 +86,16 @@ This repository assumes a working knowledge of:
     minikube start --cpus 4 --memory 8192
     ```
 
+    Alternative:
+
+    ```console
+    minikube start --cpus 4 --memory 8192 --vm-driver kvm2
+    ```
+
 #### Helm/Tiller
 
-1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md).
-1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md).
+1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
+1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md) in the minikube cluster.
 
 #### Senzing docker images
 
@@ -268,6 +274,12 @@ This repository assumes a working knowledge of:
       senzing/ibm-db2express-c
     ```
 
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    ```
+
 ### Initialize database
 
 1. Using the directions shown in the output from the previous step,
@@ -401,7 +413,14 @@ See `kubectl port-forward ...` above.
 
 ## Cleanup
 
-### Delete everything in project
+### Delete everything in project#### minikube cluster
+
+1. [Install minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md).
+1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
+
+    ```console
+    minikube start --cpus 4 --memory 8192
+    ```
 
 1. Example:
 
@@ -420,3 +439,12 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
+
+### Delete minikube cluster
+
+1. Example:
+
+    ```console
+    minikube stop
+    minikube delete
+    ```
