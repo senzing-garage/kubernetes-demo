@@ -4,4 +4,4 @@ image:
 
 senzing:
   subcommand: sleep
-  sleepTime: 31536000
+  sleepTime: 86400
