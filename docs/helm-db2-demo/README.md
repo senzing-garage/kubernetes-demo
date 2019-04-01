@@ -20,12 +20,12 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
+    1. [Install DB2](#install-db2)
+    1. [Initialize database](#initialize-database)
     1. [Install Kafka](#install-kafka)
     1. [Install Kafka test client](#install-kafka-test-client)
-    1. [Install Postgresql](#install-postgresql)
-    1. [Initialize database](#initialize-database)
     1. [Install mock-data-generator](#install-mock-data-generator)
     1. [Install stream-loader](#install-stream-loader)
     1. [Install senzing-api-server](#install-senzing-api-server)
@@ -73,13 +73,6 @@ This repository assumes a working knowledge of:
 
 ### Prerequisites
 
-#### IBM docker images
-
-1. Authorize [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Visit [hub.docker.com/_/db2-developer-c-edition](https://hub.docker.com/_/db2-developer-c-edition)
-   1. Click "Proceed to Checkout" button.
-   1. Agree to terms and click "Get Content" button.
-
 #### kubectl
 
 1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
@@ -106,8 +99,6 @@ This repository assumes a working knowledge of:
 1. Make Senzing docker images.
 
     ```console
-    sudo docker build --tag senzing/db2                 https://github.com/senzing/docker-db2.git
-    sudo docker build --tag senzing/db2express-c        https://github.com/senzing/docker-db2express-c.git
     sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     ```
@@ -128,8 +119,6 @@ This repository assumes a working knowledge of:
 
     ```console
     export GIT_REPOSITORIES=( \
-      "db2" \
-      "db2express-c" \    
       "mock-data-generator" \
       "senzing-api-server" \
       "senzing-package" \
@@ -197,51 +186,17 @@ This repository assumes a working knowledge of:
     kubectl get namespaces
     ```
 
-### Add registries
-
-Because IBM docker images required acceptance of terms in
-[IBM docker images](#ibm-docker-images) step,
-Kubernetes needs username/password to hub.docker.com
-to retrieve the images.
-
-1. Add docker.io registry.
-   :warning: hub.docker.com username and password used in previous
-   [IBM docker images](#ibm-docker-images)
-   step need to be supplied.
-   **Note:** The DockerHub username, not email address, is required.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=my-username
-    export DOCKER_PASSWORD=my-password
-
-    kubectl create secret docker-registry ${DEMO_PREFIX}-docker-io \
-      --namespace ${DEMO_NAMESPACE} \
-      --docker-server=docker.io \
-      --docker-username=${DOCKER_USERNAME} \
-      --docker-password=${DOCKER_PASSWORD}
-    ```
-
-1. Review secrets.
-
-    ```console
-    kubectl get secrets \
-      --namespace ${DEMO_NAMESPACE}
-    ```
-
 ### Create persistent volume
 
 1. Create persistent volumes.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims. Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
@@ -269,12 +224,6 @@ to retrieve the images.
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
-1. Add IBM repository.  Example:
-
-    ```console
-    helm repo add ibm https://raw.githubusercontent.com/IBM/charts/master/repo/stable/    
-    ```
-
 1. Update repositories.
 
     ```console
@@ -289,7 +238,7 @@ to retrieve the images.
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Deploy Senzing_API.tgz
+### Deploy Senzing_API.tgz package
 
 1. Example:
 
@@ -301,28 +250,39 @@ to retrieve the images.
       senzing/senzing-package
     ```
 
-### Install DB2
-
-Since this takes the longest to reach the "running" state, we'll install it first.
-
-1. Example:
+1. Wait for pods to run. Example:
 
     ```console
-    helm install \
-      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      ibm/ibm-db2oltp-dev
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
     ```
 
-1. Work-around:
+### Install DB2
+
+1. Install IBM DB2 Express-C.  Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
+      --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      https://github.com/IBM/charts/raw/master/repo/stable/ibm-db2oltp-dev-3.2.0.tgz
+      --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
+      senzing/ibm-db2express-c
+    ```
+
+### Initialize database
+
+1. Using the directions shown in the output from the previous step,
+   log into the IBM DB2 Express-C container.
+
+1. In the IBM DB2 Express-C container, run the following:
+
+    ```console
+    su - db2inst1
+    db2 create database g2 using codeset utf-8 territory us
+    db2 connect to g2
+    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
+    db2 connect reset
+    exit
+    exit
     ```
 
 ### Install Kafka
@@ -349,6 +309,12 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       senzing/kafka-test-client
     ```
 
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    ```
+
 1. Run the test client. Run in a separate terminal window. Example:
 
     ```console
@@ -363,68 +329,6 @@ Since this takes the longest to reach the "running" state, we'll install it firs
         --topic senzing-kafka-topic \
         --from-beginning
     ```  
-
-### Initialize database
-
-1. Bring up a DB2 client. Example:
-
-    ```console
-    helm install \
-      --values ${HELM_VALUES_DIR}/db2-client.yaml \
-      --name ${DEMO_PREFIX}-senzing-db2-client \
-      --namespace ${DEMO_NAMESPACE} \
-      senzing/db2-client
-    ```
-
-1. X
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
-    kubectl exec \
-      -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-senzing-db2-client -- /bin/bash
-    ```
-
-1. Catalog "remote" database.
-   :warning: Look at the results of the
-   "[Initialize database](#initialize-database)"
-   step for the correct value of `DB2_HOST`.
-   In the DB2 client docker container, run
-
-    ```console
-    su - db2inst1
-
-    export DEMO_PREFIX=my
-    export DB2_HOST=${DEMO_PREFIX}-ibm-db2-ibm-db2oltp-dev-db2
-
-    db2 catalog tcpip node G2_node remote ${DB2_HOST} server 50000
-    db2 catalog database G2 at node G2_node
-    db2 terminate
-    ```
-
-    ```console
-    kubectl get pods --namespace ${DEMO_PREFIX}-namespace
-
-    kubectl logs --follow my-ibm-db2-ibm-db2oltp-dev-0
-    ```
-
-1. Populate database. In docker container, run
-
-    ```console
-    db2 connect to g2 user db2inst1 using db2inst1
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    ```
-
-1. Exit docker container.
-
-    ```console
-    db2 connect reset
-    exit
-    exit
-    ```
 
 ### Install mock-data-generator
 
@@ -459,7 +363,13 @@ Since this takes the longest to reach the "running" state, we'll install it firs
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
-      senzing-senzing-api-server
+      senzing/senzing-api-server
+    ```
+
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
@@ -500,25 +410,13 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
-    helm repo remove bitnami    
+    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
-    kubectl delete secret my-docker-io
-    # kubectl get secrets ${DEMO_PREFIX}-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
-
-### Delete helm repositories
-
-1. Delete Senzing catalog. Example:
-
-    ```console
-    helm repo ...
-    ```
