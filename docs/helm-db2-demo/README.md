@@ -350,11 +350,13 @@ This repository assumes a working knowledge of:
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "kafka-test-client.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    
 
     kubectl exec \
       -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
+      --namespace ${DEMO_NAMESPACE} \
+      ${POD_NAME} -- /usr/bin/kafka-console-consumer \
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
