@@ -439,7 +439,6 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
