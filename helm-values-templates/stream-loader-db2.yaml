@@ -4,7 +4,7 @@ image:
 
 senzing:
   subcommand: "kafka"
-  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-express-c-ibm-db2express-c:50000/G2"
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2express-c:50000/G2"
   dataSource: "PEOPLE"
   entityType: "PEOPLE"
   kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka-kafka"

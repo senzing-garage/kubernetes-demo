@@ -261,6 +261,12 @@ This repository assumes a working knowledge of:
       senzing/senzing-package
     ```
 
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    ```
+
 ### Install DB2
 
 Since this takes the longest to reach the "running" state, we'll install it first.
@@ -271,7 +277,7 @@ Choose one of the DB2 Helm charts.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-ibm-express-c \
+      --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
       senzing/ibm-db2express-c
@@ -321,6 +327,11 @@ Choose one of the DB2 Helm charts.
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
       senzing/kafka-test-client
     ```
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    ```
 
 1. Run the test client. Run in a separate terminal window. Example:
 
@@ -336,12 +347,6 @@ Choose one of the DB2 Helm charts.
         --topic senzing-kafka-topic \
         --from-beginning
     ```  
-
-1. Wait for pods to run. Example:
-
-    ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
-    ```
 
 ### Install mock-data-generator
 
@@ -423,18 +428,13 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2oltp-dev
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
     helm delete --purge ${DEMO_PREFIX}-senzing-package
-    helm delete --purge ${DEMO_PREFIX}-ibm-express-c
-    helm repo remove ibm
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
-    kubectl delete secret my-docker-io --namespace ${DEMO_NAMESPACE}
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```  
