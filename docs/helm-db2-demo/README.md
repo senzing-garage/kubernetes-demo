@@ -32,6 +32,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
+    1. [Delete minikube cluster](#delete-minikube-cluster)
 
 ## Expectations
 
@@ -413,14 +414,7 @@ See `kubectl port-forward ...` above.
 
 ## Cleanup
 
-### Delete everything in project#### minikube cluster
-
-1. [Install minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md).
-1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
-
-    ```console
-    minikube start --cpus 4 --memory 8192
-    ```
+### Delete everything in project
 
 1. Example:
 
@@ -438,7 +432,7 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
-    ```  
+    ```
 
 ### Delete minikube cluster
 
