@@ -257,6 +257,23 @@ This repository assumes a working knowledge of:
       senzing/senzing-package
     ```
 
+1. To inspect the `/opt/senzing` volume, run a second copy in "sleep" mode. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-package-sleep \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-package-sleep.yaml \
+      senzing/senzing-package
+    ```
+    
+    ```console
+    kubectl get pods --namespace ${DEMO_NAMESPACE}
+    
+    export POD_NAME=my-senzing-package-sleep-XXXXXX
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
+    ```
+
 1. Wait for pods to run. Example:
 
     ```console
