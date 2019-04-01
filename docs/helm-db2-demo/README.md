@@ -257,10 +257,21 @@ This repository assumes a working knowledge of:
       senzing/senzing-package
     ```
 
-1. Wait for pods to run. Example:
+1. To inspect the `/opt/senzing` volume, run a second copy in "sleep" mode. Example:
 
     ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-package-sleep \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-package-sleep.yaml \
+      senzing/senzing-package
+    ```
+
+    ```console
+    kubectl get pods --namespace ${DEMO_NAMESPACE}
+
+    export POD_NAME=my-senzing-package-sleep-XXXXXX
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
     ```
 
 ### Install DB2
@@ -333,11 +344,12 @@ This repository assumes a working knowledge of:
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    export POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE}-namespace -l "app.kubernetes.io/name=kafka-test-client,app.kubernetes.io/instance=${DEMO_NAMESPACE}-kafka-test-client" -o jsonpath="{.items[0].metadata.name}")
 
     kubectl exec \
       -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
+      --namespace ${DEMO_NAMESPACE} \
+      ${POD_NAME} -- /usr/bin/kafka-console-consumer \
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
@@ -422,7 +434,6 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-senzing-db2-client
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
