@@ -274,6 +274,12 @@ This repository assumes a working knowledge of:
       senzing/ibm-db2express-c
     ```
 
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    ```
+
 ### Initialize database
 
 1. Using the directions shown in the output from the previous step,
