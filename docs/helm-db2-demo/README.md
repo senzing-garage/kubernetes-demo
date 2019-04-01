@@ -197,51 +197,17 @@ This repository assumes a working knowledge of:
     kubectl get namespaces
     ```
 
-### Add registries
-
-Because IBM docker images required acceptance of terms in
-[IBM docker images](#ibm-docker-images) step,
-Kubernetes needs username/password to hub.docker.com
-to retrieve the images.
-
-1. Add docker.io registry.
-   :warning: hub.docker.com username and password used in previous
-   [IBM docker images](#ibm-docker-images)
-   step need to be supplied.
-   **Note:** The DockerHub username, not email address, is required.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=my-username
-    export DOCKER_PASSWORD=my-password
-
-    kubectl create secret docker-registry ${DEMO_PREFIX}-docker-io \
-      --namespace ${DEMO_NAMESPACE} \
-      --docker-server=docker.io \
-      --docker-username=${DOCKER_USERNAME} \
-      --docker-password=${DOCKER_PASSWORD}
-    ```
-
-1. Review secrets.
-
-    ```console
-    kubectl get secrets \
-      --namespace ${DEMO_NAMESPACE}
-    ```
-
 ### Create persistent volume
 
 1. Create persistent volumes.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-data-stor.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims. Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-data-stor.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
@@ -267,12 +233,6 @@ to retrieve the images.
 
     ```console
     helm repo add senzing https://senzing.github.io/charts/
-    ```
-
-1. Add IBM repository.  Example:
-
-    ```console
-    helm repo add ibm https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
     ```
 
 1. Update repositories.
@@ -317,44 +277,26 @@ Choose one of the DB2 Helm charts.
       senzing/ibm-db2express-c
     ```
 
-1. IBM DB2 OLTP example:
+1. XXX
+
+   ```console
+   kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
+   ```
+
+### Initialize database
+
+1. In IBM DB2 express-c container, run the following:
 
     ```console
-    helm install \
-      --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-      ibm/ibm-db2oltp-dev
+    su - db2inst1
+    db2start
+    db2 create database g2 using codeset utf-8 territory us
+    db2 connect to g2
+    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
+    db2 connect reset
+    exit
+    exit
     ```
-
-1. Work-around.
-
-    In a minikube environment, this Helm chart may time out because IBM has 
-    [livenessProbe and readinessProbe](https://github.com/IBM/charts/blob/4e65eb1f7425e6f74aca6a12d63e938fd6a291bb/stable/ibm-db2oltp-dev/templates/db2-statefulset.yaml#L212-L233)
-    set up so minikube may timeout."
-    
-    To work around this,  
-    
-    1. Clone the IBM repository.
-    
-        ```console
-        mkdir ~/ibm.git
-        cd ~/ibm.git
-        git clone https://github.com/IBM/charts.git
-        ```
-
-    1. Delete the `livenessProbe:` and `readinessProbe:` YAML stanzas in
-       `~/ibm.git/charts/stable/ibm-db2oltp-dev/templates/db2-statefulset.yaml`
-
-    1. Run with local chart.
-    
-        ```console
-        helm install \
-          --name ${DEMO_PREFIX}-ibm-db2oltp-dev \
-          --namespace ${DEMO_NAMESPACE} \
-          --values ${HELM_VALUES_DIR}/ibm-db2oltp-dev.yaml \
-          ~/ibm.git/charts/stable/ibm-db2oltp-dev
-        ```
 
 ### Install Kafka
 
@@ -395,32 +337,10 @@ Choose one of the DB2 Helm charts.
         --from-beginning
     ```  
 
-### Initialize database
-
-1. Bring up a DB2 client. Example:
+1. Wait for pods to run. Example:
 
     ```console
-    su - db2inst1
-    db2start
-    db2 create database g2 using codeset utf-8 territory us
-    db2 connect to g2
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    db2 connect reset
-    ```
-
-1. Populate database. In docker container, run
-
-    ```console
-    db2 connect to g2 user db2inst1 using db2inst1
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    ```
-
-1. Exit docker container.
-
-    ```console
-    db2 connect reset
-    exit
-    exit
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
     ```
 
 ### Install mock-data-generator
@@ -457,6 +377,12 @@ Choose one of the DB2 Helm charts.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
       senzing/senzing-api-server
+    ```
+
+1. Wait for pods to run. Example:
+
+    ```console
+    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
@@ -502,7 +428,6 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm delete --purge ${DEMO_PREFIX}-ibm-express-c
-    
     helm repo remove ibm
     helm repo remove senzing
     helm repo remove bitnami
