@@ -280,6 +280,11 @@ Choose one of the DB2 Helm charts.
       --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
+      ~/senzing.git/charts/charts/ibm-db2express-c/ibm-db2express-c
+      
+      
+      
+      
       senzing/ibm-db2express-c
     ```
 
