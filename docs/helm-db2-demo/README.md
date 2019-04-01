@@ -266,18 +266,12 @@ This repository assumes a working knowledge of:
       --values ${HELM_VALUES_DIR}/senzing-package-sleep.yaml \
       senzing/senzing-package
     ```
-    
+
     ```console
     kubectl get pods --namespace ${DEMO_NAMESPACE}
-    
+
     export POD_NAME=my-senzing-package-sleep-XXXXXX
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
-    ```
-
-1. Wait for pods to run. Example:
-
-    ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
     ```
 
 ### Install DB2
@@ -350,8 +344,7 @@ This repository assumes a working knowledge of:
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "kafka-test-client.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-    
+    export POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE}-namespace -l "app.kubernetes.io/name=kafka-test-client,app.kubernetes.io/instance=${DEMO_NAMESPACE}-kafka-test-client" -o jsonpath="{.items[0].metadata.name}")
 
     kubectl exec \
       -it \
