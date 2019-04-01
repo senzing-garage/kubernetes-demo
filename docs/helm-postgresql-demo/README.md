@@ -358,7 +358,7 @@ This repository assumes a working knowledge of:
 
 1. Open browser to [localhost:8081](http://localhost:8081)
     1. Login
-       1. See `rancher-answers/postgresql.yaml` for postgresqlUsername and postgresqlPassword
+       1. See `helm-values/postgresql.yaml` for postgresqlUsername and postgresqlPassword
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
 
