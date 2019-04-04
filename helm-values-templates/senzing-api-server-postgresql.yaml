@@ -1,8 +1,3 @@
-image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-api-server"
-  tag: "latest"
-  pullPolicy: Always
-
 senzing:
   bindAddr: "all"
   concurrency: 8

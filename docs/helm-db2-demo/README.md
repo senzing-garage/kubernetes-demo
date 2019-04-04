@@ -100,22 +100,13 @@ This repository assumes a working knowledge of:
 
 #### Senzing docker images
 
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
 1. Build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
-
-1. Make Senzing docker images.
-
-    ```console
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
-    ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 #### Docker registry
 
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
+
 1. Set environment variable. Example:
 
     ```console
@@ -126,10 +117,7 @@ This repository assumes a working knowledge of:
 
     ```console
     export GIT_REPOSITORIES=( \
-      "mock-data-generator" \
-      "senzing-api-server" \
       "senzing-package" \
-      "stream-loader" \
     )
 
     for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\

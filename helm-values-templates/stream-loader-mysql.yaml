@@ -1,7 +1,3 @@
-image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/stream-loader"
-  tag: "latest"
-
 senzing:
   subcommand: "kafka"
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
