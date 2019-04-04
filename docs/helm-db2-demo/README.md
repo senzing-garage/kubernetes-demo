@@ -63,7 +63,7 @@ This repository assumes a working knowledge of:
     export GIT_REPOSITORY=kubernetes-demo
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -181,6 +181,14 @@ This repository assumes a working knowledge of:
     kubectl get namespaces
     ```
 
+### Using Transport Layer Security
+
+1. If you are using Transport Layer Security (TLS), then set the following environment variable:
+
+    ```console
+    export HELM_TLS="--tls"
+    ```
+
 ### Create persistent volume
 
 1. Create persistent volumes.  Example:
@@ -210,25 +218,25 @@ This repository assumes a working knowledge of:
 1. Add Bitnami repository. Example:
 
     ```console
-    helm repo add bitnami https://charts.bitnami.com
+    helm repo add ${HELM_TLS} bitnami https://charts.bitnami.com
     ```
 
 1. Add Senzing repository.  Example:
 
     ```console
-    helm repo add senzing https://senzing.github.io/charts/
+    helm repo add ${HELM_TLS} senzing https://senzing.github.io/charts/
     ```
 
 1. Update repositories.
 
     ```console
-    helm repo update
+    helm repo update ${HELM_TLS}
     ```
 
 1. Review repositories
 
     ```console
-    helm repo list
+    helm repo list  ${HELM_TLS}
     ```
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
@@ -238,7 +246,7 @@ This repository assumes a working knowledge of:
 1. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-senzing-package \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-package.yaml \
@@ -248,7 +256,7 @@ This repository assumes a working knowledge of:
 1. To inspect the `/opt/senzing` volume, run a second copy in "sleep" mode. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-senzing-package-sleep \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-package-sleep.yaml \
@@ -267,7 +275,7 @@ This repository assumes a working knowledge of:
 1. Install IBM DB2 Express-C.  Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
@@ -302,7 +310,7 @@ This repository assumes a working knowledge of:
 1. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-kafka \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka.yaml \
@@ -314,7 +322,7 @@ This repository assumes a working knowledge of:
 1. Install Kafka test client app. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-kafka-test-client \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
@@ -348,7 +356,7 @@ This repository assumes a working knowledge of:
 1. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-senzing-mock-data-generator \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
@@ -360,7 +368,7 @@ This repository assumes a working knowledge of:
 1. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
@@ -372,7 +380,7 @@ This repository assumes a working knowledge of:
 1. Example:
 
     ```console
-    helm install \
+    helm install ${HELM_TLS} \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
@@ -419,14 +427,14 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
-    helm delete --purge ${DEMO_PREFIX}-senzing-api-server
-    helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
-    helm delete --purge ${DEMO_PREFIX}-kafka
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
-    helm delete --purge ${DEMO_PREFIX}-senzing-package-sleep
-    helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-api-server
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-stream-loader
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka-test-client
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-ibm-db2express-c
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-package-sleep
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
