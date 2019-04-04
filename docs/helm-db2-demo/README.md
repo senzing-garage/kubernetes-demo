@@ -100,7 +100,7 @@ This repository assumes a working knowledge of:
 
 #### Senzing docker images
 
-1. Build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
+1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 #### Docker registry
 
@@ -425,6 +425,7 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
+    helm delete --purge ${DEMO_PREFIX}-senzing-package-sleep
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
