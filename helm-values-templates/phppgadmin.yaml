@@ -1,7 +1,3 @@
-image:
-  repository: senzing/phppgadmin
-  tag: latest
-
 ingress:
   enabled: true
 

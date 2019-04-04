@@ -1,8 +1,3 @@
-image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/stream-loader"
-  tag: latest
-  pullPolicy: Always  
-
 senzing:
   subcommand: kafka
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql-postgresql:5432/G2"
