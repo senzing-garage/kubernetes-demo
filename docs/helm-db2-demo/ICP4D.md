@@ -74,31 +74,9 @@ This repository assumes a working knowledge of:
 
 ### Prerequisites
 
-#### Docker registry
+#### Docker images
 
-1. If you need to create a private docker registry, see
-       [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
-
-1. Set environment variable. Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
-    ```
-
-1. Add Senzing docker images to private docker registry.
-
-    ```console
-    export GIT_REPOSITORIES=( \
-      "senzing-package" \
-    )
-
-    for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
-    do \
-      sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-    done
-    ```
+1. **FIXME:**  Describe how to accept terms and conditions for the senzing/senzing-package docker image.
 
 ### Set environment variables
 
