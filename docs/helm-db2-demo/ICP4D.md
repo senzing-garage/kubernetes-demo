@@ -1,4 +1,4 @@
-# kubernetes-helm-db2-demo
+# kubernetes-helm-ICP4D-demo
 
 ## Overview
 
@@ -77,21 +77,6 @@ This repository assumes a working knowledge of:
 #### kubectl
 
 1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
-
-#### minikube cluster
-
-1. [Install minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md).
-1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
-
-    ```console
-    minikube start --cpus 4 --memory 8192
-    ```
-
-    Alternative:
-
-    ```console
-    minikube start --cpus 4 --memory 8192 --vm-driver kvm2
-    ```
 
 #### Helm/Tiller
 
