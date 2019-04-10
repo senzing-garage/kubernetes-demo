@@ -1,5 +1,5 @@
 image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
+  repository: "mycluster.icp:8500/my-namespace/senzing-package"
   tag: latest
 
 senzing:

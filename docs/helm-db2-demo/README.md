@@ -218,25 +218,25 @@ This repository assumes a working knowledge of:
 1. Add Bitnami repository. Example:
 
     ```console
-    helm repo add ${HELM_TLS} bitnami https://charts.bitnami.com
+    helm repo add bitnami https://charts.bitnami.com
     ```
 
 1. Add Senzing repository.  Example:
 
     ```console
-    helm repo add ${HELM_TLS} senzing https://senzing.github.io/charts/
+    helm repo add senzing https://senzing.github.io/charts/
     ```
 
 1. Update repositories.
 
     ```console
-    helm repo update ${HELM_TLS}
+    helm repo update
     ```
 
 1. Review repositories
 
     ```console
-    helm repo list  ${HELM_TLS}
+    helm repo list
     ```
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
