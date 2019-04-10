@@ -74,19 +74,6 @@ This repository assumes a working knowledge of:
 
 ### Prerequisites
 
-#### kubectl
-
-1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
-
-#### Helm/Tiller
-
-1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
-1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md) in the minikube cluster.
-
-#### Senzing docker images
-
-1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
-
 #### Docker registry
 
 1. If you need to create a private docker registry, see
