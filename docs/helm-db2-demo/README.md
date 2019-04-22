@@ -371,10 +371,15 @@ This deployment will be used later to:
 1. Log into the IBM DB2 Express-C container.  Example:
 
     ```console
-    kubectl get pods --namespace ${DEMO_NAMESPACE}
-    export DEBUG_POD_NAME=${DEMO_PREFIX}-ibm-db2express-c-XXXXXXXXXX-XXXXX
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
+    export DATABASE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --selector "app.kubernetes.io/name=ibm-db2express-c,app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
+      --output jsonpath="{.items[0].metadata.name}")
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
     ```
 
 1. In the IBM DB2 Express-C container, run the following:
