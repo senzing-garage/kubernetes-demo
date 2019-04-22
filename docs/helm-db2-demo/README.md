@@ -334,7 +334,12 @@ This deployment will be used later to:
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    export DEBUG_POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=senzing-debug,app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" -o jsonpath="{.items[0].metadata.name}")
+    export DEBUG_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-debug, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
+      )
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
@@ -376,9 +381,10 @@ This deployment will be used later to:
 
     export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}") \
+      --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=ibm-db2express-c, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c"
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
+      )
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
     ```
@@ -441,12 +447,18 @@ This deployment will be used later to:
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=kafka-test-client,app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" -o jsonpath="{.items[0].metadata.name}")
+
+    export KAFKA_TEST_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=kafka-test-client, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" \
+      )
 
     kubectl exec \
       -it \
       --namespace ${DEMO_NAMESPACE} \
-      ${POD_NAME} -- /usr/bin/kafka-console-consumer \
+      ${KAFKA_TEST_POD_NAME} -- /usr/bin/kafka-console-consumer \
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
