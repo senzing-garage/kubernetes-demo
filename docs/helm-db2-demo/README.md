@@ -339,8 +339,8 @@ This deployment will be used later to:
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    export DEBUG_POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=senzing-debug,app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" -o jsonpath="{.items[0].metadata.name}")    
-    
+    export DEBUG_POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=senzing-debug,app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" -o jsonpath="{.items[0].metadata.name}")
+
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
@@ -361,15 +361,14 @@ This deployment will be used later to:
     ```console
     watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
     ```
-    
+
 1. Example of pod running:
-    
+
     ```console
     $ kubectl get pods --namespace ${DEMO_NAMESPACE}
 
     NAME                                   READY   STATUS      RESTARTS   AGE
     my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
-    
     ```
 
 ### Initialize database
@@ -379,8 +378,7 @@ This deployment will be used later to:
     ```console
     kubectl get pods --namespace ${DEMO_NAMESPACE}
     export DEBUG_POD_NAME=${DEMO_PREFIX}-ibm-db2express-c-XXXXXXXXXX-XXXXX
-    
-    
+
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
