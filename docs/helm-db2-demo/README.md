@@ -22,23 +22,26 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Space](#space)
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
-1. [Demonstrate](#demonstrate)
+1. [Prerequisites](#prerequisites)
+    1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-    1. [Prerequisites](#prerequisites)
+    1. [Docker images](#docker-images)
+1. [Demonstrate](#demonstrate)
     1. [Set environment variables](#set-environment-variables)
-    1. [Create custom helm values.yaml files](#create-custom-helm-valuesyaml-files)
+    1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
-    1. [Install DB2](#install-db2)
+    1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
+    1. [Install DB2 Helm chart](#install-db2-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install Kafka](#install-kafka)
+    1. [Install Kafka Helm chart](#install-kafka-helm-chart)
     1. [Install Kafka test client](#install-kafka-test-client)
-    1. [Install mock-data-generator](#install-mock-data-generator)
-    1. [Install stream-loader](#install-stream-loader)
-    1. [Install senzing-api-server](#install-senzing-api-server)
+    1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
+    1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
+    1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
@@ -159,7 +162,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
-### Create custom helm values.yaml files
+### Create custom helm values files
 
 1. Variation #1. Quick method using `envsubst`.
 
@@ -229,14 +232,6 @@ The Git repository has files that will be used in the `helm install --values` pa
     kubectl get namespaces
     ```
 
-### Using Transport Layer Security
-
-1. If you are using Transport Layer Security (TLS), then set the following environment variable:
-
-    ```console
-    export HELM_TLS="--tls"
-    ```
-
 ### Create persistent volume
 
 1. Create persistent volumes.  Example:
@@ -294,7 +289,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-senzing-package \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-package.yaml \
@@ -316,7 +311,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     my-senzing-package-8n2ql   0/1     Completed   0          2m44s
     ```
 
-### Install senzing-debug Helm Chart
+### Install senzing-debug Helm chart
 
 This deployment will be used later to:
     * Inspect the `/opt/senzing` volume
@@ -326,7 +321,7 @@ This deployment will be used later to:
 1. Install chart.  Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
       --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-db2.yaml \
@@ -344,12 +339,12 @@ This deployment will be used later to:
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
-### Install DB2
+### Install DB2 Helm chart
 
 1. Install IBM DB2 Express-C.  Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
@@ -394,12 +389,12 @@ This deployment will be used later to:
     exit
     ```
 
-### Install Kafka
+### Install Kafka Helm chart
 
 1. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-kafka \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka.yaml \
@@ -411,7 +406,7 @@ This deployment will be used later to:
 1. Install Kafka test client app. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-kafka-test-client \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
@@ -451,36 +446,36 @@ This deployment will be used later to:
         --from-beginning
     ```  
 
-### Install mock-data-generator
+### Install mock-data-generator Helm chart
 
 1. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-senzing-mock-data-generator \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
       senzing/senzing-mock-data-generator
     ```
 
-### Install stream-loader
+### Install stream-loader Helm chart
 
 1. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
       senzing/senzing-stream-loader
     ```
 
-### Install senzing-api-server
+### Install senzing-api-server Helm chart
 
 1. Example:
 
     ```console
-    helm install ${HELM_TLS} \
+    helm install \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
@@ -527,14 +522,14 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-api-server
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka-test-client
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-ibm-db2express-c
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-debug
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-package
+    helm delete --purge ${DEMO_PREFIX}-senzing-api-server
+    helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
+    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
+    helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
+    helm delete --purge ${DEMO_PREFIX}-senzing-debug
+    helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
