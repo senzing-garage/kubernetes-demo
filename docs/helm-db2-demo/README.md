@@ -376,8 +376,8 @@ This deployment will be used later to:
 
     export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      --selector "app.kubernetes.io/name=ibm-db2express-c,app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
-      --output jsonpath="{.items[0].metadata.name}")
+      --output jsonpath="{.items[0].metadata.name}") \
+      --selector "app.kubernetes.io/name=ibm-db2express-c,app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c"
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
     ```
