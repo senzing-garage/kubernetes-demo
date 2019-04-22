@@ -153,6 +153,8 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000    
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -297,6 +299,12 @@ The Git repository has files that will be used in the `helm install --values` pa
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-package.yaml \
       senzing/senzing-package
+    ```
+
+1. Wait until Job has completed.  Example:
+
+    ```console
+    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
     ```
 
 ### Install senzing-debug Helm Chart
