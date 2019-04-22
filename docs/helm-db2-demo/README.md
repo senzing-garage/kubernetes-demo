@@ -153,8 +153,8 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000    
+
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -178,12 +178,12 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
     mkdir -p ${HELM_VALUES_DIR}
-    
+
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
-    
+
     Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
-    
+
     1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
 
@@ -206,12 +206,12 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
     mkdir -p ${KUBERNETES_DIR}
-    
+
     cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
     ```
-    
+
     Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
-    
+
     1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
 
@@ -307,6 +307,15 @@ The Git repository has files that will be used in the `helm install --values` pa
     watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
     ```
 
+1. Example of completion:
+
+    ```console
+    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
+
+    NAME                       READY   STATUS      RESTARTS   AGE
+    my-senzing-package-8n2ql   0/1     Completed   0          2m44s
+    ```
+
 ### Install senzing-debug Helm Chart
 
 This deployment will be used later to:
@@ -324,11 +333,14 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. Find and enter pod.  Example:
+1. Log into debug pod. Run in a separate terminal window. Example:
 
     ```console
-    kubectl get pods --namespace ${DEMO_NAMESPACE}
-    export DEBUG_POD_NAME=senzing-debug-XXXXXX
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+
+    export DEBUG_POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=senzing-debug,app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" -o jsonpath="{.items[0].metadata.name}")    
+    
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
@@ -344,16 +356,33 @@ This deployment will be used later to:
       senzing/ibm-db2express-c
     ```
 
-1. Wait for pods to run. Example:
+1. Wait for pod to run. Example:
 
     ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    ```
+    
+1. Example of pod running:
+    
+    ```console
+    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
+
+    NAME                                   READY   STATUS      RESTARTS   AGE
+    my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
+    
     ```
 
 ### Initialize database
 
-1. Using the directions shown in the output from the previous step,
-   log into the IBM DB2 Express-C container.
+1. Log into the IBM DB2 Express-C container.  Example:
+
+    ```console
+    kubectl get pods --namespace ${DEMO_NAMESPACE}
+    export DEBUG_POD_NAME=${DEMO_PREFIX}-ibm-db2express-c-XXXXXXXXXX-XXXXX
+    
+    
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
+    ```
 
 1. In the IBM DB2 Express-C container, run the following:
 
@@ -394,7 +423,18 @@ This deployment will be used later to:
 1. Wait for pods to run. Example:
 
     ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    ```
+
+1. Example of pods running:
+
+    ```console
+    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
+
+    NAME                                    READY   STATUS      RESTARTS   AGE
+    my-kafka-0                              1/1     Running     0          9m13s
+    my-kafka-test-client-854ff84955-dnjb6   1/1     Running     0          8m59s
+    my-kafka-zookeeper-0                    1/1     Running     0          9m13s
     ```
 
 1. Run the test client. Run in a separate terminal window. Example:
@@ -402,7 +442,7 @@ This deployment will be used later to:
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE}-namespace -l "app.kubernetes.io/name=kafka-test-client,app.kubernetes.io/instance=${DEMO_NAMESPACE}-kafka-test-client" -o jsonpath="{.items[0].metadata.name}")
+    export POD_NAME=$(kubectl get pods --namespace ${DEMO_NAMESPACE} -l "app.kubernetes.io/name=kafka-test-client,app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" -o jsonpath="{.items[0].metadata.name}")
 
     kubectl exec \
       -it \
@@ -452,7 +492,7 @@ This deployment will be used later to:
 1. Wait for pods to run. Example:
 
     ```console
-    watch -n 5 -d kubectl get pods --namespace ${DEMO_NAMESPACE}
+    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
