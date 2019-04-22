@@ -1,6 +1,6 @@
 image:
-  repository: "mycluster.icp:8500/my-namespace/senzing-package"
+  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
   tag: latest
 
 senzing:
-  subcommand: replace
+  subcommand: install

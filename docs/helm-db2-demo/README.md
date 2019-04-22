@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using IBM DB2 as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in an IBM Db2 database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the Helm charts, docker containers, and code in this Kubernetes demonstration.
 
 ![Image of architecture](architecture.png)
@@ -52,27 +62,9 @@ This repository assumes a working knowledge of:
 1. [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
 1. [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
 
-## Demonstrate
+## Prerequisites
 
-### Clone repository
-
-1. Using these environment variable values:
-
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=kubernetes-demo
-    ```
-
-1. Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
-
-1. After the repository has been cloned, be sure the following are set:
-
-    ```console
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    ```
-
-### Prerequisites
+### Prerequisite software
 
 #### kubectl
 
@@ -116,17 +108,43 @@ This repository assumes a working knowledge of:
 1. Add Senzing docker images to private docker registry.
 
     ```console
-    export GIT_REPOSITORIES=( \
-      "senzing-package" \
+    export DOCKER_IMAGES=( \
+      "senzing/senzing-package" \
     )
 
-    for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
+    for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};\
     do \
-      sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
+      sudo docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
+      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
+      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
     done
     ```
+
+### Clone repository
+
+The Git repository has files that will be used in the `helm install --values` parameter.
+
+1. Using these environment variable values:
+
+    ```console
+    export GIT_ACCOUNT=senzing
+    export GIT_REPOSITORY=kubernetes-demo
+    ```
+
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+
+1. After the Git repository has been cloned, be sure the following environment variables are set:
+
+    ```console
+    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+    ```
+
+### Docker images
+
+1. **FIXME:**  Describe how to accept terms and conditions for the senzing/senzing-package docker image.
+
+## Demonstrate
 
 ### Set environment variables
 
@@ -153,6 +171,20 @@ This repository assumes a working knowledge of:
     done
     ```
 
+1. Variation #2. Copy and modify.
+
+    ```console
+    export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+    
+    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
+    ```
+    
+    Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+    
+    1. `${DEMO_PREFIX}`
+    1. `${DEMO_NAMESPACE}`
+
 ### Create custom kubernetes configuration files
 
 1. Variation #1. Quick method using `envsubst`.
@@ -166,6 +198,20 @@ This repository assumes a working knowledge of:
       envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
     done
     ```
+
+1. Variation #2. Copy and modify.
+
+    ```console
+    export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+    
+    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
+    ```
+    
+    Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
+    
+    1. `${DEMO_PREFIX}`
+    1. `${DEMO_NAMESPACE}`
 
 ### Create namespace
 
@@ -253,21 +299,29 @@ This repository assumes a working knowledge of:
       senzing/senzing-package
     ```
 
-1. To inspect the `/opt/senzing` volume, run a second copy in "sleep" mode. Example:
+### Install senzing-debug Helm Chart
+
+This deployment will be used later to:
+    * Inspect the `/opt/senzing` volume
+    * Copy files onto the Persistent Volume
+    * Debug issues
+
+1. Install chart.  Example:
 
     ```console
     helm install ${HELM_TLS} \
-      --name ${DEMO_PREFIX}-senzing-package-sleep \
+      --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-package-sleep.yaml \
-      senzing/senzing-package
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-db2.yaml \
+       senzing/senzing-debug
     ```
+
+1. Find and enter pod.  Example:
 
     ```console
     kubectl get pods --namespace ${DEMO_NAMESPACE}
-
-    export POD_NAME=my-senzing-package-sleep-XXXXXX
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${POD_NAME} -- /bin/bash
+    export DEBUG_POD_NAME=senzing-debug-XXXXXX
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
 ### Install DB2
@@ -433,7 +487,7 @@ See `kubectl port-forward ...` above.
     helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-kafka
     helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-ibm-db2express-c
-    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-package-sleep
+    helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-debug
     helm delete ${HELM_TLS} --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
