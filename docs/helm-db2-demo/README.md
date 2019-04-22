@@ -299,14 +299,14 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Wait until Job has completed.  Example:
 
     ```console
-    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 1. Example of completion:
 
     ```console
-    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
-
     NAME                       READY   STATUS      RESTARTS   AGE
     my-senzing-package-8n2ql   0/1     Completed   0          2m44s
     ```
@@ -359,14 +359,14 @@ This deployment will be used later to:
 1. Wait for pod to run. Example:
 
     ```console
-    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 1. Example of pod running:
 
     ```console
-    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
-
     NAME                                   READY   STATUS      RESTARTS   AGE
     my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
     ```
@@ -428,14 +428,14 @@ This deployment will be used later to:
 1. Wait for pods to run. Example:
 
     ```console
-    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 1. Example of pods running:
 
     ```console
-    $ kubectl get pods --namespace ${DEMO_NAMESPACE}
-
     NAME                                    READY   STATUS      RESTARTS   AGE
     my-kafka-0                              1/1     Running     0          9m13s
     my-kafka-test-client-854ff84955-dnjb6   1/1     Running     0          8m59s
@@ -503,7 +503,9 @@ This deployment will be used later to:
 1. Wait for pods to run. Example:
 
     ```console
-    watch -n 5 -d "kubectl get pods --namespace ${DEMO_NAMESPACE}"
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 1. Port forward to local machine.  Run in a separate terminal window. Example:
