@@ -93,6 +93,30 @@ This repository assumes a working knowledge of:
 1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
 1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md) in the minikube cluster.
 
+### Clone repository
+
+The Git repository has files that will be used in the `helm install --values` parameter.
+
+1. Using these environment variable values:
+
+    ```console
+    export GIT_ACCOUNT=senzing
+    export GIT_REPOSITORY=kubernetes-demo
+    ```
+
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+
+1. After the Git repository has been cloned, be sure the following environment variables are set:
+
+    ```console
+    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+    ```
+
+### Docker images
+
+1. **FIXME:**  Describe how to accept terms and conditions for the senzing/senzing-package docker image.
+
 #### Senzing docker images
 
 1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
@@ -122,30 +146,6 @@ This repository assumes a working knowledge of:
       sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
     done
     ```
-
-### Clone repository
-
-The Git repository has files that will be used in the `helm install --values` parameter.
-
-1. Using these environment variable values:
-
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=kubernetes-demo
-    ```
-
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
-
-1. After the Git repository has been cloned, be sure the following environment variables are set:
-
-    ```console
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    ```
-
-### Docker images
-
-1. **FIXME:**  Describe how to accept terms and conditions for the senzing/senzing-package docker image.
 
 ## Demonstrate
 
