@@ -329,12 +329,16 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. :pencil2: In a separate terminal window, log into debug pod.  Example:
+1. In a separate terminal window, log into debug pod.  Example:
+
+    :pencil2:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
+    ```
+    
+    ```console
     export DEBUG_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
