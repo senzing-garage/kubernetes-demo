@@ -9,7 +9,7 @@ The instructions show how to set up a system that:
 1. Reads JSON lines from a file on the internet.
 1. Sends each JSON line as a message to a Kafka topic.
 1. Reads messages from the Kafka topic and inserts into Senzing.
-    1. In this implementation, Senzing keeps its data in an IBM Db2 database.
+    1. In this implementation, Senzing keeps its data in a PostgreSQL database.
 1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
 
 The following diagram shows the relationship of the Helm charts, docker containers, and code in this Kubernetes demonstration.
@@ -324,7 +324,7 @@ This deployment will be used later to:
     helm install \
       --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-db2.yaml \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-postgresql.yaml \
        senzing/senzing-debug
     ```
 
