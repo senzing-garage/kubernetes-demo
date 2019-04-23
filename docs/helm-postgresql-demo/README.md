@@ -22,24 +22,27 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Space](#space)
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
-1. [Demonstrate](#demonstrate)
+1. [Prerequisites](#prerequisites)
+    1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-    1. [Prerequisites](#prerequisites)
+    1. [Docker images](#docker-images)
+1. [Demonstrate](#demonstrate)
     1. [Set environment variables](#set-environment-variables)
-    1. [Create custom helm values.yaml files](#create-custom-helm-valuesyaml-files)
+    1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Deploy Senzing_API.tgz](#deploy-senzing_apitgz)
     1. [Add helm repositories](#add-helm-repositories)
-    1. [Install Kafka](#install-kafka)
-    1. [Install Kafka test client](#install-kafka-test-client)
-    1. [Install Postgresql](#install-postgresql)
+    1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
+    1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
+    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
     1. [Install phpPgAdmin](#install-phppgadmin)
-    1. [Install mock-data-generator](#install-mock-data-generator)
-    1. [Install stream-loader](#install-stream-loader)
-    1. [Install senzing-api-server](#install-senzing-api-server)
+    1. [Install Kafka Helm chart](#install-kafka-helm-chart)
+    1. [Install Kafka test client](#install-kafka-test-client)
+    1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
+    1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
+    1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
@@ -122,13 +125,13 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
 
-1. :pencil2: Set environment variable. Example:
+1. :pencil2: Set environment variable.  Example:
 
     ```console
     export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
-1. Add Senzing docker images to private docker registry. Example:
+1. Add Senzing docker images to private docker registry.  Example:
 
     ```console
     export DOCKER_IMAGES=( \
@@ -160,7 +163,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`. Example:
+1. Variation #1. Quick method using `envsubst`.  Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -188,7 +191,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`. Example:
+1. Variation #1. Quick method using `envsubst`.  Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -237,7 +240,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
-1. Create persistent volume claims. Example:
+1. Create persistent volume claims.  Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
@@ -256,7 +259,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Add helm repositories
 
-1. Add Bitnami repository. Example:
+1. Add Bitnami repository.  Example:
 
     ```console
     helm repo add bitnami https://charts.bitnami.com
@@ -286,7 +289,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 This deployment initializes the Persistent Volume with Senzing code and data.
 
-1. Install chart. Example:
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -328,7 +331,7 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. Wait for pod to run. Example:
+1. Wait for pod to run.  Example:
 
     ```console
     kubectl get pods \
@@ -360,7 +363,7 @@ This deployment will be used later to:
 
 ### Install Postgresql Helm chart
 
-1. Create Configmap for `pg_hba.conf`. Example:
+1. Create Configmap for `pg_hba.conf`.  Example:
 
     ```console
     kubectl create configmap ${DEMO_PREFIX}-pg-hba \
@@ -370,7 +373,7 @@ This deployment will be used later to:
 
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
-1. Install Postgresql chart. Example:
+1. Install Postgresql chart.  Example:
 
     ```console
     helm install \
@@ -380,7 +383,7 @@ This deployment will be used later to:
       bitnami/postgresql
     ```
 
-1. Wait for pod to run. Example:
+1. Wait for pod to run.  Example:
 
     ```console
     kubectl get pods \
@@ -388,7 +391,16 @@ This deployment will be used later to:
       --watch
     ```
 
+1. Example of pod running:
+
+    ```console
+    NAME                                   READY   STATUS      RESTARTS   AGE
+    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    ```
+
 ### Initialize database
+
+This step creates tables in the database used by Senzing.
 
 1. Example:
 
@@ -402,7 +414,7 @@ This deployment will be used later to:
 
 ### Install phpPgAdmin
 
-1. Install phpPgAdmin app. Example:
+1. Install phpPgAdmin app.  Example:
 
     ```console
     helm install \
@@ -425,7 +437,7 @@ This deployment will be used later to:
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-    Port forward. Example:
+    Port forward.  Example:
 
     ```console
     kubectl port-forward \
@@ -454,7 +466,7 @@ This deployment will be used later to:
 
 ### Install Kafka test client
 
-1. Install Kafka test client app. Example:
+1. Install Kafka test client app.  Example:
 
     ```console
     helm install \
@@ -464,7 +476,7 @@ This deployment will be used later to:
       senzing/kafka-test-client
     ```
 
-1. Wait for pods to run. Example:
+1. Wait for pods to run.  Example:
 
     ```console
     kubectl get pods \
@@ -551,7 +563,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. Wait for pods to run. Example:
+1. Wait for pods to run.  Example:
 
     ```console
     kubectl get pods \

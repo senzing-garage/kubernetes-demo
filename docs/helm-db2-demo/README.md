@@ -124,13 +124,13 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
 
-1. :pencil2: Set environment variable. Example:
+1. :pencil2: Set environment variable.  Example:
 
     ```console
     export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
-1. Add Senzing docker images to private docker registry. Example:
+1. Add Senzing docker images to private docker registry.  Example:
 
     ```console
     export DOCKER_IMAGES=( \
@@ -162,7 +162,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`. Example:
+1. Variation #1. Quick method using `envsubst`.  Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -190,7 +190,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`. Example:
+1. Variation #1. Quick method using `envsubst`.  Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -238,7 +238,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
-1. Create persistent volume claims. Example:
+1. Create persistent volume claims.  Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
@@ -256,7 +256,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Add helm repositories
 
-1. Add Bitnami repository. Example:
+1. Add Bitnami repository.  Example:
 
     ```console
     helm repo add bitnami https://charts.bitnami.com
@@ -286,7 +286,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 This deployment initializes the Persistent Volume with Senzing code and data.
 
-1. Install chart. Example:
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -328,7 +328,7 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. Wait for pod to run. Example:
+1. Wait for pod to run.  Example:
 
     ```console
     kubectl get pods \
@@ -370,7 +370,7 @@ This deployment will be used later to:
       senzing/ibm-db2express-c
     ```
 
-1. Wait for pod to run. Example:
+1. Wait for pod to run.  Example:
 
     ```console
     kubectl get pods \
@@ -391,7 +391,7 @@ This step creates tables in the database used by Senzing.
 
 1. Log into the IBM DB2 Express-C container.
 
-    :pencil2:  Set environment variables.  Example:
+    :pencil2: Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
@@ -437,7 +437,7 @@ This step creates tables in the database used by Senzing.
 
 ### Install Kafka test client
 
-1. Install Kafka test client app. Example:
+1. Install Kafka test client app.  Example:
 
     ```console
     helm install \
@@ -447,7 +447,7 @@ This step creates tables in the database used by Senzing.
       senzing/kafka-test-client
     ```
 
-1. Wait for pods to run. Example:
+1. Wait for pods to run.  Example:
 
     ```console
     kubectl get pods \
@@ -534,7 +534,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. Wait for pods to run. Example:
+1. Wait for pods to run.  Example:
 
     ```console
     kubectl get pods \
