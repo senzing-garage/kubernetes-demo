@@ -1,0 +1,3 @@
+senzing:
+  databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
+  optSenzingClaim: opt-senzing-claim
