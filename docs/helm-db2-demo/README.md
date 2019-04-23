@@ -329,6 +329,14 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
+1. Wait for pod to run. Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
 1. In a separate terminal window, log into debug pod.
 
     :pencil2:  Set environment variables.  Example:
