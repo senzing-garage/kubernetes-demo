@@ -329,14 +329,16 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. In a separate terminal window, log into debug pod.  Example:
+1. In a separate terminal window, log into debug pod.
 
-    :pencil2:
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
+    
+    Log into pod. Example:
     
     ```console
     export DEBUG_POD_NAME=$(kubectl get pods \
@@ -380,12 +382,16 @@ This deployment will be used later to:
 
 This step creates tables in the database used by Senzing.
 
-1. :pencil2: Log into the IBM DB2 Express-C container.  Example:
+1. Log into the IBM DB2 Express-C container.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
+    ```
+    
+    ```console
     export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
@@ -449,12 +455,16 @@ This step creates tables in the database used by Senzing.
     my-kafka-zookeeper-0                    1/1     Running     0          9m13s
     ```
 
-1. :pencil2: In a separate terminal window, run the test client.  Example:
+1. In a separate terminal window, run the test client.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
+    ```
+    
+    ```console
     export KAFKA_TEST_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
@@ -521,12 +531,16 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       --watch
     ```
 
-1. :pencil2: In a separate terminal window, port forward to local machine.   Example:
+1. In a separate terminal window, port forward to local machine.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
+    ```
+    
+    ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
