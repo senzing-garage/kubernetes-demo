@@ -316,7 +316,6 @@ This deployment initializes the Persistent Volume with Senzing code and data.
 This deployment will be used later to:
 
 * Inspect the `/opt/senzing` volume
-* Copy files onto the Persistent Volume
 * Debug issues
 
 1. Install chart.  Example:

@@ -316,7 +316,6 @@ This deployment initializes the Persistent Volume with Senzing code and data.
 This deployment will be used later to:
 
 * Inspect the `/opt/senzing` volume
-* Copy files onto the Persistent Volume
 * Debug issues
 
 1. Install chart.  Example:
@@ -371,7 +370,7 @@ This deployment will be used later to:
 
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
-1. Install Postgresql. Example:
+1. Install Postgresql chart. Example:
 
     ```console
     helm install \
@@ -381,9 +380,15 @@ This deployment will be used later to:
       bitnami/postgresql
     ```
 
-### Initialize database
+1. Wait for pod to run. Example:
 
-**FIXME:** Does not work.  Use phpPgAdmin, the next step, to initialize database.
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+### Initialize database
 
 1. Example:
 
@@ -411,12 +416,18 @@ This deployment will be used later to:
     [senzing/phppgadmin](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/build-docker-senzing-phppgadmin.md)
     docker image.
 
-1. Port forward to local machine.  Run in a separate terminal window. Example:
+1. In a separate terminal window, port forward to local machine.
+
+    :pencil2: Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Port forward. Example:
+
+    ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
