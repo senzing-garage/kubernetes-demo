@@ -337,9 +337,9 @@ This deployment will be used later to:
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
-    
-    Log into pod. Example:
-    
+
+    Log into pod.  Example:
+
     ```console
     export DEBUG_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
@@ -390,7 +390,9 @@ This step creates tables in the database used by Senzing.
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
-    
+
+    Log into pod.  Example:
+
     ```console
     export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
@@ -463,7 +465,9 @@ This step creates tables in the database used by Senzing.
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
-    
+
+    Run the test client.  Example:
+
     ```console
     export KAFKA_TEST_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
@@ -539,7 +543,9 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
-    
+
+    Port forward.  Example:
+
     ```console
     kubectl port-forward \
       --address 0.0.0.0 \
