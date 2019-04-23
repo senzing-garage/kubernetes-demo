@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in a PostgreSQL database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the Helm charts, docker containers, and code in this Kubernetes demonstration.
 
 ![Image of architecture](architecture.png)
@@ -33,6 +43,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Test Senzing REST API server](#test-senzing-rest-api-server)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
+    1. [Delete minikube cluster](#delete-minikube-cluster)
 
 ## Expectations
 
@@ -52,27 +63,9 @@ This repository assumes a working knowledge of:
 1. [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
 1. [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
 
-## Demonstrate
+## Prerequisites
 
-### Clone repository
-
-1. Using these environment variable values:
-
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=kubernetes-demo
-    ```
-
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
-
-1. After the repository has been cloned, be sure the following are set:
-
-    ```console
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    ```
-
-### Prerequisites
+### Prerequisite software
 
 #### kubectl
 
@@ -87,67 +80,87 @@ This repository assumes a working knowledge of:
     minikube start --cpus 4 --memory 8192
     ```
 
+    Alternative:
+
+    ```console
+    minikube start --cpus 4 --memory 8192 --vm-driver kvm2
+    ```
+
 #### Helm/Tiller
 
-1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md).
-1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md).
+1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
+1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md) in the minikube cluster.
+
+### Clone repository
+
+The Git repository has files that will be used in the `helm install --values` parameter.
+
+1. Using these environment variable values:
+
+    ```console
+    export GIT_ACCOUNT=senzing
+    export GIT_REPOSITORY=kubernetes-demo
+    ```
+
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+
+1. After the Git repository has been cloned, be sure the following environment variables are set:
+
+    ```console
+    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+    ```
+
+### Docker images
 
 #### Senzing docker images
 
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-1. Build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
-
-1. Make Senzing docker images.
-
-    ```console
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
-    ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
+1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 #### Docker registry
 
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
-1. Set environment variable. Example:
+
+1. :pencil2: Set environment variable. Example:
 
     ```console
     export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
-1. Add Senzing docker images to private docker registry.
+1. Add Senzing docker images to private docker registry. Example:
 
     ```console
-    export GIT_REPOSITORIES=( \
-      "mock-data-generator" \
-      "senzing-api-server" \
-      "senzing-package" \
-      "stream-loader" \
+    export DOCKER_IMAGES=( \
+      "senzing/senzing-package" \
     )
 
-    for GIT_REPOSITORY in ${GIT_REPOSITORIES[@]};\
+    for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};\
     do \
-      sudo docker tag senzing/${GIT_REPOSITORY} ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/senzing/${GIT_REPOSITORY}; \
+      sudo docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
+      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
+      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
     done
     ```
 
+## Demonstrate
+
 ### Set environment variables
 
-1. Environment variables that need customization.  Example:
+1. :pencil2: Environment variables that need customization.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
-### Create custom helm values.yaml files
+### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.
+1. Variation #1. Quick method using `envsubst`. Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -159,9 +172,23 @@ This repository assumes a working knowledge of:
     done
     ```
 
+1. Variation #2. Copy and modify method.
+
+    ```console
+    export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
+    ```
+
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_PREFIX}`
+    1. `${DEMO_NAMESPACE}`
+
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.
+1. Variation #1. Quick method using `envsubst`. Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -173,6 +200,20 @@ This repository assumes a working knowledge of:
     done
     ```
 
+1. Variation #2. Copy and modify method.
+
+    ```console
+    export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
+    ```
+
+    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_PREFIX}`
+    1. `${DEMO_NAMESPACE}`
+
 ### Create namespace
 
 1. Create namespace.
@@ -181,7 +222,7 @@ This repository assumes a working knowledge of:
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-1. Review namespaces.
+1. Optional: Review namespaces.
 
     ```console
     kubectl get namespaces
@@ -203,7 +244,7 @@ This repository assumes a working knowledge of:
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
-1. Review persistent volumes and claims.
+1. Optional: Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \
@@ -233,7 +274,7 @@ This repository assumes a working knowledge of:
     helm repo update
     ```
 
-1. Review repositories
+1. Optional: Review repositories
 
     ```console
     helm repo list
@@ -241,9 +282,11 @@ This repository assumes a working knowledge of:
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Deploy Senzing_API.tgz
+### Deploy Senzing_API.tgz package
 
-1. Example:
+This deployment initializes the Persistent Volume with Senzing code and data.
+
+1. Install chart. Example:
 
     ```console
     helm install \
@@ -253,48 +296,71 @@ This repository assumes a working knowledge of:
       senzing/senzing-package
     ```
 
-### Install Kafka
+1. Wait until Job has completed.  Example:
 
-1. Example:
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of completion:
+
+    ```console
+    NAME                       READY   STATUS      RESTARTS   AGE
+    my-senzing-package-8n2ql   0/1     Completed   0          2m44s
+    ```
+
+### Install senzing-debug Helm chart
+
+This deployment will be used later to:
+
+* Inspect the `/opt/senzing` volume
+* Debug issues
+
+1. Install chart.  Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-kafka \
+      --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka.yaml \
-      bitnami/kafka
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-postgresql.yaml \
+       senzing/senzing-debug
     ```
 
-### Install Kafka test client
-
-1. Install Kafka test client app. Example:
+1. Wait for pod to run. Example:
 
     ```console
-    helm install \
-      --name ${DEMO_PREFIX}-kafka-test-client \
+    kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
-      senzing/kafka-test-client
+      --watch
     ```
 
-1. Run the test client. Run in a separate terminal window. Example:
+1. In a separate terminal window, log into debug pod.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
-    kubectl exec \
-      -it \
-      -n ${DEMO_NAMESPACE} \
-      ${DEMO_PREFIX}-kafka-test-client -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
-        --topic senzing-kafka-topic \
-        --from-beginning
-    ```  
+    Log into pod.  Example:
 
-### Install Postgresql
+    ```console
+    export DEBUG_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-debug, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
+      )
 
-1. Create Configmap for `pg_hba.conf`. Example
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
+    ```
+
+### Install Postgresql Helm chart
+
+1. Create Configmap for `pg_hba.conf`. Example:
 
     ```console
     kubectl create configmap ${DEMO_PREFIX}-pg-hba \
@@ -304,7 +370,7 @@ This repository assumes a working knowledge of:
 
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
-1. Install Postgresql. Example:
+1. Install Postgresql chart. Example:
 
     ```console
     helm install \
@@ -314,9 +380,15 @@ This repository assumes a working knowledge of:
       bitnami/postgresql
     ```
 
-### Initialize database
+1. Wait for pod to run. Example:
 
-**FIXME:** Does not work.  Use phpPgAdmin, the next step, to initialize database.
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+### Initialize database
 
 1. Example:
 
@@ -344,12 +416,18 @@ This repository assumes a working knowledge of:
     [senzing/phppgadmin](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/build-docker-senzing-phppgadmin.md)
     docker image.
 
-1. Port forward to local machine.  Run in a separate terminal window. Example:
+1. In a separate terminal window, port forward to local machine.
+
+    :pencil2: Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Port forward. Example:
+
+    ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
@@ -362,9 +440,80 @@ This repository assumes a working knowledge of:
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
 
-### Install mock-data-generator
+### Install Kafka Helm chart
 
-1. Example:
+1. Install chart.  Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-kafka \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/kafka.yaml \
+      bitnami/kafka
+    ```
+
+### Install Kafka test client
+
+1. Install Kafka test client app. Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-kafka-test-client \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
+      senzing/kafka-test-client
+    ```
+
+1. Wait for pods to run. Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of pods running:
+
+    ```console
+    NAME                                    READY   STATUS      RESTARTS   AGE
+    my-kafka-0                              1/1     Running     0          9m13s
+    my-kafka-test-client-854ff84955-dnjb6   1/1     Running     0          8m59s
+    my-kafka-zookeeper-0                    1/1     Running     0          9m13s
+    ```
+
+1. In a separate terminal window, run the test client.
+
+    :pencil2:  Set environment variables.  Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
+
+    Run the test client.  Example:
+
+    ```console
+    export KAFKA_TEST_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=kafka-test-client, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" \
+      )
+
+    kubectl exec \
+      -it \
+      --namespace ${DEMO_NAMESPACE} \
+      ${KAFKA_TEST_POD_NAME} -- /usr/bin/kafka-console-consumer \
+        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
+        --topic senzing-kafka-topic \
+        --from-beginning
+    ```  
+
+### Install mock-data-generator Helm chart
+
+The mock data generator pulls JSON lines from a file and pushes them to Kafka.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -374,9 +523,11 @@ This repository assumes a working knowledge of:
       senzing/senzing-mock-data-generator
     ```
 
-### Install stream-loader
+### Install stream-loader Helm chart
 
-1. Example:
+The stream loader pulls messages from Kafka and sends them to Senzing.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -386,9 +537,11 @@ This repository assumes a working knowledge of:
       senzing/senzing-stream-loader
     ```
 
-### Install senzing-api-server
+### Install senzing-api-server Helm chart
 
-1. Example:
+The Senzing API server receives HTTP requests to read and modify Senzing data.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -398,12 +551,26 @@ This repository assumes a working knowledge of:
       senzing/senzing-api-server
     ```
 
-1. Port forward to local machine.  Run in a separate terminal window. Example:
+1. Wait for pods to run. Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. In a separate terminal window, port forward to local machine.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Port forward.  Example:
+
+    ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
@@ -435,11 +602,12 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
+    helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
-    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
-    helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
@@ -448,13 +616,13 @@ See `kubectl port-forward ...` above.
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
-    ```  
+    ```
 
-### Delete minikube
+### Delete minikube cluster
 
-1. If `minikube` was used,  
+1. Example:
 
     ```console
     minikube stop
-    minikube delete    
+    minikube delete
     ```

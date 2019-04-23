@@ -115,8 +115,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Docker images
 
-1. **FIXME:**  Describe how to accept terms and conditions for the senzing/senzing-package docker image.
-
 #### Senzing docker images
 
 1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
@@ -126,13 +124,13 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
 
-1. Set environment variable. Example:
+1. :pencil2: Set environment variable. Example:
 
     ```console
     export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
-1. Add Senzing docker images to private docker registry.
+1. Add Senzing docker images to private docker registry. Example:
 
     ```console
     export DOCKER_IMAGES=( \
@@ -151,7 +149,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Set environment variables
 
-1. Environment variables that need customization.  Example:
+1. :pencil2: Environment variables that need customization.  Example:
 
     ```console
     export DEMO_PREFIX=my
@@ -164,7 +162,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.
+1. Variation #1. Quick method using `envsubst`. Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -176,7 +174,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     done
     ```
 
-1. Variation #2. Copy and modify.
+1. Variation #2. Copy and modify method.
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -185,14 +183,14 @@ The Git repository has files that will be used in the `helm install --values` pa
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-    Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.
+1. Variation #1. Quick method using `envsubst`. Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -204,7 +202,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     done
     ```
 
-1. Variation #2. Copy and modify.
+1. Variation #2. Copy and modify method.
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -213,7 +211,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
     ```
 
-    Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
+    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
@@ -226,7 +224,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-1. Review namespaces.
+1. Optional: Review namespaces.
 
     ```console
     kubectl get namespaces
@@ -246,7 +244,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
-1. Review persistent volumes and claims.
+1. Optional: Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \
@@ -276,7 +274,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     helm repo update
     ```
 
-1. Review repositories
+1. Optional: Review repositories
 
     ```console
     helm repo list
@@ -286,7 +284,9 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Deploy Senzing_API.tgz package
 
-1. Example:
+This deployment initializes the Persistent Volume with Senzing code and data.
+
+1. Install chart. Example:
 
     ```console
     helm install \
@@ -314,9 +314,9 @@ The Git repository has files that will be used in the `helm install --values` pa
 ### Install senzing-debug Helm chart
 
 This deployment will be used later to:
-    * Inspect the `/opt/senzing` volume
-    * Copy files onto the Persistent Volume
-    * Debug issues
+
+* Inspect the `/opt/senzing` volume
+* Debug issues
 
 1. Install chart.  Example:
 
@@ -328,12 +328,26 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. Log into debug pod. Run in a separate terminal window. Example:
+1. Wait for pod to run. Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. In a separate terminal window, log into debug pod.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Log into pod.  Example:
+
+    ```console
     export DEBUG_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
@@ -346,7 +360,7 @@ This deployment will be used later to:
 
 ### Install DB2 Helm chart
 
-1. Install IBM DB2 Express-C.  Example:
+1. Install IBM DB2 Express-C chart.  Example:
 
     ```console
     helm install \
@@ -373,12 +387,20 @@ This deployment will be used later to:
 
 ### Initialize database
 
-1. Log into the IBM DB2 Express-C container.  Example:
+This step creates tables in the database used by Senzing.
+
+1. Log into the IBM DB2 Express-C container.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Log into pod.  Example:
+
+    ```console
     export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
@@ -403,7 +425,7 @@ This deployment will be used later to:
 
 ### Install Kafka Helm chart
 
-1. Example:
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -442,12 +464,18 @@ This deployment will be used later to:
     my-kafka-zookeeper-0                    1/1     Running     0          9m13s
     ```
 
-1. Run the test client. Run in a separate terminal window. Example:
+1. In a separate terminal window, run the test client.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Run the test client.  Example:
+
+    ```console
     export KAFKA_TEST_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
@@ -466,7 +494,9 @@ This deployment will be used later to:
 
 ### Install mock-data-generator Helm chart
 
-1. Example:
+The mock data generator pulls JSON lines from a file and pushes them to Kafka.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -478,7 +508,9 @@ This deployment will be used later to:
 
 ### Install stream-loader Helm chart
 
-1. Example:
+The stream loader pulls messages from Kafka and sends them to Senzing.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -490,7 +522,9 @@ This deployment will be used later to:
 
 ### Install senzing-api-server Helm chart
 
-1. Example:
+The Senzing API server receives HTTP requests to read and modify Senzing data.
+
+1. Install chart.  Example:
 
     ```console
     helm install \
@@ -508,12 +542,18 @@ This deployment will be used later to:
       --watch
     ```
 
-1. Port forward to local machine.  Run in a separate terminal window. Example:
+1. In a separate terminal window, port forward to local machine.
+
+    :pencil2:  Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
 
+    Port forward.  Example:
+
+    ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
