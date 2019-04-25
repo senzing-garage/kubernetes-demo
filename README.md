@@ -15,7 +15,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 ![Image of architecture](docs/img-architecture/architecture.png)
 
-The unlabeled boxes represent variations in the following implementations:
+Implementations of the docker formation:
 
 1. [Using PostgreSQL database](docs/helm-postgresql-demo/README.md)
 1. [Using DB2 database](docs/helm-db2-demo/README.md)
