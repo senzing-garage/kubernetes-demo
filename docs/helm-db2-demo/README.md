@@ -133,15 +133,15 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Add Senzing docker images to private docker registry.  Example:
 
     ```console
-    export DOCKER_IMAGES=( \
+    export DOCKER_IMAGE_NAMES=( \
       "senzing/senzing-package" \
     )
 
-    for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};\
+    for DOCKER_IMAGE_NAME in ${DOCKER_IMAGE_NAMES[@]};\
     do \
-      sudo docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}; \
+      sudo docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
+      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
+      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
     done
     ```
 
