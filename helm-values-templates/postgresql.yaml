@@ -1,7 +1,7 @@
 persistence:
   existingClaim: postgresql-claim
 
-postgresqlDatabase: G2
+postgresqlDatabase: "\"G2\""
 postgresqlPassword: postgres
 
 securityContext:
