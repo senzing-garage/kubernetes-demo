@@ -1,5 +1,5 @@
 postgresql:
-  database: G2
+  database: "G2"
   file: "g2/data/g2core-schema-postgresql-create.sql"
   host: ${DEMO_PREFIX}-postgresql-postgresql
   password: postgres
