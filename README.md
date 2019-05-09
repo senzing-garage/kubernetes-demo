@@ -29,6 +29,6 @@ The following table indicates the instructions for variations in components.
 
     | Queue    | Database   | Instructions |
     |----------|------------|:------------:|
-    | Kafka    | PostgreSQL | [:page_facing_up:](docs/helm-kafka-postgresql-demo/README.md) |
-    | Kafka    | Db2        | [:page_facing_up:](docs/helm-kafka-db2-demo/README.md) |
+    | Kafka    | PostgreSQL | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |
+    | Kafka    | Db2        | [:page_facing_up:](docs/helm-kafka-db2/README.md) |
     | RabbitMQ | PostgreSQL | [:page_facing_up:](docs/helm-rabbitmq-postgresql/README.md) |
