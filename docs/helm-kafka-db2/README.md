@@ -1,4 +1,4 @@
-# kubernetes-helm-db2-demo
+# kubernetes-demo-helm-kafka-db2
 
 ## Overview
 
@@ -490,7 +490,7 @@ This step creates tables in the database used by Senzing.
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
-    ```  
+    ```
 
 ### Install mock-data-generator Helm chart
 

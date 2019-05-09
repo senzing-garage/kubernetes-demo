@@ -1,4 +1,4 @@
-# kubernetes-helm-postgresql-demo
+# kubernetes-demo-helm-rabbitmq-postgresql
 
 ## Overview
 
@@ -519,7 +519,7 @@ This step creates tables in the database used by Senzing.
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
-    ```  
+    ```
 
 ### Install mock-data-generator Helm chart
 
