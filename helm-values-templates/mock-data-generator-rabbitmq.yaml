@@ -1,0 +1,9 @@
+senzing:
+  subcommand: url-to-rabbitmq
+  rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+  rabbitmqPassword: passw0rd
+  rabbitmqQueue: senzing-rabbitmq-queue
+  rabbitmqUsername: user
+  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M_shuffled.json"
+  recordMax: 10000
+  recordMonitor: 1000

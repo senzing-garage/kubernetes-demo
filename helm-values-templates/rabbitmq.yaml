@@ -1,0 +1,3 @@
+rabbitmq:
+  password: passw0rd
+  username: user

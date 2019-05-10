@@ -1,3 +1,6 @@
+image:
+  pullPolicy: Always
+
 persistence:
   existingClaim: postgresql-claim
 
@@ -6,3 +9,4 @@ postgresqlPassword: postgres
 
 securityContext:
   enabled: false
+

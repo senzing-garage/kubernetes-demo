@@ -1,4 +1,4 @@
-# kubernetes-helm-db2-demo
+# kubernetes-demo-helm-kafka-db2
 
 ## Overview
 
@@ -7,8 +7,9 @@ This repository illustrates a reference implementation of Senzing using IBM DB2 
 The instructions show how to set up a system that:
 
 1. Reads JSON lines from a file on the internet.
-1. Sends each JSON line as a message to a Kafka topic.
-1. Reads messages from the Kafka topic and inserts into Senzing.
+1. Sends each JSON line to a message queue.
+    1. In this implementation, the queue is Kafka.
+1. Reads messages from the queue and inserts into Senzing.
     1. In this implementation, Senzing keeps its data in an IBM Db2 database.
 1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
 
@@ -490,7 +491,7 @@ This step creates tables in the database used by Senzing.
         --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
-    ```  
+    ```
 
 ### Install mock-data-generator Helm chart
 
