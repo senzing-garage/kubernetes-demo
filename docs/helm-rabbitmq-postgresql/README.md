@@ -578,8 +578,7 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
-    helm delete --purge ${DEMO_PREFIX}-kafka
+    helm delete --purge ${DEMO_PREFIX}-rabbitmq
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
