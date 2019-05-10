@@ -465,62 +465,25 @@ This step creates tables in the database used by Senzing.
       bitnami/rabbitmq
     ```
 
-### Install Kafka test client
+1. In a separate terminal window, port forward to local machine.
 
-1. Install Kafka test client app.  Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-kafka-test-client \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
-      senzing/kafka-test-client
-    ```
-
-1. Wait for pods to run.  Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pods running:
-
-    ```console
-    NAME                                    READY   STATUS      RESTARTS   AGE
-    my-kafka-0                              1/1     Running     0          9m13s
-    my-kafka-test-client-854ff84955-dnjb6   1/1     Running     0          8m59s
-    my-kafka-zookeeper-0                    1/1     Running     0          9m13s
-    ```
-
-1. In a separate terminal window, run the test client.
-
-    :pencil2:  Set environment variables.  Example:
+    :pencil2: Set environment variables.  Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-    Run the test client.  Example:
+    Port forward.  Example:
 
     ```console
-    export KAFKA_TEST_POD_NAME=$(kubectl get pods \
+    kubectl port-forward \
+      --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=kafka-test-client, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" \
-      )
-
-    kubectl exec \
-      -it \
-      --namespace ${DEMO_NAMESPACE} \
-      ${KAFKA_TEST_POD_NAME} -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
-        --topic senzing-kafka-topic \
-        --from-beginning
+      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
     ```
+
+1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672)
 
 ### Install mock-data-generator Helm chart
 
@@ -532,7 +495,7 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
     helm install \
       --name ${DEMO_PREFIX}-senzing-mock-data-generator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
+      --values ${HELM_VALUES_DIR}/mock-data-generator-rabbitmq.yaml \
       senzing/senzing-mock-data-generator
     ```
 
@@ -546,7 +509,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
       senzing/senzing-stream-loader
     ```
 
