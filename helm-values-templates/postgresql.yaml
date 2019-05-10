@@ -1,10 +1,11 @@
 image:
   pullPolicy: Always
+  tag: 10.7.0-r72
 
 persistence:
   existingClaim: postgresql-claim
 
-postgresqlDatabase: "G2"
+postgresqlDatabase: G2
 postgresqlPassword: postgres
 
 securityContext:
