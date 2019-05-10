@@ -21,6 +21,7 @@ The following table indicates the instructions for variations in components.
 
 1. Component variants:
     1. Queue
+        1. RabbitMQ
         1. Kafka
     1. Database
         1. PostgreSQL
