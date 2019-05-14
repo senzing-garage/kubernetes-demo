@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+This repository illustrates a reference implementation of Senzing using IBM's Db2 as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -36,9 +36,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install Db2 Helm chart](#install-db2-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin](#install-phppgadmin)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -236,14 +235,12 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Create persistent volumes.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
@@ -327,7 +324,7 @@ This deployment will be used later to:
     helm install \
       --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-postgresql.yaml \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-db2.yaml \
        senzing/senzing-debug
     ```
 
@@ -552,17 +549,13 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
-    helm delete --purge ${DEMO_PREFIX}-phppgadmin
-    helm delete --purge ${DEMO_PREFIX}-postgresql-client
-    helm delete --purge ${DEMO_PREFIX}-postgresql
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
