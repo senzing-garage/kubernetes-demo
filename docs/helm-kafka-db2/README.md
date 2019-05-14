@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using IBM DB2 as the underlying database.
+This repository illustrates a reference implementation of Senzing using IBM's Db2 as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -140,7 +140,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     for DOCKER_IMAGE_NAME in ${DOCKER_IMAGE_NAMES[@]};\
     do \
-      sudo docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
+      sudo docker tag  ${DOCKER_IMAGE_NAME} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
       sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
       sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
     done
