@@ -1,3 +1,5 @@
 rabbitmq:
   password: passw0rd
   username: user
+  extraConfiguration: |-
+    disk_free_limit.absolute = 1MB
