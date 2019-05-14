@@ -361,26 +361,16 @@ This deployment will be used later to:
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
-### Install Postgresql Helm chart
+### Install DB2 Helm chart
 
-1. Create Configmap for `pg_hba.conf`.  Example:
-
-    ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
-      --namespace ${DEMO_NAMESPACE} \
-      --from-file=${KUBERNETES_DIR}/pg_hba.conf
-    ```
-
-    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
-
-1. Install Postgresql chart.  Example:
+1. Install IBM DB2 Express-C chart.  Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-postgresql \
+      --name ${DEMO_PREFIX}-ibm-db2express-c \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      bitnami/postgresql
+      --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
+      senzing/ibm-db2express-c
     ```
 
 1. Wait for pod to run.  Example:
@@ -395,40 +385,14 @@ This deployment will be used later to:
 
     ```console
     NAME                                   READY   STATUS      RESTARTS   AGE
-    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
     ```
 
 ### Initialize database
 
 This step creates tables in the database used by Senzing.
 
-1. Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-postgresql-client \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
-      senzing/postgresql-client
-    ```
-
-### Install phpPgAdmin
-
-1. Install phpPgAdmin app.  Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-phppgadmin \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
-      senzing/phppgadmin
-    ```
-
-1. Optional:  Background information on
-    [senzing/phppgadmin](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/build-docker-senzing-phppgadmin.md)
-    docker image.
-
-1. In a separate terminal window, port forward to local machine.
+1. Log into the IBM DB2 Express-C container.
 
     :pencil2: Set environment variables.  Example:
 
@@ -437,20 +401,30 @@ This step creates tables in the database used by Senzing.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-    Port forward.  Example:
+    Log into pod.  Example:
 
     ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
+    export DATABASE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin-phppgadmin 8081:8080
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=ibm-db2express-c, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
     ```
 
-1. Open browser to [localhost:8081](http://localhost:8081)
-    1. Login
-       1. See `helm-values/postgresql.yaml` for postgresqlUsername and postgresqlPassword
-       1. Default: username: `postgres`  password: `postgres`
-    1. On left-hand navigation, select "G2" database to explore.
+1. In the IBM DB2 Express-C container, run the following:
+
+    ```console
+    su - db2inst1
+    db2 create database g2 using codeset utf-8 territory us
+    db2 connect to g2
+    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
+    db2 connect reset
+    exit
+    exit
+    ```
 
 ### Install RabbitMQ Helm chart
 
@@ -508,7 +482,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-db2.yaml \
       senzing/senzing-stream-loader
     ```
 
@@ -522,7 +496,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
     helm install \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
       senzing/senzing-api-server
     ```
 
