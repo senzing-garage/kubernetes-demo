@@ -1,0 +1,13 @@
+senzing:
+  subcommand: rabbitmq
+  databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
+  dataSource: PEOPLE
+  entityType: PEOPLE
+  logLevel: info
+  monitoringPeriod: 60
+  optSenzingClaim: opt-senzing-claim
+  rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+  rabbitmqPassword: passw0rd
+  rabbitmqQueue: senzing-rabbitmq-queue
+  rabbitmqUsername: user
+  threadsPerProcess: 4
