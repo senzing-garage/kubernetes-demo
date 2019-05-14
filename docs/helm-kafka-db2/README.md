@@ -503,7 +503,7 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
     helm install \
       --name ${DEMO_PREFIX}-senzing-mock-data-generator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mock-data-generator.yaml \
+      --values ${HELM_VALUES_DIR}/mock-data-generator-kafka.yaml \
       senzing/senzing-mock-data-generator
     ```
 
@@ -517,7 +517,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-db2.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-kafka-db2.yaml \
       senzing/senzing-stream-loader
     ```
 
