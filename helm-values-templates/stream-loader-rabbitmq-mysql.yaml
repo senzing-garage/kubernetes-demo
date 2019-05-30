@@ -1,3 +1,9 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  repository: senzing/xxx
+  tag: latest
+  pullPolicy: Always
+
 senzing:
   subcommand: rabbitmq
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"

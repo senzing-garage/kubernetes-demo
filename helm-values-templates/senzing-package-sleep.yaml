@@ -1,5 +1,6 @@
 image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
+  registry: ${DOCKER_REGISTRY_URL}
+  repository: senzing/senzing-package
   tag: latest
 
 senzing:

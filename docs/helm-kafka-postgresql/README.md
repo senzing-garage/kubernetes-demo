@@ -157,7 +157,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
+    export DOCKER_REGISTRY_URL=docker.io
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
