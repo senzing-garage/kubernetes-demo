@@ -1,3 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 mysql:
   database: "G2"
   file: "g2/data/g2core-schema-mysql-create.sql"

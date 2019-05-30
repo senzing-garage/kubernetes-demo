@@ -1,0 +1,2 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}

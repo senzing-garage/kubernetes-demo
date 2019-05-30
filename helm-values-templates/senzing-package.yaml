@@ -1,8 +1,6 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
   repository: senzing/senzing-package
-  tag: latest
-  pullPolicy: Always
 
 senzing:
   subcommand: install
