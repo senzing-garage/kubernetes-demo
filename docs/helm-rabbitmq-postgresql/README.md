@@ -236,14 +236,12 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Create persistent volumes.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
