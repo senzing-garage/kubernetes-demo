@@ -1,3 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 senzing:
   subcommand: "url-to-kafka"
   kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"

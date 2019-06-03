@@ -1,6 +1,6 @@
 image:
-  repository: "${DOCKER_REGISTRY_URL}/senzing/senzing-package"
-  tag: latest
+  registry: ${DOCKER_REGISTRY_URL}
+  repository: senzing/senzing-package
 
 senzing:
   subcommand: sleep

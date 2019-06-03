@@ -157,7 +157,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
+    export DOCKER_REGISTRY_URL=docker.io
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -237,14 +237,12 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Create persistent volumes.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     ```
 
 1. Create persistent volume claims.  Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     ```
 
@@ -381,7 +379,7 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      bitnami/postgresql
+      stable/postgresql
     ```
 
 1. Wait for pod to run.  Example:

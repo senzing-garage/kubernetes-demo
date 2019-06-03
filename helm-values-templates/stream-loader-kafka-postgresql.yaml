@@ -1,3 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 senzing:
   subcommand: kafka
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql-postgresql:5432/G2"

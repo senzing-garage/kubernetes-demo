@@ -1,6 +1,9 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 db2:
   license: accept
   password: db2inst1
 
-senzing:  
+senzing:
   optSenzingStorageClaim: opt-senzing-claim
