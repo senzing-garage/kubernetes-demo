@@ -256,12 +256,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Add helm repositories
 
-1. Add Bitnami repository.  Example:
-
-    ```console
-    helm repo add bitnami https://charts.bitnami.com
-    ```
-
 1. Add Senzing repository.  Example:
 
     ```console
@@ -432,7 +426,7 @@ This step creates tables in the database used by Senzing.
       --name ${DEMO_PREFIX}-rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      bitnami/rabbitmq
+      stable/rabbitmq
     ```
 
 1. In a separate terminal window, port forward to local machine.
@@ -553,7 +547,6 @@ See `kubectl port-forward ...` above.
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-package
     helm repo remove senzing
-    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
