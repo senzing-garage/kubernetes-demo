@@ -379,7 +379,7 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-stable \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      bitnami/postgresql
+      stable/postgresql
     ```
 
 1. Wait for pod to run.  Example:
