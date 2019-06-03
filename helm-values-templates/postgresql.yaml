@@ -1,9 +1,9 @@
 persistence:
-  existingClaim: postgresql-claim
+  enabled: false
+# existingClaim: postgresql-claim
 
 postgresqlDatabase: G2
 postgresqlPassword: postgres
 
 securityContext:
   enabled: false
-
