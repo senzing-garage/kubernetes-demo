@@ -376,7 +376,7 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-stable \
+      --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
       stable/postgresql
