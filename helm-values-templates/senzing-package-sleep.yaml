@@ -1,6 +1,6 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
-  repository: senzing/senzing-package
+  repository: store/senzing/senzing-package
 
 senzing:
   subcommand: sleep

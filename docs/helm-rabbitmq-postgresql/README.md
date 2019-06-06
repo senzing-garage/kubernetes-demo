@@ -118,33 +118,15 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 #### Senzing docker images
 
+1. Accept license agreement for `store/senzing/senzing-package` docker image.
+    1. Visit [HOWTO- Accept EULA](accept-eula.md#storesenzingsenzing-package-docker-image).
+
 1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 #### Docker registry
 
 1. If you need to create a private docker registry, see
        [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
-
-1. :pencil2: Set environment variable.  Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
-    ```
-
-1. Add Senzing docker images to private docker registry.  Example:
-
-    ```console
-    export DOCKER_IMAGE_NAMES=( \
-      "senzing/senzing-package" \
-    )
-
-    for DOCKER_IMAGE_NAME in ${DOCKER_IMAGE_NAMES[@]};\
-    do \
-      sudo docker tag  ${DOCKER_IMAGE_NAME} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-    done
-    ```
 
 ## Demonstrate
 
