@@ -121,13 +121,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Accept license agreement for `store/senzing/senzing-package` docker image.
     1. Visit [HOWTO- Accept EULA](accept-eula.md#storesenzingsenzing-package-docker-image).
 
-1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
-
-#### Docker registry
-
-1. If you need to create a private docker registry, see
-       [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
-
 ## Demonstrate
 
 ### Set environment variables
@@ -139,6 +132,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -166,7 +160,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+   :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
@@ -258,6 +252,52 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
+
+## Access Docker images in Docker Store
+
+The following
+
+1. Accept End User License Agreement.
+    1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
+
+1. :pencil2: Set environment variables.
+   Example:
+
+
+    ```console
+    export DOCKER_USERNAME=<your-docker-username>
+    export DOCKER_PASSWORD=<your-docker-password>
+    ```
+
+1. Log into docker.
+   Example:
+
+    ```console
+    docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+    ```
+
+   This creates or updates `~/.docker/config.json`.
+
+
+1. :pencil2: Identify docker configuration file.
+   Example:
+
+    ```console
+    export DOCKER_CONFIGURATION_FILE=~/.docker/config.json
+    ```
+
+1. Create a kubernetes secret.
+   Example:
+
+    ```console
+    kubectl create secret generic regcred \
+      --namespace ${DEMO_NAMESPACE} \
+      --from-file=.dockerconfigjson=${DOCKER_CONFIGURATION_FILE} \
+      --type=kubernetes.io/dockerconfigjson
+    ```
+
+1. References:
+    1. [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
 
 ### Deploy Senzing_API.tgz package
 
