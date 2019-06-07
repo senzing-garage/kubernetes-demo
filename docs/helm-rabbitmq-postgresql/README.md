@@ -473,7 +473,8 @@ This step creates tables in the database used by Senzing.
       svc/${DEMO_PREFIX}-rabbitmq 15672:15672
     ```
 
-1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672)
+1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672).
+   Username and password are in `helm-values/rabbitmq.yaml`.
 
 ### Install mock-data-generator Helm chart
 
