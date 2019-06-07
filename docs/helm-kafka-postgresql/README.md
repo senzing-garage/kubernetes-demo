@@ -38,7 +38,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin](#install-phppgadmin)
+    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
     1. [Install Kafka Helm chart](#install-kafka-helm-chart)
     1. [Install Kafka test client](#install-kafka-test-client)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
@@ -410,7 +410,7 @@ This step creates tables in the database used by Senzing.
       senzing/postgresql-client
     ```
 
-### Install phpPgAdmin
+### Install phpPgAdmin Helm Chart
 
 1. Install phpPgAdmin app.  Example:
 
