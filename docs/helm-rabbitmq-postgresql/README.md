@@ -114,13 +114,6 @@ The Git repository has files that will be used in the `helm install --values` pa
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-### Docker images
-
-#### Senzing docker images
-
-1. Accept license agreement for `store/senzing/senzing-package` docker image.
-    1. Visit [HOWTO- Accept EULA](accept-eula.md#storesenzingsenzing-package-docker-image).
-
 ## Demonstrate
 
 ### Set environment variables
@@ -254,16 +247,13 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-## Access Docker images in Docker Store
+### Docker images
 
-The following
-
-1. Accept End User License Agreement.
+1. Accept End User License Agreement (EULA) for `store/senzing/senzing-package` docker image.
     1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
 
 1. :pencil2: Set environment variables.
    Example:
-
 
     ```console
     export DOCKER_USERNAME=<your-docker-username>
