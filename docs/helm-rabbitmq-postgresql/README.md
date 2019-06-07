@@ -258,23 +258,8 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export DOCKER_USERNAME=<your-docker-username>
     export DOCKER_PASSWORD=<your-docker-password>
-    ```
 
-1. Log into docker.
-   Example:
-
-    ```console
-    docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
-    ```
-
-   This creates or updates `~/.docker/config.json`.
-
-
-1. :pencil2: Identify docker configuration file.
-   Example:
-
-    ```console
-    export DOCKER_CONFIGURATION_FILE=~/.docker/config.json
+    export DOCKER_REGISTRY_SERVER=https://index.docker.io/v1/
     ```
 
 1. Create a kubernetes secret.
@@ -282,6 +267,8 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     ```console
     kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
+      --namespace ${DEMO_NAMESPACE} \
+      --docker-server=${DOCKER_REGISTRY_SERVER} \
       --docker-username=${DOCKER_USERNAME} \
       --docker-password=${DOCKER_PASSWORD}
     ```
