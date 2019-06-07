@@ -26,7 +26,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-    1. [Docker images](#docker-images)
 1. [Demonstrate](#demonstrate)
     1. [Set environment variables](#set-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
@@ -34,11 +33,12 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Enable Docker images](#enable-docker-images)
     1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin](#install-phppgadmin)
+    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -247,7 +247,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Docker images
+### Enable Docker images
 
 1. Accept End User License Agreement (EULA) for `store/senzing/senzing-package` docker image.
     1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
@@ -403,7 +403,7 @@ This step creates tables in the database used by Senzing.
       senzing/postgresql-client
     ```
 
-### Install phpPgAdmin
+### Install phpPgAdmin Helm Chart
 
 1. Install phpPgAdmin app.  Example:
 
