@@ -26,7 +26,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-    1. [Docker images](#docker-images)
 1. [Demonstrate](#demonstrate)
     1. [Set environment variables](#set-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
@@ -34,6 +33,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Enable Docker images](#enable-docker-images)
     1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
     1. [Install Db2 Helm chart](#install-db2-helm-chart)
@@ -113,38 +113,6 @@ The Git repository has files that will be used in the `helm install --values` pa
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-### Docker images
-
-#### Senzing docker images
-
-1. In a new terminal window, build [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
-
-#### Docker registry
-
-1. If you need to create a private docker registry, see
-       [HOWTO - Install docker registry server](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-registry-server.md).
-
-1. :pencil2: Set environment variable.  Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
-    ```
-
-1. Add Senzing docker images to private docker registry.  Example:
-
-    ```console
-    export DOCKER_IMAGE_NAMES=( \
-      "senzing/senzing-package" \
-    )
-
-    for DOCKER_IMAGE_NAME in ${DOCKER_IMAGE_NAMES[@]};\
-    do \
-      sudo docker tag  ${DOCKER_IMAGE_NAME} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-      sudo docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-      sudo docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}; \
-    done
-    ```
-
 ## Demonstrate
 
 ### Set environment variables
@@ -156,6 +124,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
     export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -183,10 +152,11 @@ The Git repository has files that will be used in the `helm install --values` pa
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+   :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
-    1. `${DEMO_NAMESPACE}`
+    1. `${DOCKER_REGISTRY_SECRET}`
+    1. `${DOCKER_REGISTRY_URL}`
 
 ### Create custom kubernetes configuration files
 
@@ -275,6 +245,35 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
+
+### Enable Docker images
+
+1. Accept End User License Agreement (EULA) for `store/senzing/senzing-package` docker image.
+    1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
+
+1. :pencil2: Set environment variables.
+   Example:
+
+    ```console
+    export DOCKER_USERNAME=<your-docker-username>
+    export DOCKER_PASSWORD=<your-docker-password>
+
+    export DOCKER_SERVER=https://index.docker.io/v1/
+    ```
+
+1. Create a kubernetes secret.
+   Example:
+
+    ```console
+    kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
+      --namespace ${DEMO_NAMESPACE} \
+      --docker-server ${DOCKER_SERVER} \
+      --docker-username ${DOCKER_USERNAME} \
+      --docker-password ${DOCKER_PASSWORD}
+    ```
+
+1. References:
+    1. [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
 
 ### Deploy Senzing_API.tgz package
 
@@ -447,7 +446,8 @@ This step creates tables in the database used by Senzing.
       svc/${DEMO_PREFIX}-rabbitmq 15672:15672
     ```
 
-1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672)
+1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672).
+   Username and password are in `helm-values/rabbitmq.yaml`.
 
 ### Install mock-data-generator Helm chart
 
