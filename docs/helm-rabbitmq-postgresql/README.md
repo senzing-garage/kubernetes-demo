@@ -163,7 +163,8 @@ The Git repository has files that will be used in the `helm install --values` pa
    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
-    1. `${DEMO_NAMESPACE}`
+    1. `${DOCKER_REGISTRY_SECRET}`
+    1. `${DOCKER_REGISTRY_URL}`
 
 ### Create custom kubernetes configuration files
 
@@ -290,10 +291,9 @@ The following
    Example:
 
     ```console
-    kubectl create secret generic regcred \
-      --namespace ${DEMO_NAMESPACE} \
-      --from-file=.dockerconfigjson=${DOCKER_CONFIGURATION_FILE} \
-      --type=kubernetes.io/dockerconfigjson
+    kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
+      --docker-username=${DOCKER_USERNAME} \
+      --docker-password=${DOCKER_PASSWORD}
     ```
 
 1. References:
