@@ -259,7 +259,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export DOCKER_USERNAME=<your-docker-username>
     export DOCKER_PASSWORD=<your-docker-password>
 
-    export DOCKER_REGISTRY_SERVER=https://index.docker.io/v1/
+    export DOCKER_SERVER=https://index.docker.io/v1/
     ```
 
 1. Create a kubernetes secret.
@@ -268,9 +268,9 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
       --namespace ${DEMO_NAMESPACE} \
-      --docker-server=${DOCKER_REGISTRY_SERVER} \
-      --docker-username=${DOCKER_USERNAME} \
-      --docker-password=${DOCKER_PASSWORD}
+      --docker-server ${DOCKER_SERVER} \
+      --docker-username ${DOCKER_USERNAME} \
+      --docker-password ${DOCKER_PASSWORD}
     ```
 
 1. References:
