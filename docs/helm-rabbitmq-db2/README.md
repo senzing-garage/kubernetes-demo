@@ -36,7 +36,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Enable Docker images](#enable-docker-images)
     1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
-    1. [Install Db2 Helm chart](#install-db2-helm-chart)
+    1. [Install DB2 Helm chart](#install-db2-helm-chart)
     1. [Initialize database](#initialize-database)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
