@@ -7,6 +7,6 @@ senzing:
   rabbitmqPassword: passw0rd
   rabbitmqQueue: senzing-rabbitmq-queue
   rabbitmqUsername: user
-  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M_shuffled.json"
+  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
   recordMax: 10000
   recordMonitor: 1000
