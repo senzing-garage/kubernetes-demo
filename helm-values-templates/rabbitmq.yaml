@@ -1,3 +1,6 @@
+livenessProbe:
+  enabled: false
+
 persistence:
   enabled: true
   existingClaim: rabbitmq-claim
@@ -5,6 +8,9 @@ persistence:
 rabbitmq:
   password: passw0rd
   username: user
+
+readinessProbe:
+  enabled: false
 
 volumePermissions:
   enabled: true
