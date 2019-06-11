@@ -1,3 +1,10 @@
+persistence:
+  enabled: true
+  existingClaim: rabbitmq-claim
+
 rabbitmq:
   password: passw0rd
   username: user
+
+volumePermissions:
+  enabled: true
