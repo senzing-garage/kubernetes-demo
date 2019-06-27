@@ -207,12 +207,14 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     ```
 
 1. Create persistent volume claims.  Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     ```
 
 1. Optional: Review persistent volumes and claims.
@@ -578,8 +580,10 @@ See `kubectl port-forward ...` above.
     helm repo remove senzing
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 

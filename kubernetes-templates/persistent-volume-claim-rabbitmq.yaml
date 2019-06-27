@@ -5,13 +5,13 @@ metadata:
   - kubernetes.io/pvc-protection
   labels:
     cattle.io/creator: norman
-  name: opt-senzing-claim
+  name: rabbitmq-claim
   namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 10Gi
   storageClassName: "manual"
-  volumeName: opt-senzing-volume
+  volumeName: rabbitmq-volume
