@@ -11,5 +11,5 @@ spec:
   capacity:
     storage: 40Gi
   hostPath:
-    path: /opt/senzing
+    path: /mnt/vda1
   storageClassName: manual

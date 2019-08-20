@@ -80,13 +80,13 @@ This repository assumes a working knowledge of:
 1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
 
     ```console
-    minikube start --cpus 4 --memory 8192
+    minikube start --cpus 4 --memory 8192 --disk-size=100g
     ```
 
     Alternative:
 
     ```console
-    minikube start --cpus 4 --memory 8192 --vm-driver kvm2
+    minikube start --cpus 4 --memory 8192 --disk-size=100g --vm-driver kvm2
     ```
 
 #### Helm/Tiller
