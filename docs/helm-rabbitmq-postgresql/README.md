@@ -308,7 +308,7 @@ This deployment will be used later to:
     helm install \
       --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-postgresql.yaml \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml \
        senzing/senzing-debug
     ```
 
