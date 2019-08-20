@@ -5,7 +5,7 @@ ingress:
   enabled: true
 
 phppgadmin:
-  serverHost: "${DEMO_PREFIX}-postgresql-postgresql"
+  serverHost: ${DEMO_PREFIX}-postgresql-postgresql
 
 service:
   type: ClusterIP
