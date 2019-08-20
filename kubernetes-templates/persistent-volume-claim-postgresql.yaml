@@ -13,5 +13,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: "manual"
+  storageClassName: manual
   volumeName: postgresql-volume

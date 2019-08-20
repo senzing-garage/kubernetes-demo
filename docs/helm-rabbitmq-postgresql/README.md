@@ -80,13 +80,13 @@ This repository assumes a working knowledge of:
 1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
 
     ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=100g
+    minikube start --cpus 4 --memory 8192 --disk-size=50g
     ```
 
     Alternative:
 
     ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=100g --vm-driver kvm2
+    minikube start --cpus 4 --memory 8192 --disk-size=50g --vm-driver kvm2
     ```
 
 #### Helm/Tiller
@@ -115,6 +115,23 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
 ## Demonstrate
+
+### EULA
+
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   See
+   [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)
+   for the correct value.
+   Replace the double-quote character in the example with the correct value.
+   The use of the double-quote character is intentional to prevent simple copy/paste.
+   Example:
+
+    ```console
+    export SENZING_ACCEPT_EULA="
+    ```
 
 ### Set environment variables
 
@@ -158,6 +175,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     1. `${DEMO_PREFIX}`
     1. `${DOCKER_REGISTRY_SECRET}`
     1. `${DOCKER_REGISTRY_URL}`
+    1. `${SENZING_ACCEPT_EULA}`
 
 ### Create custom kubernetes configuration files
 
@@ -184,7 +202,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
 
-    1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
 
 ### Create namespace
@@ -249,36 +266,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Enable Docker images
-
-1. Accept End User License Agreement (EULA) for `store/senzing/senzing-package` docker image.
-    1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
-
-1. :pencil2: Set environment variables.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=<your-docker-username>
-    export DOCKER_PASSWORD=<your-docker-password>
-
-    export DOCKER_SERVER=https://index.docker.io/v1/
-    ```
-
-1. Create a kubernetes secret.
-   Example:
-
-    ```console
-    kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
-      --namespace ${DEMO_NAMESPACE} \
-      --docker-server ${DOCKER_SERVER} \
-      --docker-username ${DOCKER_USERNAME} \
-      --docker-password ${DOCKER_PASSWORD}
-    ```
-
-1. References:
-    1. [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
-
-### Deploy Senzing_API.tgz package
+### Deploy Senzing RPM
 
 This deployment initializes the Persistent Volume with Senzing code and data.
 
@@ -286,10 +274,10 @@ This deployment initializes the Persistent Volume with Senzing code and data.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-package \
+      --name ${DEMO_PREFIX}-senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
-      senzing/senzing-package
+      --values ${HELM_VALUES_DIR}/senzing-yum.yaml \
+      senzing/yum
     ```
 
 1. Wait until Job has completed.  Example:
@@ -304,7 +292,7 @@ This deployment initializes the Persistent Volume with Senzing code and data.
 
     ```console
     NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-package-8n2ql   0/1     Completed   0          2m44s
+    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
 
 ### Install senzing-debug Helm chart
