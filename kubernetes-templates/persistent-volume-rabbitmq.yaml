@@ -11,5 +11,5 @@ spec:
   capacity:
     storage: 10Gi
   hostPath:
-    path: /var/rabbitmq
+    path: /mnt/vda1/rabbitmq
   storageClassName: manual
