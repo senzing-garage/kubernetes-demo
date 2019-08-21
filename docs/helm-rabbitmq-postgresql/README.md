@@ -323,38 +323,7 @@ This deployment will be used later to:
        senzing/senzing-debug
     ```
 
-1. Wait for pod to run.
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. In a separate terminal window, log into debug pod.
-
-    :pencil2: Set environment variables.
-    Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
-    Log into pod.
-    Example:
-
-    ```console
-    export DEBUG_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-debug, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
-    ```
+1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
 ### Install Postgresql Helm chart
 
@@ -369,7 +338,7 @@ This deployment will be used later to:
 
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
-1. Install Postgresql chart.
+1. Install chart.
    Example:
 
     ```console
@@ -523,7 +492,8 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       --watch
     ```
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
@@ -545,6 +515,22 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    ```
+
+#### View Senzing Debug pod
+
+1. In a separate terminal window, log into debug pod.
+   Example:
+
+    ```console
+    export DEBUG_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-debug, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
 #### View RabbitMQ
