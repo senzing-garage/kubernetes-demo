@@ -480,6 +480,20 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
       senzing/senzing-mock-data-generator
     ```
 
+### Install init-container Helm chart
+
+The init-container creates files from templates and initializes the G2 database.
+
+1. Install chart.  Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-init-container \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      senzing/senzing-init-container
+    ```
+
 ### Install stream-loader Helm chart
 
 The stream loader pulls messages from Kafka and sends them to Senzing.
