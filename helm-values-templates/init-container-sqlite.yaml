@@ -1,5 +1,0 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-
-senzing:
-  optSenzingClaim: opt-senzing-claim

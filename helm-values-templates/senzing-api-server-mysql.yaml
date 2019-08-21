@@ -5,5 +5,5 @@ senzing:
   bindAddr: all
   concurrency: 8
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
-  iniFile: /opt/senzing/g2/python/G2Module.ini
+  iniFile: /etc/opt/senzing/G2Module.ini
   optSenzingClaim: opt-senzing-claim

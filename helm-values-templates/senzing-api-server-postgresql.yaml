@@ -2,8 +2,8 @@ image:
   registry: ${DOCKER_REGISTRY_URL}
 
 senzing:
-  bindAddr: "all"
+  bindAddr: all
   concurrency: 8
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432/G2"
-  iniFile: "/opt/senzing/g2/python/G2Module.ini"
-  optSenzingClaim: "opt-senzing-claim"
+  iniFile: /etc/opt/senzing/G2Module.ini
+  optSenzingClaim: opt-senzing-claim
