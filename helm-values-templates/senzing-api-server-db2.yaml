@@ -1,9 +1,0 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-
-senzing:
-  bindAddr: all
-  concurrency: 8
-  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2express-c:50000/G2"
-  iniFile: /etc/opt/senzing/G2Module.ini
-  optSenzingClaim: opt-senzing-claim
