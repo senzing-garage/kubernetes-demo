@@ -4,8 +4,8 @@ image:
 senzing:
   subcommand: rabbitmq
   databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2express-c:50000/G2"
-  dataSource: PEOPLE
-  entityType: PEOPLE
+  dataSource: TEST
+  entityType: TEST
   logLevel: info
   monitoringPeriod: 60
   optSenzingClaim: opt-senzing-claim

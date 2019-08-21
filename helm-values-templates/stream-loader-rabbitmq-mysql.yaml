@@ -4,8 +4,8 @@ image:
 senzing:
   subcommand: rabbitmq
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
-  dataSource: PEOPLE
-  entityType: PEOPLE
+  dataSource: TEST
+  entityType: TEST
   logLevel: info
   monitoringPeriod: 60
   optSenzingClaim: opt-senzing-claim

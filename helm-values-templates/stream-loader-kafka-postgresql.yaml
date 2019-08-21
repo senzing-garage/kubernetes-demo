@@ -4,8 +4,8 @@ image:
 senzing:
   subcommand: kafka
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432/G2"
-  dataSource: PEOPLE
-  entityType: PEOPLE
+  dataSource: TEST
+  entityType: TEST
   kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"
   kafkaBootstrapServerPort: 9092
   kafkaTopic: senzing-kafka-topic
