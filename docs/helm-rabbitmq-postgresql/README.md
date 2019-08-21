@@ -616,6 +616,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
@@ -624,7 +625,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
-    helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
