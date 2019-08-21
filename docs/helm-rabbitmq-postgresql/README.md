@@ -519,7 +519,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
     helm install \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml \
       senzing/senzing-api-server
     ```
 
