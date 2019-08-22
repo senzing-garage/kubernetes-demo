@@ -331,10 +331,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-ibm-db2express-c \
+      --name ${DEMO_PREFIX}-senzing-ibm-db2 \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
-      senzing/ibm-db2express-c
+      --values ${HELM_VALUES_DIR}/senzing-ibm-db2.yaml \
+      senzing/senzing-ibm-db2
     ```
 
 1. Wait for pod to run.
