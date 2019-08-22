@@ -286,7 +286,7 @@ This deployment initializes the Persistent Volume with Senzing code and data.
       --name ${DEMO_PREFIX}-senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-yum.yaml \
-      senzing/yum
+      senzing/senzing-yum
     ```
 
 1. Wait until Job has completed.
