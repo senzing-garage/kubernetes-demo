@@ -6,4 +6,4 @@ db2:
   password: db2inst1
 
 senzing:
-  optSenzingStorageClaim: opt-senzing-claim
+  optSenzingStorageClaim: senzing-persistent-volume-claim

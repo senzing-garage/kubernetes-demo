@@ -5,4 +5,4 @@ senzing:
   bindAddr: all
   concurrency: 8
   iniFile: /etc/opt/senzing/G2Module.ini
-  optSenzingClaim: opt-senzing-claim
+  optSenzingClaim: senzing-persistent-volume-claim

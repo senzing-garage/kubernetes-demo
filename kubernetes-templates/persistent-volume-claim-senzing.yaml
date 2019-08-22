@@ -5,7 +5,7 @@ metadata:
   - kubernetes.io/pvc-protection
   labels:
     cattle.io/creator: norman
-  name: postgresql-persistent-volume-claim
+  name: senzing-persistent-volume-claim
   namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:
@@ -14,4 +14,4 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: manual
-  volumeName: postgresql-persistent-volume
+  volumeName: senzing-persistent-volume

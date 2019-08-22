@@ -1,6 +1,6 @@
 persistence:
   enabled: true
-  existingClaim: rabbitmq-claim
+  existingClaim: rabbitmq-persistent-volume-claim
 
 rabbitmq:
   password: passw0rd

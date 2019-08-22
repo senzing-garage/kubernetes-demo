@@ -228,14 +228,17 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2-database.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+
     ```
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2-database.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. Optional: Review persistent volumes and claims.
@@ -600,9 +603,9 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
