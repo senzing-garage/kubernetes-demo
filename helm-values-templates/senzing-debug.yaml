@@ -2,4 +2,4 @@ image:
   registry: ${DOCKER_REGISTRY_URL}
 
 senzing:
-  optSenzingClaim: senzing-persistent-volume-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim

@@ -3,4 +3,4 @@ image:
 
 senzing:
   databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432/G2"
-  optSenzingClaim: senzing-persistent-volume-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim

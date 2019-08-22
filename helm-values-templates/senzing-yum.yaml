@@ -6,5 +6,5 @@ imagePullSecrets:
 
 senzing:
   acceptEula: ${SENZING_ACCEPT_EULA}
-  optSenzingClaim: senzing-persistent-volume-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim
   yumParameters: ["-y", "localinstall", "/rpms/senzingapi-1.11.0-19215.x86_64.rpm"]

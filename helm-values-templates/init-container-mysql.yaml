@@ -3,4 +3,4 @@ image:
 
 senzing:
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql-mysql:3306/G2"
-  optSenzingClaim: senzing-persistent-volume-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim

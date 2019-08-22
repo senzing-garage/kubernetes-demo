@@ -305,6 +305,21 @@ This deployment initializes the Persistent Volume with Senzing code and data.
     my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
 
+### Install IBM Db2 Driver
+
+This step adds the IBM Db2 Client driver code.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-ibm-db2-driver-installer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/ibm-db2-driver-installer.yaml \
+      senzing/ibm-db2-driver-installer
+    ```
+
 ### Install senzing-debug Helm chart
 
 This deployment will be used later to:
@@ -325,9 +340,12 @@ This deployment will be used later to:
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-### Install DB2 Helm chart
+### Install Db2 Helm chart
 
-1. Install IBM DB2 Express-C chart.  Example:
+This step starts IBM Db2 database and populates the database with the Senzing schema.
+
+1. Install chart.
+   Example:
 
     ```console
     helm install \
@@ -337,59 +355,7 @@ This deployment will be used later to:
       senzing/senzing-ibm-db2
     ```
 
-1. Wait for pod to run.
-   Example:
 
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pod running:
-
-    ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
-    ```
-
-### Initialize database
-
-This step creates tables in the database used by Senzing.
-
-1. Log into the IBM DB2 Express-C container.
-
-    :pencil2: Set environment variables.  Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
-    Log into pod.  Example:
-
-    ```console
-    export DATABASE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=ibm-db2express-c, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
-    ```
-
-1. In the IBM DB2 Express-C container, run the following:
-
-    ```console
-    su - db2inst1
-    db2 create database g2 using codeset utf-8 territory us
-    db2 connect to g2
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    db2 connect reset
-    exit
-    exit
-    ```
 
 ### Install RabbitMQ Helm chart
 
