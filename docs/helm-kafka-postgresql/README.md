@@ -429,7 +429,8 @@ This deployment will be used later to:
       senzing/kafka-test-client
     ```
 
-1. Wait for pods to run.  Example:
+1. Wait for pods to run.
+   Example:
 
     ```console
     kubectl get pods \
