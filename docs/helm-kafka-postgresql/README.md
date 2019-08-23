@@ -402,7 +402,7 @@ This deployment will be used later to:
       senzing/phppgadmin
     ```
 
-1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql)
+1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install Kafka Helm chart
 
@@ -438,7 +438,7 @@ This deployment will be used later to:
       --watch
     ```
 
-1. To view Kafka, see [View Kafka](#view-kafka)
+1. To view Kafka, see [View Kafka](#view-kafka).
 
 ### Install mock-data-generator Helm chart
 
@@ -509,7 +509,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server)
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
 ### Install senzing-entity-search-web-app Helm chart
 
@@ -535,7 +535,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
-1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
 ### View data
 

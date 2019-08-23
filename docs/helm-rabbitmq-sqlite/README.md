@@ -1,16 +1,16 @@
-# kubernetes-demo-helm-kafka-db2
+# kubernetes-demo-helm-rabbitmq-sqlite
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using IBM's Db2 as the underlying database.
+This repository illustrates a reference implementation of Senzing using SQLite as the underlying database.
 
 The instructions show how to set up a system that:
 
 1. Reads JSON lines from a file on the internet.
 1. Sends each JSON line to a message queue.
-    1. In this implementation, the queue is Kafka.
+    1. In this implementation, the queue is RabbitMQ.
 1. Reads messages from the queue and inserts into Senzing.
-    1. In this implementation, Senzing keeps its data in an IBM Db2 database.
+    1. In this implementation, Senzing keeps its data in an SQLite database.
 1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
 1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
@@ -36,11 +36,9 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
-    1. [Install IBM Db2 Driver](#install-ibm-db2-driver)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
-    1. [Install DB2 Helm chart](#install-db2-helm-chart)
-    1. [Install Kafka Helm chart](#install-kafka-helm-chart)
-    1. [Install Kafka test client](#install-kafka-test-client)
+    1. [Install SQLite web](#install-sqlite-web)
+    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -175,7 +173,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-   :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DOCKER_REGISTRY_SECRET}`
@@ -231,7 +229,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
@@ -239,7 +237,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
@@ -254,13 +252,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```
 
 ### Add helm repositories
-
-1. Add Bitnami repository.
-   Example:
-
-    ```console
-    helm repo add bitnami https://charts.bitnami.com
-    ```
 
 1. Add Senzing repository.
    Example:
@@ -298,22 +289,7 @@ This deployment initializes the Persistent Volume with Senzing code and data.
       senzing/senzing-yum
     ```
 
-### Install IBM Db2 Driver
-
-This step adds the IBM Db2 Client driver code.
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-ibm-db2-driver-installer \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2-driver-installer.yaml \
-      senzing/ibm-db2-driver-installer
-    ```
-
-1. Wait until Jobs have completed.
+1. Wait until Job has completed.
    Example:
 
     ```console
@@ -325,9 +301,8 @@ This step adds the IBM Db2 Client driver code.
 1. Example of completion:
 
     ```console
-    NAME                               READY  STATUS     RESTARTS  AGE
-    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
-    my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
+    NAME                       READY   STATUS      RESTARTS   AGE
+    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
 
 ### Install senzing-debug Helm chart
@@ -350,44 +325,32 @@ This deployment will be used later to:
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-### Install Db2 Helm chart
-
-This step starts IBM Db2 database and populates the database with the Senzing schema.
+### Install SQLite Web
 
 1. Install chart.
    Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-ibm-db2 \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-ibm-db2.yaml \
-      senzing/senzing-ibm-db2
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml \
+      senzing/coleifer-sqlite-web
     ```
 
-### Install Kafka Helm chart
+1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
+
+### Install RabbitMQ Helm chart
 
 1. Install chart.
    Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-kafka \
+      --name ${DEMO_PREFIX}-rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka.yaml \
-      bitnami/kafka
-    ```
-
-### Install Kafka test client
-
-1. Install Kafka test client app.  Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-kafka-test-client \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
-      senzing/kafka-test-client
+      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
+      stable/rabbitmq
     ```
 
 1. Wait for pods to run.
@@ -399,7 +362,7 @@ This step starts IBM Db2 database and populates the database with the Senzing sc
       --watch
     ```
 
-1. To view Kafka, see [View Kafka](#view-kafka).
+1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
 ### Install mock-data-generator Helm chart
 
@@ -412,7 +375,7 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
     helm install \
       --name ${DEMO_PREFIX}-senzing-mock-data-generator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mock-data-generator-kafka.yaml \
+      --values ${HELM_VALUES_DIR}/mock-data-generator-rabbitmq.yaml \
       senzing/senzing-mock-data-generator
     ```
 
@@ -427,7 +390,7 @@ The init-container creates files from templates and initializes the G2 database.
     helm install \
       --name ${DEMO_PREFIX}-senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-db2.yaml \
+      --values ${HELM_VALUES_DIR}/init-container-sqlite.yaml \
       senzing/senzing-init-container
     ```
 
@@ -451,7 +414,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-kafka-db2.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite.yaml \
       senzing/senzing-stream-loader
     ```
 
@@ -526,27 +489,35 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
     ```
 
-#### View Kafka
+#### View RabbitMQ
 
-1. In a separate terminal window, run the test client.
+1. In a separate terminal window, port forward to local machine.
    Example:
 
     ```console
-    export KAFKA_TEST_POD_NAME=$(kubectl get pods \
+    kubectl port-forward \
+      --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=kafka-test-client, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" \
-      )
-
-    kubectl exec \
-      -it \
-      --namespace ${DEMO_NAMESPACE} \
-      ${KAFKA_TEST_POD_NAME} -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
-        --topic senzing-kafka-topic \
-        --from-beginning
+      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
     ```
+
+1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
+    1. Login
+        1. See `helm-values/rabbitmq.yaml` for Username and password.
+
+#### View SQLite database
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-coleifer-sqlite-web 8887:8080
+    ```
+
+1. SQLite Web will be viewable at [localhost:8887](http://localhost:8887).
 
 #### View Senzing API Server
 
@@ -599,18 +570,15 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
-    helm delete --purge ${DEMO_PREFIX}-kafka-test-client
-    helm delete --purge ${DEMO_PREFIX}-kafka
-    helm delete --purge ${DEMO_PREFIX}-senzing-ibm-db2
+    helm delete --purge ${DEMO_PREFIX}-rabbitmq
+    helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2-driver-installer
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
-    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 

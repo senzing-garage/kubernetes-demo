@@ -175,7 +175,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-   :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DOCKER_REGISTRY_SECRET}`
@@ -395,7 +395,7 @@ This deployment will be used later to:
       senzing/phppgadmin
     ```
 
-1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql)
+1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install RabbitMQ Helm chart
 
@@ -419,7 +419,7 @@ This deployment will be used later to:
       --watch
     ```
 
-1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq)
+1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
 ### Install mock-data-generator Helm chart
 
@@ -490,7 +490,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server)
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
 ### Install senzing-entity-search-web-app Helm chart
 
@@ -516,7 +516,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
-1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
 ### View data
 
