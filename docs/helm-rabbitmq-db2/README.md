@@ -408,8 +408,17 @@ The init-container creates files from templates and initializes the G2 database.
     helm install \
       --name ${DEMO_PREFIX}-senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/init-container-db2.yaml \
       senzing/senzing-init-container
+    ```
+
+1. Wait for pods to run.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 ### Install stream-loader Helm chart
