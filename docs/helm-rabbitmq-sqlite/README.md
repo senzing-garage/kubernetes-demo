@@ -332,10 +332,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-sqlite-web \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/sqlite-web.yaml \
-      senzing/sqlite-web
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml \
+      senzing/coleifer-sqlite-web
     ```
 
 1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
@@ -571,7 +571,6 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
-    helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
