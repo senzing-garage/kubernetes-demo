@@ -1,6 +1,9 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 persistence:
   enabled: false
-# existingClaim: postgresql-claim
+  existingClaim: postgresql-persistent-volume-claim
 
 postgresqlDatabase: G2
 postgresqlPassword: postgres

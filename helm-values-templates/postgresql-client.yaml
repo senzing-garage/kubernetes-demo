@@ -3,8 +3,8 @@ image:
 
 postgresql:
   database: G2
-  file: g2/data/g2core-schema-postgresql-create.sql
-  host: ${DEMO_PREFIX}-postgresql-postgresql
+  file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql
+  host: ${DEMO_PREFIX}-postgresql
   password: postgres
-  storageClaim: opt-senzing-claim
+  storageClaim: senzing-persistent-volume-claim
   username: postgres

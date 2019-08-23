@@ -2,7 +2,7 @@ image:
   registry: ${DOCKER_REGISTRY_URL}
 
 db:
-  host: "${DEMO_PREFIX}-mysql-mysql"
+  host: ${DEMO_PREFIX}-mysql-mysql
 
 service:
   port: 80

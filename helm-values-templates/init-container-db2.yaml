@@ -1,0 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
+  persistentVolumeClaim: senzing-persistent-volume-claim

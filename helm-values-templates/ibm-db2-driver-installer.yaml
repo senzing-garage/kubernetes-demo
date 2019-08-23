@@ -1,0 +1,9 @@
+db2:
+  license: accept
+  persistentVolumeClaim: db2-persistent-volume-claim
+
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  persistentVolumeClaim: senzing-persistent-volume-claim
