@@ -1,16 +1,6 @@
-defaultImage: true
-image: mysql
-imageTag: 5.7.14
 mysqlDatabase: G2
 mysqlUser: g2
 mysqlPassword: g2
 
 persistence:
-  enabled: "false"
-  size: 8Gi
-  storageClass: ""
-
-service:
-  port: "3306"
-  type: ClusterIP
-  nodePort: ""
+  existingClaim: mysql-persistent-volume-claim
