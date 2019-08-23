@@ -2,5 +2,4 @@ image:
   registry: ${DOCKER_REGISTRY_URL}
 
 senzing:
-  database: G2C.db
   persistentVolumeClaim: senzing-persistent-volume-claim
