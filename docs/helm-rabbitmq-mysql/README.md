@@ -371,20 +371,20 @@ This deployment will be used later to:
       senzing/mysql-client
     ```
 
-### Install phpPgAdmin Helm Chart
+### Install phpMyAdmin Helm Chart
 
-1. Install phpPgAdmin app.
+1. Install phpMyAdmin app.
    Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-phppgadmin \
+      --name ${DEMO_PREFIX}-phpmyadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
-      senzing/phppgadmin
+      --values ${HELM_VALUES_DIR}/phpmyadmin.yaml \
+      senzing/phpmyadmin
     ```
 
-1. To view MySQL via phpPgAdmin, see [View MySQL](#view-mysql).
+1. To view MySQL via phpMyAdmin, see [View MySQL](#view-mysql).
 
 ### Install RabbitMQ Helm chart
 
@@ -560,13 +560,13 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin-phppgadmin 8081:8080
+      svc/${DEMO_PREFIX}-phpmyadmin 8081:8080
     ```
 
 1. MySQL will be viewable at [localhost:8081](http://localhost:8081).
     1. Login
-       1. See `helm-values/mysql.yaml` for `rabbitmq.username` and `rabbitmq.password`.
-       1. Default: username: `user`  password: `passw0rd`
+       1. See `helm-values/mysql.yaml` for `mysqlUser` and `mysqlPassword`.
+       1. Default: username: `g2`  password: `g2`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. G2 > DSRC_RECORD
