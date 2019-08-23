@@ -516,7 +516,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-sqlite-web 8887:8080
+      svc/${DEMO_PREFIX}-coleifer-sqlite-web 8887:8080
     ```
 
 1. SQLite Web will be viewable at [localhost:8887](http://localhost:8887).
