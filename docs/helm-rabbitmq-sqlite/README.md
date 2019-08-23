@@ -10,7 +10,7 @@ The instructions show how to set up a system that:
 1. Sends each JSON line to a message queue.
     1. In this implementation, the queue is RabbitMQ.
 1. Reads messages from the queue and inserts into Senzing.
-    1. In this implementation, Senzing keeps its data in a PostgreSQL database.
+    1. In this implementation, Senzing keeps its data in an SQLite database.
 1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
 1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
@@ -37,8 +37,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
-    1. [Initialize database](#initialize-database)
     1. [Install SQLite web](#install-sqlite-web)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
@@ -392,7 +390,7 @@ The init-container creates files from templates and initializes the G2 database.
     helm install \
       --name ${DEMO_PREFIX}-senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/init-container-sqlite.yaml \
       senzing/senzing-init-container
     ```
 
@@ -416,7 +414,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite.yaml \
       senzing/senzing-stream-loader
     ```
 
@@ -574,8 +572,6 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
-    helm delete --purge ${DEMO_PREFIX}-postgresql-client
-    helm delete --purge ${DEMO_PREFIX}-postgresql
     helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
