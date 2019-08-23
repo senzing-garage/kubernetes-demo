@@ -576,6 +576,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
     helm delete --purge ${DEMO_PREFIX}-postgresql
+    helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
