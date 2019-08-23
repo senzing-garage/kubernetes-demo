@@ -35,14 +35,15 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
+    1. [Install IBM Db2 Driver](#install-ibm-db2-driver)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
     1. [Install DB2 Helm chart](#install-db2-helm-chart)
-    1. [Initialize database](#initialize-database)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
+    1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [View data](#view-data)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
@@ -290,22 +291,6 @@ This deployment initializes the Persistent Volume with Senzing code and data.
       senzing/senzing-yum
     ```
 
-1. Wait until Job has completed.
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of completion:
-
-    ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
-    ```
-
 ### Install IBM Db2 Driver
 
 This step adds the IBM Db2 Client driver code.
@@ -319,6 +304,23 @@ This step adds the IBM Db2 Client driver code.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/ibm-db2-driver-installer.yaml \
       senzing/ibm-db2-driver-installer
+    ```
+
+1. Wait until Jobs have completed.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of completion:
+
+    ```console
+    NAME                               READY  STATUS     RESTARTS  AGE
+    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
+    my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
     ```
 
 ### Install senzing-debug Helm chart
@@ -355,8 +357,6 @@ This step starts IBM Db2 database and populates the database with the Senzing sc
       --values ${HELM_VALUES_DIR}/senzing-ibm-db2.yaml \
       senzing/senzing-ibm-db2
     ```
-
-
 
 ### Install RabbitMQ Helm chart
 

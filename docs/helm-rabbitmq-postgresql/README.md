@@ -44,6 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
+    1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [View data](#view-data)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
@@ -229,16 +230,18 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. Optional: Review persistent volumes and claims.
@@ -445,6 +448,15 @@ The init-container creates files from templates and initializes the G2 database.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
       senzing/senzing-init-container
+    ```
+
+1. Wait for pods to run.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
 ### Install stream-loader Helm chart
