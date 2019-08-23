@@ -370,8 +370,9 @@ This deployment will be used later to:
 1. Example of pod running:
 
     ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    NAME                               READY  STATUS   RESTARTS  AGE
+    my-postgresql-postgresql-0         1/1    Running  0         78s
+    my-senzing-debug-55c9c978c5-rjrl8  1/1    Running  0         75s
     ```
 
 ### Initialize database
@@ -433,15 +434,6 @@ This deployment will be used later to:
     kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --watch
-    ```
-
-1. Example of pods running:
-
-    ```console
-    NAME                                    READY   STATUS      RESTARTS   AGE
-    my-kafka-0                              1/1     Running     0          9m13s
-    my-kafka-test-client-854ff84955-dnjb6   1/1     Running     0          8m59s
-    my-kafka-zookeeper-0                    1/1     Running     0          9m13s
     ```
 
 1. To view Kafka, see [View Kafka](#view-kafka)
