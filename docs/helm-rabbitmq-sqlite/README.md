@@ -327,20 +327,20 @@ This deployment will be used later to:
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-
-
-### Install SQLite web
+### Install SQLite Web
 
 1. Install chart.
    Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-rabbitmq \
+      --name ${DEMO_PREFIX}-sqlite-web \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/sqlite-web.yaml \
       senzing/sqlite-web
     ```
+
+1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
 
 ### Install RabbitMQ Helm chart
 
@@ -364,7 +364,7 @@ This deployment will be used later to:
       --watch
     ```
 
-1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq)
+1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
 ### Install mock-data-generator Helm chart
 
@@ -435,7 +435,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server)
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
 ### Install senzing-entity-search-web-app Helm chart
 
@@ -461,7 +461,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
-1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
 ### View data
 
@@ -508,6 +508,18 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
         1. See `helm-values/rabbitmq.yaml` for Username and password.
 
 #### View SQLite database
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-sqlite-web 8887:8080
+    ```
+
+1. SQLite Web will be viewable at [localhost:8887](http://localhost:8887).
 
 #### View Senzing API Server
 
