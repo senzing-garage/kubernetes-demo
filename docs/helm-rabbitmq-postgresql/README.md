@@ -175,7 +175,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
     ```
 
-   :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_PREFIX}`
     1. `${DOCKER_REGISTRY_SECRET}`
