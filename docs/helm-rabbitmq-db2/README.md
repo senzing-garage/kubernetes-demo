@@ -12,6 +12,7 @@ The instructions show how to set up a system that:
 1. Reads messages from the queue and inserts into Senzing.
     1. In this implementation, Senzing keeps its data in an IBM Db2 database.
 1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
 The following diagram shows the relationship of the Helm charts, docker containers, and code in this Kubernetes demonstration.
 
@@ -27,22 +28,24 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
 1. [Demonstrate](#demonstrate)
+    1. [EULA](#eula)
     1. [Set environment variables](#set-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
-    1. [Enable Docker images](#enable-docker-images)
-    1. [Deploy Senzing_API.tgz package](#deploy-senzing_apitgz-package)
+    1. [Deploy Senzing RPM](#deploy-senzing-rpm)
+    1. [Install IBM Db2 Driver](#install-ibm-db2-driver)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
     1. [Install DB2 Helm chart](#install-db2-helm-chart)
-    1. [Initialize database](#initialize-database)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
+    1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
-    1. [Test Senzing REST API server](#test-senzing-rest-api-server)
+    1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
+    1. [View data](#view-data)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
@@ -79,13 +82,13 @@ This repository assumes a working knowledge of:
 1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
 
     ```console
-    minikube start --cpus 4 --memory 8192
+    minikube start --cpus 4 --memory 8192 --disk-size=50g
     ```
 
     Alternative:
 
     ```console
-    minikube start --cpus 4 --memory 8192 --vm-driver kvm2
+    minikube start --cpus 4 --memory 8192 --disk-size=50g --vm-driver kvm2
     ```
 
 #### Helm/Tiller
@@ -115,9 +118,27 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ## Demonstrate
 
+### EULA
+
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   See
+   [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)
+   for the correct value.
+   Replace the double-quote character in the example with the correct value.
+   The use of the double-quote character is intentional to prevent simple copy/paste.
+   Example:
+
+    ```console
+    export SENZING_ACCEPT_EULA="
+    ```
+
 ### Set environment variables
 
-1. :pencil2: Environment variables that need customization.  Example:
+1. :pencil2: Environment variables that need customization.
+   Example:
 
     ```console
     export DEMO_PREFIX=my
@@ -131,7 +152,8 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.  Example:
+1. Variation #1. Quick method using `envsubst`.
+   Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -157,10 +179,12 @@ The Git repository has files that will be used in the `helm install --values` pa
     1. `${DEMO_PREFIX}`
     1. `${DOCKER_REGISTRY_SECRET}`
     1. `${DOCKER_REGISTRY_URL}`
+    1. `${SENZING_ACCEPT_EULA}`
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.  Example:
+1. Variation #1. Quick method using `envsubst`.
+   Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -183,12 +207,12 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
 
-    1. `${DEMO_PREFIX}`
     1. `${DEMO_NAMESPACE}`
 
 ### Create namespace
 
 1. Create namespace.
+   Example:
 
     ```console
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
@@ -202,16 +226,22 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create persistent volume
 
-1. Create persistent volumes.  Example:
+1. Create persistent volumes.
+   Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
-1. Create persistent volume claims.  Example:
+1. Create persistent volume claims.
+   Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. Optional: Review persistent volumes and claims.
@@ -226,7 +256,8 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Add helm repositories
 
-1. Add Senzing repository.  Example:
+1. Add Senzing repository.
+   Example:
 
     ```console
     helm repo add senzing https://senzing.github.io/charts/
@@ -246,50 +277,38 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Enable Docker images
-
-1. Accept End User License Agreement (EULA) for `store/senzing/senzing-package` docker image.
-    1. Visit [HOWTO - Accept EULA](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/accept-eula.md#storesenzingsenzing-package-docker-image).
-
-1. :pencil2: Set environment variables.
-   Example:
-
-    ```console
-    export DOCKER_USERNAME=<your-docker-username>
-    export DOCKER_PASSWORD=<your-docker-password>
-
-    export DOCKER_SERVER=https://index.docker.io/v1/
-    ```
-
-1. Create a kubernetes secret.
-   Example:
-
-    ```console
-    kubectl create secret docker-registry ${DOCKER_REGISTRY_SECRET} \
-      --namespace ${DEMO_NAMESPACE} \
-      --docker-server ${DOCKER_SERVER} \
-      --docker-username ${DOCKER_USERNAME} \
-      --docker-password ${DOCKER_PASSWORD}
-    ```
-
-1. References:
-    1. [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
-
-### Deploy Senzing_API.tgz package
+### Deploy Senzing RPM
 
 This deployment initializes the Persistent Volume with Senzing code and data.
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-package \
+      --name ${DEMO_PREFIX}-senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-package.yaml \
-      senzing/senzing-package
+      --values ${HELM_VALUES_DIR}/senzing-yum.yaml \
+      senzing/senzing-yum
     ```
 
-1. Wait until Job has completed.  Example:
+### Install IBM Db2 Driver
+
+This step adds the IBM Db2 Client driver code.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-ibm-db2-driver-installer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/ibm-db2-driver-installer.yaml \
+      senzing/ibm-db2-driver-installer
+    ```
+
+1. Wait until Jobs have completed.
+   Example:
 
     ```console
     kubectl get pods \
@@ -300,125 +319,50 @@ This deployment initializes the Persistent Volume with Senzing code and data.
 1. Example of completion:
 
     ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-package-8n2ql   0/1     Completed   0          2m44s
+    NAME                               READY  STATUS     RESTARTS  AGE
+    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
+    my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
     ```
 
 ### Install senzing-debug Helm chart
 
 This deployment will be used later to:
 
-* Inspect the `/opt/senzing` volume
-* Debug issues
+- Inspect mounted volumes
+- Debug issues
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
       --name ${DEMO_PREFIX}-senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug-db2.yaml \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml \
        senzing/senzing-debug
     ```
 
-1. Wait for pod to run.  Example:
+1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
+### Install Db2 Helm chart
 
-1. In a separate terminal window, log into debug pod.
+This step starts IBM Db2 database and populates the database with the Senzing schema.
 
-    :pencil2:  Set environment variables.  Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
-    Log into pod.  Example:
-
-    ```console
-    export DEBUG_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-debug, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
-    ```
-
-### Install DB2 Helm chart
-
-1. Install IBM DB2 Express-C chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-ibm-db2express-c \
+      --name ${DEMO_PREFIX}-senzing-ibm-db2 \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/ibm-db2express-c.yaml \
-      senzing/ibm-db2express-c
-    ```
-
-1. Wait for pod to run.  Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pod running:
-
-    ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-ibm-db2express-c-6bf64cbbdf-25gtb   1/1     Running     0          10m
-    ```
-
-### Initialize database
-
-This step creates tables in the database used by Senzing.
-
-1. Log into the IBM DB2 Express-C container.
-
-    :pencil2: Set environment variables.  Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
-    Log into pod.  Example:
-
-    ```console
-    export DATABASE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=ibm-db2express-c, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-ibm-db2express-c" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DATABASE_POD_NAME} -- /bin/bash
-    ```
-
-1. In the IBM DB2 Express-C container, run the following:
-
-    ```console
-    su - db2inst1
-    db2 create database g2 using codeset utf-8 territory us
-    db2 connect to g2
-    db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
-    db2 connect reset
-    exit
-    exit
+      --values ${HELM_VALUES_DIR}/senzing-ibm-db2.yaml \
+      senzing/senzing-ibm-db2
     ```
 
 ### Install RabbitMQ Helm chart
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
@@ -428,32 +372,23 @@ This step creates tables in the database used by Senzing.
       stable/rabbitmq
     ```
 
-1. In a separate terminal window, port forward to local machine.
-
-    :pencil2: Set environment variables.  Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
-    Port forward.  Example:
+1. Wait for pods to run.
+   Example:
 
     ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
+    kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
+      --watch
     ```
 
-1. RabbitMQ is viewable at [localhost:15672](http://localhost:15672).
-   Username and password are in `helm-values/rabbitmq.yaml`.
+1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq)
 
 ### Install mock-data-generator Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to Kafka.
+The mock data generator pulls JSON lines from a file and pushes them to RabbitMQ.
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
@@ -463,11 +398,36 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
       senzing/senzing-mock-data-generator
     ```
 
+### Install init-container Helm chart
+
+The init-container creates files from templates and initializes the G2 database.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-init-container \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/init-container-db2.yaml \
+      senzing/senzing-init-container
+    ```
+
+1. Wait for pods to run.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
 ### Install stream-loader Helm chart
 
-The stream loader pulls messages from Kafka and sends them to Senzing.
+The stream loader pulls messages from RabbitMQ and sends them to Senzing.
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
@@ -481,17 +441,25 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
 
 The Senzing API server receives HTTP requests to read and modify Senzing data.
 
-1. Install chart.  Example:
+1. Install chart.
+   Example:
 
     ```console
     helm install \
       --name ${DEMO_PREFIX}-senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml \
       senzing/senzing-api-server
     ```
 
-1. Wait for pods to run.  Example:
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server)
+
+### Install senzing-entity-search-web-app Helm chart
+
+The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
+
+1. Wait for previous pods to run.
+   Example:
 
     ```console
     kubectl get pods \
@@ -499,30 +467,77 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       --watch
     ```
 
-1. In a separate terminal window, port forward to local machine.
+1. Install chart.
+   Example:
 
-    :pencil2:  Set environment variables.  Example:
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-entity-search-web-app \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      senzing/senzing-entity-search-web-app
+    ```
+
+1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+
+### View data
+
+1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
+   [helm-values-templates](../helm-values-templates).
+1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
+   Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-    Port forward.  Example:
+#### View Senzing Debug pod
+
+1. In a separate terminal window, log into debug pod.
+   Example:
+
+    ```console
+    export DEBUG_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-debug, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
+    ```
+
+#### View RabbitMQ
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
 
     ```console
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8889:80
+      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
     ```
 
-### Test Senzing REST API server
+1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
+    1. Login
+        1. See `helm-values/rabbitmq.yaml` for Username and password.
 
-*Note:* port 8889 on the localhost has been mapped to port 80 in the docker container.
-See `kubectl port-forward ...` above.
+#### View Senzing API Server
 
-1. Example:
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-api-server 8889:8080
+    ```
+
+1. Make HTTP calls via `curl`.
+   Example:
 
     ```console
     export SENZING_API_SERVICE=http://localhost:8889
@@ -532,6 +547,22 @@ See `kubectl port-forward ...` above.
     curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
+#### View Senzing Entity Search WebApp
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8888:80
+    ```
+
+1. Senzing Entity Search WebApp will be viewable at [localhost:8888](http://localhost:8888).
+   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   instructions will give a tour of the Senzing web app.
+
 ## Cleanup
 
 ### Delete everything in project
@@ -539,16 +570,23 @@ See `kubectl port-forward ...` above.
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
+    helm delete --purge ${DEMO_PREFIX}-senzing-init-container
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
-    helm delete --purge ${DEMO_PREFIX}-ibm-db2express-c
+    helm delete --purge ${DEMO_PREFIX}-senzing-ibm-db2
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
-    helm delete --purge ${DEMO_PREFIX}-senzing-package
+    helm delete --purge ${DEMO_PREFIX}-ibm-db2-driver-installer
+    helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-opt-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-opt-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 

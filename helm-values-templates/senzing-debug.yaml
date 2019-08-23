@@ -1,0 +1,5 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  persistentVolumeClaim: senzing-persistent-volume-claim

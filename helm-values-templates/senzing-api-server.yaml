@@ -1,0 +1,8 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  bindAddr: all
+  concurrency: 8
+  iniFile: /etc/opt/senzing/G2Module.ini
+  persistentVolumeClaim: senzing-persistent-volume-claim

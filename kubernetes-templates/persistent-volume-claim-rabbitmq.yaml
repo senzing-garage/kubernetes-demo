@@ -5,7 +5,7 @@ metadata:
   - kubernetes.io/pvc-protection
   labels:
     cattle.io/creator: norman
-  name: rabbitmq-claim
+  name: rabbitmq-persistent-volume-claim
   namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:
@@ -13,5 +13,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: "manual"
-  volumeName: rabbitmq-volume
+  storageClassName: manual
+  volumeName: rabbitmq-persistent-volume

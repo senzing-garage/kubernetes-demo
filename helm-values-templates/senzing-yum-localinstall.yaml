@@ -1,0 +1,10 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
+senzing:
+  acceptEula: ${SENZING_ACCEPT_EULA}
+  persistentVolumeClaim: senzing-persistent-volume-claim
+  yumParameters: ["-y", "localinstall", "/rpms/senzingapi-1.11.0-19215.x86_64.rpm"]

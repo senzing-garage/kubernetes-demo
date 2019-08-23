@@ -1,0 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432/G2"
+  persistentVolumeClaim: senzing-persistent-volume-claim

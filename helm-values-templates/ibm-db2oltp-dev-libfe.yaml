@@ -1,22 +1,22 @@
 dataVolume:
-  existingClaimName: "db2-data-stor-claim"
+  existingClaimName: db2-data-stor-claim
 
 db2inst:
-  instname: "db2inst1"
-  password: "db2inst1"
+  instname: db2inst1
+  password: db2inst1
 
 global:
   image:
     secretName: ${DEMO_PREFIX}-docker-io
 
 options:
-  databaseName: "G2"
+  databaseName: G2
 
 persistence:
   enabled: "false"
   useDynamicProvisioning: "false"
 
 service:
-  name: "ibm-db2oltp-dev-libfe"
+  name: ibm-db2oltp-dev-libfe
   port: 50002
   tsport: 55002

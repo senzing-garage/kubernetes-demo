@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: opt-senzing-volume
+  name: db2-persistent-volume
   labels:
-    type: local
+    assign-to: database
   namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 40Gi
+    storage: 10Gi
   hostPath:
-    path: /opt/senzing
+    path: /mnt/vda1/db2
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: manual

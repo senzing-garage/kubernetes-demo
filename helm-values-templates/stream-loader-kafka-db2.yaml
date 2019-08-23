@@ -4,12 +4,12 @@ image:
 senzing:
   subcommand: kafka
   databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2express-c:50000/G2"
-  dataSource: PEOPLE
-  entityType: PEOPLE
+  dataSource: TEST
+  entityType: TEST
   kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"
   kafkaBootstrapServerPort: 9092
   kafkaTopic: senzing-kafka-topic
   logLevel: info
   monitoringPeriod: 60
-  optSenzingClaim: opt-senzing-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim
   threadsPerProcess: 4
