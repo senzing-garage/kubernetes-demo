@@ -1,3 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
 persistence:
   enabled: false
   existingClaim: postgresql-persistent-volume-claim
