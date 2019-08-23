@@ -560,7 +560,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phpmyadmin 8081:8080
+      svc/${DEMO_PREFIX}-phpmyadmin 8081:80
     ```
 
 1. MySQL will be viewable at [localhost:8081](http://localhost:8081).
