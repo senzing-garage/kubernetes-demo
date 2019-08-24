@@ -624,7 +624,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
-    helm delete --purge ${DEMO_PREFIX}-phppgadmin
+    helm delete --purge ${DEMO_PREFIX}-phpmyadmin
     helm delete --purge ${DEMO_PREFIX}-mysql-client
     helm delete --purge ${DEMO_PREFIX}-mysql
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
