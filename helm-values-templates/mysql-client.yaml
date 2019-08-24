@@ -1,5 +1,5 @@
 image:
-  registry: ${DOCKER_REGISTRY_URL}
+# registry: ${DOCKER_REGISTRY_URL}
 
 mysql:
   database: G2
