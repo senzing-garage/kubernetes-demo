@@ -25,6 +25,7 @@ The following table indicates the instructions for variations in components.
         1. Kafka
     1. Database
         1. PostgreSQL
+        1. MySQL
         1. Db2
         1. SQLite
 1. Implementations of the docker formation:
@@ -32,6 +33,7 @@ The following table indicates the instructions for variations in components.
     | Queue    | Database   | Instructions |
     |----------|------------|:------------:|
     | RabbitMQ | PostgreSQL | [:page_facing_up:](docs/helm-rabbitmq-postgresql/README.md) |
+    | RabbitMQ | MySQL      | [:page_facing_up:](docs/helm-rabbitmq-mysql/README.md) |
     | RabbitMQ | Db2        | [:page_facing_up:](docs/helm-rabbitmq-db2/README.md) |
     | RabbitMQ | SQLite     | [:page_facing_up:](docs/helm-rabbitmq-sqlite/README.md) |
     | Kafka    | PostgreSQL | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |

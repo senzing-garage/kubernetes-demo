@@ -3,8 +3,8 @@ image:
 
 mysql:
   database: G2
-  file: g2/data/g2core-schema-mysql-create.sql
-  host: ${DEMO_PREFIX}-mysql-mysql
+  file: senzing-g2/resources/schema/g2core-schema-mysql-create.sql
+  host: ${DEMO_PREFIX}-mysql
   password: g2
-  storageClaim: senzing-persistent-volume-claim
+  persistentVolumeClaim: senzing-persistent-volume-claim
   username: g2
