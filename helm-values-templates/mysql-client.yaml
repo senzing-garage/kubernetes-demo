@@ -1,6 +1,5 @@
 image:
-# registry: ${DOCKER_REGISTRY_URL}
-  registry: docker.io
+  registry: ${DOCKER_REGISTRY_URL}
 
 mysql:
   database: G2
