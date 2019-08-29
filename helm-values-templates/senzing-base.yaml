@@ -8,4 +8,4 @@ senzing:
   args:
     - sleep
     - infinity
-  persistentVolumeClaim: senzing-persistent-volume-claim
+  optSenzingClaim: senzing-persistent-volume-claim
