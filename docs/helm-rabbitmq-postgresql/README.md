@@ -281,6 +281,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 ### Deploy Senzing RPM
 
 This deployment initializes the Persistent Volume with Senzing code and data.
+There are two method available.
+The first method is simpler, but requires a root container.
+The second method can be done on kubernetes with a non-root container
+
+#### root container method
 
 1. Install chart.
    Example:
@@ -307,6 +312,71 @@ This deployment initializes the Persistent Volume with Senzing code and data.
     ```console
     NAME                       READY   STATUS      RESTARTS   AGE
     my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    ```
+
+#### Non-root container method
+
+1. Install chart with non-root container.
+   This pod will be the recipient of a `docker cp` command.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-base \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-base.yaml \
+       senzing/senzing-base
+    ```
+
+1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
+   Example:  a personal laptop.
+
+1. :pencil2: Set environment variables.
+   **Note:** See [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula) for correct value.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+
+    export SENZING_ACCEPT_EULA=put-in-correct-value
+    export SENZING_VOLUME=/opt/my-senzing
+
+    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
+    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
+    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
+    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
+    ```
+
+1. Run docker image.
+   Example:
+
+    ```console
+    sudo docker run \
+      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
+      --rm \
+      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
+      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
+      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
+      senzing/yum
+    ```
+
+1. Copy files from local machine to `senzing-base` pod.
+   Example:
+
+    ```console
+    export SENZING_BASE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-base, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-base" \
+      )
+
+    kubectl cp ${SENZING_DATA_DIR} ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-data
+    kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-g2
+    kubectl cp ${SENZING_ETC_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-etc
+    kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
     ```
 
 ### Install senzing-debug Helm chart
