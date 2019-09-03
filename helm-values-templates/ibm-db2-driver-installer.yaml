@@ -5,5 +5,11 @@ db2:
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+securityContext:
+  enabled: true
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
+
 senzing:
   persistentVolumeClaim: senzing-persistent-volume-claim

@@ -1,6 +1,12 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+securityContext:
+  enabled: true
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
+
 senzing:
   databaseUrl: "sqlite3://na:na@/var/opt/senzing/sqlite/G2C.db"
   persistentVolumeClaim: senzing-persistent-volume-claim

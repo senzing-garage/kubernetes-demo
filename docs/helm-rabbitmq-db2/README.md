@@ -105,16 +105,11 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=kubernetes-demo
-    ```
-
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
-
-1. After the Git repository has been cloned, be sure the following environment variables are set:
-
-    ```console
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
+
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Demonstrate
 
