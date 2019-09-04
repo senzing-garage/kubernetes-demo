@@ -533,13 +533,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
-
-### Install senzing-entity-search-web-app Helm chart
-
-The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
-
-1. Wait for previous pods to run.
+1. Wait for pods to run.
    Example:
 
     ```console
@@ -547,6 +541,12 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
+
+### Install senzing-entity-search-web-app Helm chart
+
+The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install chart.
    Example:
