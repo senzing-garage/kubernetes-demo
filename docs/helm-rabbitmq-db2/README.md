@@ -503,6 +503,23 @@ The init-container creates files from templates and initializes the G2 database.
       --watch
     ```
 
+### Install configurator Helm chart
+
+The Senzing Configurator is a micro-service for changing Senzing configuration.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-configurator \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/configurator.yaml \
+      senzing/senzing-configurator
+    ```
+
+1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
+
 ### Install stream-loader Helm chart
 
 The stream loader pulls messages from RabbitMQ and sends them to Senzing.
@@ -613,6 +630,27 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
+
+#### View Senzing Configurator
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
+    ```
+
+1. Make HTTP calls via `curl`.
+   Example:
+
+    ```console
+    export SENZING_API_SERVICE=http://localhost:5001
+
+    curl -X GET ${SENZING_API_SERVICE}/datasources
+    ```
 
 #### View Senzing API Server
 
