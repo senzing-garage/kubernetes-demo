@@ -147,7 +147,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Helm template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -160,7 +164,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -178,7 +183,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Kubernetes template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -191,7 +200,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -213,7 +223,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-1. Optional: Review namespaces.
+1. :thinking: **Optional:**
+   Review namespaces.
 
     ```console
     kubectl get namespaces
@@ -239,7 +250,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
-1. Optional: Review persistent volumes and claims.
+1. :thinking: **Optional:**
+   Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \
@@ -259,12 +271,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```
 
 1. Update repositories.
+   Example:
 
     ```console
     helm repo update
     ```
 
-1. Optional: Review repositories
+1. :thinking: **Optional:**
+   Review repositories.
+   Example:
 
     ```console
     helm repo list
@@ -576,7 +591,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
-1. Wait until Deployment has completed.
+1. Wait for pod to run.
    Example:
 
     ```console
