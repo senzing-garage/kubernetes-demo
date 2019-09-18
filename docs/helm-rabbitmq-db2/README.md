@@ -419,7 +419,6 @@ This step adds the IBM Db2 Client driver code.
 
     ```console
     NAME                               READY  STATUS     RESTARTS  AGE
-    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
     my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
     ```
 
