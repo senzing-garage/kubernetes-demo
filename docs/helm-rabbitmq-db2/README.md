@@ -289,12 +289,13 @@ Only one method needs to be performed.
 
 ### Deploy Senzing RPM
 
-This deployment initializes the Persistent Volume with Senzing code and data.
-There are two method available.
-The first method is simpler, but requires a root container.
-The second method can be done on kubernetes with a non-root container
+:thinking: This deployment initializes the Persistent Volume with Senzing code and data.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
 
 #### root container method
+
+**Method #1:** This method is simpler, but requires a root container.
 
 1. Install chart.
    Example:
@@ -324,6 +325,8 @@ The second method can be done on kubernetes with a non-root container
     ```
 
 #### Non-root container method
+
+**Method #2:** This method can be done on kubernetes with a non-root container.
 
 1. Install chart with non-root container.
    This pod will be the recipient of a `docker cp` command.
