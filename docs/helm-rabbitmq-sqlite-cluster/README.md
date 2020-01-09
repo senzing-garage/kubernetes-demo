@@ -1,4 +1,4 @@
-# kubernetes-demo-helm-rabbitmq-sqlite
+# kubernetes-demo-helm-rabbitmq-sqlite-cluster
 
 ## Overview
 
