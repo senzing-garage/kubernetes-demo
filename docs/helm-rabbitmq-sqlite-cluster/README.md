@@ -333,6 +333,28 @@ This deployment will be used later to:
       senzing/coleifer-sqlite-web
     ```
 
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web-libfeat \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-libfeat.yaml \
+      senzing/coleifer-sqlite-web
+    ```
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web-res \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-res.yaml \
+      senzing/coleifer-sqlite-web
+    ```
+
 1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
 
 ### Install RabbitMQ Helm chart
@@ -509,10 +531,45 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-coleifer-sqlite-web 8887:8080
+      svc/${DEMO_PREFIX}-coleifer-sqlite-web 9174:8080
     ```
 
-1. SQLite Web will be viewable at [localhost:8887](http://localhost:8887).
+1. SQLite for `G2C.db` is viewable at
+   [localhost:9174](http://localhost:9174).
+    1. The records received from the queue can be viewed in the following Senzing tables:
+        1. DSRC_RECORD
+        1. OBS_ENT
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-coleifer-sqlite-web-libfeat 9175:8080
+    ```
+
+1. SQLite for `G2C_LIBFEAT.db` is viewable at
+   [localhost:9175](http://localhost:9175).
+    1. The records received from the queue can be viewed in the following Senzing tables:
+        1. LIB_FEAT
+
+1. In a separate terminal window, port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-coleifer-sqlite-web-res 9176:8080
+    ```
+
+1. SQLite for `G2C_RES.db`is viewable at
+   [localhost:9176](http://localhost:9176).
+    1. The records received from the queue can be viewed in the following Senzing tables:
+        1. RES_FEAT_STAT
+        1. RES_FEAT_EKEY
 
 #### View Senzing API Server
 
