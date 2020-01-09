@@ -320,42 +320,7 @@ This deployment will be used later to:
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-### Install SQLite Web
 
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-coleifer-sqlite-web \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml \
-      senzing/coleifer-sqlite-web
-    ```
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-coleifer-sqlite-web-libfeat \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-libfeat.yaml \
-      senzing/coleifer-sqlite-web
-    ```
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-coleifer-sqlite-web-res \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-res.yaml \
-      senzing/coleifer-sqlite-web
-    ```
-
-1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
 
 ### Install RabbitMQ Helm chart
 
@@ -396,6 +361,18 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
       senzing/senzing-mock-data-generator
     ```
 
+### FIXME Copy databases
+
+1. XXX `minikube ssh`
+   Example:
+
+    ```console
+    sudo mkdir -p /mnt/vda1/senzing/senzing-var/sqlite
+    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C.db
+    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_LIBFEAT.db
+    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_RES.db
+    ```
+
 ### Install init-container Helm chart
 
 The init-container creates files from templates and initializes the G2 database.
@@ -419,6 +396,43 @@ The init-container creates files from templates and initializes the G2 database.
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+
+### Install SQLite Web
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml \
+      senzing/coleifer-sqlite-web
+    ```
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web-libfeat \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-libfeat.yaml \
+      senzing/coleifer-sqlite-web
+    ```
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-coleifer-sqlite-web-res \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web-res.yaml \
+      senzing/coleifer-sqlite-web
+    ```
+
+1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
 
 ### Install stream-loader Helm chart
 
