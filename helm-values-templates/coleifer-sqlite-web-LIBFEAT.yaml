@@ -1,0 +1,6 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  database: sqlite/G2C_LIBFEAT.db
+  persistentVolumeClaim: senzing-persistent-volume-claim
