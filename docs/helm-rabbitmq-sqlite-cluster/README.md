@@ -378,9 +378,12 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
 
     ```console
     sudo mkdir -p /mnt/vda1/senzing/senzing-var/sqlite
+
     sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C.db
     sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_LIBFEAT.db
     sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_RES.db
+
+    sudo chmod -R 777 /mnt/vda1/senzing/senzing-var/sqlite
     ```
 
 ### Install init-container Helm chart
@@ -455,7 +458,7 @@ The stream loader pulls messages from Kafka and sends them to Senzing.
     helm install \
       --name ${DEMO_PREFIX}-senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite.yaml \
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite-cluster.yaml \
       senzing/senzing-stream-loader
     ```
 
@@ -648,6 +651,8 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
     helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web
+    helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web-libfeat
+    helm delete --purge ${DEMO_PREFIX}-coleifer-sqlite-web-res
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
