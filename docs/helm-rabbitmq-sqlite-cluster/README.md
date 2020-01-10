@@ -361,9 +361,19 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
       senzing/senzing-mock-data-generator
     ```
 
-### FIXME Copy databases
+### Copy databases
 
-1. XXX `minikube ssh`
+1. **Note:** This step is a temporary "hack" to create the 3 databases needed for the SQLite cluster.
+   It will be replaced by additional functionality in the `senzing/senzing-init-container` in the future.
+
+1. Launch a shell into `minikube`.
+   Example:
+
+    ```console
+    minikube ssh
+    ```
+
+1. In the `minikube` shell, copy the `G2C.db.template` into multiple files.
    Example:
 
     ```console
