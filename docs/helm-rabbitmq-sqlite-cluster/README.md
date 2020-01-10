@@ -320,8 +320,6 @@ This deployment will be used later to:
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
-
-
 ### Install RabbitMQ Helm chart
 
 1. Install chart.
@@ -359,31 +357,6 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mock-data-generator-rabbitmq.yaml \
       senzing/senzing-mock-data-generator
-    ```
-
-### Copy databases
-
-1. **Note:** This step is a temporary "hack" to create the 3 databases needed for the SQLite cluster.
-   It will be replaced by additional functionality in the `senzing/senzing-init-container` in the future.
-
-1. Launch a shell into `minikube`.
-   Example:
-
-    ```console
-    minikube ssh
-    ```
-
-1. In the `minikube` shell, copy the `G2C.db.template` into multiple files.
-   Example:
-
-    ```console
-    sudo mkdir -p /mnt/vda1/senzing/senzing-var/sqlite
-
-    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C.db
-    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_LIBFEAT.db
-    sudo cp /mnt/vda1/senzing/senzing-g2/resources/templates/G2C.db.template /mnt/vda1/senzing/senzing-var/sqlite/G2C_RES.db
-
-    sudo chmod -R 777 /mnt/vda1/senzing/senzing-var/sqlite
     ```
 
 ### Install init-container Helm chart
