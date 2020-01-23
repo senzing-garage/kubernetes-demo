@@ -679,8 +679,6 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
 
-
-
 #### View Senzing API Server
 
 1. In a separate terminal window, port forward to local machine.
