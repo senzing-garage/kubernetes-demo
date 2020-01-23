@@ -1,0 +1,7 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  subcommand: redo
+  databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
+  persistentVolumeClaim: senzing-persistent-volume-claim

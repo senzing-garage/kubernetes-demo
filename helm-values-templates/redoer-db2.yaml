@@ -1,0 +1,7 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+senzing:
+  subcommand: redo
+  databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-ibm-db2express-c:50000/G2"
+  persistentVolumeClaim: senzing-persistent-volume-claim
