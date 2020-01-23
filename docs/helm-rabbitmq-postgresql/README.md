@@ -592,6 +592,21 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
+### Install redoer Helm chart
+
+The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-redoer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      senzing/senzing-redoer
+    ```
+
 ### View data
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
