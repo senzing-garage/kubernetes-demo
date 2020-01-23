@@ -36,17 +36,24 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
-    1. [Install IBM Db2 Driver](#install-ibm-db2-driver)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
+    1. [Install IBM Db2 Driver](#install-ibm-db2-driver)
     1. [Install DB2 Helm chart](#install-db2-helm-chart)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
-    1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
+    1. [Optional charts](#optional-charts)
+        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
+        1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Senzing Debug pod](#view-senzing-debug-pod)
+        1. [View RabbitMQ](#view-rabbitmq)
+        1. [View Senzing API Server](#view-senzing-api-server)
+        1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
@@ -291,7 +298,9 @@ Only one method needs to be performed.
 ### Deploy Senzing RPM
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
-There are two methods of accomplishing this.
+There are two methods available.
+The first method is simpler, but requires a root container.
+The second method can be done on kubernetes with a non-root container.
 Only one method needs to be performed.
 
 #### root container method
@@ -392,6 +401,26 @@ Only one method needs to be performed.
     kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
     ```
 
+### Install senzing-debug Helm chart
+
+This deployment will be used later to:
+
+- Inspect mounted volumes
+- Debug issues
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-debug \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml \
+       senzing/senzing-debug
+    ```
+
+1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
+
 ### Install IBM Db2 Driver
 
 This step adds the IBM Db2 Client driver code.
@@ -420,28 +449,9 @@ This step adds the IBM Db2 Client driver code.
 
     ```console
     NAME                               READY  STATUS     RESTARTS  AGE
+    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
     my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
     ```
-
-### Install senzing-debug Helm chart
-
-This deployment will be used later to:
-
-- Inspect mounted volumes
-- Debug issues
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-senzing-debug \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml \
-       senzing/senzing-debug
-    ```
-
-1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
 
 ### Install Db2 Helm chart
 
@@ -521,23 +531,6 @@ The init-container creates files from templates and initializes the G2 database.
       --watch
     ```
 
-### Install configurator Helm chart
-
-The Senzing Configurator is a micro-service for changing Senzing configuration.
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      --name ${DEMO_PREFIX}-senzing-configurator \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator.yaml \
-      senzing/senzing-configurator
-    ```
-
-1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
-
 ### Install stream-loader Helm chart
 
 The stream loader pulls messages from RabbitMQ and sends them to Senzing.
@@ -594,7 +587,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
-1. Wait for pod to run.
+1. Wait until Deployment has completed.
    Example:
 
     ```console
@@ -604,6 +597,43 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     ```
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
+
+### Optional charts
+
+These charts are not necessary for the demonstration,
+but may be valuable in a production environment.
+
+#### Install senzing-redoer Helm chart
+
+The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-redoer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/redoer-db2.yaml \
+      senzing/senzing-redoer
+    ```
+
+#### Install configurator Helm chart
+
+The Senzing Configurator is a micro-service for changing Senzing configuration.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-configurator \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/configurator.yaml \
+      senzing/senzing-configurator
+    ```
+
+1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
 
 ### View data
 
@@ -649,26 +679,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
 
-#### View Senzing Configurator
 
-1. In a separate terminal window, port forward to local machine.
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
-    ```
-
-1. Make HTTP calls via `curl`.
-   Example:
-
-    ```console
-    export SENZING_API_SERVICE=http://localhost:5001
-
-    curl -X GET ${SENZING_API_SERVICE}/datasources
-    ```
 
 #### View Senzing API Server
 
@@ -709,6 +720,28 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
+#### View Senzing Configurator
+
+1. If the Senzing configurator was deployed,
+   in a separate terminal window port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
+    ```
+
+1. Make HTTP calls via `curl`.
+   Example:
+
+    ```console
+    export SENZING_API_SERVICE=http://localhost:5001
+
+    curl -X GET ${SENZING_API_SERVICE}/datasources
+    ```
+
 ## Cleanup
 
 ### Delete everything in project
@@ -716,16 +749,17 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-configurator
+    helm delete --purge ${DEMO_PREFIX}-senzing-redoer
     helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --purge ${DEMO_PREFIX}-senzing-configurator
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
     helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
     helm delete --purge ${DEMO_PREFIX}-senzing-ibm-db2
-    helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-ibm-db2-driver-installer
+    helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml

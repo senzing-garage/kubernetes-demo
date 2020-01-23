@@ -37,14 +37,23 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
     1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
-    1. [Install SQLite web](#install-sqlite-web)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
+    1. [Install SQLite web](#install-sqlite-web)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
+    1. [Optional charts](#optional-charts)
+        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
+        1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Senzing Debug pod](#view-senzing-debug-pod)
+        1. [View RabbitMQ](#view-rabbitmq)
+        1. [View SQLite database](#view-sqlite-database)
+        1. [View Senzing API Server](#view-senzing-api-server)
+        1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
@@ -146,7 +155,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Helm template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -159,7 +172,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -177,7 +191,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Kubernetes template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -190,7 +208,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -212,7 +231,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-1. Optional: Review namespaces.
+1. :thinking: **Optional:**
+   Review namespaces.
 
     ```console
     kubectl get namespaces
@@ -236,7 +256,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
-1. Optional: Review persistent volumes and claims.
+1. :thinking: **Optional:**
+   Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \
@@ -256,12 +277,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```
 
 1. Update repositories.
+   Example:
 
     ```console
     helm repo update
     ```
 
-1. Optional: Review repositories
+1. :thinking: **Optional:**
+   Review repositories.
+   Example:
 
     ```console
     helm repo list
@@ -271,7 +295,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Deploy Senzing RPM
 
-This deployment initializes the Persistent Volume with Senzing code and data.
+:thinking: This deployment initializes the Persistent Volume with Senzing code and data.
+There are two methods available.
+The first method is simpler, but requires a root container.
+The second method can be done on kubernetes with a non-root container.
+Only one method needs to be performed.
+
+#### root container method
+
+**Method #1:** This method is simpler, but requires a root container.
 
 1. Install chart.
    Example:
@@ -298,6 +330,73 @@ This deployment initializes the Persistent Volume with Senzing code and data.
     ```console
     NAME                       READY   STATUS      RESTARTS   AGE
     my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    ```
+
+#### Non-root container method
+
+**Method #2:** This method can be done on kubernetes with a non-root container.
+
+1. Install chart with non-root container.
+   This pod will be the recipient of a `docker cp` command.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-base \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-base.yaml \
+       senzing/senzing-base
+    ```
+
+1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
+   Example:  a personal laptop.
+
+1. :pencil2: Set environment variables.
+   **Note:** See [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula) for correct value.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+
+    export SENZING_ACCEPT_EULA=put-in-correct-value
+    export SENZING_VOLUME=/opt/my-senzing
+
+    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
+    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
+    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
+    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
+    ```
+
+1. Run docker image.
+   Example:
+
+    ```console
+    sudo docker run \
+      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
+      --rm \
+      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
+      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
+      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
+      senzing/yum
+    ```
+
+1. Copy files from local machine to `senzing-base` pod.
+   Example:
+
+    ```console
+    export SENZING_BASE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-base, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-base" \
+      )
+
+    kubectl cp ${SENZING_DATA_DIR} ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-data
+    kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-g2
+    kubectl cp ${SENZING_ETC_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-etc
+    kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
     ```
 
 ### Install senzing-debug Helm chart
@@ -346,7 +445,7 @@ This deployment will be used later to:
 
 ### Install mock-data-generator Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to Kafka.
+The mock data generator pulls JSON lines from a file and pushes them to RabbitMQ.
 
 1. Install chart.
    Example:
@@ -422,7 +521,7 @@ The init-container creates files from templates and initializes the G2 database.
 
 ### Install stream-loader Helm chart
 
-The stream loader pulls messages from Kafka and sends them to Senzing.
+The stream loader pulls messages from RabbitMQ and sends them to Senzing.
 
 1. Install chart.
    Example:
@@ -450,13 +549,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
-
-### Install senzing-entity-search-web-app Helm chart
-
-The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
-
-1. Wait for previous pods to run.
+1. Wait for pods to run.
    Example:
 
     ```console
@@ -464,6 +557,12 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
+
+### Install senzing-entity-search-web-app Helm chart
+
+The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install chart.
    Example:
@@ -476,7 +575,53 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       senzing/senzing-entity-search-web-app
     ```
 
+1. Wait until Deployment has completed.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
+
+### Optional charts
+
+These charts are not necessary for the demonstration,
+but may be valuable in a production environment.
+
+#### Install senzing-redoer Helm chart
+
+The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-redoer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/redoer-sqlite-cluster.yaml \
+      senzing/senzing-redoer
+    ```
+
+#### Install configurator Helm chart
+
+The Senzing Configurator is a micro-service for changing Senzing configuration.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-configurator \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/configurator.yaml \
+      senzing/senzing-configurator
+    ```
+
+1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
 
 ### View data
 
@@ -610,6 +755,28 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
+#### View Senzing Configurator
+
+1. If the Senzing configurator was deployed,
+   in a separate terminal window port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
+    ```
+
+1. Make HTTP calls via `curl`.
+   Example:
+
+    ```console
+    export SENZING_API_SERVICE=http://localhost:5001
+
+    curl -X GET ${SENZING_API_SERVICE}/datasources
+    ```
+
 ## Cleanup
 
 ### Delete everything in project
@@ -617,6 +784,8 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-configurator
+    helm delete --purge ${DEMO_PREFIX}-senzing-redoer
     helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
