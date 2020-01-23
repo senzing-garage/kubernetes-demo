@@ -47,7 +47,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
-        1. [Install redoer Helm chart](#install-redoer-helm-chart)
+        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
     1. [View data](#view-data)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
@@ -599,7 +599,7 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 These charts are not necessary for the demonstration,
 but may be valuable in a production environment.
 
-#### Install redoer Helm chart
+#### Install senzing-redoer Helm chart
 
 The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
 
@@ -725,6 +725,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-redoer
     helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
