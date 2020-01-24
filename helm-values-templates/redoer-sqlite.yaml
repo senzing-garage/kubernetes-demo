@@ -1,7 +1,10 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
 senzing:
-  subcommand: redo
   databaseUrl: "sqlite3://na:na@/var/opt/senzing/sqlite/G2C.db"
   persistentVolumeClaim: senzing-persistent-volume-claim
+  subcommand: redo

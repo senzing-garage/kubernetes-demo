@@ -35,4 +35,4 @@ senzing:
       }
     }
   persistentVolumeClaim: senzing-persistent-volume-claim
-  subcommand: redo
+  subcommand: service

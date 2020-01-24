@@ -1,5 +1,6 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
+  tag: 4.8.5
 
 db:
   host: ${DEMO_PREFIX}-mysql

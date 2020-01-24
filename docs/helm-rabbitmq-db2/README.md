@@ -629,7 +629,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm install \
       --name ${DEMO_PREFIX}-senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator.yaml \
+      --values ${HELM_VALUES_DIR}/configurator-db2.yaml \
       senzing/senzing-configurator
     ```
 
@@ -688,14 +688,14 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8889:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8889
+    export SENZING_API_SERVICE=http://localhost:8250
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
@@ -711,10 +711,10 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8888:80
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8251:80
     ```
 
-1. Senzing Entity Search WebApp will be viewable at [localhost:8888](http://localhost:8888).
+1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
@@ -728,14 +728,14 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:5001
+    export SENZING_API_SERVICE=http://localhost:8253
 
     curl -X GET ${SENZING_API_SERVICE}/datasources
     ```

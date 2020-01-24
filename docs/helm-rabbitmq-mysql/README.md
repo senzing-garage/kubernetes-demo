@@ -641,7 +641,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm install \
       --name ${DEMO_PREFIX}-senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator.yaml \
+      --values ${HELM_VALUES_DIR}/configurator-mysql.yaml \
       senzing/senzing-configurator
     ```
 
@@ -700,10 +700,10 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phpmyadmin 8081:80
+      svc/${DEMO_PREFIX}-phpmyadmin 9173:80
     ```
 
-1. MySQL will be viewable at [localhost:8081](http://localhost:8081).
+1. MySQL will be viewable at [localhost:9173](http://localhost:9173).
     1. Login
        1. See `helm-values/mysql.yaml` for `mysqlUser` and `mysqlPassword`.
        1. Default: username: `g2`  password: `g2`
@@ -721,14 +721,14 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8889:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8889
+    export SENZING_API_SERVICE=http://localhost:8250
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
@@ -744,10 +744,10 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8888:80
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8251:80
     ```
 
-1. Senzing Entity Search WebApp will be viewable at [localhost:8888](http://localhost:8888).
+1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
@@ -761,14 +761,14 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 5001:5000
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:5001
+    export SENZING_API_SERVICE=http://localhost:8253
 
     curl -X GET ${SENZING_API_SERVICE}/datasources
     ```
