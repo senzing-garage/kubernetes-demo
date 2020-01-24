@@ -1,0 +1,10 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
+senzing:
+  databaseUrl: "sqlite3://na:na@/var/opt/senzing/sqlite/G2C.db"
+  persistentVolumeClaim: senzing-persistent-volume-claim
+  subcommand: service

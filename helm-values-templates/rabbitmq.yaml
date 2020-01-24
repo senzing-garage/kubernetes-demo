@@ -1,5 +1,6 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
+  tag: 3.8.2
 
 persistence:
   enabled: true

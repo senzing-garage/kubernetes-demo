@@ -1,2 +1,3 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
+  tag: 2.4.0

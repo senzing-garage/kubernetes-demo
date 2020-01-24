@@ -46,7 +46,16 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
+    1. [Optional charts](#optional-charts)
+        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
+        1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Senzing Debug pod](#view-senzing-debug-pod)
+        1. [View RabbitMQ](#view-rabbitmq)
+        1. [View PostgreSQL](#view-postgresql)
+        1. [View Senzing API Server](#view-senzing-api-server)
+        1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
@@ -148,7 +157,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom helm values files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Helm template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -161,7 +174,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
@@ -179,7 +193,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Create custom kubernetes configuration files
 
-1. Variation #1. Quick method using `envsubst`.
+:thinking: In this step, Kubernetes template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
    Example:
 
     ```console
@@ -192,7 +210,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     done
     ```
 
-1. Variation #2. Copy and modify method.
+1. **Method #2:** Copy and manually modify files method.
+   Example:
 
     ```console
     export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
@@ -214,7 +233,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-1. Optional: Review namespaces.
+1. :thinking: **Optional:**
+   Review namespaces.
 
     ```console
     kubectl get namespaces
@@ -240,7 +260,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
-1. Optional: Review persistent volumes and claims.
+1. :thinking: **Optional:**
+   Review persistent volumes and claims.
 
     ```console
     kubectl get persistentvolumes \
@@ -260,12 +281,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```
 
 1. Update repositories.
+   Example:
 
     ```console
     helm repo update
     ```
 
-1. Optional: Review repositories
+1. :thinking: **Optional:**
+   Review repositories.
+   Example:
 
     ```console
     helm repo list
@@ -275,12 +299,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Deploy Senzing RPM
 
-This deployment initializes the Persistent Volume with Senzing code and data.
-There are two method available.
+:thinking: This deployment initializes the Persistent Volume with Senzing code and data.
+There are two methods available.
 The first method is simpler, but requires a root container.
-The second method can be done on kubernetes with a non-root container
+The second method can be done on kubernetes with a non-root container.
+Only one method needs to be performed.
 
 #### root container method
+
+**Method #1:** This method is simpler, but requires a root container.
 
 1. Install chart.
    Example:
@@ -310,6 +337,8 @@ The second method can be done on kubernetes with a non-root container
     ```
 
 #### Non-root container method
+
+**Method #2:** This method can be done on kubernetes with a non-root container.
 
 1. Install chart with non-root container.
    This pod will be the recipient of a `docker cp` command.
@@ -555,13 +584,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       senzing/senzing-api-server
     ```
 
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
-
-### Install senzing-entity-search-web-app Helm chart
-
-The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
-
-1. Wait for previous pods to run.
+1. Wait for pods to run.
    Example:
 
     ```console
@@ -569,6 +592,12 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
+
+### Install senzing-entity-search-web-app Helm chart
+
+The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install chart.
    Example:
@@ -591,6 +620,43 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     ```
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
+
+### Optional charts
+
+These charts are not necessary for the demonstration,
+but may be valuable in a production environment.
+
+#### Install senzing-redoer Helm chart
+
+The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-redoer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      senzing/senzing-redoer
+    ```
+
+#### Install configurator Helm chart
+
+The Senzing Configurator is a micro-service for changing Senzing configuration.
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      --name ${DEMO_PREFIX}-senzing-configurator \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
+      senzing/senzing-configurator
+    ```
+
+1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
 
 ### View data
 
@@ -650,8 +716,8 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 
 1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
     1. Login
-       1. See `helm-values/postgresql.yaml` for `rabbitmq.username` and `rabbitmq.password`.
-       1. Default: username: `user`  password: `passw0rd`
+       1. See `helm-values/postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. G2 > DSRC_RECORD
@@ -666,14 +732,14 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8889:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8889
+    export SENZING_API_SERVICE=http://localhost:8250
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
@@ -689,12 +755,34 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8888:80
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8251:80
     ```
 
-1. Senzing Entity Search WebApp will be viewable at [localhost:8888](http://localhost:8888).
+1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
+
+#### View Senzing Configurator
+
+1. If the Senzing configurator was deployed,
+   in a separate terminal window port forward to local machine.
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+    ```
+
+1. Make HTTP calls via `curl`.
+   Example:
+
+    ```console
+    export SENZING_API_SERVICE=http://localhost:8253
+
+    curl -X GET ${SENZING_API_SERVICE}/datasources
+    ```
 
 ## Cleanup
 
@@ -703,6 +791,8 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 1. Example:
 
     ```console
+    helm delete --purge ${DEMO_PREFIX}-senzing-configurator
+    helm delete --purge ${DEMO_PREFIX}-senzing-redoer
     helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader

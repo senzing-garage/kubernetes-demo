@@ -1,3 +1,6 @@
+image: ${DOCKER_REGISTRY_URL}/mysql
+imageTag: 5.7.28
+
 mysqlDatabase: G2
 mysqlUser: g2
 mysqlPassword: g2
