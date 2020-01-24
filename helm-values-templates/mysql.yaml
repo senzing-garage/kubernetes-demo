@@ -1,6 +1,5 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: 5.7.28
+image: ${DOCKER_REGISTRY_URL}/mysql
+imageTag: 5.7.28
 
 mysqlDatabase: G2
 mysqlUser: g2
