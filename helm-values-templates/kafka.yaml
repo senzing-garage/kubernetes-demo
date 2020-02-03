@@ -1,3 +1,6 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
   tag: 2.4.0
+
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
