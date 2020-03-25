@@ -13,4 +13,4 @@ securityContext:
 senzing:
   acceptEula: ${SENZING_ACCEPT_EULA}
   persistentVolumeClaim: senzing-persistent-volume-claim
-  yumParameters: ["-y", "localinstall", "/rpms/senzingdata-v1-1.0.0-19287.x86_64.rpm", "/rpms/senzingapi-ibm-cpd-1.14.0-20030.x86_64.rpm"]
+  yumParameters: ["-y", "localinstall", "/rpms/senzingdata-v1-1.0.0-19287.x86_64.rpm", "/rpms/senzingapi-1.14.5-20078.x86_64.rpm"]
