@@ -1,5 +1,8 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
 senzing:
   persistentVolumeClaim: senzing-persistent-volume-claim

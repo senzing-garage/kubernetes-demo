@@ -1,6 +1,9 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
 postgresql:
   database: G2
   file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql

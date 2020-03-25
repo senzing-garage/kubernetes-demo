@@ -1,6 +1,9 @@
 image:
   registry: ${DOCKER_REGISTRY_URL}
 
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
 senzing:
   subcommand: kafka
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"

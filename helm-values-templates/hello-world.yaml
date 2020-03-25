@@ -3,5 +3,8 @@ image:
   repository: senzing/hello-world
   tag: latest
 
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
 senzing:
   sleepTime: 60
