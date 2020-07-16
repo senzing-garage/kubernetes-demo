@@ -4,3 +4,10 @@ image:
 
 imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
+
+persistence:
+  enabled: False
+
+zookeeper:
+  persistence:
+    enabled: False
