@@ -517,7 +517,7 @@ This deployment will be used later to:
 
 ### Install stream-producer Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to RabbitMQ.
+The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
 
 1. Install chart.
    Example:

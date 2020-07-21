@@ -494,7 +494,7 @@ This step starts IBM Db2 database and populates the database with the Senzing sc
 
 ### Install stream-producer Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to RabbitMQ.
+The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
 
 1. Install chart.
    Example:

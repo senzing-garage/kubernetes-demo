@@ -536,7 +536,7 @@ This deployment will be used later to:
 
 ### Install stream-producer Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to Kafka.
+The stream producer pulls JSON lines from a file and pushes them to Kafka.
 
 1. Install chart.
    Example:
