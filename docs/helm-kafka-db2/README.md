@@ -41,7 +41,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install DB2 Helm chart](#install-db2-helm-chart)
     1. [Install Kafka Helm chart](#install-kafka-helm-chart)
     1. [Install Kafka test client](#install-kafka-test-client)
-    1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
@@ -518,7 +518,7 @@ This step starts IBM Db2 database and populates the database with the Senzing sc
 
 1. To view Kafka, see [View Kafka](#view-kafka).
 
-### Install mock-data-generator Helm chart
+### Install stream-producer Helm chart
 
 The mock data generator pulls JSON lines from a file and pushes them to Kafka.
 
@@ -527,10 +527,10 @@ The mock data generator pulls JSON lines from a file and pushes them to Kafka.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-mock-data-generator \
+      --name ${DEMO_PREFIX}-senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mock-data-generator-kafka.yaml \
-      senzing/senzing-mock-data-generator
+      --values ${HELM_VALUES_DIR}/stream-producer-kafka.yaml \
+      senzing/senzing-stream-producer
     ```
 
 ### Install init-container Helm chart
@@ -785,7 +785,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
-    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-senzing-stream-producer
     helm delete --purge ${DEMO_PREFIX}-kafka-test-client
     helm delete --purge ${DEMO_PREFIX}-kafka
     helm delete --purge ${DEMO_PREFIX}-senzing-ibm-db2
