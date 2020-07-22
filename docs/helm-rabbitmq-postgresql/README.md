@@ -41,7 +41,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Initialize database](#initialize-database)
     1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Install mock-data-generator Helm chart](#install-mock-data-generator-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
@@ -515,19 +515,19 @@ This deployment will be used later to:
 
 1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
-### Install mock-data-generator Helm chart
+### Install stream-producer Helm chart
 
-The mock data generator pulls JSON lines from a file and pushes them to RabbitMQ.
+The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
 
 1. Install chart.
    Example:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-mock-data-generator \
+      --name ${DEMO_PREFIX}-senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mock-data-generator-rabbitmq.yaml \
-      senzing/senzing-mock-data-generator
+      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
+      senzing/senzing-stream-producer
     ```
 
 ### Install init-container Helm chart
@@ -797,7 +797,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --purge ${DEMO_PREFIX}-senzing-api-server
     helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --purge ${DEMO_PREFIX}-senzing-init-container
-    helm delete --purge ${DEMO_PREFIX}-senzing-mock-data-generator
+    helm delete --purge ${DEMO_PREFIX}-senzing-stream-producer
     helm delete --purge ${DEMO_PREFIX}-rabbitmq
     helm delete --purge ${DEMO_PREFIX}-phppgadmin
     helm delete --purge ${DEMO_PREFIX}-postgresql-client
