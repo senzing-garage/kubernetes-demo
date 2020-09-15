@@ -8,7 +8,7 @@ senzing:
   subcommand: rabbitmq
   databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
   dataSource: TEST
-  entityType: TEST
+  entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
   persistentVolumeClaim: senzing-persistent-volume-claim
