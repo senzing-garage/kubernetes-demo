@@ -8,7 +8,7 @@ senzing:
   subcommand: rabbitmq
   databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
   dataSource: TEST
-  entityType: TEST
+  entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
   persistentVolumeClaim: senzing-persistent-volume-claim
