@@ -8,7 +8,7 @@ senzing:
   subcommand: rabbitmq
   databaseUrl: "sqlite3://na:na@/var/opt/senzing/sqlite/G2C.db"
   dataSource: TEST
-  entityType: TEST
+  entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
   persistentVolumeClaim: senzing-persistent-volume-claim

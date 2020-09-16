@@ -36,7 +36,7 @@ senzing:
         "LIB_FEAT_HKEY": "C2"
       }
     }
-  entityType: TEST
+  entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
   persistentVolumeClaim: senzing-persistent-volume-claim
