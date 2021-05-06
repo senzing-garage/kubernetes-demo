@@ -445,6 +445,7 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
+      --version v6.5.7 \
       bitnami/postgresql
     ```
 
