@@ -277,6 +277,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
@@ -444,7 +445,7 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      stable/postgresql
+      bitnami/postgresql
     ```
 
 1. Wait for pod to run.
@@ -501,7 +502,7 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      stable/rabbitmq
+      bitnami/rabbitmq
     ```
 
 1. Wait for pods to run.
