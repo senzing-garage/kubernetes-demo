@@ -58,6 +58,14 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
 
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+
 ## Expectations
 
 ### Space
@@ -271,6 +279,13 @@ Only one method needs to be performed.
 
 ### Add helm repositories
 
+1. Add Bitnami repository.
+   Example:
+
+    ```console
+    helm repo add bitnami https://charts.bitnami.com
+    ```
+
 1. Add Senzing repository.
    Example:
 
@@ -478,7 +493,8 @@ This step starts IBM Db2 database and populates the database with the Senzing sc
       --name ${DEMO_PREFIX}-rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      stable/rabbitmq
+      --version v6.0.0 \
+      bitnami/rabbitmq
     ```
 
 1. Wait for pods to run.
@@ -760,6 +776,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
+    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml

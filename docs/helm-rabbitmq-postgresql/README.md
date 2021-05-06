@@ -60,6 +60,14 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
 
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+
 ## Expectations
 
 ### Space
@@ -273,11 +281,17 @@ Only one method needs to be performed.
 
 ### Add helm repositories
 
+1. Add Bitnami repository.
+   Example:
+
+    ```console
+    helm repo add bitnami https://charts.bitnami.com
+    ```
+
 1. Add Senzing repository.
    Example:
 
     ```console
-    helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
