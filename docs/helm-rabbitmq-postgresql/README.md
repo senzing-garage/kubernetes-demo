@@ -277,6 +277,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo add senzing https://senzing.github.io/charts/
     ```
 
@@ -444,7 +445,8 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      stable/postgresql
+      --version v6.5.7 \
+      bitnami/postgresql
     ```
 
 1. Wait for pod to run.
@@ -501,7 +503,8 @@ This deployment will be used later to:
       --name ${DEMO_PREFIX}-rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      stable/rabbitmq
+      --version v6.0.0 \
+      bitnami/rabbitmq
     ```
 
 1. Wait for pods to run.
@@ -805,6 +808,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --purge ${DEMO_PREFIX}-senzing-debug
     helm delete --purge ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
+    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
