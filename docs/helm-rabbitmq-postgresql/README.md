@@ -1,5 +1,9 @@
 # kubernetes-demo-helm-rabbitmq-postgresql
 
+## Synopsis
+
+Using `minikube` bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+
 ## Overview
 
 This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
@@ -60,6 +64,18 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Delete everything in project](#delete-everything-in-project)
     1. [Delete minikube cluster](#delete-minikube-cluster)
 
+## Preamble
+
+At [Senzing](http://senzing.com),
+we strive to create GitHub documentation in a
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+For the most part, instructions are copy and paste.
+Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
+Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
+If the instructions are not clear, please let us know by opening a new
+[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
+describing where we can improve.   Now on with the show...
+
 ### Legend
 
 1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
@@ -68,31 +84,23 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
 1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
 
+## Related artifacts
+
+1. [DockerHub](https://hub.docker.com/r/senzing)
+1. [Helm Charts](https://github.com/Senzing/charts)
+
 ## Expectations
 
-### Space
-
-This repository and demonstration require 20 GB free disk space.
-
-### Time
-
-Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
-
-### Background knowledge
-
-This repository assumes a working knowledge of:
-
-1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-1. [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-1. [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+- **Space:** This repository and demonstration require 20 GB free disk space.
+- **Time:** Budget 4 hous to get the demonstration up-and-running, depending on CPU and network speeds.
+- **Background knowledge:** This repository assumes a working knowledge of:
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software
-
-#### kubectl
-
-1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
 
 #### minikube cluster
 
@@ -103,16 +111,13 @@ This repository assumes a working knowledge of:
     minikube start --cpus 4 --memory 8192 --disk-size=50g
     ```
 
-    Alternative:
+#### kubectl
 
-    ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=50g --vm-driver kvm2
-    ```
+1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
 
-#### Helm/Tiller
+#### Helm
 
-1. [Install Helm](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
-1. [Install Tiller](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-tiller.md) in the minikube cluster.
+1. [Install Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
 
 ### Clone repository
 
@@ -840,3 +845,9 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     minikube stop
     minikube delete
     ```
+
+## Errors
+
+1. See [docs/errors.md](docs/errors.md).
+
+## References
