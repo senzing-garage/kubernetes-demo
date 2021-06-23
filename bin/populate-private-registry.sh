@@ -2,6 +2,9 @@
 
 DOCKER_IMAGES=(
     "senzing/yum:${SENZING_DOCKER_IMAGE_VERSION_YUM}"
+    "senzing/senzing-base:${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}"
+    "bitnami/"
+    "bitnami/zookeeper:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_ZOOKEEPER}"
 )
 
 for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
