@@ -126,6 +126,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 ### Start minikube cluster
 
 1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
+   Example:
 
     ```console
     minikube start --cpus 4 --memory 8192 --disk-size=50g
