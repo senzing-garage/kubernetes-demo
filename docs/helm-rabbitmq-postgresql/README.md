@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Using `minikube` bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
 
@@ -92,7 +92,7 @@ describing where we can improve.   Now on with the show...
 ## Expectations
 
 - **Space:** This repository and demonstration require 20 GB free disk space.
-- **Time:** Budget 4 hous to get the demonstration up-and-running, depending on CPU and network speeds.
+- **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
   - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
@@ -102,22 +102,9 @@ describing where we can improve.   Now on with the show...
 
 ### Prerequisite software
 
-#### minikube cluster
-
-1. [Install minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md).
-1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
-
-    ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=50g
-    ```
-
-#### kubectl
-
-1. [Install kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md).
-
-#### Helm
-
-1. [Install Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md) on your local workstation.
+1. [minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
 ### Clone repository
 
@@ -135,6 +122,14 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Demonstrate
+
+### Start minikube cluster
+
+1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
+
+    ```console
+    minikube start --cpus 4 --memory 8192 --disk-size=50g
+    ```
 
 ### EULA
 
