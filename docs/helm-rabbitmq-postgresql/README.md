@@ -169,7 +169,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     curl -X GET \
-      --output ${SENZING_OUTPUT_DIR}/docker-versions-latest.sh \
+      --output ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/versions-latest.sh
     ```
 
@@ -177,7 +177,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    source ${SENZING_OUTPUT_DIR}/docker-versions-latest.sh
+    source ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh
     ```
 
 ### Create custom helm values files
