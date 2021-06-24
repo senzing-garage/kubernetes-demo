@@ -11,7 +11,7 @@ DOCKER_IMAGES=(
     "senzing/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}"
     "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT}"
     "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER}"
-    "senzing/resolver:$[SENZING_DOCKER_IMAGE_VERSION_RESOLVER]"
+    "senzing/resolver:${SENZING_DOCKER_IMAGE_VERSION_RESOLVER}"
     "senzing/senzing-api-server:${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER}"
     "senzing/senzing-base:${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}"
     "senzing/senzing-console:${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}"
