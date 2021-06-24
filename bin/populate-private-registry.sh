@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
 DOCKER_IMAGES=(
-    "senzing/yum:${SENZING_DOCKER_IMAGE_VERSION_YUM}"
-    "senzing/senzing-base:${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}"
-    "bitnami/"
+    "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_POSTGRES}"
+    "bitnami/rabbitmq:${SENZING_DOCKER_IMAGE_VERSION_RABBITMQ}"
     "bitnami/zookeeper:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_ZOOKEEPER}"
+    "coleifer/sqlite-web${SENZING_DOCKER_IMAGE_VERSION_SQLITE_WEB}"
+    "senzing/configurator:${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR}"
+    "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}"
+    "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER}"
+    "senzing/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}"
+    "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT}"
+    "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER}"
+    "senzing/resolver:$[SENZING_DOCKER_IMAGE_VERSION_RESOLVER]"
+    "senzing/senzing-api-server:${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER}"
+    "senzing/senzing-base:${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}"
+    "senzing/senzing-console:${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}"
+    "senzing/senzing-debug:${SENZING_DOCKER_IMAGE_VERSION_SENZING_DEBUG}"
+    "senzing/stream-loader:${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}"
+    "senzing/stream-producer:${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}"
+    "senzing/yum:${SENZING_DOCKER_IMAGE_VERSION_YUM}"
 )
 
 for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};

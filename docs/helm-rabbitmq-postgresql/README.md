@@ -164,6 +164,22 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
+1. Retrieve latest docker image version numbers.
+   Example:
+
+    ```console
+    curl -X GET \
+      --output ${SENZING_OUTPUT_DIR}/docker-versions-latest.sh \
+      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/versions-latest.sh
+    ```
+
+1. Set environment variables for docker image versions used.
+   Example:
+
+    ```console
+    source ${SENZING_OUTPUT_DIR}/docker-versions-latest.sh
+    ```
+
 ### Create custom helm values files
 
 :thinking: In this step, Helm template files are populated with actual values.
