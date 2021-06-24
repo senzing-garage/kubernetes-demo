@@ -4,7 +4,7 @@ DOCKER_IMAGES=(
     "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_POSTGRES}"
     "bitnami/rabbitmq:${SENZING_DOCKER_IMAGE_VERSION_RABBITMQ}"
     "bitnami/zookeeper:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_ZOOKEEPER}"
-    "coleifer/sqlite-web${SENZING_DOCKER_IMAGE_VERSION_SQLITE_WEB}"
+    "coleifer/sqlite-web:${SENZING_DOCKER_IMAGE_VERSION_SQLITE_WEB}"
     "senzing/configurator:${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR}"
     "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}"
     "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER}"
