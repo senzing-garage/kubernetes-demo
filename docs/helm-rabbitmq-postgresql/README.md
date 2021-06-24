@@ -170,7 +170,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```console
     curl -X GET \
       --output ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh \
-      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/versions-latest.sh
+      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
     ```
 
 1. Set environment variables for docker image versions used.
