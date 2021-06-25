@@ -503,10 +503,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-postgresql-client \
+      ${DEMO_PREFIX}-postgresql-client \
+      senzing/postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
-      senzing/postgresql-client
+      --values ${HELM_VALUES_DIR}/postgresql-client.yaml
     ```
 
 ### Install phpPgAdmin Helm Chart
@@ -516,10 +516,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-phppgadmin \
+      ${DEMO_PREFIX}-phppgadmin \
+      senzing/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
-      senzing/phppgadmin
+      --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
@@ -531,11 +531,11 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-rabbitmq \
+      ${DEMO_PREFIX}-rabbitmq \
+      bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      --version v6.0.0 \
-      bitnami/rabbitmq
+      --version v6.0.0
     ```
 
 1. Wait for pods to run.
