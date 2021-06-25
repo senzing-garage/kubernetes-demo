@@ -447,10 +447,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-debug \
+      ${DEMO_PREFIX}-senzing-debug \
+      senzing/senzing-debug \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml \
-       senzing/senzing-debug
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml
     ```
 
 1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
@@ -473,11 +473,11 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-postgresql \
+      ${DEMO_PREFIX}-postgresql \
+      bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      --version v6.5.7 \
-      bitnami/postgresql
+      --version v6.5.7
     ```
 
 1. Wait for pod to run.
@@ -825,19 +825,19 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 1. Example:
 
     ```console
-    helm delete --purge ${DEMO_PREFIX}-senzing-configurator
-    helm delete --purge ${DEMO_PREFIX}-senzing-redoer
-    helm delete --purge ${DEMO_PREFIX}-senzing-entity-search-web-app
-    helm delete --purge ${DEMO_PREFIX}-senzing-api-server
-    helm delete --purge ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --purge ${DEMO_PREFIX}-senzing-init-container
-    helm delete --purge ${DEMO_PREFIX}-senzing-stream-producer
-    helm delete --purge ${DEMO_PREFIX}-rabbitmq
-    helm delete --purge ${DEMO_PREFIX}-phppgadmin
-    helm delete --purge ${DEMO_PREFIX}-postgresql-client
-    helm delete --purge ${DEMO_PREFIX}-postgresql
-    helm delete --purge ${DEMO_PREFIX}-senzing-debug
-    helm delete --purge ${DEMO_PREFIX}-senzing-yum
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-debug
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
