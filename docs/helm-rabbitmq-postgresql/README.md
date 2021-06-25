@@ -302,14 +302,14 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    helm repo add bitnami https://charts.bitnami.com
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     ```
 
 1. Add Senzing repository.
    Example:
 
     ```console
-    helm repo add senzing https://senzing.github.io/charts/
+    helm repo add senzing https://hub.senzing.com/charts/
     ```
 
 1. Update repositories.
@@ -346,10 +346,10 @@ Only one method needs to be performed.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-yum \
+      ${DEMO_PREFIX}-senzing-yum \
+      senzing/senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum.yaml \
-      senzing/senzing-yum
+      --values ${HELM_VALUES_DIR}/senzing-yum.yaml
     ```
 
 1. Wait until Job has completed.
@@ -378,10 +378,10 @@ Only one method needs to be performed.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-base \
+      name ${DEMO_PREFIX}-senzing-base \
+      senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-base.yaml \
-       senzing/senzing-base
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
