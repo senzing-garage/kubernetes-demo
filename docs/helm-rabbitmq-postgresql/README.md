@@ -25,9 +25,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
 ### Contents
 
 1. [Expectations](#expectations)
-    1. [Space](#space)
-    1. [Time](#time)
-    1. [Background knowledge](#background-knowledge)
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -178,6 +175,25 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     source ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh
+    ```
+
+### Populate private Docker registry
+
+If a private Docker registry, in other words a docker registry other than `docker.io`,
+then populate the private Docker registry.
+
+1. :thinking: If needed, set `sudo` access for docker commands.
+   Example:
+
+    ```console
+    export SENZING_SUDO=sudo
+    ```
+
+1. Download, tag, and push images to private Docker registry.
+   Example:
+
+    ```console
+    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
     ```
 
 ### Create custom helm values files
@@ -518,7 +534,7 @@ This deployment will be used later to:
     helm install \
       ${DEMO_PREFIX}-phppgadmin \
       senzing/phppgadmin \
-      --namespace ${DEMO_NAMESPACE} \
+      --namespace ${DEMO_NAMESPACE} \+
       --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
 
