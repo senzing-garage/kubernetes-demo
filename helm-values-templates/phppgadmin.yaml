@@ -1,3 +1,6 @@
+containerSecurityContext:
+  enabled: false
+
 image:
   registry: ${DOCKER_REGISTRY_URL}
   tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
