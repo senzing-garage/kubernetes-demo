@@ -451,7 +451,7 @@ Only one method needs to be performed.
     kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
     ```
 
-### Install senzing-debug Helm chart
+### Install senzing-console Helm chart
 
 This deployment will be used later to:
 
@@ -463,13 +463,13 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-debug \
-      senzing/senzing-debug \
+      ${DEMO_PREFIX}-senzing-console \
+      senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-debug.yaml
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console.yaml
     ```
 
-1. To use senzing-debug pod, see [View Senzing Debug pod](#view-senzing-debug-pod).
+1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
 ### Install Postgresql Helm chart
 
@@ -720,20 +720,20 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-#### View Senzing Debug pod
+#### View Senzing Console pod
 
 1. In a separate terminal window, log into debug pod.
    Example:
 
     ```console
-    export DEBUG_POD_NAME=$(kubectl get pods \
+    export CONSOLE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-debug, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-debug" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
       )
 
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${DEBUG_POD_NAME} -- /bin/bash
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
 
 #### View RabbitMQ
