@@ -9,6 +9,9 @@ image:
 imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
 
+loadDefinition:
+  enabled: true
+
 persistence:
   enabled: true
   existingClaim: rabbitmq-persistent-volume-claim
