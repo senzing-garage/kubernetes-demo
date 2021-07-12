@@ -550,8 +550,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
-      --version v6.0.0
+      --values ${HELM_VALUES_DIR}/rabbitmq.yaml
     ```
 
 1. Wait for pods to run.
@@ -574,10 +573,10 @@ The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-stream-producer \
+      ${DEMO_PREFIX}-senzing-stream-producer \
+      senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
-      senzing/senzing-stream-producer
+      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml
     ```
 
 ### Install init-container Helm chart

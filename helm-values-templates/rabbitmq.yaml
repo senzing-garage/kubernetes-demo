@@ -9,7 +9,7 @@ persistence:
   enabled: true
   existingClaim: rabbitmq-persistent-volume-claim
 
-rabbitmq:
+auth:
   password: passw0rd
   username: user
 
