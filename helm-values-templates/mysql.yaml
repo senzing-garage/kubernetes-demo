@@ -1,5 +1,5 @@
 image: ${DOCKER_REGISTRY_URL}/mysql
-imageTag: ${SENZING_DOCKER_IMAGE_VERSION_MYSQL}
+imageTag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL}
 
 mysqlDatabase: G2
 mysqlUser: g2
