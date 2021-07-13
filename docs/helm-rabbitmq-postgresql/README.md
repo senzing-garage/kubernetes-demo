@@ -37,7 +37,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
-    1. [Install senzing-debug Helm chart](#install-senzing-debug-helm-chart)
+    1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
     1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
@@ -51,7 +51,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
-        1. [View Senzing Debug pod](#view-senzing-debug-pod)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
         1. [View Senzing API Server](#view-senzing-api-server)
@@ -721,7 +721,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
 #### View Senzing Console pod
 
-1. In a separate terminal window, log into debug pod.
+1. In a separate terminal window, log into Senzing Console pod.
    Example:
 
     ```console
@@ -851,7 +851,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-debug
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     helm repo remove bitnami
