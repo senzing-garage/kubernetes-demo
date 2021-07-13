@@ -534,7 +534,7 @@ This deployment will be used later to:
     helm install \
       ${DEMO_PREFIX}-phppgadmin \
       senzing/phppgadmin \
-      --namespace ${DEMO_NAMESPACE} \+
+      --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
 
