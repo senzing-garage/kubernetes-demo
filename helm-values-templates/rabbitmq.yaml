@@ -2,9 +2,9 @@ auth:
   password: passw0rd
   username: user
 
-#image:
-#  registry: ${DOCKER_REGISTRY_URL}
-#  tag: ${SENZING_DOCKER_IMAGE_VERSION_RABBITMQ}
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_RABBITMQ}
 
 imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
