@@ -588,10 +588,10 @@ The init-container creates files from templates and initializes the G2 database.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-init-container \
+      ${DEMO_PREFIX}-senzing-init-container \
+      senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
-      senzing/senzing-init-container
+      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml
     ```
 
 1. Wait for pods to run.
@@ -612,10 +612,10 @@ The stream loader pulls messages from RabbitMQ and sends them to Senzing.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-stream-loader \
+      ${DEMO_PREFIX}-senzing-stream-loader \
+      senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
-      senzing/senzing-stream-loader
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml
     ```
 
 ### Install senzing-api-server Helm chart
@@ -627,10 +627,10 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-api-server \
+      ${DEMO_PREFIX}-senzing-api-server \
+      senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml \
-      senzing/senzing-api-server
+      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml
     ```
 
 1. Wait for pods to run.
@@ -653,10 +653,10 @@ The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing 
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-entity-search-web-app \
+      ${DEMO_PREFIX}-senzing-entity-search-web-app \
+      senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
-      senzing/senzing-entity-search-web-app
+      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml
     ```
 
 1. Wait until Deployment has completed.
@@ -684,10 +684,10 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-redoer \
+      ${DEMO_PREFIX}-senzing-redoer \
+      senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
-      senzing/senzing-redoer
+      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml
     ```
 
 #### Install configurator Helm chart
@@ -699,10 +699,10 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     helm install \
-      --name ${DEMO_PREFIX}-senzing-configurator \
+      ${DEMO_PREFIX}-senzing-configurator \
+      senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
-      senzing/senzing-configurator
+      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
