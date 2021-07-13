@@ -9,9 +9,10 @@ image:
 imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
 
-persistence:
-  enabled: true
-  existingClaim: rabbitmq-persistent-volume-claim
+# FIXME:
+# persistence:
+#   enabled: true
+#   existingClaim: rabbitmq-persistent-volume-claim
 
 volumePermissions:
   enabled: true
