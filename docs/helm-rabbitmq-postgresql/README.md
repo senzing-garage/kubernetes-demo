@@ -135,15 +135,17 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. :warning: This step is intentionally tricky and not simply copy/paste.
    This ensures that you make a conscious effort to accept the EULA.
-   See
-   [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)
-   for the correct value.
-   Replace the double-quote character in the example with the correct value.
-   The use of the double-quote character is intentional to prevent simple copy/paste.
+   Example:
+
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+
+### Enable minikube docker registry
+
+1. Enable a docker registry inside the minikube instance.
    Example:
 
     ```console
-    export SENZING_ACCEPT_EULA="
+    minikube addons enable registry
     ```
 
 ### Set environment variables
@@ -155,7 +157,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
 
-    export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_URL=$(minikube ip):5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
