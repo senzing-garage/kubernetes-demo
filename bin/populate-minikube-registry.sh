@@ -10,5 +10,8 @@ source ${SCRIPT_DIR}/docker-images.sh
 for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
 do
     ${SENZING_SUDO} docker pull ${DOCKER_IMAGE}
-    minikube cache add ${DOCKER_IMAGE}
+
+    # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-load
+
+    minikube image load ${DOCKER_IMAGE}
 done
