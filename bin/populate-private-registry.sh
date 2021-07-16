@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# List all of the docker images to be installed into the private registry.
+# Instantiate "DOCKER_IMAGES", a list of docker images to be installed into the private registry.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 source ${SCRIPT_DIR}/docker-images.sh
