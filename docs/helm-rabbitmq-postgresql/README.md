@@ -534,7 +534,7 @@ The advantage of this method is that the Senzing RPMs are not downloaded from th
     exit
     ```
 
-1. In `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
+1. Install chart to perform `yum localinstall`.
    Example:
 
     ```console
