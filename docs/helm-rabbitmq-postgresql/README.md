@@ -183,7 +183,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 #### Use public registry
 
-**Method #1:** Pulls docker images from public internet registry.
+_Method #1:_ Pulls docker images from public internet registry.
 
 1. Use the default public `docker.io` registry which pulls images from
    [hub.docker.com](https://hub.docker.com/).
@@ -196,7 +196,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 #### Use private registry
 
-**Method #2:** Pulls docker images from private registry.
+_Method #2:_ Pulls docker images from private registry.
 
 1. :pencil2: Specify a private registry.
    Example:
@@ -210,7 +210,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 #### Use minikube registry
 
-**Method #3:** Pulls docker images from minikube's registry.
+_Method #3:_ Pulls docker images from minikube's registry.
 
 1. Use minikube's docker registry.
    Example:
@@ -415,7 +415,7 @@ _Method #1:_ This method is simpler, but requires a root container.
 
 #### Non-root container method
 
-**Method #2:** This method can be done on kubernetes with a non-root container.
+_Method #2:_ This method can be done on kubernetes with a non-root container.
 
 1. Install chart with non-root container.
    This pod will be the recipient of a `docker cp` command.
@@ -482,7 +482,7 @@ _Method #1:_ This method is simpler, but requires a root container.
 
 #### yum localinstall method
 
-**Method #3:** This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
+_Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 
 1. :pencil2: Identify a directory to store downloaded files.
