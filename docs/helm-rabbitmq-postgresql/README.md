@@ -384,7 +384,7 @@ Choose one:
 
 #### Root container method
 
-**Method #1:** This method is simpler, but requires a root container.
+_Method #1:_ This method is simpler, but requires a root container.
 
 1. Install chart.
    Example:
