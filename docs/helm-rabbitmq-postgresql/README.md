@@ -139,63 +139,87 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
-### Enable minikube docker registry
-
-1. Enable a docker registry inside the minikube instance.
-   Example:
-
-    ```console
-    minikube addons enable registry
-    ```
-
 ### Set environment variables
 
-1. :pencil2: Environment variables that need customization.
+1. Set environment variables listed in "[Clone repository](#clone-repository)".
+
+1. :pencil2: Environment variables that can be customized.
    Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
-    export DOCKER_REGISTRY_URL=$(minikube ip):5000
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
-1. Set environment variables listed in "[Clone repository](#clone-repository)".
-
-1. Retrieve latest docker image version numbers.
+1. Retrieve latest docker image version numbers and set their environment variables.
    Example:
 
     ```console
     curl -X GET \
       --output ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
-    ```
 
-1. Set environment variables for docker image versions used.
-   Example:
-
-    ```console
     source ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh
     ```
 
-### Populate private Docker registry
-
-If a private Docker registry, in other words a docker registry other than `docker.io`,
-then populate the private Docker registry.
-
-1. :thinking: If needed, set `sudo` access for docker commands.
+1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    export SENZING_SUDO=sudo
+    curl -X GET \
+      --output ${GIT_REPOSITORY_DIR}/bin/senzing-versions-latest.sh \
+      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
+
+    source ${GIT_REPOSITORY_DIR}/bin/senzing-versions-latest.sh
     ```
 
-1. Download, tag, and push images to private Docker registry.
+### Identify Docker registry
+
+:thinking: There are 3 options when it comes to using a docker registry.  Choose one:
+
+1. [Use public registry](#use-public-registry)
+1. [Use private registry](#use-private-registry)
+1. [Use minikube registry](#use-minikube-registry)
+
+#### Use public registry
+
+**Method #1:** Pulls docker images from public internet registry.
+
+1. Use the default public `docker.io` registry which pulls images from
+   [hub.docker.com](https://hub.docker.com/).
    Example:
 
     ```console
+    export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    ```
+
+#### Use private registry
+
+**Method #2:** Pulls docker images from private registry.
+
+1. :pencil2: Specify a private registry.
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_URL=my.example.com:5000
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    export SENZING_SUDO=sudo
     ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
+    ```
+
+#### Use minikube registry
+
+**Method #3:** Pulls docker images from minikube's registry.
+
+1. Use minikube's docker registry.
+   Example:
+
+    ```console
+    minikube addons enable registry
+    export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
     ```
 
 ### Create custom helm values files
@@ -350,12 +374,15 @@ Only one method needs to be performed.
 ### Deploy Senzing RPM
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
-There are two methods available.
-The first method is simpler, but requires a root container.
-The second method can be done on kubernetes with a non-root container.
-Only one method needs to be performed.
 
-#### root container method
+There are 3 options when it comes to initializing the Persistent Volume with Senzing code and data.
+Choose one:
+
+1. [Root container method](#root-container-method) - but requires a root container
+1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
+1. [yum localinstall method](#yum-localinstall-method) - Uses existing Senzing RPMs, so no downloading during installation.
+
+#### Root container method
 
 **Method #1:** This method is simpler, but requires a root container.
 
@@ -451,6 +478,71 @@ Only one method needs to be performed.
     kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-g2
     kubectl cp ${SENZING_ETC_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-etc
     kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
+    ```
+
+#### yum localinstall method
+
+**Method #3:** This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
+The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
+
+1. :pencil2: Identify a directory to store downloaded files.
+   Example:
+
+    ```console
+    export DOWNLOAD_DIR=~/Downloads
+    ```
+
+1. Download Senzing RPMs.
+   Example:
+
+    ```console
+    docker run \
+      --rm \
+      --volume ${DOWNLOAD_DIR}:/download \
+      senzing/yumdownloader \
+         senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
+         senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
+    ```
+
+1. Copy files into minikube.
+   Example:
+
+    ```console
+    scp -i $(minikube ssh-key) \
+        ${DOWNLOAD_DIR}/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME} \
+        docker@$(minikube ip):/home/docker
+
+    scp -i $(minikube ssh-key) \
+        ${DOWNLOAD_DIR}/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME} \
+        docker@$(minikube ip):/home/docker
+    ```
+
+1. Log into `minikube` instance.
+   Example:
+
+    ```console
+    minikube ssh
+    ```
+
+1. In the `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
+   Example:
+
+    ```console
+    sudo mkdir -p /mnt/vda1/senzing/senzing-rpms
+    sudo mv /home/docker/senzingdata* /mnt/vda1/senzing/senzing-rpms
+    sudo mv /home/docker/senzingapi* /mnt/vda1/senzing/senzing-rpms
+    exit
+    ```
+
+1. In `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-yum \
+      senzing/senzing-yum \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml
     ```
 
 ### Install senzing-console Helm chart

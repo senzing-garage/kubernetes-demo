@@ -9,7 +9,5 @@ source ./docker-images.sh
 for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
 do
     ${SENZING_SUDO} docker pull ${DOCKER_IMAGE}
-    ${SENZING_SUDO} docker tag  ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}
-    ${SENZING_SUDO} docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}
-    ${SENZING_SUDO} docker rmi  ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}
+    minikube cache add ${DOCKER_IMAGE}
 done
