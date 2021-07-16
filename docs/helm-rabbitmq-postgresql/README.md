@@ -545,6 +545,22 @@ The advantage of this method is that the Senzing RPMs are not downloaded from th
       --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml
     ```
 
+1. Wait until Job has completed.
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of completion:
+
+    ```console
+    NAME                       READY   STATUS      RESTARTS   AGE
+    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    ```
+
 ### Install senzing-console Helm chart
 
 This deployment will be used later to:
