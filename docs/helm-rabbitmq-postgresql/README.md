@@ -870,7 +870,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 8081:8080
+      svc/${DEMO_PREFIX}-phppgadmin 8081:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
