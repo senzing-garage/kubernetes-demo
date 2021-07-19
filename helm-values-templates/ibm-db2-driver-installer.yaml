@@ -4,6 +4,7 @@ db2:
 
 image:
   registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_DB2_DRIVER_INSTALLER}
 
 imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}

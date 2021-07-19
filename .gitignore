@@ -1,2 +1,4 @@
 helm-values/
 kubernetes/
+bin/docker-versions-latest.sh
+bin/senzing-versions-latest.sh
