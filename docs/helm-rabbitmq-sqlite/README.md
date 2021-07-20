@@ -577,21 +577,6 @@ This deployment will be used later to:
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
-### Install SQLite Web
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-coleifer-sqlite-web \
-      senzing/coleifer-sqlite-web \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml
-    ```
-
-1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
-
 ### Install RabbitMQ Helm chart
 
 1. Install chart.
@@ -654,6 +639,21 @@ The init-container creates files from templates and initializes the G2 database.
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+
+### Install SQLite Web
+
+1. Install chart.
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-coleifer-sqlite-web \
+      senzing/coleifer-sqlite-web \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml
+    ```
+
+1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
 
 ### Install stream-loader Helm chart
 
