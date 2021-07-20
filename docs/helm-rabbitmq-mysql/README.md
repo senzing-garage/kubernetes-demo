@@ -713,7 +713,7 @@ The stream loader pulls messages from RabbitMQ and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-mysql.yaml
     ```
 
 ### Install senzing-api-server Helm chart
@@ -785,7 +785,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/redoer-mysql.yaml
     ```
 
 #### Install configurator Helm chart
