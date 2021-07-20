@@ -1,9 +1,12 @@
-image: ${DOCKER_REGISTRY_URL}/mysql
-imageTag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL}
+auth:
+  database: G2
+  password: g2
+  username: g2
 
-mysqlDatabase: G2
-mysqlUser: g2
-mysqlPassword: g2
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL}
 
-persistence:
-  existingClaim: mysql-persistent-volume-claim
+primary:
+  persistence:
+    existingClaim: mysql-persistent-volume-claim
