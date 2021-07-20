@@ -675,6 +675,7 @@ This deployment will be used later to:
     ```
 
 1. Wait for pods to run.
+   *Note:* Kafka will crash and restart until Zookeeper is up an running.
    Example:
 
     ```console
