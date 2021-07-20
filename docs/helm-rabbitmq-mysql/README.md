@@ -689,7 +689,7 @@ The init-container creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/init-container-mysql.yaml
     ```
 
 1. Wait for pods to run.
