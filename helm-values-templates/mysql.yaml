@@ -10,3 +10,6 @@ image:
 primary:
   persistence:
     existingClaim: mysql-persistent-volume-claim
+
+volumePermissions:
+  enabled: true
