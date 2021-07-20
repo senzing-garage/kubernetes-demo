@@ -631,7 +631,7 @@ This deployment will be used later to:
     ```console
     helm install \
       ${DEMO_PREFIX}-phpmyadmin \
-      senzing/phpmyadmin \
+      bitnami/phpmyadmin \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/phpmyadmin.yaml
     ```

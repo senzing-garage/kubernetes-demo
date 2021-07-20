@@ -1,12 +1,8 @@
+# See https://github.com/bitnami/charts/tree/master/bitnami/phpmyadmin
+
 image:
   registry: ${DOCKER_REGISTRY_URL}
   tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_PHPMYADMIN}
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
-
 db:
   host: ${DEMO_PREFIX}-mysql
-
-service:
-  port: 80
