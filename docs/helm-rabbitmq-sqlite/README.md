@@ -587,7 +587,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-coleifer-sqlite-web \
       senzing/coleifer-sqlite-web \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml \
+      --values ${HELM_VALUES_DIR}/coleifer-sqlite-web.yaml
     ```
 
 1. To view SQLite database via SQLite Web, see [View SQLite database](#view-sqlite-database).
