@@ -574,7 +574,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console.yaml
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console-db2.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
