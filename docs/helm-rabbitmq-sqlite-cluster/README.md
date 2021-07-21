@@ -689,7 +689,7 @@ The stream loader pulls messages from RabbitMQ and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-sqlite-cluster.yaml
     ```
 
 ### Install senzing-api-server Helm chart
@@ -704,7 +704,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-sqlite-cluster.yaml
     ```
 
 1. Wait for pods to run.
@@ -761,7 +761,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-sqlite.yaml
+      --values ${HELM_VALUES_DIR}/redoer-sqlite-cluster.yaml
     ```
 
 #### Install configurator Helm chart
@@ -776,7 +776,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-sqlite.yaml
+      --values ${HELM_VALUES_DIR}/configurator-sqlite-cluster.yaml
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
