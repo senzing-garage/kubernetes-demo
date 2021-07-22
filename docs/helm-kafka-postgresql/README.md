@@ -752,7 +752,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
     ```
 
 1. Wait for pods to run.
