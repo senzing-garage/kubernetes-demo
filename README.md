@@ -27,13 +27,10 @@ The following table indicates the instructions for variations in components.
     1. Database
         1. PostgreSQL
         1. MySQL
-        1. Db2
 1. Implementations of the docker formation:
 
     | Queue    | Database       | Instructions   |
     |----------|----------------|:--------------:|
     | RabbitMQ | PostgreSQL     | [:page_facing_up:](docs/helm-rabbitmq-postgresql/README.md) |
     | RabbitMQ | MySQL          | [:page_facing_up:](docs/helm-rabbitmq-mysql/README.md) |
-    | RabbitMQ | Db2            | [:page_facing_up:](docs/helm-rabbitmq-db2/README.md) |
     | Kafka    | PostgreSQL     | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |
-    | Kafka    | Db2            | [:page_facing_up:](docs/helm-kafka-db2/README.md) |
