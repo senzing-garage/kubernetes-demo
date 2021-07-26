@@ -576,7 +576,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console.yaml
+      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console-postgresql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -740,7 +740,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
     ```
 
 1. Wait for pods to run.

@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: db2-persistent-volume
   labels:
-    assign-to: database
+    type: local
   namespace: ${DEMO_NAMESPACE}
 spec:
   accessModes:

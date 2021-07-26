@@ -1,9 +1,17 @@
-image: ${DOCKER_REGISTRY_URL}/mysql
-imageTag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL}
+# See https://github.com/bitnami/charts/tree/master/bitnami/mysql
 
-mysqlDatabase: G2
-mysqlUser: g2
-mysqlPassword: g2
+auth:
+  database: G2
+  password: g2
+  username: g2
 
-persistence:
-  existingClaim: mysql-persistent-volume-claim
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL}
+
+primary:
+  persistence:
+    existingClaim: mysql-persistent-volume-claim
+
+volumePermissions:
+  enabled: true
