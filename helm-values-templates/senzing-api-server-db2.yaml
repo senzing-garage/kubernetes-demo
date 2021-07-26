@@ -17,7 +17,7 @@ senzing:
       },
       "SQL": {
         "BACKEND": "HYBRID",
-        "CONNECTION": "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
+        "CONNECTION": "db2://db2inst1:db2inst1@G2"
       }
     }
   persistentVolumeClaim: senzing-persistent-volume-claim
