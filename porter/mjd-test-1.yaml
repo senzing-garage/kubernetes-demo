@@ -1,0 +1,93 @@
+mixins:
+- helm3:
+    clientVersion: v3.3.0
+    repositories:
+      stable:
+        url: "https://kubernetes-charts.storage.googleapis.com"
+
+name: helm3-mysql
+version: 0.1.0
+tag: getporter/helm3-mysql:v0.1.0
+
+credentials:
+- name: kubeconfig
+  path: /root/.kube/config
+
+parameters:
+- name: database-name
+  type: string
+  default: mydb
+- name: mysql-user
+  type: string
+  default: mysql-admin
+- name: namespace
+  type: string
+  default: ''
+- name: mysql-name
+  type: string
+  default: my-mysql
+
+customActions:
+  status:
+    description: "Get the status of a helm3 release"
+    modifies: false
+    stateless: true
+
+install:
+  - helm3:
+      description: "Install MySQL"
+      name: "{{ bundle.parameters.mysql-name }}"
+      chart: stable/mysql
+      version: 1.6.2
+      namespace: "{{ bundle.parameters.namespace }}"
+      replace: true
+      set:
+        mysqlDatabase: "{{ bundle.parameters.database-name}}"
+        mysqlUser: "{{ bundle.parameters.mysql-user }}"
+      outputs:
+      - name: mysql-root-password
+        secret: "{{ bundle.parameters.mysql-name }}"
+        key: mysql-root-password
+      - name: mysql-password
+        secret: "{{ bundle.parameters.mysql-name }}"
+        key: mysql-password
+
+status:
+  - helm3:
+      description: "MySQL Status"
+      arguments:
+        - status
+        - "{{ bundle.parameters.mysql-name }}"
+      flags:
+        o: yaml
+
+upgrade:
+  - helm3:
+      description: "Upgrade MySQL"
+      name: "{{ bundle.parameters.mysql-name }}"
+      namespace: "{{ bundle.parameters.namespace }}"
+      chart: stable/mysql
+      version: 1.6.2
+      outputs:
+      - name: mysql-root-password
+        secret: "{{ bundle.parameters.mysql-name }}"
+        key: mysql-root-password
+      - name: mysql-password
+        secret: "{{ bundle.parameters.mysql-name }}"
+        key: mysql-password
+
+uninstall:
+  - helm3:
+      description: "Uninstall MySQL"
+      namespace: "{{ bundle.parameters.namespace }}"
+      releases:
+        - "{{ bundle.parameters.mysql-name }}"
+
+outputs:
+  - name: mysql-password
+    description: "The mysql database password"
+    type: string
+    applyTo:
+      - install
+      - upgrade
+    sensitive: true
