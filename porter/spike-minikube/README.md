@@ -94,7 +94,11 @@ The Git repository has files that will be used in the `helm install --values` pa
    Example:
 
     ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=50g  --embed-certs
+    minikube start \
+      --cpus 4 \
+      --disk-size=50g  \
+      --embed-certs \
+      --memory 8192
     ```
 
 ### Build bundle
