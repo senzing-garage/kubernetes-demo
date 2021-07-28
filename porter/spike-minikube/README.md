@@ -111,6 +111,18 @@ The Git repository has files that will be used in the `helm install --values` pa
     porter build
     ```
 
+### Create credentials
+
+1. []()
+   Example:
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
+    porter credentials generate spike-helm3
+    ```
+
+    1. Choose: *file path* = ~/.kube/config
+
 ### Install bundle
 
 1. [Install bundle](https://porter.sh/cli/porter_install/).
@@ -118,7 +130,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     ```console
     cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
-    porter install
+    porter install --cred spike-helm3
     ```
 
 ## Cleanup
