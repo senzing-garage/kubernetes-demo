@@ -122,7 +122,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
     1. Set:
-        1. *file path* = ~/.kube/config
+        1. *file path* = /home/[username]/.kube/config
 
 ### Install bundle
 
