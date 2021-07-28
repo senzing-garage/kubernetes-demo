@@ -4,9 +4,9 @@
 # -----------------------------------------------------------------------------
 
 description: Spike to try out porter with MySql
-name: helm3-mysql
+name: spike-helm3-mysql
 version: 0.1.0
-tag: senzing/spike-helm3-mysql:v0.1.0
+registry: senzing
 
 # -----------------------------------------------------------------------------
 # Mixins
