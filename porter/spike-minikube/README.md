@@ -121,7 +121,8 @@ The Git repository has files that will be used in the `helm install --values` pa
     porter credentials generate spike-helm3
     ```
 
-    1. Choose: *file path* = ~/.kube/config
+    1. Set:
+        1. *file path* = ~/.kube/config
 
 ### Install bundle
 
