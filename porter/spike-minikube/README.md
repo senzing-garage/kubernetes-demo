@@ -116,3 +116,23 @@ The Git repository has files that will be used in the `helm install --values` pa
     cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
     porter install
     ```
+
+## Cleanup
+
+### Delete everything in project
+
+1. Example:
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
+    porter uninstall
+    ```
+
+### Delete minikube cluster
+
+1. Example:
+
+    ```console
+    minikube stop
+    minikube delete
+    ```
