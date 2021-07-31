@@ -1,6 +1,9 @@
 # -----------------------------------------------------------------------------
-# Spike: minikube
-# Based on https://github.com/MChorfa/porter-helm3/blob/master/example/porter.yaml
+# Spike: azure kubernetes cluster
+# References:
+# - https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough
+# - https://github.com/getporter/porter/blob/main/examples/azure-terraform/porter.yaml
+# - https://github.com/getporter/porter/tree/main/examples/azure-terraform
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -8,8 +11,8 @@
 # https://porter.sh/author-bundles/#bundle-metadata
 # -----------------------------------------------------------------------------
 
-description: Spike to try out porter with MySql
-name: spike-helm3-mysql
+description: Spike to deploy Kubernetes on Azure
+name: spike-azure-k8s
 version: 0.1.0
 registry: senzing
 
@@ -20,11 +23,7 @@ registry: senzing
 # -----------------------------------------------------------------------------
 
 mixins:
-- helm3:
-    clientVersion: "v3.3.4"
-    repositories:
-      stable:
-        url: "https://charts.helm.sh/stable"
+- az
 
 # -----------------------------------------------------------------------------
 # Credentials
@@ -33,8 +32,7 @@ mixins:
 # -----------------------------------------------------------------------------
 
 credentials:
-- default: ~/.kube/config
-  description: File with embedded server and user certificates to connect to a kubernetes cluster. Helm should have already been init'd on this cluster.
+- description: File with embedded server and user certificates to connect to a kubernetes cluster. Helm should have already been init'd on this cluster.
   name: kubeconfig
   path: /root/.kube/config
 
@@ -48,26 +46,12 @@ parameters:
 - name: database-name
   type: string
   default: mydb
-- name: mysql-user
-  type: string
-  default: mysql-admin
-- name: namespace
-  type: string
-  default: ''
-- name: mysql-name
-  type: string
-  default: my-mysql
 
 # -----------------------------------------------------------------------------
 # Custom Actions
 # https://porter.sh/author-bundles/#custom-actions
 # -----------------------------------------------------------------------------
 
-customActions:
-  status:
-    description: "Get the status of a helm3 release"
-    modifies: false
-    stateless: true
 
 # -----------------------------------------------------------------------------
 # Bundle Actions
@@ -77,60 +61,40 @@ customActions:
 # -- install ------------------------------------------------------------------
 
 install:
-  - helm3:
-      description: "Install MySQL"
-      name: "{{ bundle.parameters.mysql-name }}"
-      chart: stable/mysql
-      version: 1.6.2
-      namespace: "{{ bundle.parameters.namespace }}"
-      replace: true
-      set:
-        mysqlDatabase: "{{ bundle.parameters.database-name}}"
-        mysqlUser: "{{ bundle.parameters.mysql-user }}"
-      outputs:
-      - name: mysql-root-password
-        secret: "{{ bundle.parameters.mysql-name }}"
-        key: mysql-root-password
-      - name: mysql-password
-        secret: "{{ bundle.parameters.mysql-name }}"
-        key: mysql-password
-
-# -- status -------------------------------------------------------------------
-
-status:
-  - helm3:
-      description: "MySQL Status"
+  - az:
       arguments:
-        - status
-        - "{{ bundle.parameters.mysql-name }}"
+        - login
+      description: "Azure CLI login"
       flags:
-        o: yaml
+        password: "{{ bundle.credentials.AZURE_SP_PASSWORD}}"
+        service-principal:
+        tenant: "{{ bundle.credentials.AZURE_TENANT}}"
+        username: "{{ bundle.credentials.AZURE_SP_CLIENT_ID}}"
+
+  - az:
+      arguments:
+        - group
+        - create
+      description: "Create a resource group"
+      flags:
+        name: myResourceGroup
+        location: eastus
 
 # -- upgrade ------------------------------------------------------------------
 
-upgrade:
-  - helm3:
-      description: "Upgrade MySQL"
-      name: "{{ bundle.parameters.mysql-name }}"
-      namespace: "{{ bundle.parameters.namespace }}"
-      chart: stable/mysql
-      version: 1.6.2
-      outputs:
-      - name: mysql-root-password
-        secret: "{{ bundle.parameters.mysql-name }}"
-        key: mysql-root-password
-      - name: mysql-password
-        secret: "{{ bundle.parameters.mysql-name }}"
-        key: mysql-password
 
 # -- uninstall ----------------------------------------------------------------
 
 uninstall:
-  - helm3:
-      description: "Uninstall MySQL"
-      namespace: "{{ bundle.parameters.namespace }}"
-      releases:
-        - "{{ bundle.parameters.mysql-name }}"
+  - az:
+      arguments:
+        - group
+        - delete
+      description: "Delete a resource group"
+      flags:
+        name: myResourceGroup
+        yes:
+        no-wait:
 
 # -----------------------------------------------------------------------------
 # outputs

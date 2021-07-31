@@ -83,23 +83,10 @@ The Git repository has files that will be used in the `helm install --values` pa
    Example:
 
     ```console
-    porter mixin install helm3 --feed-url https://mchorfa.github.io/porter-helm3/atom.xml
+    porter mixin install az
     ```
 
 ## Demonstrate
-
-### Start minikube cluster
-
-1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview).
-   Example:
-
-    ```console
-    minikube start \
-      --cpus 4 \
-      --disk-size=50g  \
-      --embed-certs \
-      --memory 8192
-    ```
 
 ### Build bundle
 
@@ -118,7 +105,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     ```console
     cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
-    porter credentials generate spike-helm3
+    porter credentials generate spike-azure-k8s
     ```
 
     1. Set:
@@ -131,7 +118,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
     ```console
     cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
-    porter install --cred spike-helm3
+    porter install --cred spike-azure-k8s
     ```
 
 ## Cleanup
@@ -143,13 +130,4 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     cd ${GIT_REPOSITORY_DIR}/porter/spike-minikube
     porter uninstall
-    ```
-
-### Delete minikube cluster
-
-1. Example:
-
-    ```console
-    minikube stop
-    minikube delete
     ```
