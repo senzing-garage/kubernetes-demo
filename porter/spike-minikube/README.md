@@ -101,6 +101,13 @@ The Git repository has files that will be used in the `helm install --values` pa
       --memory 8192
     ```
 
+1. Configure local host environment with [minikube docker-env](https://minikube.sigs.k8s.io/docs/commands/docker-env/)
+   Example:
+
+    ```console
+    eval $(minikube docker-env)
+    ```
+
 ### Build bundle
 
 1. [Build bundle](https://porter.sh/cli/porter_build/).
