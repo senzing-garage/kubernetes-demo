@@ -1,8 +1,8 @@
-# kubernetes-demo-helm-rabbitmq-postgresql
+# kubernetes-demo-azure-helm-rabbitmq-postgresql
 
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
 
@@ -99,9 +99,19 @@ describing where we can improve.   Now on with the show...
 
 ### Prerequisite software
 
-1. [minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md)
+1. [Azure subscription](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/azure-subscription.md)
+1. [Azure Command Line Interface (CLI)](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/azure-cli.md)
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+
+## Prerequisites
+
+1. Login to Azure.
+   Example:
+
+    ```console
+    az login
+    ```
 
 ### Clone repository
 
@@ -120,15 +130,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ## Demonstrate
 
-### Start minikube cluster
-
-1. [Start cluster](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview).
-   Example:
-
-    ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=50g
-    ```
-
 ### EULA
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
@@ -143,12 +144,24 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
-1. :pencil2: Environment variables that can be customized.
+1. :pencil2: Create unique prefix.
+   This will be used to create unique names in Azure.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=Xyzzy
+    ```
+
+1. Set environment variables..
    Example:
 
     ```console
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
+    export AZURE_LOCATION=eastus
+    export AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
+    export AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -178,8 +191,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 :thinking: There are 3 options when it comes to using a docker registry.  Choose one:
 
 1. [Use public registry](#use-public-registry)
-1. [Use private registry](#use-private-registry)
-1. [Use minikube registry](#use-minikube-registry)
 
 #### Use public registry
 
@@ -192,34 +203,6 @@ _Method #1:_ Pulls docker images from public internet registry.
     ```console
     export DOCKER_REGISTRY_URL=docker.io
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ```
-
-#### Use private registry
-
-_Method #2:_ Pulls docker images from private registry.
-
-1. :pencil2: Specify a private registry.
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.example.com:5000
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
-    ```
-
-#### Use minikube registry
-
-_Method #3:_ Pulls docker images from minikube's registry.
-
-1. Use minikube's docker registry.
-   Example:
-
-    ```console
-    minikube addons enable registry
-    export DOCKER_REGISTRY_URL=docker.io
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
     ```
 
 ### Create custom helm values files
@@ -291,9 +274,60 @@ Only one method needs to be performed.
 
     1. `${DEMO_NAMESPACE}`
 
+### Create an Azure Resource Group
+
+1. Create Resource group
+   using
+   [az group create](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create).
+   Example:
+
+    ```console
+    az group create \
+        --name ${AZURE_RESOURCE_GROUP_NAME} \
+        --location ${AZURE_LOCATION}
+    ```
+
+## Create an Azure Kubernetes Service cluster
+
+1. [Create Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#create-an-aks-cluster)
+   using
+   [az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_create)
+   Example:
+
+    ```console
+    az aks create \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
+        --name ${AZURE_AKS_NAME} \
+        --location ${AZURE_LOCATION} \
+        --generate-ssh-keys
+    ```
+
+## Connect to your AKS cluster
+
+1. [Connect to your AKS cluster](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#connect-to-your-aks-cluster).
+   Get credentials for `kubectl` using
+   [az aks get-credential](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_get_credentials)
+   Example:
+
+    ```console
+    az aks get-credentials \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
+        --name ${AZURE_AKS_NAME}
+    ```
+
+### Create Azure files for Persistent Volumes
+
+The choice of "Azure Files" over "Azure Disks" is because of
+> Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
+on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
+
+Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
+
+
 ### Create namespace
 
-1. Create namespace.
+1. Create namespace using
+   [helm create](https://helm.sh/docs/helm/helm_create/)
    Example:
 
     ```console
