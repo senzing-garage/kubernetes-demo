@@ -315,15 +315,6 @@ Only one method needs to be performed.
         --name ${AZURE_AKS_NAME}
     ```
 
-### Create Azure files for Persistent Volumes
-
-The choice of "Azure Files" over "Azure Disks" is because of
-> Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
-on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
-
-Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
-
-
 ### Create namespace
 
 1. Create namespace using
@@ -331,7 +322,7 @@ Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -343,22 +334,26 @@ Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
 
 ### Create persistent volume
 
-1. Create persistent volumes.
+"Azure Files" have been selected over "Azure Disks" because:
+> Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
+on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
+
+1. Create Storage Class.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/storage-class-azure.yaml
     ```
+
+   Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql-azure.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq-azure.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-azure.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -621,7 +616,7 @@ This deployment will be used later to:
    Example:
 
     ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
+    kubectl apply configmap ${DEMO_PREFIX}-pg-hba \
       --namespace ${DEMO_NAMESPACE} \
       --from-file=${KUBERNETES_DIR}/pg_hba.conf
     ```
