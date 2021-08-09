@@ -146,10 +146,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. :pencil2: Create unique prefix.
    This will be used to create unique names in Azure.
+   :warning:  Must be all lowercase.
    Example:
 
     ```console
-    export DEMO_PREFIX=Xyzzy
+    export DEMO_PREFIX=xyzzy
     ```
 
 1. Set environment variables..
@@ -286,7 +287,7 @@ Only one method needs to be performed.
         --location ${AZURE_LOCATION}
     ```
 
-   View in [Azure portal](https://portal.azure.com/#home).
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
 
 ## Create an Azure Kubernetes Service cluster
 
@@ -302,6 +303,8 @@ Only one method needs to be performed.
         --location ${AZURE_LOCATION} \
         --generate-ssh-keys
     ```
+
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
 
 ## Connect to your AKS cluster
 
