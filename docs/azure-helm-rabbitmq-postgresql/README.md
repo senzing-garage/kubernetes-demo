@@ -156,7 +156,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export AZURE_LOCATION=eastus
@@ -286,6 +285,8 @@ Only one method needs to be performed.
         --name ${AZURE_RESOURCE_GROUP_NAME} \
         --location ${AZURE_LOCATION}
     ```
+
+   View in [Azure portal](https://portal.azure.com/#home).
 
 ## Create an Azure Kubernetes Service cluster
 
