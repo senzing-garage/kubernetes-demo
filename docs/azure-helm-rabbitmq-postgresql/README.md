@@ -1004,13 +1004,16 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-### Delete minikube cluster
+### Delete Resource Group
 
-1. Example:
+1. Delete the Azure Resource Group using
+   [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete)
 
     ```console
-    minikube stop
-    minikube delete
+    az group delete \
+        --name ${AZURE_RESOURCE_GROUP_NAME} \
+        --yes \
+        --no-wait
     ```
 
 ## Errors
