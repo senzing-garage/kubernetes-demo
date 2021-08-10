@@ -442,8 +442,8 @@ _Method #1:_ This method is simpler, but requires a root container.
 1. Example of completion:
 
     ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    NAME                          READY   STATUS      RESTARTS   AGE
+    xyzzy-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
 
 #### Non-root container method
@@ -590,8 +590,8 @@ The advantage of this method is that the Senzing RPMs are not downloaded from th
 1. Example of completion:
 
     ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    NAME                          READY   STATUS      RESTARTS   AGE
+    xyzzy-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
 
 ### Install senzing-console Helm chart
@@ -620,7 +620,7 @@ This deployment will be used later to:
    Example:
 
     ```console
-    kubectl apply configmap ${DEMO_PREFIX}-pg-hba \
+    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
       --namespace ${DEMO_NAMESPACE} \
       --from-file=${KUBERNETES_DIR}/pg_hba.conf
     ```
@@ -651,8 +651,8 @@ This deployment will be used later to:
 1. Example of pod running:
 
     ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    NAME                                      READY   STATUS      RESTARTS   AGE
+    xyzzy-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
     ```
 
 ### Initialize database
