@@ -938,6 +938,20 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
+1. Using [SwaggerUI](https://swagger.io/tools/swagger-ui/).
+   Example:
+
+    ```console
+    docker run \
+      --env URL=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml \
+      --name senzing-swagger-ui \
+      --publish 9180:8080 \
+      --rm \
+      swaggerapi/swagger-ui
+    ```
+
+   Then visit [http://localhost:9180](http://localhost:9180).
+
 #### View Senzing Entity Search WebApp
 
 1. In a separate terminal window, port forward to local machine.
