@@ -170,14 +170,14 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export DEMO_DIR=~/azure-demo-${DEMO_PREFIX}
+    export DEMO_DIR=~/senzing-azure-demo-${DEMO_PREFIX}
     ```
 
 1. Make a directory for the demo.
    Example:
 
     ```console
-    mkdir ${DEMO_DIR}
+    mkdir -p ${DEMO_DIR}
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -300,7 +300,8 @@ Only one method needs to be performed.
     ```console
     az group create \
         --name ${AZURE_RESOURCE_GROUP_NAME} \
-        --location ${AZURE_LOCATION}
+        --location ${AZURE_LOCATION} \
+        > ${DEMO_DIR}/az-group-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
@@ -348,7 +349,7 @@ Only one method needs to be performed.
         --name RootManageSharedAccessKey \
         --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        > ${DEMO_DIR}/az-servicebus-namespace-authorizatio-rule-keys-list.json
+        > ${DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
