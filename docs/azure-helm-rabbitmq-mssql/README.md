@@ -1085,7 +1085,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
    [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete)
 
     ```console
-    az servicebus queue delete
+    az servicebus queue delete \
         --name ${AZURE_QUEUE_NAME} \
         --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
@@ -1095,7 +1095,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
    [az servicebus Namespace delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace?view=azure-cli-latest#az_servicebus_namespace_delete)
 
     ```console
-    az servicebus namespace delete
+    az servicebus namespace delete \
         --name ${AZURE_MESSAGE_BUS_NAME} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
