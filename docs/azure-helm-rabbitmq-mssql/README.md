@@ -166,8 +166,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```console
     export AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
     export AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
-    export AZURE_AUTH_KEYS_NAME="${DEMO_PREFIX}AuthKeys"
-    export AZURE_MESSAGE_BUS_NAME="${DEMO_PREFIX}MessageBus"
+    export AZURE_MESSAGE_BUS_NAMESPACE="${DEMO_PREFIX}MessageBusNamespace"
     export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
@@ -298,7 +297,7 @@ Only one method needs to be performed.
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
 
-## Create an Azure Service Bus Queue
+### Create an Azure Service Bus Queue
 
 1. Create Azure Service Bus Namespace
    using
@@ -308,7 +307,7 @@ Only one method needs to be performed.
     ```console
     az servicebus namespace create \
         --location ${AZURE_LOCATION} \
-        --name ${AZURE_MESSAGE_BUS_NAME} \
+        --name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
@@ -322,7 +321,7 @@ Only one method needs to be performed.
     ```console
     az servicebus queue create \
         --name ${AZURE_QUEUE_NAME} \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
@@ -336,8 +335,8 @@ Only one method needs to be performed.
 
     ```console
     az servicebus namespace authorization-rule keys list \
-        --name ${AZURE_AUTH_KEYS_NAME} \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --name RootManageSharedAccessKey \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --output tsv \
         --query primaryConnectionString \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
@@ -347,7 +346,7 @@ Only one method needs to be performed.
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
-## Create an Azure Kubernetes Service cluster
+### Create an Azure Kubernetes Service cluster
 
 1. [Create Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#create-an-aks-cluster)
    using
@@ -364,7 +363,7 @@ Only one method needs to be performed.
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
 
-## Connect to your AKS cluster
+### Connect to your AKS cluster
 
 1. [Connect to your AKS cluster](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#connect-to-your-aks-cluster).
    Get credentials for `kubectl` using
@@ -1087,7 +1086,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     ```console
     az servicebus queue delete \
         --name ${AZURE_QUEUE_NAME} \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
@@ -1096,7 +1095,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     az servicebus namespace delete \
-        --name ${AZURE_MESSAGE_BUS_NAME} \
+        --name ${AZURE_MESSAGE_BUS_NAMESPACE} \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
