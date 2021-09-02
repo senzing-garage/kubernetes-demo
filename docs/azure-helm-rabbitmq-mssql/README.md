@@ -170,6 +170,14 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    export DEMO_DIR=~/azure-demo-${DEMO_PREFIX}
+    ```
+
+1. Make a directory for the demo.
+   Example:
+
+    ```console
+    mkdir ${DEMO_DIR}
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -177,10 +185,10 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     curl -X GET \
-      --output ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh \
+      --output ${DEMO_DIR}/docker-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
 
-    source ${GIT_REPOSITORY_DIR}/bin/docker-versions-latest.sh
+    source ${DEMO_DIR}/docker-versions-latest.sh
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
@@ -188,10 +196,10 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     curl -X GET \
-      --output ${GIT_REPOSITORY_DIR}/bin/senzing-versions-latest.sh \
+      --output ${DEMO_DIR}/senzing-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
 
-    source ${GIT_REPOSITORY_DIR}/bin/senzing-versions-latest.sh
+    source ${DEMO_DIR}/senzing-versions-latest.sh
     ```
 
 ### Identify Docker registry
@@ -223,7 +231,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
+    export HELM_VALUES_DIR=${DEMO_DIR}/helm-values
     mkdir -p ${HELM_VALUES_DIR}
 
     for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
@@ -236,7 +244,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export HELM_VALUES_DIR=${GIT_REPOSITORY_DIR}/helm-values
+    export HELM_VALUES_DIR=${DEMO_DIR}/helm-values
     mkdir -p ${HELM_VALUES_DIR}
 
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
@@ -259,7 +267,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
+    export KUBERNETES_DIR=${DEMO_DIR}/kubernetes
     mkdir -p ${KUBERNETES_DIR}
 
     for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
@@ -272,7 +280,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export KUBERNETES_DIR=${GIT_REPOSITORY_DIR}/kubernetes
+    export KUBERNETES_DIR=${DEMO_DIR}/kubernetes
     mkdir -p ${KUBERNETES_DIR}
 
     cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
@@ -308,7 +316,8 @@ Only one method needs to be performed.
     az servicebus namespace create \
         --location ${AZURE_LOCATION} \
         --name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
+        > ${DEMO_DIR}/az-servicebus-namespace-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
@@ -322,7 +331,8 @@ Only one method needs to be performed.
     az servicebus queue create \
         --name ${AZURE_QUEUE_NAME} \
         --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
+        > ${DEMO_DIR}/az-servicebus-queue-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
@@ -337,9 +347,8 @@ Only one method needs to be performed.
     az servicebus namespace authorization-rule keys list \
         --name RootManageSharedAccessKey \
         --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --output tsv \
-        --query primaryConnectionString \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
+        > ${DEMO_DIR}/az-servicebus-namespace-authorizatio-rule-keys-list.json
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
@@ -516,7 +525,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-base.yaml
+      --values ${DEMO_DIR}/helm-values/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -666,7 +675,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${GIT_REPOSITORY_DIR}/helm-values/senzing-console-postgresql.yaml
+      --values ${DEMO_DIR}/helm-values/senzing-console-postgresql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
