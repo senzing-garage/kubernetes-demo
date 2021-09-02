@@ -1,0 +1,112 @@
+# -----------------------------------------------------------------------------
+# Spike: azure kubernetes cluster
+# References:
+# - https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough
+# - https://github.com/getporter/porter/blob/main/examples/azure-terraform/porter.yaml
+# - https://github.com/getporter/porter/tree/main/examples/azure-terraform
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Metadata
+# https://porter.sh/author-bundles/#bundle-metadata
+# -----------------------------------------------------------------------------
+
+description: Spike to deploy Kubernetes on Azure
+name: spike-azure-k8s
+version: 0.1.0
+registry: senzing
+
+# -----------------------------------------------------------------------------
+# Mixins
+# https://porter.sh/author-bundles/#mixins
+# https://porter.sh/mixins/
+# -----------------------------------------------------------------------------
+
+mixins:
+- az
+
+# -----------------------------------------------------------------------------
+# Credentials
+# https://porter.sh/author-bundles/#credentials
+# https://porter.sh/credentials/
+# -----------------------------------------------------------------------------
+
+credentials:
+- description: File with embedded server and user certificates to connect to a kubernetes cluster. Helm should have already been init'd on this cluster.
+  name: kubeconfig
+  path: /root/.kube/config
+
+# -----------------------------------------------------------------------------
+# Parameters
+# https://porter.sh/author-bundles/#parameters
+# https://porter.sh/parameters/
+# -----------------------------------------------------------------------------
+
+parameters:
+- name: database-name
+  type: string
+  default: mydb
+
+# -----------------------------------------------------------------------------
+# Custom Actions
+# https://porter.sh/author-bundles/#custom-actions
+# -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
+# Bundle Actions
+# https://porter.sh/author-bundles/#bundle-actions
+# -----------------------------------------------------------------------------
+
+# -- install ------------------------------------------------------------------
+
+install:
+  - az:
+      arguments:
+        - login
+      description: "Azure CLI login"
+      flags:
+        password: "{{ bundle.credentials.AZURE_SP_PASSWORD}}"
+        service-principal:
+        tenant: "{{ bundle.credentials.AZURE_TENANT}}"
+        username: "{{ bundle.credentials.AZURE_SP_CLIENT_ID}}"
+
+  - az:
+      arguments:
+        - group
+        - create
+      description: "Create a resource group"
+      flags:
+        name: myResourceGroup
+        location: eastus
+
+# -- upgrade ------------------------------------------------------------------
+
+
+# -- uninstall ----------------------------------------------------------------
+
+uninstall:
+  - az:
+      arguments:
+        - group
+        - delete
+      description: "Delete a resource group"
+      flags:
+        name: myResourceGroup
+        yes:
+        no-wait:
+
+# -----------------------------------------------------------------------------
+# outputs
+# https://porter.sh/author-bundles/#parameters
+# https://porter.sh/wiring/#outputs
+# -----------------------------------------------------------------------------
+
+outputs:
+  - name: mysql-password
+    description: "The mysql database password"
+    type: string
+    applyTo:
+      - install
+      - upgrade
+    sensitive: true
