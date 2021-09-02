@@ -312,6 +312,8 @@ Only one method needs to be performed.
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
+
 1. Create Azure Queue in the Service Bus
    using
    [az servicebus queue create](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_create).
@@ -324,6 +326,9 @@ Only one method needs to be performed.
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
+   Near bottom, select "Queues" tab.
+
 1. Create Authorization keys
    using
    [az servicebus namespace authorization-rule keys list](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace/authorization-rule/keys?view=azure-cli-latest#az_servicebus_namespace_authorization_rule_keys_list).
@@ -331,10 +336,10 @@ Only one method needs to be performed.
 
     ```console
     az servicebus namespace authorization-rule keys list \
-        --name ${AZURE_AUTH_KEYS_NAME}
-        --namespace-name ${AZURE_MESSAGE_BUS_NAME}
-        --output tsv
-        --query primaryConnectionString
+        --name ${AZURE_AUTH_KEYS_NAME} \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --output tsv \
+        --query primaryConnectionString \
         --resource-group ${AZURE_RESOURCE_GROUP_NAME}
     ```
 
