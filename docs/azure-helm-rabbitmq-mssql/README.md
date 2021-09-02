@@ -1,8 +1,8 @@
-# kubernetes-demo-azure-helm-rabbitmq-postgresql
+# kubernetes-demo-azure-helm-rabbitmq-mssql
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a MS SQL database.
 
 ## Overview
 
@@ -153,15 +153,24 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export DEMO_PREFIX=xyzzy
     ```
 
-1. Set environment variables..
+1. :pencil2: Identify Azure location.
    Example:
 
     ```console
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export AZURE_LOCATION=eastus
+    ```
+
+1. Synthesize environment variables.
+   Example:
+
+    ```console
     export AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
     export AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
+    export AZURE_AUTH_KEYS_NAME="${DEMO_PREFIX}AuthKeys"
+    export AZURE_MESSAGE_BUS_NAME="${DEMO_PREFIX}MessageBus"
+    export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
+    export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -288,6 +297,50 @@ Only one method needs to be performed.
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
+
+## Create an Azure Service Bus Queue
+
+1. Create Azure Service Bus Namespace
+   using
+   [az servicebus namespace create](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace?view=azure-cli-latest#az_servicebus_namespace_create).
+   Example:
+
+    ```console
+    az servicebus namespace create \
+        --location ${AZURE_LOCATION} \
+        --name ${AZURE_MESSAGE_BUS_NAME} \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+    ```
+
+1. Create Azure Queue in the Service Bus
+   using
+   [az servicebus queue create](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_create).
+   Example:
+
+    ```console
+    az servicebus queue create \
+        --name ${AZURE_QUEUE_NAME} \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+    ```
+
+1. Create Authorization keys
+   using
+   [az servicebus namespace authorization-rule keys list](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace/authorization-rule/keys?view=azure-cli-latest#az_servicebus_namespace_authorization_rule_keys_list).
+   Example:
+
+    ```console
+    az servicebus namespace authorization-rule keys list \
+        --name ${AZURE_AUTH_KEYS_NAME}
+        --namespace-name ${AZURE_MESSAGE_BUS_NAME}
+        --output tsv
+        --query primaryConnectionString
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+    ```
+
+1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
+1. References:
+    1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
 ## Create an Azure Kubernetes Service cluster
 
