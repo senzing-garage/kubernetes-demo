@@ -947,7 +947,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
       --name senzing-swagger-ui \
       --publish 9180:8080 \
       --rm \
-      swaggerapi/swagger-ui
+      swaggerapi/swagger-ui:v3.23.10
     ```
 
    Then visit [http://localhost:9180](http://localhost:9180).
