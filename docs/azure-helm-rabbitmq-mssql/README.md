@@ -1079,6 +1079,27 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
+### Delete Message Bus
+
+1. Delete the Azure Queue
+   [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete)
+
+    ```console
+    az servicebus queue delete
+        --name ${AZURE_QUEUE_NAME} \
+        --namespace-name ${AZURE_MESSAGE_BUS_NAME} \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+    ```
+
+1. Delete the Azure Message Bus Namespace
+   [az servicebus Namespace delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace?view=azure-cli-latest#az_servicebus_namespace_delete)
+
+    ```console
+    az servicebus namespace delete
+        --name ${AZURE_MESSAGE_BUS_NAME} \
+        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+    ```
+
 ### Delete Resource Group
 
 1. Delete the Azure Resource Group using
