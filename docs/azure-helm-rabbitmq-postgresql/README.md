@@ -59,7 +59,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in project](#delete-everything-in-project)
-    1. [Delete minikube cluster](#delete-minikube-cluster)
+    1. [Delete Resource Group](#delete-resource-group)
 
 ## Preamble
 
@@ -104,7 +104,7 @@ describing where we can improve.   Now on with the show...
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
-## Prerequisites
+### Azure login
 
 1. Login to Azure.
    Example:
@@ -349,7 +349,7 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
     kubectl apply -f ${KUBERNETES_DIR}/storage-class-azure.yaml
     ```
 
-   Reference: https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
+   Reference: [Dynamically create and use a persistent volume with Azure Files in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv)
 
 1. Create persistent volume claims.
    Example:
