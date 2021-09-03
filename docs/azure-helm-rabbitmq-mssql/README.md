@@ -207,7 +207,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export SENZING_AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
     export SENZING_AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export SENZING_AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
-    export SENZING_AZURE_SERVICE_BUS="${DEMO_PREFIX}ServiceBus"
+    export SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME="${DEMO_PREFIX}ServiceBus"
     export SENZING_AZURE_SQL_FIREWALL="${DEMO_PREFIX}SqlFirewall"
     export SENZING_AZURE_SQL_SERVER=${DEMO_PREFIX}SqlServer
     ```
@@ -375,7 +375,7 @@ Only one method needs to be performed.
     ```console
     az servicebus namespace create \
         --location ${SENZING_AZURE_LOCATION} \
-        --name ${SENZING_AZURE_SERVICE_BUS} \
+        --name ${SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         > ${SENZING_DEMO_DIR}/az-servicebus-namespace-create.json
     ```
@@ -390,7 +390,7 @@ Only one method needs to be performed.
     ```console
     az servicebus queue create \
         --name ${SENZING_AZURE_QUEUE_NAME} \
-        --namespace-name ${SENZING_AZURE_SERVICE_BUS} \
+        --namespace-name ${SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         > ${SENZING_DEMO_DIR}/az-servicebus-queue-create.json
     ```
@@ -407,7 +407,7 @@ Only one method needs to be performed.
     ```console
     az servicebus namespace authorization-rule keys list \
         --name RootManageSharedAccessKey \
-        --namespace-name ${SENZING_AZURE_SERVICE_BUS} \
+        --namespace-name ${SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         > ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json
     ```
@@ -1251,7 +1251,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     ```console
     az servicebus queue delete \
         --name ${SENZING_AZURE_QUEUE_NAME} \
-        --namespace-name ${SENZING_AZURE_SERVICE_BUS} \
+        --namespace-name ${SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
@@ -1260,7 +1260,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     az servicebus namespace delete \
-        --name ${SENZING_AZURE_SERVICE_BUS} \
+        --name ${SENZING_AZURE_SERVICE_BUS_NAMESPACE_NAME} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
