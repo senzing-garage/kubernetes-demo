@@ -174,6 +174,15 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export SENZING_AZURE_LOCATION=eastus
     ```
 
+1. :pencil2: Specify Azure SQL Database credentials.
+   Example:
+
+    ```console
+    export DATABASE_USERNAME=azureuser
+    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-12};echo;)
+    echo "DATABASE_PASSWORD: ${DATABASE_PASSWORD}"
+    ```
+
 1. Synthesize environment variables.
    Example:
 
@@ -310,6 +319,7 @@ Only one method needs to be performed.
     env \
     | grep \
         --regexp="^DEMO_" \
+        --regexp="^DATABASE_" \
         --regexp="^DOCKER_" \
         --regexp="^GIT_" \
         --regexp="^SENZING_" \
@@ -385,6 +395,12 @@ Only one method needs to be performed.
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
+
+### Create Azure SQL Database
+
+
+1. References:
+    1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 
 ### Create an Azure Kubernetes Service cluster
 
