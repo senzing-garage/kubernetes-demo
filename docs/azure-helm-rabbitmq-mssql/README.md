@@ -194,8 +194,8 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    export DATABASE_HOST=${DEMO_PREFIX}Database
     export DATABASE_DATABASE=G2
+    export DATABASE_HOST=${DEMO_PREFIX}Database
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     export SENZING_AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
     export SENZING_AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
