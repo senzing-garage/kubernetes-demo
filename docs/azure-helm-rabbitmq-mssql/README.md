@@ -316,6 +316,8 @@ Only one method needs to be performed.
     | sort \
     | awk -F= '{ print "export", $0 }' \
     >> ${SENZING_DEMO_DIR}/environment.sh
+
+    chmod +x ${SENZING_DEMO_DIR}/environment.sh
     ```
 
 ### Create an Azure Resource Group
