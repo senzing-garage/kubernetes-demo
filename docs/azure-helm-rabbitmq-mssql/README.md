@@ -24,6 +24,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 ### Contents
 
+1. [Preamble](#preamble)
+1. [Related artifacts](#related-artifacts)
 1. [Expectations](#expectations)
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
@@ -58,8 +60,13 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
-    1. [Delete everything in project](#delete-everything-in-project)
+    1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
+    1. [Delete Kubernetes Service cluster](#delete-kubernetes-service-cluster)
+    1. [Delete SQL Database](#delete-sql-database)
+    1. [Delete Service Bus Queue](#delete-service-bus-queue)
     1. [Delete Resource Group](#delete-resource-group)
+1. [Errors](#errors)
+1. [References](#references)
 
 ## Preamble
 
@@ -195,7 +202,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     export DATABASE_DATABASE=G2
-    export DATABASE_HOST=${DEMO_PREFIX}Database
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     export SENZING_AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
     export SENZING_AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
@@ -203,6 +209,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export SENZING_AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export SENZING_AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export SENZING_AZURE_SQL_FIREWALL="${DEMO_PREFIX}SqlFirewall"
+    export SENZING_AZURE_SQL_SERVER=${DEMO_PREFIX}SqlServer
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -418,12 +425,12 @@ Only one method needs to be performed.
         --admin-password ${DATABASE_PASSWORD} \
         --admin-user ${DATABASE_USERNAME} \
         --location ${SENZING_AZURE_LOCATION}  \
-        --name ${DATABASE_HOST} \
+        --name ${SENZING_AZURE_SQL_SERVER} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         > ${SENZING_DEMO_DIR}/az-sql-server-create.json
     ```
 
-   View in [Azure portal](https://portal.azure.com).
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fazuresql).
 
 1. Configure a firewall rule for the server
    using
@@ -435,12 +442,12 @@ Only one method needs to be performed.
         --end-ip-address ${SENZING_AZURE_DATABASE_END_IP} \
         --name ${SENZING_AZURE_SQL_FIREWALL} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --server ${DATABASE_HOST} \
+        --server ${SENZING_AZURE_SQL_SERVER} \
         --start-ip-address ${SENZING_AZURE_DATABASE_BEGIN_IP} \
         > ${SENZING_DEMO_DIR}/az-sql-server-firewall-rule-create.json
     ```
 
-   View in [Azure portal](https://portal.azure.com).
+   FIXME: View in [Azure portal](https://portal.azure.com).
 
 1. Create a single database
    using
@@ -455,11 +462,11 @@ Only one method needs to be performed.
         --family Gen5 \
         --name ${DATABASE_DATABASE} \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --server ${DATABASE_HOST} \
+        --server ${SENZING_AZURE_SQL_SERVER} \
         > ${SENZING_DEMO_DIR}/az-sql-db-create.json
     ```
 
-   View in [Azure portal](https://portal.azure.com).
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
 
 1. References:
     1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
@@ -1167,7 +1174,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
 ## Cleanup
 
-### Delete everything in project
+### Delete everything in Kubernetes
 
 1. Example:
 
@@ -1196,10 +1203,47 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-### Delete Message Bus
+### Delete Kubernetes Service cluster
 
-1. Delete the Azure Queue
-   [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete)
+1. Delete the Azure Kubernetes Service cluster using
+   [az aks delete](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete).
+
+    ```console
+    az aks delete \
+        --name ${SENZING_AZURE_AKS_NAME} \
+        --no-wait \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --yes
+    ```
+
+### Delete SQL Database
+
+1. Delete the Azure SQL database using
+   [az sql db delete](https://docs.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az_sql_db_delete).
+
+    ```console
+    az sql db delete \
+        --name ${DATABASE_DATABASE} \
+        --no-wait \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --server ${SENZING_AZURE_SQL_SERVER} \
+        --yes
+    ```
+
+1. Delete the Azure SQL server using
+   [az sql server delete](https://docs.microsoft.com/en-us/cli/azure/sql/server?view=azure-cli-latest#az_sql_server_delete).
+
+    ```console
+    az sql server delete \
+        --name ${SENZING_AZURE_SQL_SERVER} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --yes
+    ```
+
+### Delete Service Bus Queue
+
+1. Delete the Azure Queue using
+   [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete).
 
     ```console
     az servicebus queue delete \
@@ -1208,8 +1252,8 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
-1. Delete the Azure Message Bus Namespace
-   [az servicebus Namespace delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace?view=azure-cli-latest#az_servicebus_namespace_delete)
+1. Delete the Azure Message Bus Namespace using
+   [az servicebus Namespace delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/namespace?view=azure-cli-latest#az_servicebus_namespace_delete).
 
     ```console
     az servicebus namespace delete \
@@ -1220,7 +1264,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 ### Delete Resource Group
 
 1. Delete the Azure Resource Group using
-   [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete)
+   [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete).
 
     ```console
     az group delete \
