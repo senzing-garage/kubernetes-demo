@@ -166,7 +166,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
-
 1. :pencil2: Identify Azure location.
    Example:
 
@@ -183,16 +182,27 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     echo "DATABASE_PASSWORD: ${DATABASE_PASSWORD}"
     ```
 
+1. :pencil2: Specify Azure SQL Database credentials.
+   Example:
+
+    ```console
+    export SENZING_AZURE_DATABASE_BEGIN_IP=0.0.0.0
+    export SENZING_AZURE_DATABASE_END_IP=0.0.0.0
+    ```
+
 1. Synthesize environment variables.
    Example:
 
     ```console
+    export DATABASE_HOST=${DEMO_PREFIX}Database
+    export DATABASE_DATABASE=G2
+    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     export SENZING_AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
     export SENZING_AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
     export SENZING_AZURE_MESSAGE_BUS_NAMESPACE="${DEMO_PREFIX}MessageBusNamespace"
     export SENZING_AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export SENZING_AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    export SENZING_AZURE_SQL_FIREWALL="${DEMO_PREFIX}SqlFirewall"
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
@@ -398,6 +408,58 @@ Only one method needs to be performed.
 
 ### Create Azure SQL Database
 
+1. Create Azure SQL server
+   using
+   [az sql server create](https://docs.microsoft.com/en-us/cli/azure/sql/server?view=azure-cli-latest#az_sql_server_create).
+   Example:
+
+    ```console
+    az sql server create \
+        --admin-password ${DATABASE_PASSWORD} \
+        --admin-user ${DATABASE_USERNAME} \
+        --location ${SENZING_AZURE_LOCATION}  \
+        --name ${DATABASE_HOST} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        > ${SENZING_DEMO_DIR}/az-sql-server-create.json
+    ```
+
+   View in [Azure portal](https://portal.azure.com).
+
+1. Configure a firewall rule for the server
+   using
+   [az sql server create](https://docs.microsoft.com/en-us/cli/azure/sql/server/firewall-rule?view=azure-cli-latest#az_sql_server_firewall_rule_create).
+   Example:
+
+    ```console
+    az sql server firewall-rule create \
+        --end-ip-address ${SENZING_AZURE_DATABASE_END_IP} \
+        --name ${SENZING_AZURE_SQL_FIREWALL} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --server ${DATABASE_HOST} \
+        --start-ip-address ${SENZING_AZURE_DATABASE_BEGIN_IP} \
+        > ${SENZING_DEMO_DIR}/az-sql-server-firewall-rule-create.json
+    ```
+
+   View in [Azure portal](https://portal.azure.com).
+
+1. Create a single database
+   using
+   [az sql db create](https://docs.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az_sql_db_create).
+   Example:
+
+    ```console
+    az sql db create \
+        --capacity 2 \
+        --compute-model Serverless \
+        --edition GeneralPurpose \
+        --family Gen5 \
+        --name ${DATABASE_DATABASE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --server ${DATABASE_HOST} \
+        > ${SENZING_DEMO_DIR}/az-sql-db-create.json
+    ```
+
+   View in [Azure portal](https://portal.azure.com).
 
 1. References:
     1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
