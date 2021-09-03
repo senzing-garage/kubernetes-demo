@@ -412,7 +412,7 @@ Only one method needs to be performed.
         > ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json
     ```
 
-1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
+   FIXME: View in [Azure portal](https://portal.azure.com).
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
@@ -486,7 +486,8 @@ Only one method needs to be performed.
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         --name ${SENZING_AZURE_AKS_NAME} \
         --location ${SENZING_AZURE_LOCATION} \
-        --generate-ssh-keys
+        --generate-ssh-keys \
+        > ${SENZING_DEMO_DIR}/az-aks-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
@@ -501,7 +502,8 @@ Only one method needs to be performed.
     ```console
     az aks get-credentials \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --name ${SENZING_AZURE_AKS_NAME}
+        --name ${SENZING_AZURE_AKS_NAME} \
+        > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
     ```
 
 ### Create namespace
