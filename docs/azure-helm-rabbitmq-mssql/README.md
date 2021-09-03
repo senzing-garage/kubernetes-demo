@@ -104,13 +104,34 @@ describing where we can improve.   Now on with the show...
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
+### Create demo directory
+
+1. :pencil2: Create unique prefix.
+   This will be used to create unique names in Azure
+   and will be used in a local directory name.
+   :warning:  Must be all lowercase.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=xyzzy
+    ```
+
+1. Make a directory for the demo.
+   Example:
+
+    ```console
+    export DEMO_DIR=~/senzing-azure-demo-${DEMO_PREFIX}
+    mkdir -p ${DEMO_DIR}
+    ```
+
 ### Azure login
 
 1. Login to Azure.
    Example:
 
     ```console
-    az login
+    az login \
+        > ${DEMO_DIR}/az-login.json
     ```
 
 ### Clone repository
@@ -144,14 +165,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
-1. :pencil2: Create unique prefix.
-   This will be used to create unique names in Azure.
-   :warning:  Must be all lowercase.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=xyzzy
-    ```
 
 1. :pencil2: Identify Azure location.
    Example:
@@ -170,14 +183,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
     export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    export DEMO_DIR=~/senzing-azure-demo-${DEMO_PREFIX}
-    ```
-
-1. Make a directory for the demo.
-   Example:
-
-    ```console
-    mkdir -p ${DEMO_DIR}
     ```
 
 1. Retrieve latest docker image version numbers and set their environment variables.
