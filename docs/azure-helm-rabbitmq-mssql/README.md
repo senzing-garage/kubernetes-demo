@@ -339,6 +339,8 @@ Only one method needs to be performed.
         --regexp="^DATABASE_" \
         --regexp="^DOCKER_" \
         --regexp="^GIT_" \
+        --regexp="^HELM_" \
+        --regexp="^KUBERNETES_" \
         --regexp="^SENZING_" \
     | sort \
     | awk -F= '{ print "export", $0 }' \
