@@ -309,8 +309,8 @@ Only one method needs to be performed.
 
     env \
     | grep \
-        --regexp="^AZURE_" \
         --regexp="^DEMO_" \
+        --regexp="^DOCKER_" \
         --regexp="^GIT_" \
         --regexp="^SENZING_" \
     | sort \
