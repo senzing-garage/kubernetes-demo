@@ -104,36 +104,6 @@ describing where we can improve.   Now on with the show...
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
-### Create demo directory
-
-1. :pencil2: Create unique prefix.
-   This will be used to create unique names in Azure
-   and will be used in a local directory name.
-   :warning:  Must be all lowercase.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=xyzzy
-    ```
-
-1. Make a directory for the demo.
-   Example:
-
-    ```console
-    export DEMO_DIR=~/senzing-azure-demo-${DEMO_PREFIX}
-    mkdir -p ${DEMO_DIR}
-    ```
-
-### Azure login
-
-1. Login to Azure.
-   Example:
-
-    ```console
-    az login \
-        > ${DEMO_DIR}/az-login.json
-    ```
-
 ### Clone repository
 
 The Git repository has files that will be used in the `helm install --values` parameter.
@@ -150,6 +120,37 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Demonstrate
+
+### Create demo directory
+
+1. :pencil2: Create unique prefix.
+   This will be used to create unique names in Azure
+   and will be used in a local directory name.
+
+   :warning:  Must be all lowercase.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=xyzzy
+    ```
+
+1. Make a directory for the demo.
+   Example:
+
+    ```console
+    export SENZING_DEMO_DIR=~/senzing-azure-demo-${DEMO_PREFIX}
+    mkdir -p ${SENZING_DEMO_DIR}
+    ```
+
+### Azure login
+
+1. Login to Azure.
+   Example:
+
+    ```console
+    az login \
+        > ${SENZING_DEMO_DIR}/az-login.json
+    ```
 
 ### EULA
 
@@ -170,18 +171,18 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    export AZURE_LOCATION=eastus
+    export SENZING_AZURE_LOCATION=eastus
     ```
 
 1. Synthesize environment variables.
    Example:
 
     ```console
-    export AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
-    export AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
-    export AZURE_MESSAGE_BUS_NAMESPACE="${DEMO_PREFIX}MessageBusNamespace"
-    export AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
-    export AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
+    export SENZING_AZURE_ACR_NAME="${DEMO_PREFIX}Acr"
+    export SENZING_AZURE_AKS_NAME="${DEMO_PREFIX}Aks"
+    export SENZING_AZURE_MESSAGE_BUS_NAMESPACE="${DEMO_PREFIX}MessageBusNamespace"
+    export SENZING_AZURE_QUEUE_NAME="${DEMO_PREFIX}Queue"
+    export SENZING_AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
@@ -190,10 +191,10 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     curl -X GET \
-      --output ${DEMO_DIR}/docker-versions-latest.sh \
+      --output ${SENZING_DEMO_DIR}/docker-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
 
-    source ${DEMO_DIR}/docker-versions-latest.sh
+    source ${SENZING_DEMO_DIR}/docker-versions-latest.sh
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
@@ -201,10 +202,10 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     curl -X GET \
-      --output ${DEMO_DIR}/senzing-versions-latest.sh \
+      --output ${SENZING_DEMO_DIR}/senzing-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
 
-    source ${DEMO_DIR}/senzing-versions-latest.sh
+    source ${SENZING_DEMO_DIR}/senzing-versions-latest.sh
     ```
 
 ### Identify Docker registry
@@ -236,7 +237,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export HELM_VALUES_DIR=${DEMO_DIR}/helm-values
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
     mkdir -p ${HELM_VALUES_DIR}
 
     for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
@@ -249,7 +250,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export HELM_VALUES_DIR=${DEMO_DIR}/helm-values
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
     mkdir -p ${HELM_VALUES_DIR}
 
     cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
@@ -272,7 +273,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export KUBERNETES_DIR=${DEMO_DIR}/kubernetes
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
     mkdir -p ${KUBERNETES_DIR}
 
     for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
@@ -285,7 +286,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    export KUBERNETES_DIR=${DEMO_DIR}/kubernetes
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
     mkdir -p ${KUBERNETES_DIR}
 
     cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
@@ -294,6 +295,28 @@ Only one method needs to be performed.
     :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
 
     1. `${DEMO_NAMESPACE}`
+
+### Save environment variables
+
+1. Save environment variables into a file that can be sourced.
+   Example:
+
+    ```console
+    cat <<EOT > ${SENZING_DEMO_DIR}/environment.sh
+    #!/usr/bin/env bash
+
+    EOT
+
+    env \
+    | grep \
+        --regexp="^AZURE_" \
+        --regexp="^DEMO_" \
+        --regexp="^GIT_" \
+        --regexp="^SENZING_" \
+    | sort \
+    | awk -F= '{ print "export", $0 }' \
+    >> ${SENZING_DEMO_DIR}/environment.sh
+    ```
 
 ### Create an Azure Resource Group
 
@@ -304,9 +327,9 @@ Only one method needs to be performed.
 
     ```console
     az group create \
-        --name ${AZURE_RESOURCE_GROUP_NAME} \
-        --location ${AZURE_LOCATION} \
-        > ${DEMO_DIR}/az-group-create.json
+        --name ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --location ${SENZING_AZURE_LOCATION} \
+        > ${SENZING_DEMO_DIR}/az-group-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
@@ -320,10 +343,10 @@ Only one method needs to be performed.
 
     ```console
     az servicebus namespace create \
-        --location ${AZURE_LOCATION} \
-        --name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        > ${DEMO_DIR}/az-servicebus-namespace-create.json
+        --location ${SENZING_AZURE_LOCATION} \
+        --name ${SENZING_AZURE_MESSAGE_BUS_NAMESPACE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        > ${SENZING_DEMO_DIR}/az-servicebus-namespace-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
@@ -335,10 +358,10 @@ Only one method needs to be performed.
 
     ```console
     az servicebus queue create \
-        --name ${AZURE_QUEUE_NAME} \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        > ${DEMO_DIR}/az-servicebus-queue-create.json
+        --name ${SENZING_AZURE_QUEUE_NAME} \
+        --namespace-name ${SENZING_AZURE_MESSAGE_BUS_NAMESPACE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        > ${SENZING_DEMO_DIR}/az-servicebus-queue-create.json
     ```
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
@@ -352,9 +375,9 @@ Only one method needs to be performed.
     ```console
     az servicebus namespace authorization-rule keys list \
         --name RootManageSharedAccessKey \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        > ${DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json
+        --namespace-name ${SENZING_AZURE_MESSAGE_BUS_NAMESPACE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        > ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters).
@@ -370,9 +393,9 @@ Only one method needs to be performed.
 
     ```console
     az aks create \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        --name ${AZURE_AKS_NAME} \
-        --location ${AZURE_LOCATION} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --name ${SENZING_AZURE_AKS_NAME} \
+        --location ${SENZING_AZURE_LOCATION} \
         --generate-ssh-keys
     ```
 
@@ -387,8 +410,8 @@ Only one method needs to be performed.
 
     ```console
     az aks get-credentials \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME} \
-        --name ${AZURE_AKS_NAME}
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
+        --name ${SENZING_AZURE_AKS_NAME}
     ```
 
 ### Create namespace
@@ -531,7 +554,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -681,7 +704,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${DEMO_DIR}/helm-values/senzing-console-postgresql.yaml
+      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-postgresql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -1100,9 +1123,9 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     az servicebus queue delete \
-        --name ${AZURE_QUEUE_NAME} \
-        --namespace-name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+        --name ${SENZING_AZURE_QUEUE_NAME} \
+        --namespace-name ${SENZING_AZURE_MESSAGE_BUS_NAMESPACE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
 1. Delete the Azure Message Bus Namespace
@@ -1110,8 +1133,8 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     az servicebus namespace delete \
-        --name ${AZURE_MESSAGE_BUS_NAMESPACE} \
-        --resource-group ${AZURE_RESOURCE_GROUP_NAME}
+        --name ${SENZING_AZURE_MESSAGE_BUS_NAMESPACE} \
+        --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
 ### Delete Resource Group
@@ -1121,7 +1144,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     ```console
     az group delete \
-        --name ${AZURE_RESOURCE_GROUP_NAME} \
+        --name ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         --yes \
         --no-wait
     ```
