@@ -177,7 +177,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    export DATABASE_USERNAME=azureuser
+    export DATABASE_USERNAME=senzing
     export DATABASE_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-12};echo;)
     echo "DATABASE_PASSWORD: ${DATABASE_PASSWORD}"
     ```
