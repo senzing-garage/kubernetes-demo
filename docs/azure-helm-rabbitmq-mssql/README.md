@@ -870,30 +870,6 @@ This deployment will be used later to:
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
-### Install RabbitMQ Helm chart
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-rabbitmq \
-      bitnami/rabbitmq \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml
-    ```
-
-1. Wait for pods to run.
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
-
 ### Install stream-producer Helm chart
 
 The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
