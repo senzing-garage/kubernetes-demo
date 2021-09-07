@@ -882,7 +882,7 @@ The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml
+      --values ${HELM_VALUES_DIR}/stream-producer-azure-queue.yaml
     ```
 
 ### Install init-container Helm chart
