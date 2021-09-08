@@ -382,6 +382,13 @@ _Method #1:_ Pulls docker images from public internet registry.
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
 
+1. Capture values in environment variables.
+   Example:
+
+    ```console
+    export DATABASE_HOST=$(tail +2 ${SENZING_DEMO_DIR}/az-sql-server-create.json | jq --raw-output ".fullyQualifiedDomainName")
+    ```
+
 1. References:
     1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 
