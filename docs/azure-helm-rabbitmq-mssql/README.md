@@ -317,6 +317,13 @@ _Method #1:_ Pulls docker images from public internet registry.
     ```
 
    FIXME: View in [Azure portal](https://portal.azure.com).
+1. Capture values in environment variables.
+   Example:
+
+    ```console
+    export SENZING_AZURE_CONNECTION_STRING=$(jq --raw-output ".primaryConnectionString" ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json)
+    export SENZING_AZURE_QUEUE_NAME=$(jq --raw-output ".name" ${SENZING_DEMO_DIR}/az-servicebus-queue-create.json)
+    ```
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
