@@ -253,102 +253,6 @@ _Method #1:_ Pulls docker images from public internet registry.
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
-### Create custom helm values files
-
-:thinking: In this step, Helm template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
-
-1. **Method #1:** Quick method using `envsubst`.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
-    do \
-      envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
-    done
-    ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
-    ```
-
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_PREFIX}`
-    1. `${DOCKER_REGISTRY_SECRET}`
-    1. `${DOCKER_REGISTRY_URL}`
-    1. `${SENZING_ACCEPT_EULA}`
-
-### Create custom kubernetes configuration files
-
-:thinking: In this step, Kubernetes template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
-
-1. **Method #1:** Quick method using `envsubst`.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
-    do \
-      envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
-    done
-    ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
-    ```
-
-    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_NAMESPACE}`
-
-### Save environment variables
-
-1. Save environment variables into a file that can be sourced.
-   Example:
-
-    ```console
-    cat <<EOT > ${SENZING_DEMO_DIR}/environment.sh
-    #!/usr/bin/env bash
-
-    EOT
-
-    env \
-    | grep \
-        --regexp="^DEMO_" \
-        --regexp="^DATABASE_" \
-        --regexp="^DOCKER_" \
-        --regexp="^GIT_" \
-        --regexp="^HELM_" \
-        --regexp="^KUBERNETES_" \
-        --regexp="^SENZING_" \
-    | sort \
-    | awk -F= '{ print "export", $0 }' \
-    >> ${SENZING_DEMO_DIR}/environment.sh
-
-    chmod +x ${SENZING_DEMO_DIR}/environment.sh
-    ```
-
 ### Create an Azure Resource Group
 
 1. Create Resource group
@@ -504,6 +408,102 @@ Only one method needs to be performed.
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
         --name ${SENZING_AZURE_AKS_NAME} \
         > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
+    ```
+
+### Create custom helm values files
+
+:thinking: In this step, Helm template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
+   Example:
+
+    ```console
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
+    do \
+      envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
+    done
+    ```
+
+1. **Method #2:** Copy and manually modify files method.
+   Example:
+
+    ```console
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
+    ```
+
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_PREFIX}`
+    1. `${DOCKER_REGISTRY_SECRET}`
+    1. `${DOCKER_REGISTRY_URL}`
+    1. `${SENZING_ACCEPT_EULA}`
+
+### Create custom kubernetes configuration files
+
+:thinking: In this step, Kubernetes template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
+   Example:
+
+    ```console
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+
+    for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
+    do \
+      envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
+    done
+    ```
+
+1. **Method #2:** Copy and manually modify files method.
+   Example:
+
+    ```console
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
+    ```
+
+    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_NAMESPACE}`
+
+### Save environment variables
+
+1. Save environment variables into a file that can be sourced.
+   Example:
+
+    ```console
+    cat <<EOT > ${SENZING_DEMO_DIR}/environment.sh
+    #!/usr/bin/env bash
+
+    EOT
+
+    env \
+    | grep \
+        --regexp="^DEMO_" \
+        --regexp="^DATABASE_" \
+        --regexp="^DOCKER_" \
+        --regexp="^GIT_" \
+        --regexp="^HELM_" \
+        --regexp="^KUBERNETES_" \
+        --regexp="^SENZING_" \
+    | sort \
+    | awk -F= '{ print "export", $0 }' \
+    >> ${SENZING_DEMO_DIR}/environment.sh
+
+    chmod +x ${SENZING_DEMO_DIR}/environment.sh
     ```
 
 ### Create namespace
