@@ -556,8 +556,6 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql-azure.yaml
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq-azure.yaml
     kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-azure.yaml
     ```
 
