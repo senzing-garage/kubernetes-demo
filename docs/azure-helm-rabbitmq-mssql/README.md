@@ -169,6 +169,14 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
+To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End User License Agreement (EULA).
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   Example:
+
+    <pre>export MSSQL_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#mssql_accept_eula">this link</a>&gt;"</pre>
+
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -512,6 +520,7 @@ Only one method needs to be performed.
         --regexp="^GIT_" \
         --regexp="^HELM_" \
         --regexp="^KUBERNETES_" \
+        --regexp="^MSSQL_" \
         --regexp="^SENZING_" \
     | sort \
     | awk -F= '{ print "export", $0 }' \
