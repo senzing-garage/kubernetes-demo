@@ -668,6 +668,8 @@ _Method #1:_ This method is simpler, but requires a root container.
 
 #### Non-root container method
 
+**FIXME:**  non-root container method not verified.
+
 _Method #2:_ This method can be done on kubernetes with a non-root container.
 
 1. Install chart with non-root container.
