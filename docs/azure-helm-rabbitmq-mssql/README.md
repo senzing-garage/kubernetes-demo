@@ -579,6 +579,12 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
       --namespace ${DEMO_NAMESPACE}
     ```
 
+   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ClassicStorage%2FStorageAccounts).
+
+   1. Select storage account having resource group containing value of `DEMO_PREFIX`.
+   1. In "Data Storage", select "File shares"
+   1. Select "kubernetes-dynamic-pvc-...`
+
 ### Add helm repositories
 
 1. Add Bitnami repository.
