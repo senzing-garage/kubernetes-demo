@@ -631,7 +631,6 @@ Choose one:
 
 1. [Root container method](#root-container-method) - but requires a root container
 1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
-1. [yum localinstall method](#yum-localinstall-method) - Uses existing Senzing RPMs, so no downloading during installation.
 
 #### Root container method
 
@@ -642,10 +641,10 @@ _Method #1:_ This method is simpler, but requires a root container.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-yum \
-      senzing/senzing-yum \
+      ${DEMO_PREFIX}-senzing-apt \
+      senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum.yaml
+      --values ${HELM_VALUES_DIR}/senzing-apt-mssql.yaml
     ```
 
 1. Wait until Job has completed.
@@ -661,11 +660,11 @@ _Method #1:_ This method is simpler, but requires a root container.
 
     ```console
     NAME                          READY   STATUS      RESTARTS   AGE
-    xyzzy-senzing-yum-8n2ql       0/1     Completed   0          2m44s
+    xyzzy-senzing-apt-8n2ql       0/1     Completed   0          2m44s
     ```
 
 1. :thinking: **Optional:**
-   [View persistent volume](#view-persistent-volume).
+   To see results of installation, [view persistent volume](#view-persistent-volume).
 
 #### Non-root container method
 
@@ -714,7 +713,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      senzing/yum
+      senzing/apt
     ```
 
 1. Copy files from local machine to `senzing-base` pod.
@@ -735,7 +734,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
     ```
 
 1. :thinking: **Optional:**
-   [View persistent volume](#view-persistent-volume).
+   To see results of installation, [view persistent volume](#view-persistent-volume).
 
 ### Install senzing-console Helm chart
 
@@ -1128,7 +1127,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
