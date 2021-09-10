@@ -6,7 +6,7 @@ Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+This repository illustrates a reference implementation of Senzing using Microft SQL Database as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -14,7 +14,7 @@ The instructions show how to set up a system that:
 1. Sends each JSON line to a message queue.
     1. In this implementation, the queue is RabbitMQ.
 1. Reads messages from the queue and inserts into Senzing.
-    1. In this implementation, Senzing keeps its data in a PostgreSQL database.
+    1. In this implementation, Senzing keeps its data in a Microsoft SQL Database database.
 1. Reads information from Senzing via [Senzing API Server](https://github.com/Senzing/senzing-api-server) server.
 1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
@@ -40,10 +40,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing RPM](#deploy-senzing-rpm)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
-    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -54,8 +51,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View Senzing Console pod](#view-senzing-console-pod)
-        1. [View RabbitMQ](#view-rabbitmq)
-        1. [View PostgreSQL](#view-postgresql)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
@@ -753,7 +748,7 @@ This deployment will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-postgresql.yaml
+      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-mssql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -765,26 +760,11 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql-client \
-      senzing/postgresql-client \
+      ${DEMO_PREFIX}-mssql-client \
+      senzing/mssql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml
+      --values ${HELM_VALUES_DIR}/mssql-client.yaml
     ```
-
-### Install phpPgAdmin Helm Chart
-
-1. Install phpPgAdmin app.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-phppgadmin \
-      senzing/phppgadmin \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml
-    ```
-
-1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install stream-producer Helm chart
 
@@ -813,7 +793,7 @@ The init-container creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/init-container-mssql.yaml
     ```
 
 1. Wait for pods to run.
@@ -837,7 +817,7 @@ The stream loader pulls messages from RabbitMQ and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-mssql.yaml
     ```
 
 ### Install senzing-api-server Helm chart
@@ -852,7 +832,7 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-mssql.yaml
     ```
 
 1. Wait for pods to run.
@@ -909,7 +889,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/redoer-mssql.yaml
     ```
 
 #### Install configurator Helm chart
@@ -924,7 +904,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/configurator-mssql.yaml
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
@@ -956,43 +936,6 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
-
-#### View RabbitMQ
-
-1. In a separate terminal window, port forward to local machine.
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
-    ```
-
-1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
-    1. Login
-        1. See `helm-values/rabbitmq.yaml` for Username and password.
-
-#### View PostgreSQL
-
-1. In a separate terminal window, port forward to local machine.
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 8081:80
-    ```
-
-1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
-    1. Login
-       1. See `helm-values/postgresql.yaml` for postgres password (`postgresqlPassword`).
-       1. Default: username: `postgres`  password: `postgres`
-    1. On left-hand navigation, select "G2" database to explore.
-    1. The records received from the queue can be viewed in the following Senzing tables:
-        1. G2 > DSRC_RECORD
-        1. G2 > OBS_ENT
 
 #### View Senzing API Server
 
@@ -1083,10 +1026,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-client
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
