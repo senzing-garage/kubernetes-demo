@@ -579,11 +579,14 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
       --namespace ${DEMO_NAMESPACE}
     ```
 
-   View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ClassicStorage%2FStorageAccounts).
+#### View persistent volume
 
-   1. Select storage account having resource group containing value of `DEMO_PREFIX`.
-   1. In "Data Storage", select "File shares"
-   1. Select "kubernetes-dynamic-pvc-...`
+To view persistent volume:
+
+1. Visit [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ClassicStorage%2FStorageAccounts).
+1. Select storage account having resource group containing value of `DEMO_PREFIX`.
+1. In "Data Storage", select "File shares"
+1. Select "kubernetes-dynamic-pvc-...`
 
 ### Add helm repositories
 
@@ -659,6 +662,9 @@ _Method #1:_ This method is simpler, but requires a root container.
     NAME                          READY   STATUS      RESTARTS   AGE
     xyzzy-senzing-yum-8n2ql       0/1     Completed   0          2m44s
     ```
+
+1. :thinking: **Optional:**
+   [View persistent volume](#view-persistent-volume).
 
 #### Non-root container method
 
