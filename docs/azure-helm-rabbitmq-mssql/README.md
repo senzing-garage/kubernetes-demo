@@ -1122,11 +1122,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
