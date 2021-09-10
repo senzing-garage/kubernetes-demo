@@ -758,47 +758,6 @@ This deployment will be used later to:
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
-### Install Postgresql Helm chart
-
-1. Create Configmap for `pg_hba.conf`.
-   Example:
-
-    ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
-      --namespace ${DEMO_NAMESPACE} \
-      --from-file=${KUBERNETES_DIR}/pg_hba.conf
-    ```
-
-    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
-
-1. Install chart.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-postgresql \
-      bitnami/postgresql \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      --version v6.5.7
-    ```
-
-1. Wait for pod to run.
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pod running:
-
-    ```console
-    NAME                                      READY   STATUS      RESTARTS   AGE
-    xyzzy-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
-    ```
-
 ### Initialize database
 
 1. Create tables in the database (i.e. the schema) used by Senzing.
