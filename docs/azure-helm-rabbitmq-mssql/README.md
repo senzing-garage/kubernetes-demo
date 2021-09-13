@@ -188,7 +188,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 
     ```console
     export DATABASE_USERNAME=senzing
-    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-12};echo;)
+    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
     echo "DATABASE_PASSWORD: ${DATABASE_PASSWORD}"
     ```
 
