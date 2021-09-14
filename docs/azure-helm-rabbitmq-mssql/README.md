@@ -352,7 +352,7 @@ _Method #1:_ Pulls docker images from public internet registry.
 
 1. Configure a firewall rule for the server
    using
-   [az sql server create](https://docs.microsoft.com/en-us/cli/azure/sql/server/firewall-rule?view=azure-cli-latest#az_sql_server_firewall_rule_create).
+   [az sql server firewall-rule create](https://docs.microsoft.com/en-us/cli/azure/sql/server/firewall-rule?view=azure-cli-latest#az_sql_server_firewall_rule_create).
    Example:
 
     ```console
@@ -753,6 +753,7 @@ This deployment will be used later to:
 ### Initialize database
 
 1. Create tables in the database (i.e. the schema) used by Senzing.
+
    Example:
 
     ```console
@@ -762,6 +763,10 @@ This deployment will be used later to:
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mssql-tools.yaml
     ```
+
+1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
+    1. Choose database. (Usually `G2`)
+    1. Choose "Query editor" using `DATABASE_USERNAME` and `DATABASE_PASSWORD` values to log in.
 
 ### Install stream-producer Helm chart
 

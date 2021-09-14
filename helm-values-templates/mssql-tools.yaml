@@ -1,5 +1,4 @@
 image:
-  registry: ${DOCKER_REGISTRY_URL}
   tag: ${SENZING_DOCKER_IMAGE_VERSION_MSSQL_TOOLS}
 
 imagePullSecrets:
@@ -9,6 +8,13 @@ mssql:
   database: ${DATABASE_DATABASE}
   file: senzing-g2/resources/schema/g2core-schema-mssql-create.sql
   host: ${DATABASE_HOST}
+  importFile: false
   password: ${DATABASE_PASSWORD}
   storageClaim: senzing-persistent-volume-claim
   username: ${DATABASE_USERNAME}
+
+securityContext:
+  enabled: true
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
