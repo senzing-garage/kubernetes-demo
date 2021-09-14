@@ -568,9 +568,6 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
    Review persistent volumes and claims.
 
     ```console
-    kubectl get persistentvolumes \
-      --namespace ${DEMO_NAMESPACE}
-
     kubectl get persistentvolumeClaims \
       --namespace ${DEMO_NAMESPACE}
     ```
@@ -760,10 +757,10 @@ This deployment will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-mssql-client \
-      senzing/mssql-client \
+      ${DEMO_PREFIX}-mssql-tools \
+      senzing/mssql-tools \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mssql-client.yaml
+      --values ${HELM_VALUES_DIR}/mssql-tools.yaml
     ```
 
 ### Install stream-producer Helm chart
