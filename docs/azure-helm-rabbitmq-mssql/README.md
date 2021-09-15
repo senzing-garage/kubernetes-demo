@@ -782,6 +782,7 @@ The stream producer pulls JSON lines from a file and pushes them to message queu
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-producer-azure-queue.yaml
     ```
+
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
    Select service bus.
    Near bottom, select "Queues" tab.
