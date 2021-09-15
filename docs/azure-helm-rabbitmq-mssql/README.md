@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a MS SQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, message queue, and a MS SQL database.
 
 ## Overview
 
@@ -12,7 +12,7 @@ The instructions show how to set up a system that:
 
 1. Reads JSON lines from a file on the internet.
 1. Sends each JSON line to a message queue.
-    1. In this implementation, the queue is RabbitMQ.
+    1. In this implementation, the queue is message queue.
 1. Reads messages from the queue and inserts into Senzing.
     1. In this implementation, Senzing keeps its data in a Microsoft SQL Database database.
 1. Reads information from Senzing via [Senzing API Server](https://github.com/Senzing/senzing-api-server) server.
@@ -578,7 +578,7 @@ To view persistent volume:
 
 1. Visit [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ClassicStorage%2FStorageAccounts).
 1. Select storage account having resource group containing value of `DEMO_PREFIX`.
-1. In "Data Storage", select "File shares"
+1. In "Data Storage" section, select "File shares"
 1. Select "kubernetes-dynamic-pvc-...`
 
 ### Add helm repositories
@@ -618,10 +618,10 @@ To view persistent volume:
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
 
-There are 3 options when it comes to initializing the Persistent Volume with Senzing code and data.
+There are 2 options when it comes to initializing the Persistent Volume with Senzing code and data.
 Choose one:
 
-1. [Root container method](#root-container-method) - but requires a root container
+1. [Root container method](#root-container-method) - requires a root container
 1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
 
 #### Root container method
@@ -770,7 +770,7 @@ This deployment will be used later to:
 
 ### Install stream-producer Helm chart
 
-The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
+The stream producer pulls JSON lines from a file and pushes them to message queue.
 
 1. Install chart.
    Example:
@@ -782,6 +782,9 @@ The stream producer pulls JSON lines from a file and pushes them to RabbitMQ.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-producer-azure-queue.yaml
     ```
+1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
+   Select service bus.
+   Near bottom, select "Queues" tab.
 
 ### Install init-container Helm chart
 
@@ -809,7 +812,7 @@ The init-container creates files from templates and initializes the G2 database.
 
 ### Install stream-loader Helm chart
 
-The stream loader pulls messages from RabbitMQ and sends them to Senzing.
+The stream loader pulls messages from message queue and sends them to Senzing.
 
 1. Install chart.
    Example:
