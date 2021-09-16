@@ -6,13 +6,14 @@ imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
 
 senzing:
-  subcommand: azure-queue
+  azureConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
+  azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
   databaseUrl: "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:1433/${DATABASE_DATABASE}"
   dataSource: TEST
   entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
+  mountOptMicrosoft: true
   persistentVolumeClaim: senzing-persistent-volume-claim
-  azureQueueConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
-  azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
+  subcommand: azure-queue
   threadsPerProcess: 4

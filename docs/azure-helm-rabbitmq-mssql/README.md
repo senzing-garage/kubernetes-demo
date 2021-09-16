@@ -823,7 +823,7 @@ The stream loader pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-mssql.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-azure-queue-mssql.yaml
     ```
 
 ### Install senzing-api-server Helm chart

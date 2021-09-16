@@ -6,9 +6,9 @@ imagePullSecrets:
   - name: ${DOCKER_REGISTRY_SECRET}
 
 senzing:
-  subcommand: json-to-azure-queue
-  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-  azureQueueConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
+  azureConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
   azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
+  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
   recordMax: 10000
   recordMonitor: 1000
+  subcommand: json-to-azure-queue
