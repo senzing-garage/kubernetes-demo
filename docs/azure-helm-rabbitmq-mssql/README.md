@@ -177,7 +177,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
 1. :pencil2: Identify Azure location.
-   See [az-group-create > Required Parameters > --location](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create-required-parameters)
+   See [az-group-create > Required Parameters > --location](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create-required-parameters).
    Example:
 
     ```console
@@ -240,14 +240,6 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
     ```
 
 ### Identify Docker registry
-
-:thinking: There are 3 options when it comes to using a docker registry.  Choose one:
-
-1. [Use public registry](#use-public-registry)
-
-#### Use public registry
-
-_Method #1:_ Pulls docker images from public internet registry.
 
 1. Use the default public `docker.io` registry which pulls images from
    [hub.docker.com](https://hub.docker.com/).
@@ -585,21 +577,24 @@ To view persistent volume:
 
 ### Add helm repositories
 
-1. Add Bitnami repository.
+1. Add Bitnami repository using
+   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
    Example:
 
     ```console
     helm repo add bitnami https://charts.bitnami.com/bitnami
     ```
 
-1. Add Senzing repository.
+1. Add Senzing repository using
+   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
    Example:
 
     ```console
     helm repo add senzing https://hub.senzing.com/charts/
     ```
 
-1. Update repositories.
+1. Update repositories using
+   [helm repo update](https://helm.sh/docs/helm/helm_repo_update/).
    Example:
 
     ```console
@@ -607,7 +602,8 @@ To view persistent volume:
     ```
 
 1. :thinking: **Optional:**
-   Review repositories.
+   Review repositories using
+   [helm repo list](https://helm.sh/docs/helm/helm_repo_list/).
    Example:
 
     ```console
