@@ -177,6 +177,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
 1. :pencil2: Identify Azure location.
+   See [az-group-create > Required Parameters > --location](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create-required-parameters)
    Example:
 
     ```console
