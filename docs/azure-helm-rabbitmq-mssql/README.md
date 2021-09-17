@@ -730,10 +730,12 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
 
 ### Install senzing-console Helm chart
 
-This deployment will be used later to:
+The [senzing-console](https://github.com/Senzing/docker-senzing-console)
+will be used later to:
 
 - Inspect mounted volumes
 - Debug issues
+- Run command-line tools
 
 1. Install chart.
    Example:
@@ -768,7 +770,8 @@ This deployment will be used later to:
 
 ### Install stream-producer Helm chart
 
-The stream producer pulls JSON lines from a file and pushes them to message queue.
+The [stream producer](https://github.com/Senzing/stream-producer)
+pulls JSON lines from a file and pushes them to message queue.
 
 1. Install chart.
    Example:
@@ -787,7 +790,8 @@ The stream producer pulls JSON lines from a file and pushes them to message queu
 
 ### Install init-container Helm chart
 
-The init-container creates files from templates and initializes the G2 database.
+The [init-container](https://github.com/Senzing/docker-init-container)
+creates files from templates and initializes the G2 database.
 
 1. Install chart.
    Example:
@@ -811,7 +815,8 @@ The init-container creates files from templates and initializes the G2 database.
 
 ### Install stream-loader Helm chart
 
-The stream loader pulls messages from message queue and sends them to Senzing.
+The [stream loader](https://github.com/Senzing/stream-loader)
+pulls messages from message queue and sends them to Senzing.
 
 1. Install chart.
    Example:
@@ -826,7 +831,8 @@ The stream loader pulls messages from message queue and sends them to Senzing.
 
 ### Install senzing-api-server Helm chart
 
-The Senzing API server receives HTTP requests to read and modify Senzing data.
+The [Senzing API server](https://github.com/Senzing/senzing-api-server)
+receives HTTP requests to read and modify Senzing data.
 
 1. Install chart.
    Example:
@@ -852,7 +858,8 @@ The Senzing API server receives HTTP requests to read and modify Senzing data.
 
 ### Install senzing-entity-search-web-app Helm chart
 
-The Senzing Entity Search WebApp is a light-weight WebApp demonstrating Senzing search capabilities.
+The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
+is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install chart.
    Example:
