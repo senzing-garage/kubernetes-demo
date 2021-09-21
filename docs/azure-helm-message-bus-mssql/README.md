@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, message queue, and a MS SQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, Message Bus queue, and a MS SQL database.
 
 ## Overview
 
