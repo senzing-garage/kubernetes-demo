@@ -1037,7 +1037,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-client
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-tools
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
