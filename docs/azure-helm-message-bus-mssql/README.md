@@ -10,11 +10,14 @@ This repository illustrates a reference implementation of Senzing using Microft 
 
 The instructions show how to set up a system that:
 
-1. Reads JSON lines from a file on the internet.
-1. Sends each JSON line to a message queue.
-    1. In this implementation, the queue is message queue.
-1. Reads messages from the queue and inserts into Senzing.
-    1. In this implementation, Senzing keeps its data in a Microsoft SQL Database database.
+1. Reads JSON lines from a file on the internet and sends each JSON line to a message queue via the Senzing
+   [stream-producer](https://github.com/Senzing/stream-producer).
+    1. In this implementation, the queue is an
+       [Azure Message Bus](https://azure.microsoft.com/en-us/services/service-bus/) queue.
+1. Reads messages from the queue and inserts into Senzing via the Senzing
+   [stream-loader](https://github.com/Senzing/stream-loader).
+    1. In this implementation, Senzing keeps its data in an
+       [Azure SQL Database](https://azure.microsoft.com/en-us/products/azure-sql/database/#overview) database.
 1. Reads information from Senzing via [Senzing API Server](https://github.com/Senzing/senzing-api-server) server.
 1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
@@ -72,7 +75,7 @@ For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
 If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
+[Documentation issue](https://github.com/Senzing/kubernetes-demo/issues/new?assignees=&labels=&template=documentation_request.md)
 describing where we can improve.   Now on with the show...
 
 ### Legend
