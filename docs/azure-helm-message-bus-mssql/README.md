@@ -205,7 +205,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
     echo "DATABASE_PASSWORD: ${DATABASE_PASSWORD}"
     ```
 
-1. :pencil2: Specify Azure SQL Database credentials.
+1. :pencil2: Specify Azure SQL Database firewall parameters.
    See [az sql server firewall-rule > Optional Parameters.](https://docs.microsoft.com/en-us/cli/azure/sql/server/firewall-rule?view=azure-cli-latest#az_sql_server_firewall_rule_create-optional-parameters)
    Example:
 
