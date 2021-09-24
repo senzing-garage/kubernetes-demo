@@ -8,7 +8,7 @@ imagePullSecrets:
 senzing:
   bindAddr: all
   concurrency: 8
-  initJson: >-
+  engineConfigurationJson: >-
     {
       "PIPELINE": {
         "CONFIGPATH": "/etc/opt/senzing",

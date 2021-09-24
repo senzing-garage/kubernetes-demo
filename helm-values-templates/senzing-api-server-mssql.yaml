@@ -17,7 +17,8 @@ senzing:
       },
       "SQL": {
         "BACKEND": "HYBRID",
-        "CONNECTION": "db2://db2inst1:db2inst1@G2"
+        "CONNECTION": "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_DATABASE}"
       }
     }
+  mountOptMicrosoft: true
   persistentVolumeClaim: senzing-persistent-volume-claim
