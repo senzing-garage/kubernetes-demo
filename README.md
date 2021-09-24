@@ -36,5 +36,5 @@ The following table indicates the instructions for variations in components.
     | RabbitMQ          | PostgreSQL         | [:page_facing_up:](docs/helm-rabbitmq-postgresql/README.md) |
     | RabbitMQ          | MySQL              | [:page_facing_up:](docs/helm-rabbitmq-mysql/README.md) |
     | Kafka             | PostgreSQL         | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |
-    | Azure Message Bus | Azure SQL Database | [:page_facing_up:](docs/azure-helm-message-bus-mssql+++++++++++/README.md) |
+    | Azure Message Bus | Azure SQL Database | [:page_facing_up:](docs/azure-helm-message-bus-mssql/README.md) |
 
