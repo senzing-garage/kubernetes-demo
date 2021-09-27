@@ -337,7 +337,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
-### Create Azure SQL Database
+### Create an Azure SQL Database
 
 1. Create Azure SQL server
    using
