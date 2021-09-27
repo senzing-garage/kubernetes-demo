@@ -336,7 +336,6 @@ Only one method needs to be performed.
         --regexp="^GIT_" \
         --regexp="^HELM_" \
         --regexp="^KUBERNETES_" \
-        --regexp="^MSSQL_" \
         --regexp="^SENZING_" \
     | sort \
     | awk -F= '{ print "export", $0 }' \
@@ -468,12 +467,9 @@ _Method #1:_ This method is simpler, but requires a root container.
 1. Example of completion:
 
     ```console
-    NAME                          READY   STATUS      RESTARTS   AGE
-    xyzzy-senzing-apt-8n2ql       0/1     Completed   0          2m44s
+    NAME                       READY   STATUS      RESTARTS   AGE
+    my-senzing-apt-8n2ql       0/1     Completed   0          2m44s
     ```
-
-1. :thinking: **Optional:**
-   To see results of installation, [view persistent volume](#view-persistent-volume).
 
 #### Non-root container method
 
