@@ -66,6 +66,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
     1. [Delete minikube cluster](#delete-minikube-cluster)
+1. [Errors](#errors)
+1. [References](#references)
 
 ## Preamble
 
@@ -374,18 +376,18 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -553,6 +555,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
 _Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 This produces the same result as the `apt` installs describe in prior methods.
+*Note:*  The environment variables were "sourced" in
+[Set environment variables](#set-environment-variables).
 
 1. :pencil2: Identify a directory to store downloaded files.
    Example:
@@ -568,7 +572,9 @@ This produces the same result as the `apt` installs describe in prior methods.
     docker run \
       --rm \
       --volume ${DOWNLOAD_DIR}:/download \
-      senzing/yumdownloader
+      senzing/yumdownloader \
+        senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
+        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.
