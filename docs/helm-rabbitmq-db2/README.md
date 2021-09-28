@@ -492,7 +492,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -643,7 +643,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-db2.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-db2.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).

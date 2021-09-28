@@ -62,16 +62,20 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Azure Resource Group](#view-azure-resource-group)
+        1. [View Azure Service Bus Queue](#view-azure-service-bus-queue)
+        1. [View Azure SQL Database](#view-azure-sql-database)
+        1. [View Azure Kubernetes Cluster](#view-azure-kubernetes-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
-    1. [Delete Kubernetes Service cluster](#delete-kubernetes-service-cluster)
-    1. [Delete SQL Database](#delete-sql-database)
-    1. [Delete Service Bus Queue](#delete-service-bus-queue)
-    1. [Delete Resource Group](#delete-resource-group)
+    1. [Delete Azure Kubernetes Service Cluster](#delete-azure-kubernetes-service-cluster)
+    1. [Delete Azure SQL Database](#delete-azure-sql-database)
+    1. [Delete Azure Service Bus Queue](#delete-azure-service-bus-queue)
+    1. [Delete Azure Resource Group](#delete-azure-resource-group)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -684,7 +688,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -758,7 +762,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-mssql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-mssql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -766,7 +770,6 @@ will be used later to:
 ### Initialize database
 
 1. Create tables in the database (i.e. the schema) used by Senzing.
-
    Example:
 
     ```console
@@ -945,6 +948,29 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
+#### View Azure Resource Group
+
+1. View [Resource Group](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
+
+#### View Azure Service Bus Queue
+
+1. View [Service Bus](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces)
+   .
+    1. Select service bus.
+    1. Near bottom, select "Queues" tab.
+
+#### View Azure SQL Database
+
+1. View [MS SQL Server](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fazuresql)
+   in Azure Portal.
+1. View [Database](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases)
+   in Azure Portal.
+
+#### View Azure Kubernetes Cluster
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
+
 #### View Senzing Console pod
 
 1. In a separate terminal window, log into Senzing Console pod.
@@ -1060,7 +1086,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-### Delete Kubernetes Service cluster
+### Delete Azure Kubernetes Service Cluster
 
 1. Delete the Azure Kubernetes Service cluster using
    [az aks delete](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete).
@@ -1073,7 +1099,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         --yes
     ```
 
-### Delete SQL Database
+### Delete Azure SQL Database
 
 1. Delete the Azure SQL database using
    [az sql db delete](https://docs.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az_sql_db_delete).
@@ -1097,7 +1123,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         --yes
     ```
 
-### Delete Service Bus Queue
+### Delete Azure Service Bus Queue
 
 1. Delete the Azure Queue using
    [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete).
@@ -1118,7 +1144,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
-### Delete Resource Group
+### Delete Azure Resource Group
 
 1. Delete the Azure Resource Group using
    [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete).

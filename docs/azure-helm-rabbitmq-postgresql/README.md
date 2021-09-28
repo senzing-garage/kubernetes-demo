@@ -61,6 +61,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Azure Resource Group](#view-azure-resource-group)
+        1. [View Azure Kubernetes Cluster](#view-azure-kubernetes-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
@@ -69,8 +71,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
-    1. [Delete Kubernetes Service cluster](#delete-kubernetes-service-cluster)
-    1. [Delete Resource Group](#delete-resource-group)
+    1. [Delete Azure Kubernetes Service Cluster](#delete-azure-kubernetes-service-cluster)
+    1. [Delete Azure Resource Group](#delete-azure-resource-group)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -533,7 +535,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -607,7 +609,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -866,21 +868,9 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-#### View Senzing Console pod
+#### View Azure Resource Group
 
-1. In a separate terminal window, log into Senzing Console pod.
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-    ```
+1. View [Resource Group](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
 
 #### View RabbitMQ
 
@@ -897,6 +887,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
+
 
 #### View PostgreSQL
 
@@ -918,6 +909,27 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. G2 > DSRC_RECORD
         1. G2 > OBS_ENT
+
+#### View Azure Kubernetes Cluster
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
+
+#### View Senzing Console pod
+
+1. In a separate terminal window, log into Senzing Console pod.
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+    ```
 
 #### View Senzing API Server
 
@@ -1025,7 +1037,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-### Delete Kubernetes Service cluster
+### Delete Azure Kubernetes Service Cluster
 
 1. Delete the Azure Kubernetes Service cluster using
    [az aks delete](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete).
@@ -1038,7 +1050,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         --yes
     ```
 
-### Delete Resource Group
+### Delete Azure Resource Group
 
 1. Delete the Azure Resource Group using
    [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete).
