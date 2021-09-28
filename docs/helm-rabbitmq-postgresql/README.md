@@ -544,6 +544,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
 
 _Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
+This produces the same result as the `apt` installs describe in prior methods.
 
 1. :pencil2: Identify a directory to store downloaded files.
    Example:
@@ -559,10 +560,17 @@ The advantage of this method is that the Senzing RPMs are not downloaded from th
     docker run \
       --rm \
       --volume ${DOWNLOAD_DIR}:/download \
-      senzing/yumdownloader \
-         senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
-         senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
+      senzing/yumdownloader
     ```
+
+1. :pencil2: Identify `RPM` package names.
+   The files will be in the `DOWNLOAD_DIR`.
+   Example:
+
+   ```console
+   export SENZING_VERSION_SENZINGAPI_RPM_FILENAME=senzingapi-2.8.2-21243.x86_64.rpm
+   export SENZING_VERSION_SENZINGDATA_RPM_FILENAME=senzingdata-v2-2.0.0-2.x86_64.rpm
+   ```
 
 1. Copy files into minikube.
    Example:
