@@ -64,7 +64,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
-    1. [Delete everything in project](#delete-everything-in-project)
+    1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
     1. [Delete minikube cluster](#delete-minikube-cluster)
 
 ## Preamble
@@ -600,10 +600,6 @@ This produces the same result as the `apt` installs describe in prior methods.
     sudo mv /home/docker/senzingapi* /mnt/vda1/senzing/senzing-rpms
     exit
     ```
-
-1. :warning: **Warning:**
-   `${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml` will need to be updated
-   with the appropriate filenames.
 
 1. Install chart to perform `yum localinstall`.
    Example:

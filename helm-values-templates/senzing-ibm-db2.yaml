@@ -16,4 +16,5 @@ securityContext:
   fsGroup: 0
 
 senzing:
+  mountOptIbm:  true
   persistentVolumeClaim: senzing-persistent-volume-claim

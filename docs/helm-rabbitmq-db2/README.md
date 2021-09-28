@@ -599,10 +599,6 @@ This produces the same result as the `apt` installs describe in prior methods.
     exit
     ```
 
-1. :warning: **Warning:**
-   `${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml` will need to be updated
-   with the appropriate filenames.
-
 1. Install chart to perform `yum localinstall`.
    Example:
 

@@ -12,6 +12,7 @@ senzing:
   entityType: GENERIC
   logLevel: info
   monitoringPeriod: 60
+  mountOptIbm:  true
   persistentVolumeClaim: senzing-persistent-volume-claim
   rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
   rabbitmqPassword: passw0rd
