@@ -156,6 +156,13 @@ The Git repository has files that will be used in the `helm install --values` pa
     minikube start --cpus 4 --memory 8192 --disk-size=50g
     ```
 
+1. View [minikube dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
+   Example:
+
+    ```console
+    minikube dashboard
+    ```
+
 ### EULA
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
