@@ -443,6 +443,7 @@ Choose one:
 #### Root container method
 
 _Method #1:_ This method is simpler, but requires a root container.
+This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
 1. Install chart.
    Example:
@@ -698,7 +699,8 @@ will be used later to:
 
 ### Initialize database
 
-1. Create tables in the database (i.e. the schema) used by Senzing.
+1. The [PostgreSQL Client](https://github.com/Senzing/postgresql-client) is used to
+   create tables in the database (i.e. the schema) used by Senzing.
    Example:
 
     ```console
@@ -866,7 +868,7 @@ but may be valuable in a production environment.
 
 #### Install senzing-redoer Helm chart
 
-The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
 1. Install chart.
    Example:
@@ -881,7 +883,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
 
 #### Install configurator Helm chart
 
-The Senzing Configurator is a micro-service for changing Senzing configuration.
+The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
 1. Install chart.
    Example:
