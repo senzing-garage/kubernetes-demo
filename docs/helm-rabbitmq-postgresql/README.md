@@ -571,15 +571,6 @@ This produces the same result as the `apt` installs describe in prior methods.
       senzing/yumdownloader
     ```
 
-1. :pencil2: Identify `RPM` package names.
-   The files will be in the `DOWNLOAD_DIR`.
-   Example:
-
-   ```console
-   export SENZING_VERSION_SENZINGAPI_RPM_FILENAME=senzingapi-2.8.2-21243.x86_64.rpm
-   export SENZING_VERSION_SENZINGDATA_RPM_FILENAME=senzingdata-v2-2.0.0-2.x86_64.rpm
-   ```
-
 1. Copy files into minikube.
    Example:
 
