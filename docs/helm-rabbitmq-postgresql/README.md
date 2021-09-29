@@ -378,18 +378,18 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. :thinking: **Optional:**
