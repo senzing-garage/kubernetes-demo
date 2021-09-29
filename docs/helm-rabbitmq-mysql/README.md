@@ -68,6 +68,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
     1. [Delete minikube cluster](#delete-minikube-cluster)
+1. [Errors](#errors)
+1. [References](#references)
 
 ## Preamble
 
@@ -159,6 +161,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
 1. View [minikube dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
+   Run command in a new terminal.
    Example:
 
     ```console
@@ -496,7 +499,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -555,6 +558,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
 _Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 This produces the same result as the `apt` installs describe in prior methods.
+*Note:*  The environment variables were "sourced" in
+[Set environment variables](#set-environment-variables).
 
 1. :pencil2: Identify a directory to store downloaded files.
    Example:
@@ -570,7 +575,9 @@ This produces the same result as the `apt` installs describe in prior methods.
     docker run \
       --rm \
       --volume ${DOWNLOAD_DIR}:/download \
-      senzing/yumdownloader
+      senzing/yumdownloader \
+        senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
+        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.
@@ -647,7 +654,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-mysql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-mysql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -893,22 +900,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-#### View Senzing Console pod
-
-1. In a separate terminal window, log into Senzing Console pod.
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-    ```
-
 #### View RabbitMQ
 
 1. In a separate terminal window, port forward to local machine.
@@ -945,6 +936,22 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. G2 > DSRC_RECORD
         1. G2 > OBS_ENT
+
+#### View Senzing Console pod
+
+1. In a separate terminal window, log into Senzing Console pod.
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+    ```
 
 #### View Senzing API Server
 
@@ -1040,7 +1047,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mysql-client
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mysql
     helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
+    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
