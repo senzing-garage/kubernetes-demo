@@ -1,5 +1,12 @@
 # kubernetes-demo-helm-kafka-db2
 
+## :no_entry: Deprecated
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+This set of instructions is not being maintained.
+It remains for archival purposes.
+
 ## Synopsis
 
 Using `minikube`, bring up a Senzing stack on Kubernetes
