@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, Message Bus queue, and a MS SQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes
+using Helm, Azure Message Bus Queue, and a Azure SQL Database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using Microft SQL Database as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+Microsoft's Azure SQL Database as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -50,7 +52,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
-    1. [Deploy Senzing RPM](#deploy-senzing-rpm)
+    1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
     1. [Initialize database](#initialize-database)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
@@ -62,16 +64,20 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
+        1. [View Azure Resource Group](#view-azure-resource-group)
+        1. [View Azure Service Bus Queue](#view-azure-service-bus-queue)
+        1. [View Azure SQL Database](#view-azure-sql-database)
+        1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
-    1. [Delete Kubernetes Service cluster](#delete-kubernetes-service-cluster)
-    1. [Delete SQL Database](#delete-sql-database)
-    1. [Delete Service Bus Queue](#delete-service-bus-queue)
-    1. [Delete Resource Group](#delete-resource-group)
+    1. [Delete Azure Kubernetes Service Cluster](#delete-azure-kubernetes-service-cluster)
+    1. [Delete Azure SQL Database](#delete-azure-sql-database)
+    1. [Delete Azure Service Bus Queue](#delete-azure-service-bus-queue)
+    1. [Delete Azure Resource Group](#delete-azure-resource-group)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -337,7 +343,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. References:
     1. [Use the Azure CLI to create a Service Bus namespace and a queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-cli)
 
-### Create Azure SQL Database
+### Create an Azure SQL Database
 
 1. Create Azure SQL server
    using
@@ -402,7 +408,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. References:
     1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 
-### Create an Azure Kubernetes Service cluster
+### Create an Azure Kubernetes Service Cluster
 
 1. [Create Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#create-an-aks-cluster)
    using
@@ -538,7 +544,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/namespace.yaml
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -558,7 +564,7 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/storage-class-azure.yaml
+    kubectl create -f ${KUBERNETES_DIR}/storage-class-azure.yaml
     ```
 
    Reference: [Dynamically create and use a persistent volume with Azure Files in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv)
@@ -567,7 +573,7 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-azure.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-azure.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -624,7 +630,7 @@ To view persistent volume:
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Deploy Senzing RPM
+### Deploy Senzing
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
 
@@ -637,6 +643,7 @@ Choose one:
 #### Root container method
 
 _Method #1:_ This method is simpler, but requires a root container.
+This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
 1. Install chart.
    Example:
@@ -661,8 +668,8 @@ _Method #1:_ This method is simpler, but requires a root container.
 1. Example of completion:
 
     ```console
-    NAME                          READY   STATUS      RESTARTS   AGE
-    xyzzy-senzing-apt-8n2ql       0/1     Completed   0          2m44s
+    NAME                       READY   STATUS      RESTARTS   AGE
+    xyzzy-senzing-apt-8n2ql    0/1     Completed   0          2m44s
     ```
 
 1. :thinking: **Optional:**
@@ -683,7 +690,7 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -757,7 +764,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${SENZING_DEMO_DIR}/helm-values/senzing-console-mssql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-mssql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -765,7 +772,6 @@ will be used later to:
 ### Initialize database
 
 1. Create tables in the database (i.e. the schema) used by Senzing.
-
    Example:
 
     ```console
@@ -902,7 +908,7 @@ but may be valuable in a production environment.
 
 #### Install senzing-redoer Helm chart
 
-The "redo-er" pulls Senzing redo records from the Senzing database and re-processes.
+The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
 1. Install chart.
    Example:
@@ -917,7 +923,7 @@ The "redo-er" pulls Senzing redo records from the Senzing database and re-proces
 
 #### Install configurator Helm chart
 
-The Senzing Configurator is a micro-service for changing Senzing configuration.
+The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
 1. Install chart.
    Example:
@@ -943,6 +949,29 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     export DEMO_PREFIX=my
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
+
+#### View Azure Resource Group
+
+1. View [Resource Group](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
+
+#### View Azure Service Bus Queue
+
+1. View [Service Bus](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces)
+   .
+    1. Select service bus.
+    1. Near bottom, select "Queues" tab.
+
+#### View Azure SQL Database
+
+1. View [MS SQL Server](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fazuresql)
+   in Azure Portal.
+1. View [Database](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases)
+   in Azure Portal.
+
+#### View Azure Kubernetes Service Cluster
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
 
 #### View Senzing Console pod
 
@@ -1059,7 +1088,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
-### Delete Kubernetes Service cluster
+### Delete Azure Kubernetes Service Cluster
 
 1. Delete the Azure Kubernetes Service cluster using
    [az aks delete](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete).
@@ -1072,7 +1101,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
         --yes
     ```
 
-### Delete SQL Database
+### Delete Azure SQL Database
 
 1. Delete the Azure SQL database using
    [az sql db delete](https://docs.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az_sql_db_delete).
@@ -1096,7 +1125,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
         --yes
     ```
 
-### Delete Service Bus Queue
+### Delete Azure Service Bus Queue
 
 1. Delete the Azure Queue using
    [az servicebus queue delete](https://docs.microsoft.com/en-us/cli/azure/servicebus/queue?view=azure-cli-latest#az_servicebus_queue_delete).
@@ -1117,7 +1146,7 @@ The Senzing Configurator is a micro-service for changing Senzing configuration.
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME}
     ```
 
-### Delete Resource Group
+### Delete Azure Resource Group
 
 1. Delete the Azure Resource Group using
    [az group delete](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_delete).

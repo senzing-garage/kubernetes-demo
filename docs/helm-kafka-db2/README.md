@@ -1,12 +1,21 @@
 # kubernetes-demo-helm-kafka-db2
 
+## :no_entry: Deprecated
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+This set of instructions is not being maintained.
+It remains for archival purposes.
+
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, Kafka, and a Db2 database.
+Using `minikube`, bring up a Senzing stack on Kubernetes
+using Helm, Kafka, and a Db2 database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using IBM's Db2 as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+IBM's Db2 as the underlying database.
 
 The instructions show how to set up a system that:
 

@@ -15,5 +15,6 @@ senzing:
   kafkaTopic: senzing-kafka-topic
   logLevel: info
   monitoringPeriod: 60
+  mountOptIbm:  true
   persistentVolumeClaim: senzing-persistent-volume-claim
   threadsPerProcess: 4
