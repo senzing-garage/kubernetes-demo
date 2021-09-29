@@ -147,7 +147,7 @@ The Git repository has files that will be used in the `helm install --values` pa
    Example:
 
     ```console
-    export SENZING_DEMO_DIR=~/senzing-rabbitmq-postgresql-demo-${DEMO_PREFIX}
+    export SENZING_DEMO_DIR=~/senzing-rabbitmq-mysql-demo-${DEMO_PREFIX}
     mkdir -p ${SENZING_DEMO_DIR}
     ```
 
