@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes
+using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+PostgreSQL as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -887,7 +889,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
-
 
 #### View PostgreSQL
 

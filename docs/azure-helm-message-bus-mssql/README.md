@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes using Helm, Message Bus queue, and a MS SQL database.
+Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes
+using Helm, Azure Message Bus Queue, and a Azure SQL Database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using Microft SQL Database as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+Microsoft's Azure SQL Database as the underlying database.
 
 The instructions show how to set up a system that:
 
