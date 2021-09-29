@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a Db2 database.
+Using `minikube`, bring up a Senzing stack on Kubernetes
+using Helm, RabbitMQ, and an IBM Db2 database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using IBM's Db2 as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+IBM's Db2 as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -56,14 +58,16 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
     1. [Delete minikube cluster](#delete-minikube-cluster)
+1. [Errors](#errors)
+1. [References](#references)
 
 ## Preamble
 
@@ -372,18 +376,18 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-db2.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
 1. Create persistent volume claims.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-db2.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl apply -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -551,6 +555,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
 _Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 This produces the same result as the `apt` installs describe in prior methods.
+*Note:*  The environment variables were "sourced" in
+[Set environment variables](#set-environment-variables).
 
 1. :pencil2: Identify a directory to store downloaded files.
    Example:
@@ -566,7 +572,9 @@ This produces the same result as the `apt` installs describe in prior methods.
     docker run \
       --rm \
       --volume ${DOWNLOAD_DIR}:/download \
-      senzing/yumdownloader
+      senzing/yumdownloader \
+        senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
+        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.
@@ -879,22 +887,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-#### View Senzing Console pod
-
-1. In a separate terminal window, log into Senzing Console pod.
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-    ```
-
 #### View RabbitMQ
 
 1. In a separate terminal window, port forward to local machine.
@@ -910,6 +902,22 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
         1. See `helm-values/rabbitmq.yaml` for Username and password.
+
+#### View Senzing Console pod
+
+1. In a separate terminal window, log into Senzing Console pod.
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+    ```
 
 #### View Senzing API Server
 
