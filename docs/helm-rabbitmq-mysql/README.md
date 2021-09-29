@@ -360,7 +360,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/namespace.yaml
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 1. :thinking: **Optional:**

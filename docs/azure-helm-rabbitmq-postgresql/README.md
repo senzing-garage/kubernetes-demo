@@ -386,7 +386,7 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/namespace.yaml
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -406,7 +406,7 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
    Example:
 
     ```console
-    kubectl apply -f ${KUBERNETES_DIR}/storage-class-azure.yaml
+    kubectl create -f ${KUBERNETES_DIR}/storage-class-azure.yaml
     ```
 
    Reference: [Dynamically create and use a persistent volume with Azure Files in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv)
