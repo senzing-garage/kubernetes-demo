@@ -44,7 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
-    1. [Deploy Senzing RPM](#deploy-senzing-rpm)
+    1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
@@ -441,7 +441,7 @@ Only one method needs to be performed.
 
 1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
 
-### Deploy Senzing RPM
+### Deploy Senzing
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
 
