@@ -67,7 +67,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Azure Resource Group](#view-azure-resource-group)
         1. [View Azure Service Bus Queue](#view-azure-service-bus-queue)
         1. [View Azure SQL Database](#view-azure-sql-database)
-        1. [View Azure Kubernetes Cluster](#view-azure-kubernetes-cluster)
+        1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
@@ -408,7 +408,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 1. References:
     1. [Create an Azure SQL Database single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 
-### Create an Azure Kubernetes Service cluster
+### Create an Azure Kubernetes Service Cluster
 
 1. [Create Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#create-an-aks-cluster)
    using
@@ -968,7 +968,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. View [Database](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases)
    in Azure Portal.
 
-#### View Azure Kubernetes Cluster
+#### View Azure Kubernetes Service Cluster
 
 1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
    in Azure Portal.

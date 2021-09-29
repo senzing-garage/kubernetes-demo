@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a PostgreSQL database.
+Using `minikube`, bring up a Senzing stack on Kubernetes
+using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+PostgreSQL as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -57,9 +59,9 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
@@ -910,22 +912,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-#### View Senzing Console pod
-
-1. In a separate terminal window, log into Senzing Console pod.
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-    ```
-
 #### View RabbitMQ
 
 1. In a separate terminal window, port forward to local machine.
@@ -962,6 +948,22 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. G2 > DSRC_RECORD
         1. G2 > OBS_ENT
+
+#### View Senzing Console pod
+
+1. In a separate terminal window, log into Senzing Console pod.
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+    ```
 
 #### View Senzing API Server
 

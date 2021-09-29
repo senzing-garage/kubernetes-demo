@@ -64,10 +64,10 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View Azure Resource Group](#view-azure-resource-group)
-        1. [View Azure Kubernetes Cluster](#view-azure-kubernetes-cluster)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
+        1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
@@ -250,7 +250,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
    View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceGroups).
 
-### Create an Azure Kubernetes Service cluster
+### Create an Azure Kubernetes Service Cluster
 
 1. [Create Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/quickstart-helm#create-an-aks-cluster)
    using
@@ -911,7 +911,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         1. G2 > DSRC_RECORD
         1. G2 > OBS_ENT
 
-#### View Azure Kubernetes Cluster
+#### View Azure Kubernetes Service Cluster
 
 1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
    in Azure Portal.
