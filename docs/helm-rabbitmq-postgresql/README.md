@@ -161,6 +161,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```
 
 1. View [minikube dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
+   Run command in a new terminal.
    Example:
 
     ```console

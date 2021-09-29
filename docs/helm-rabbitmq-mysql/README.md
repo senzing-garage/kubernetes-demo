@@ -2,11 +2,13 @@
 
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes using Helm, RabbitMQ, and a MySQL database.
+Using `minikube`, bring up a Senzing stack on Kubernetes
+using Helm, RabbitMQ, and a MySQL database.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using MySQL as the underlying database.
+This repository illustrates a reference implementation of Senzing using
+MySQL as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -57,9 +59,9 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View MySQL](#view-mysql)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Configurator](#view-senzing-configurator)
