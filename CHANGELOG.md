@@ -19,9 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - helm-kafka-db2
   - helm-rabbitmq-sqlite
   - helm-rabbitmq-sqlite-cluster
+- Updated
+  - helm-kafka-postgresql
+  - helm-rabbitmq-db2
+  - helm-rabbitmq-mysql
+  - helm-rabbitmq-postgresql
 - Replaced hard-coded docker image tags with environment variables
 - Improved `helm-values-templates` files
 - Updated images
+- Added `mountOptIbm` and `mountOptMicrosoft` where applicable
+- Added `engineConfigurationJson`
+
+### Removed in 1.3.0
+
+- Support for IBM Db2 OLTP
 
 ## [1.2.0] - 2020-07-22
 
