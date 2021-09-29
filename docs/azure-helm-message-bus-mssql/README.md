@@ -668,8 +668,8 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 1. Example of completion:
 
     ```console
-    NAME                          READY   STATUS      RESTARTS   AGE
-    xyzzy-senzing-apt-8n2ql       0/1     Completed   0          2m44s
+    NAME                       READY   STATUS      RESTARTS   AGE
+    xyzzy-senzing-apt-8n2ql    0/1     Completed   0          2m44s
     ```
 
 1. :thinking: **Optional:**

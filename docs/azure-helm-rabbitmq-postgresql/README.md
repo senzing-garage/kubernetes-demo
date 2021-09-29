@@ -515,8 +515,8 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 1. Example of completion:
 
     ```console
-    NAME                          READY   STATUS      RESTARTS   AGE
-    xyzzy-senzing-apt-8n2ql       0/1     Completed   0          2m44s
+    NAME                       READY   STATUS      RESTARTS   AGE
+    xyzzy-senzing-apt-8n2ql    0/1     Completed   0          2m44s
     ```
 
 1. :thinking: **Optional:**
@@ -653,8 +653,8 @@ will be used later to:
 1. Example of pod running:
 
     ```console
-    NAME                                      READY   STATUS      RESTARTS   AGE
-    xyzzy-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    NAME                                   READY   STATUS      RESTARTS   AGE
+    xyzzy-postgresql-6bf64cbbdf-25gtb      1/1     Running     0          10m
     ```
 
 ### Initialize database
