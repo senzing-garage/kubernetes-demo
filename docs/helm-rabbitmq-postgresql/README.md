@@ -153,7 +153,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Start minikube cluster
 
-Using [Get Started with Bitnami Charts using Minikube ](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
+Using [Get Started with Bitnami Charts using Minikube](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
 as a guide, start a minikube cluster.
 
 1. Start cluster using
@@ -204,6 +204,13 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    ```
+
+1. Retrieve stable Helm Chart version numbers and set their environment variables.
+   Example:
+
+    ```console
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
@@ -474,7 +481,8 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       ${DEMO_PREFIX}-senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt.yaml
+      --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_APT:-latest}
     ```
 
 1. Wait until Job has completed using
@@ -510,7 +518,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_BASE:-latest}
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -592,6 +601,14 @@ This produces the same result as the `apt` installs describe in prior methods.
         senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
+1. :pencil2: Identify filenames of downloaded files.
+   Example:
+
+    ```console
+    export SENZING_VERSION_SENZINGAPI_RPM_FILENAME=senzingapi-2.8.1-21217.x86_64.rpm
+    export SENZING_VERSION_SENZINGDATA_RPM_FILENAME=senzingdata-v2-2.0.0-2.x86_64.rpm
+    ```
+
 1. Copy files into minikube.
    Example:
 
@@ -632,7 +649,8 @@ This produces the same result as the `apt` installs describe in prior methods.
       ${DEMO_PREFIX}-senzing-yum \
       senzing/senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml
+      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_YUM:-latest}
     ```
 
 1. Wait until Job has completed using
@@ -670,7 +688,8 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-latest}
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -699,7 +718,7 @@ will be used later to:
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/postgresql.yaml \
-      --version v6.5.7
+      --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-latest}
     ```
 
 1. Wait for pod to run using
@@ -731,7 +750,8 @@ will be used later to:
       ${DEMO_PREFIX}-postgresql-client \
       senzing/postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml
+      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-latest}
     ```
 
 ### Install phpPgAdmin Helm Chart
@@ -745,7 +765,8 @@ will be used later to:
       ${DEMO_PREFIX}-phppgadmin \
       senzing/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml
+      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-latest}
     ```
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
@@ -761,7 +782,8 @@ will be used later to:
       ${DEMO_PREFIX}-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml
+      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
+      --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-latest}
     ```
 
 1. Wait for pods to run using
@@ -781,6 +803,7 @@ will be used later to:
 The [stream producer](https://github.com/Senzing/stream-producer)
 pulls JSON lines from a file and pushes them to message queue using
 [helm install](https://helm.sh/docs/helm/helm_install/).
+
 1. Install chart.
    Example:
 
@@ -790,6 +813,7 @@ pulls JSON lines from a file and pushes them to message queue using
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml
+      --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-latest}
     ```
 
 ### Install init-container Helm chart
@@ -806,7 +830,8 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-latest}
     ```
 
 1. Wait for pods to run using
@@ -833,7 +858,8 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-latest}
     ```
 
 ### Install senzing-api-server Helm chart
@@ -850,7 +876,8 @@ receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-latest}
     ```
 
 1. Wait for pods to run using
@@ -879,7 +906,8 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml
+      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-latest}
     ```
 
 1. Wait until Deployment has completed using
@@ -912,7 +940,8 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_REDOER:-latest}
     ```
 
 #### Install configurator Helm chart
@@ -928,7 +957,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-latest}
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
