@@ -601,14 +601,6 @@ This produces the same result as the `apt` installs describe in prior methods.
         senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
-1. :pencil2: Identify filenames of downloaded files.
-   Example:
-
-    ```console
-    export SENZING_VERSION_SENZINGAPI_RPM_FILENAME=senzingapi-2.8.1-21217.x86_64.rpm
-    export SENZING_VERSION_SENZINGDATA_RPM_FILENAME=senzingdata-v2-2.0.0-2.x86_64.rpm
-    ```
-
 1. Copy files into minikube.
    Example:
 
