@@ -170,8 +170,7 @@ View the minikube cluster using the
 [dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
 
 1. Run command in a new terminal using
-   [minikube dashboard](https://minikube.sigs.k8s.io/docs/commands/dashboard/)
-
+   [minikube dashboard](https://minikube.sigs.k8s.io/docs/commands/dashboard/).
    Example:
 
     ```console
@@ -796,7 +795,8 @@ The [stream producer](https://github.com/Senzing/stream-producer)
 pulls JSON lines from a file and pushes them to message queue using
 [helm install](https://helm.sh/docs/helm/helm_install/).
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
