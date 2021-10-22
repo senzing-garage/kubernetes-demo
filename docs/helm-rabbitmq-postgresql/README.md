@@ -463,11 +463,10 @@ Choose one:
 #### Root container method
 
 _Method #1:_ This method is simpler, but requires a root container.
-It uses
-[helm install](https://helm.sh/docs/helm/helm_install/).
 This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -478,7 +477,8 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       --values ${HELM_VALUES_DIR}/senzing-apt.yaml
     ```
 
-1. Wait until Job has completed.
+1. Wait until Job has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -500,8 +500,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
 _Method #2:_ This method can be done on kubernetes with a non-root container.
 
-1. Install chart with non-root container.
-   It uses
+1. Install chart with non-root container using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    This pod will be the recipient of a `docker cp` command.
    Example:
@@ -548,7 +547,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       senzing/apt
     ```
 
-1. Copy files from local machine to `senzing-base` pod.
+1. Copy files from local machine to `senzing-base` pod using
+   [kubectl cp](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp).
    Example:
 
     ```console
@@ -605,7 +605,8 @@ This produces the same result as the `apt` installs describe in prior methods.
         docker@$(minikube ip):/home/docker
     ```
 
-1. Log into `minikube` instance.
+1. Log into `minikube` instance using
+   [minikube ssh](https://minikube.sigs.k8s.io/docs/commands/ssh/).
    Example:
 
     ```console
@@ -622,8 +623,7 @@ This produces the same result as the `apt` installs describe in prior methods.
     exit
     ```
 
-1. Install chart to perform `yum localinstall`.
-   It uses
+1. Install chart to perform `yum localinstall` using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -635,7 +635,8 @@ This produces the same result as the `apt` installs describe in prior methods.
       --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml
     ```
 
-1. Wait until Job has completed.
+1. Wait until Job has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -676,7 +677,8 @@ will be used later to:
 
 ### Install Postgresql Helm chart
 
-1. Create Configmap for `pg_hba.conf`.
+1. Create Configmap for `pg_hba.conf` using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
     ```console
@@ -700,7 +702,8 @@ will be used later to:
       --version v6.5.7
     ```
 
-1. Wait for pod to run.
+1. Wait for pod to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -761,7 +764,8 @@ will be used later to:
       --values ${HELM_VALUES_DIR}/rabbitmq.yaml
     ```
 
-1. Wait for pods to run.
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -805,7 +809,8 @@ creates files from templates and initializes the G2 database.
       --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml
     ```
 
-1. Wait for pods to run.
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -848,7 +853,8 @@ receives HTTP requests to read and modify Senzing data.
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
     ```
 
-1. Wait for pods to run.
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -876,7 +882,8 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml
     ```
 
-1. Wait until Deployment has completed.
+1. Wait until Deployment has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -940,7 +947,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View RabbitMQ
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -956,7 +964,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View PostgreSQL
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -977,7 +986,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing Console pod
 
-1. In a separate terminal window, log into Senzing Console pod.
+1. In a separate terminal window, log into Senzing Console pod using
+   [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
    Example:
 
     ```console
@@ -993,7 +1003,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing API Server
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -1030,7 +1041,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing Entity Search WebApp
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -1047,7 +1059,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 #### View Senzing Configurator
 
 1. If the Senzing configurator was deployed,
-   in a separate terminal window port forward to local machine.
+   in a separate terminal window port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
