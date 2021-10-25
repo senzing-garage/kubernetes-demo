@@ -35,6 +35,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Clone repository](#clone-repository)
 1. [Demonstrate](#demonstrate)
     1. [Create demo directory](#create-demo-directory)
+    1. [Start minikube cluster](#start-minikube-cluster)
+    1. [View minikube cluster](#view-minikube-cluster)
     1. [EULA](#eula)
     1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
