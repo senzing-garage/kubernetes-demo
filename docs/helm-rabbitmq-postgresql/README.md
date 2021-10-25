@@ -135,10 +135,11 @@ The Git repository has files that will be used in the `helm install --values` pa
 ### Create demo directory
 
 1. :pencil2: Create unique prefix.
-   This will be used to create unique names in Azure
-   and will be used in a local directory name.
+   This will be used in a local directory name
+   as well as a prefix to kubernetes object.
 
    :warning:  Must be all lowercase.
+
    Example:
 
     ```console
