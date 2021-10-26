@@ -734,8 +734,8 @@ will be used later to:
 
 ### Initialize database
 
-1. The [PostgreSQL Client](https://github.com/Senzing/postgresql-client) is used to
-   create tables in the database (i.e. the schema) used by Senzing using
+1. The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
+   is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
