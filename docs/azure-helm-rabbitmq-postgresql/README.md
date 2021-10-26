@@ -402,7 +402,7 @@ Only one method needs to be performed.
 
 "Azure Files" have been selected over "Azure Disks" because:
 > Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
-on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
+> -- <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
 
 1. Create Storage Class using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).

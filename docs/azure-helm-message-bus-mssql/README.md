@@ -1,4 +1,4 @@
-# kubernetes-demo-azure-helm-rabbitmq-mssql
+# kubernetes-demo-azure-helm-message-bus-mssql
 
 ## Synopsis
 
@@ -9,7 +9,7 @@ using Helm, Azure Message Bus Queue, and a Azure SQL Database.
 
 This repository illustrates a reference implementation of Senzing using
 Microsoft's Azure SQL Database as the underlying database.
-
+f
 The instructions show how to set up a system that:
 
 1. Reads JSON lines from a file on the internet and sends each JSON line to a message queue via the Senzing
@@ -560,7 +560,7 @@ Only one method needs to be performed.
 
 "Azure Files" have been selected over "Azure Disks" because:
 > Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
-on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
+> -- <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
 
 1. Create Storage Class using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
@@ -794,7 +794,7 @@ will be used later to:
       senzing/mssql-tools \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/mssql-tools.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_MSSQL_TOOLS:-""}      
+      --version ${SENZING_HELM_VERSION_SENZING_MSSQL_TOOLS:-""}
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
@@ -989,8 +989,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Azure Service Bus Queue
 
-1. View [Service Bus](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces)
-   .
+1. View [Service Bus](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
     1. Select service bus.
     1. Near bottom, select "Queues" tab.
 
