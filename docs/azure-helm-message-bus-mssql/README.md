@@ -148,6 +148,7 @@ The Git repository has files that will be used in the `helm install --values` pa
    and will be used in a local directory name.
 
    :warning:  Must be all lowercase.
+
    Example:
 
     ```console
@@ -239,22 +240,21 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
    Example:
 
     ```console
-    curl -X GET \
-      --output ${SENZING_DEMO_DIR}/docker-versions-latest.sh \
-      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    ```
 
-    source ${SENZING_DEMO_DIR}/docker-versions-latest.sh
+1. Retrieve stable Helm Chart version numbers and set their environment variables.
+   Example:
+
+    ```console
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    curl -X GET \
-      --output ${SENZING_DEMO_DIR}/senzing-versions-latest.sh \
-      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
-
-    source ${SENZING_DEMO_DIR}/senzing-versions-latest.sh
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
     ```
 
 ### Identify Docker registry
@@ -540,7 +540,7 @@ Only one method needs to be performed.
 ### Create namespace
 
 1. Create namespace using
-   [helm create](https://helm.sh/docs/helm/helm_create/)
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
     ```console
@@ -548,7 +548,9 @@ Only one method needs to be performed.
     ```
 
 1. :thinking: **Optional:**
-   Review namespaces.
+   Review namespaces using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
 
     ```console
     kubectl get namespaces
@@ -560,7 +562,8 @@ Only one method needs to be performed.
 > Since Azure Disks are mounted as ReadWriteOnce, they're only available to a single pod.
 on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
 
-1. Create Storage Class.
+1. Create Storage Class using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
     ```console
@@ -569,7 +572,8 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
 
    Reference: [Dynamically create and use a persistent volume with Azure Files in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv)
 
-1. Create persistent volume claims.
+1. Create persistent volume claims using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
     ```console
@@ -577,7 +581,9 @@ on <https://docs.microsoft.com/en-us/azure/aks/concepts-storage#volumes>
     ```
 
 1. :thinking: **Optional:**
-   Review persistent volumes and claims.
+   Review persistent volumes and claims using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
 
     ```console
     kubectl get persistentvolumeClaims \
@@ -628,8 +634,6 @@ To view persistent volume:
     helm repo list
     ```
 
-1. Reference: [helm repo](https://helm.sh/docs/helm/#helm-repo)
-
 ### Deploy Senzing
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
@@ -645,7 +649,8 @@ Choose one:
 _Method #1:_ This method is simpler, but requires a root container.
 This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -653,10 +658,12 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       ${DEMO_PREFIX}-senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt-mssql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-apt-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_APT:-""}
     ```
 
-1. Wait until Job has completed.
+1. Wait until Job has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -681,7 +688,8 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
 _Method #2:_ This method can be done on kubernetes with a non-root container.
 
-1. Install chart with non-root container.
+1. Install chart with non-root container using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    This pod will be the recipient of a `docker cp` command.
    Example:
 
@@ -690,7 +698,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       name ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-base.yaml
+      --values ${HELM_VALUES_DIR}/senzing-base.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_BASE:-""}
     ```
 
 1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
@@ -727,7 +736,8 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       senzing/apt
     ```
 
-1. Copy files from local machine to `senzing-base` pod.
+1. Copy files from local machine to `senzing-base` pod using
+   [kubectl cp](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp).
    Example:
 
     ```console
@@ -756,7 +766,8 @@ will be used later to:
 - Debug issues
 - Run command-line tools
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -764,14 +775,17 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-mssql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
 ### Initialize database
 
-1. Create tables in the database (i.e. the schema) used by Senzing.
+1. [mssql-tools](https://github.com/Senzing/charts/tree/master/charts/mssql-tools)
+   is used to create tables in the database (i.e. the schema) used by Senzing using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -779,7 +793,8 @@ will be used later to:
       ${DEMO_PREFIX}-mssql-tools \
       senzing/mssql-tools \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mssql-tools.yaml
+      --values ${HELM_VALUES_DIR}/mssql-tools.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_MSSQL_TOOLS:-""}      
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
@@ -789,9 +804,11 @@ will be used later to:
 ### Install stream-producer Helm chart
 
 The [stream producer](https://github.com/Senzing/stream-producer)
-pulls JSON lines from a file and pushes them to message queue.
+pulls JSON lines from a file and pushes them to message queue using
+[helm install](https://helm.sh/docs/helm/helm_install/).
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -799,7 +816,8 @@ pulls JSON lines from a file and pushes them to message queue.
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-azure-queue.yaml
+      --values ${HELM_VALUES_DIR}/stream-producer-azure-queue.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces).
@@ -811,7 +829,8 @@ pulls JSON lines from a file and pushes them to message queue.
 The [init-container](https://github.com/Senzing/docker-init-container)
 creates files from templates and initializes the G2 database.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -819,10 +838,12 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-mssql.yaml
+      --values ${HELM_VALUES_DIR}/init-container-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
-1. Wait for pods to run.
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -836,7 +857,8 @@ creates files from templates and initializes the G2 database.
 The [stream loader](https://github.com/Senzing/stream-loader)
 pulls messages from message queue and sends them to Senzing.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -844,7 +866,8 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-azure-queue-mssql.yaml
+      --values ${HELM_VALUES_DIR}/stream-loader-azure-queue-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
 ### Install senzing-api-server Helm chart
@@ -852,7 +875,8 @@ pulls messages from message queue and sends them to Senzing.
 The [Senzing API server](https://github.com/Senzing/senzing-api-server)
 receives HTTP requests to read and modify Senzing data.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -860,10 +884,12 @@ receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-mssql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-api-server-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
     ```
 
-1. Wait for pods to run.
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -879,7 +905,8 @@ receives HTTP requests to read and modify Senzing data.
 The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
 is a light-weight WebApp demonstrating Senzing search capabilities.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -887,10 +914,12 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml
+      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
-1. Wait until Deployment has completed.
+1. Wait until Deployment has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
@@ -910,7 +939,8 @@ but may be valuable in a production environment.
 
 The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -918,14 +948,16 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-mssql.yaml
+      --values ${HELM_VALUES_DIR}/redoer-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
 #### Install configurator Helm chart
 
 The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
-1. Install chart.
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
@@ -933,7 +965,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-mssql.yaml
+      --values ${HELM_VALUES_DIR}/configurator-mssql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
@@ -975,7 +1008,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing Console pod
 
-1. In a separate terminal window, log into Senzing Console pod.
+1. In a separate terminal window, log into Senzing Console pod using
+   [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
    Example:
 
     ```console
@@ -991,7 +1025,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing API Server
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -1028,7 +1063,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Senzing Entity Search WebApp
 
-1. In a separate terminal window, port forward to local machine.
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -1045,7 +1081,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 #### View Senzing Configurator
 
 1. If the Senzing configurator was deployed,
-   in a separate terminal window port forward to local machine.
+   in a separate terminal window port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
@@ -1068,19 +1105,24 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 ### Delete everything in Kubernetes
 
+Delete Kubernetes artifacts using
+[helm uninstall](https://helm.sh/docs/helm/helm_uninstall/),
+[helm repo remove](https://helm.sh/docs/helm/helm_repo_remove/), and
+[kubectl delete](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete).
+
 1. Example:
 
     ```console
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-tools
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm delete --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-tools
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
