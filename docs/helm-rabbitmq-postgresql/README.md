@@ -750,7 +750,7 @@ will be used later to:
 
 ### Install phpPgAdmin Helm Chart
 
-1. Install phpPgAdmin app using
+1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
