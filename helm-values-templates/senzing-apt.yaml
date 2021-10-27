@@ -1,0 +1,16 @@
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_APT}
+
+imagePullSecrets:
+  - name: ${DOCKER_REGISTRY_SECRET}
+
+securityContext:
+  enabled: true
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
+
+senzing:
+  acceptEula: "${SENZING_ACCEPT_EULA}"
+  persistentVolumeClaim: senzing-persistent-volume-claim

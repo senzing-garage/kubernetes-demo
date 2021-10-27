@@ -169,7 +169,7 @@ as a guide, start a minikube cluster.
 
 ### View minikube cluster
 
-View the minikube cluster using the
+:thinking: **Optional:** View the minikube cluster using the
 [dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
 
 1. Run command in a new terminal using
@@ -506,60 +506,58 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
 #### Non-root container method
 
-**FIXME:**  non-root container method not verified.
-
 _Method #2:_ This method can be done on kubernetes with a non-root container.
+The following instructions are done on a non-kubernetes machine which allows root docker containers.
+Example: A personal laptop.
+
+1. Set environment variables.
+   Example:
+
+    ```console
+    export SENZING_DATA_DIR=${SENZING_DEMO_DIR}/data
+    export SENZING_G2_DIR=${SENZING_DEMO_DIR}/g2
+    ```
+
+1. Run docker container to download and extract Senzing binaries to
+   `SENZING_DATA_DIR` and `SENZING_G2_DIR`.
+   Example:
+
+    ```console
+    sudo docker run \
+      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
+      --interactive \
+      --rm \
+      --tty \
+      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
+      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      senzing/apt
+    ```
 
 1. Install chart with non-root container using
    [helm install](https://helm.sh/docs/helm/helm_install/).
-   This pod will be the recipient of a `docker cp` command.
+   This pod will be the recipient of `kubectl cp` commands.
    Example:
 
     ```console
     helm install \
-      name ${DEMO_PREFIX}-senzing-base \
+      ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-base.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_BASE:-""}
     ```
 
-1. The following instructions are done on a non-kubernetes machine which allows root docker containers.
-   Example:  a personal laptop.
-
-1. :pencil2: Set environment variables.
-   **Note:** See [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula) for correct value.
+1. Wait for pod to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-
-    export SENZING_ACCEPT_EULA=put-in-correct-value
-    export SENZING_VOLUME=/opt/my-senzing
-
-    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
-    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
-    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
-    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
     ```
 
-1. Run docker image.
-   Example:
-
-    ```console
-    sudo docker run \
-      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
-      --rm \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      senzing/apt
-    ```
-
-1. Copy files from local machine to `senzing-base` pod using
-   [kubectl cp](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp).
+1. Identify Senzing Base pod name.
    Example:
 
     ```console
@@ -569,11 +567,15 @@ _Method #2:_ This method can be done on kubernetes with a non-root container.
       --selector "app.kubernetes.io/name=senzing-base, \
                   app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-base" \
       )
+    ```
 
-    kubectl cp ${SENZING_DATA_DIR} ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-data
-    kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-g2
-    kubectl cp ${SENZING_ETC_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-etc
-    kubectl cp ${SENZING_VAR_DIR}  ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/senzing-var
+1. Copy files from local machine to Senzing Base pod using
+   [kubectl cp](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp).
+   Example:
+
+    ```console
+    kubectl cp ${SENZING_DATA_DIR} ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/data
+    kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/g2
     ```
 
 #### yum localinstall method
