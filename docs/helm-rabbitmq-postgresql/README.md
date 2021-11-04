@@ -856,7 +856,7 @@ pulls messages from message queue and sends them to Senzing.
       senzing/senzing-nemo \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
+      --version 0.1.0
     ```
 
     ```console
