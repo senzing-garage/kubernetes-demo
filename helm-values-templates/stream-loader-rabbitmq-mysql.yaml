@@ -1,20 +1,26 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
+  autoscaling:
+    enabled: true
+    maxReplicas: 10
+    minReplicas: 3
+    targetCPU: 10
+    targetMemory: 10
 
-senzing:
-  subcommand: rabbitmq
-  databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
-  dataSource: TEST
-  entityType: GENERIC
-  logLevel: info
-  monitoringPeriod: 60
-  persistentVolumeClaim: senzing-persistent-volume-claim
-  rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
-  rabbitmqPassword: passw0rd
-  rabbitmqQueue: senzing-rabbitmq-queue
-  rabbitmqUsername: user
-  threadsPerProcess: 4
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}
+
+  senzing:
+    dataSource: TEST
+    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
+    entityType: GENERIC
+    logLevel: info
+    monitoringPeriod: 60
+    persistentVolumeClaim: senzing-persistent-volume-claim
+    rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+    rabbitmqPassword: passw0rd
+    rabbitmqQueue: senzing-rabbitmq-queue
+    rabbitmqUsername: user
+    subcommand: rabbitmq
+    threadsPerProcess: 4

@@ -853,15 +853,6 @@ pulls messages from message queue and sends them to Senzing.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-stream-loader \
-      senzing/senzing-nemo \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
-      --version 0.1.0
-    ```
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
