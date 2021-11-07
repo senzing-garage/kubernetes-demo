@@ -6,11 +6,10 @@ main:
 
   containerSecurityContext:
     enabled: true
-    fsGroup: 0
     privileged: true
     runAsGroup: 0
     runAsUser: 0
 
   senzing:
-    acceptEula: "${SENZING_ACCEPT_EULA}"
+    acceptEula: ${SENZING_ACCEPT_EULA}
     persistentVolumeClaim: senzing-persistent-volume-claim
