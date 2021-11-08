@@ -1127,7 +1127,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
