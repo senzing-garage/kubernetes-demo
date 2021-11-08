@@ -3,12 +3,17 @@ ingress:
 
 main:
   containerSecurityContext:
-    enabled: false
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
   phppgadmin:
     serverHost: ${DEMO_PREFIX}-postgresql
+  podSecurityContext:
+    enabled: false
 
 service:
   type: ClusterIP
