@@ -1,15 +1,14 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
 
-senzing:
-  inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-  kafkaBootstrapServerHost: ${DEMO_PREFIX}-kafka
-  kafkaBootstrapServerPort: 9092
-  kafkaTopic: senzing-kafka-topic
-  recordMax: 10000
-  recordMonitor: 1000
-  subcommand: json-to-kafka
+  senzing:
+    inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
+    kafkaBootstrapServerHost: ${DEMO_PREFIX}-kafka
+    kafkaBootstrapServerPort: 9092
+    kafkaTopic: senzing-kafka-topic
+    recordMax: 50000
+    recordMonitor: 1000
+    subcommand: json-to-kafka
