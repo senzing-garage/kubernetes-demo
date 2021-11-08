@@ -713,7 +713,7 @@ will be used later to:
       ${DEMO_PREFIX}-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
     ```
 
@@ -778,7 +778,7 @@ will be used later to:
       ${DEMO_PREFIX}-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
     ```
 
@@ -809,7 +809,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -827,7 +827,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -855,7 +855,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -903,7 +903,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -937,7 +937,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
@@ -954,7 +954,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
