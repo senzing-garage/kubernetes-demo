@@ -1,22 +1,21 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
 
-senzing:
-  engineConfigurationJson: >-
-    {
-      "PIPELINE": {
-        "CONFIGPATH": "/etc/opt/senzing",
-        "RESOURCEPATH": "/opt/senzing/g2/resources",
-        "SUPPORTPATH": "/opt/senzing/data"
-      },
-      "SQL": {
-        "BACKEND": "HYBRID",
-        "CONNECTION": "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
+  senzing:
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "HYBRID",
+          "CONNECTION": "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
+        }
       }
-    }
-  mountOptIbm:  true
-  persistentVolumeClaim: senzing-persistent-volume-claim
+    mountOptIbm:  true
+    persistentVolumeClaim: senzing-persistent-volume-claim

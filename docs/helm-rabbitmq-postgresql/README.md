@@ -743,10 +743,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql-client \
-      senzing/postgresql-client \
+      ${DEMO_PREFIX}-senzing-postgresql-client \
+      senzing/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
