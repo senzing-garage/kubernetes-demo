@@ -1,10 +1,9 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}
 
-senzing:
-  apiServerUrl: "http://${DEMO_PREFIX}-senzing-api-server:8080"
+  senzing:
+    apiServerUrl: "http://${DEMO_PREFIX}-senzing-api-server"
 
