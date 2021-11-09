@@ -1,11 +1,10 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR}
 
-senzing:
-  databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
-  persistentVolumeClaim: senzing-persistent-volume-claim
-  subcommand: service
+  senzing:
+    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
+    persistentVolumeClaim: senzing-persistent-volume-claim
+    subcommand: service
