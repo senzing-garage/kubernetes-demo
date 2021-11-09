@@ -964,6 +964,16 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
+
+1. Because some of the Kubernetes Services use LoadBalancer,
+   a `minikube` tunnel is needed for
+   [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
+   Example:
+
+    ```console
+    minikube tunnel
+    ```
+
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
    Example:
 
@@ -1038,7 +1048,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1094,7 +1104,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
 1. Make HTTP calls via `curl`.
