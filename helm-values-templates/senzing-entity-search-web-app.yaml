@@ -1,5 +1,8 @@
 main:
 
+  autoscaling:
+    enabled: true
+
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}
