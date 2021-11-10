@@ -712,7 +712,7 @@ will be used later to:
       ${DEMO_PREFIX}-bitnami-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
     ```
 
@@ -730,7 +730,7 @@ will be used later to:
 
     ```console
     NAME                                   READY   STATUS      RESTARTS   AGE
-    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    my-bitnami-postgresql-6bf64cbbdf-25gtb  1/1     Running     0          10m
     ```
 
 ### Initialize database
@@ -742,10 +742,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql-client \
-      senzing/postgresql-client \
+      ${DEMO_PREFIX}-senzing-postgresql-client \
+      senzing/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
@@ -774,10 +774,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-kafka \
+      ${DEMO_PREFIX}-bitnami-kafka \
       bitnami/kafka \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-kafka.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_KAFKA:-""}
     ```
 
@@ -822,7 +822,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-kafka.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-kafka.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -840,7 +840,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -868,7 +868,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-kafka-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-kafka-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -916,7 +916,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -950,7 +950,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
@@ -967,7 +967,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
@@ -977,6 +977,16 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
+
+1. Because some of the Kubernetes Services use LoadBalancer,
+   a `minikube` tunnel is needed for
+   [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
+   Example:
+
+    ```console
+    minikube tunnel
+    ```
+
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
    Example:
 
@@ -1022,7 +1032,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
     1. Login
-       1. See `helm-values/postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
@@ -1056,7 +1066,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1112,7 +1122,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1144,9 +1154,9 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-kafka-test-client
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-kafka
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-kafka
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt

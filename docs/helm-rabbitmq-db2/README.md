@@ -719,7 +719,6 @@ This step adds the IBM Db2 Client driver code.
 
     ```console
     NAME                               READY  STATUS     RESTARTS  AGE
-    my-senzing-yum-8n2ql               0/1    Completed  0         2m44s
     my-ibm-db2-driver-installer-z8d45  0/1    Completed  0         1m35s
     ```
 
@@ -782,7 +781,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -800,7 +799,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-db2.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -828,7 +827,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-db2.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -876,7 +875,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -910,7 +909,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-db2.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
@@ -927,7 +926,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-db2.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-db2.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
@@ -937,6 +936,16 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
+
+1. Because some of the Kubernetes Services use LoadBalancer,
+   a `minikube` tunnel is needed for
+   [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
+   Example:
+
+    ```console
+    minikube tunnel
+    ```
+
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
    Example:
 
@@ -989,7 +998,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1045,7 +1054,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
 1. Make HTTP calls via `curl`.
