@@ -724,18 +724,18 @@ will be used later to:
 
 ### Initialize database
 
-1. The [MySQL Client](https://github.com/Senzing/charts/tree/master/charts/mysql-client)
+1. The [MySQL Client](https://github.com/Senzing/charts/tree/master/charts/arey-mysql-client)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-mysql-client \
-      senzing/senzing-mysql-client \
+      ${DEMO_PREFIX}-arey-mysql-client \
+      senzing/arey-mysql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-mysql-client.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_MYSQL_CLIENT:-""}
+      --values ${HELM_VALUES_DIR}/arey-mysql-client.yaml \
+      --version ${SENZING_HELM_VERSION_AREY_MYSQL_CLIENT:-""}
     ```
 
 ### Install phpMyAdmin Helm Chart
@@ -1125,7 +1125,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-phpmyadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-mysql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-arey-mysql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-mysql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
