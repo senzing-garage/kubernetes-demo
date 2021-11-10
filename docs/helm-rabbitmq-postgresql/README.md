@@ -1080,7 +1080,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```console
     helm install \
       ${DEMO_PREFIX}-cetic-swaggerui \
-      senzing/cetic-swaggerui \
+      cetic/swaggerui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/cetic-swaggerui.yaml
     ```
