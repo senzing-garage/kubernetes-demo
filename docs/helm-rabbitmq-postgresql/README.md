@@ -1089,7 +1089,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 9180:80
+      svc/${DEMO_PREFIX}-cetic-swaggerui 9180:80
     ```
 
    Then visit [http://localhost:9180](http://localhost:9180).
