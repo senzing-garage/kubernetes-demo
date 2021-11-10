@@ -736,7 +736,7 @@ will be used later to:
 
 ### Initialize database
 
-1. The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
+1. The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1009,10 +1009,10 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 8081:80
+      svc/${DEMO_PREFIX}-phppgadmin 9171:80
     ```
 
-1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
+1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
        1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
        1. Default: username: `postgres`  password: `postgres`

@@ -1027,10 +1027,10 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 8081:80
+      svc/${DEMO_PREFIX}-phppgadmin 9171:80
     ```
 
-1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
+1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
        1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
        1. Default: username: `postgres`  password: `postgres`
