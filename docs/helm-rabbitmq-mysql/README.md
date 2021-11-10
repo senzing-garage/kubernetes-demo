@@ -698,10 +698,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-mysql \
+      ${DEMO_PREFIX}-bitnami-mysql \
       bitnami/mysql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mysql.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-mysql.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_MYSQL:-""}
     ```
 
@@ -719,7 +719,7 @@ will be used later to:
 
     ```console
     NAME                              READY   STATUS      RESTARTS   AGE
-    my-mysql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    my-bitnami-mysql-6bf64cbbdf-25gtb  1/1     Running     0          10m
     ```
 
 ### Initialize database
@@ -731,25 +731,25 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-mysql-client \
-      senzing/mysql-client \
+      ${DEMO_PREFIX}-senzing-mysql-client \
+      senzing/senzing-mysql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mysql-client.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-mysql-client.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_MYSQL_CLIENT:-""}
     ```
 
 ### Install phpMyAdmin Helm Chart
 
-1. Install phpMyAdmin app using
+1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-phpmyadmin \
+      ${DEMO_PREFIX}-bitnami-phpmyadmin \
       bitnami/phpmyadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phpmyadmin.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-phpmyadmin.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_PHPMYADMIN:-""}
     ```
 
@@ -763,10 +763,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-rabbitmq \
+      ${DEMO_PREFIX}-bitnami-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
     ```
 
@@ -797,7 +797,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -815,7 +815,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-mysql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-mysql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -843,7 +843,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-mysql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-mysql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -891,7 +891,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -925,7 +925,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-mysql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-mysql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
@@ -942,7 +942,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-mysql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-mysql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
@@ -952,6 +952,16 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
+
+1. Because some of the Kubernetes Services use LoadBalancer,
+   a `minikube` tunnel is needed for
+   [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
+   Example:
+
+    ```console
+    minikube tunnel
+    ```
+
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
    Example:
 
@@ -970,12 +980,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
+      svc/${DEMO_PREFIX}-bitnami-rabbitmq 15672:15672
     ```
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/rabbitmq.yaml` for Username and password.
+        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View MySQL
 
@@ -987,12 +997,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phpmyadmin 9173:80
+      svc/${DEMO_PREFIX}-bitnami-phpmyadmin 9173:80
     ```
 
 1. MySQL will be viewable at [localhost:9173](http://localhost:9173).
     1. Login
-       1. See `helm-values/mysql.yaml` for `mysqlUser` and `mysqlPassword`.
+       1. See `helm-values/bitnami-mysql.yaml` for `mysqlUser` and `mysqlPassword`.
        1. Default: username: `g2`  password: `g2`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
@@ -1026,7 +1036,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1082,7 +1092,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1113,10 +1123,10 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phpmyadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mysql-client
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mysql
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-phpmyadmin
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-mysql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-mysql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing

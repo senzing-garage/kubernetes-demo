@@ -710,7 +710,7 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql \
+      ${DEMO_PREFIX}-bitnami-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
@@ -731,7 +731,7 @@ will be used later to:
 
     ```console
     NAME                                   READY   STATUS      RESTARTS   AGE
-    my-postgresql-6bf64cbbdf-25gtb         1/1     Running     0          10m
+    my-bitnami-postgresql-6bf64cbbdf-25gtb  1/1     Running     0          10m
     ```
 
 ### Initialize database
@@ -775,7 +775,7 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-rabbitmq \
+      ${DEMO_PREFIX}-bitnami-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
@@ -992,12 +992,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
+      svc/${DEMO_PREFIX}-bitnami-rabbitmq 15672:15672
     ```
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/rabbitmq.yaml` for Username and password.
+        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
 
@@ -1014,7 +1014,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
     1. Login
-       1. See `helm-values/postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
@@ -1135,10 +1135,10 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm repo remove senzing
