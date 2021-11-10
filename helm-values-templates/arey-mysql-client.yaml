@@ -3,7 +3,7 @@ main:
   args:
     - "--database=G2"
     - "--execute=source /sql/senzing-g2/resources/schema/g2core-schema-mysql-create.sql"
-    - "--host=${DEMO_PREFIX}-mysql"
+    - "--host=${DEMO_PREFIX}-bitnami-mysql"
     - "--password=g2"
     - "--user=g2"
 
