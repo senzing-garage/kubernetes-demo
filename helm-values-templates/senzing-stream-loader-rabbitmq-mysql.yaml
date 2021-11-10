@@ -13,12 +13,12 @@ main:
 
   senzing:
     dataSource: TEST
-    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
+    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/G2"
     entityType: GENERIC
     logLevel: info
     monitoringPeriod: 60
     persistentVolumeClaim: senzing-persistent-volume-claim
-    rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user

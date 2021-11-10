@@ -13,7 +13,7 @@ main:
 
   senzing:
     dataSource: TEST
-    databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432/G2"
+    databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
     entityType: GENERIC
     kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"
     kafkaBootstrapServerPort: 9092

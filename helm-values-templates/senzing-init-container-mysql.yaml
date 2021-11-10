@@ -11,5 +11,5 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER}
 
   senzing:
-    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-mysql:3306/G2"
+    databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/G2"
     persistentVolumeClaim: senzing-persistent-volume-claim

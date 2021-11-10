@@ -18,7 +18,7 @@ main:
         },
         "SQL": {
           "BACKEND": "HYBRID",
-          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-postgresql:5432:G2"
+          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
         }
       }
     persistentVolumeClaim: senzing-persistent-volume-claim

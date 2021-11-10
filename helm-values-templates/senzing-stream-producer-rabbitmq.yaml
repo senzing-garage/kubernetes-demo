@@ -6,7 +6,7 @@ main:
 
   senzing:
     inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-    rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user

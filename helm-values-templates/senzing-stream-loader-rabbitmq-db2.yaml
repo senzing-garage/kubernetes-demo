@@ -19,7 +19,7 @@ main:
     monitoringPeriod: 60
     mountOptIbm: true
     persistentVolumeClaim: senzing-persistent-volume-claim
-    rabbitmqHost: ${DEMO_PREFIX}-rabbitmq
+    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user
