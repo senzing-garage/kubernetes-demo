@@ -1,0 +1,8 @@
+deployment:
+  jsonNoCheckCertificate: true
+
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+
+swaggerui:
+  jsonUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
