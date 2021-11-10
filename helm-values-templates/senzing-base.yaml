@@ -1,11 +1,14 @@
 main:
 
+  args:
+    - infinity
+
+  command:
+    - sleep
+
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}
 
   senzing:
-    args:
-      - sleep
-      - infinity
     persistentVolumeClaim: senzing-persistent-volume-claim
