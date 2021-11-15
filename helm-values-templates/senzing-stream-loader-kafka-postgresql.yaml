@@ -15,7 +15,7 @@ main:
     dataSource: TEST
     databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
     entityType: GENERIC
-    kafkaBootstrapServerHost: "${DEMO_PREFIX}-kafka"
+    kafkaBootstrapServerHost: "${DEMO_PREFIX}-bitnami-kafka"
     kafkaBootstrapServerPort: 9092
     kafkaTopic: senzing-kafka-topic
     logLevel: info
