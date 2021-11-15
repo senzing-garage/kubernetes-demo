@@ -1020,7 +1020,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       -it \
       --namespace ${DEMO_NAMESPACE} \
       ${KAFKA_TEST_POD_NAME} -- /usr/bin/kafka-console-consumer \
-        --bootstrap-server ${DEMO_PREFIX}-kafka:9092 \
+        --bootstrap-server ${DEMO_PREFIX}-bitnami-kafka:9092 \
         --topic senzing-kafka-topic \
         --from-beginning
     ```
