@@ -60,12 +60,14 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
+        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View SwaggerUI](#view-swaggerui)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
@@ -941,6 +943,26 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
+#### Install SwaggerUI Helm chart
+
+The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
+for viewing the Senzing REST OpenAPI specification in a web browser.
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-swaggerapi-swagger-ui \
+      senzing/swaggerapi-swagger-ui \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
+      --version ${SENZING_HELM_VERSION_SWAGGERAPI_SWAGGER_UI:-""}
+    ```
+
+1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
+
 #### Install configurator Helm chart
 
 The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
@@ -1062,20 +1084,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
-1. Using [SwaggerUI](https://swagger.io/tools/swagger-ui/).
-   Example:
-
-    ```console
-    docker run \
-      --env URL=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml \
-      --name senzing-swagger-ui \
-      --publish 9180:8080 \
-      --rm \
-      swaggerapi/swagger-ui:v3.23.10
-    ```
-
-   Then visit [http://localhost:9180](http://localhost:9180).
-
 #### View Senzing Entity Search WebApp
 
 1. In a separate terminal window, port forward to local machine using
@@ -1092,6 +1100,21 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
+
+#### View SwaggerUI
+
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui 9180:80
+    ```
+
+   Then visit [http://localhost:9180](http://localhost:9180).
 
 #### View Senzing Configurator
 
@@ -1129,6 +1152,7 @@ Delete Kubernetes artifacts using
 
     ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-swaggerapi-swagger-ui
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
