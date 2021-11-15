@@ -1074,24 +1074,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       swaggerapi/swagger-ui:v3.23.10
     ```
 
-1. Using [SwaggerUI](https://swagger.io/tools/swagger-ui/) Helm Chart.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-cetic-swaggerui \
-      cetic/swaggerui \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/cetic-swaggerui.yaml
-    ```
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-cetic-swaggerui 9180:80
-    ```
-
    Then visit [http://localhost:9180](http://localhost:9180).
 
 #### View Senzing Entity Search WebApp
