@@ -432,6 +432,14 @@ Only one method needs to be performed.
     helm repo add bitnami https://charts.bitnami.com/bitnami
     ```
 
+1. Add Confluentinc repository using
+   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
+   Example:
+
+    ```console
+    helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
+    ```
+
 1. Add Senzing repository using
    [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
    Example:
@@ -787,11 +795,11 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-kafka-test-client \
-      senzing/kafka-test-client \
+      ${DEMO_PREFIX}-confluentinc-cp-kafka \
+      senzing/confluentinc-cp-kafka \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/kafka-test-client.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_KAFKA_TEST_CLIENT:-""}
+      --values ${HELM_VALUES_DIR}/confluentinc-cp-kafka.yaml \
+      --version ${SENZING_HELM_VERSION_CONFLUENTINC_CP_KAFKA:-""}
     ```
 
 1. Wait for pods to run using
@@ -1153,7 +1161,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-kafka-test-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-confluentinc-cp-kafka
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-kafka
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
