@@ -6,7 +6,7 @@ main:
 
   senzing:
     inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-    kafkaBootstrapServerHost: ${DEMO_PREFIX}-kafka
+    kafkaBootstrapServerHost: ${DEMO_PREFIX}-bitnami-kafka
     kafkaBootstrapServerPort: 9092
     kafkaTopic: senzing-kafka-topic
     recordMax: 50000
