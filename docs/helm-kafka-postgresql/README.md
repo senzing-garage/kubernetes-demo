@@ -1012,8 +1012,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export KAFKA_TEST_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=kafka-test-client, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-kafka-test-client" \
+      --selector "app.kubernetes.io/name=confluenceinc-cp-kafka, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-confluenceinc-cp-kafka" \
       )
 
     kubectl exec \
