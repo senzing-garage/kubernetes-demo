@@ -993,7 +993,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
     ```console
     helm install \
       ${DEMO_PREFIX}-swaggerapi-swagger-ui \
-      senzing/senzing-swaggerapi-swagger-ui \
+      senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
       --version ${SENZING_HELM_VERSION_SWAGGERAPI_SWAGGER_UI:-""}
