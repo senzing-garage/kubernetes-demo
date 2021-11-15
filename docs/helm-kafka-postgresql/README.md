@@ -981,6 +981,26 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
 
+#### Install SwaggerUI Helm chart
+
+The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
+for viewing the Senzing REST OpenAPI specification in a web browser.
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-swaggerapi-swagger-ui \
+      senzing/senzing-swaggerapi-swagger-ui \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
+      --version ${SENZING_HELM_VERSION_SWAGGERAPI_SWAGGER_UI:-""}
+    ```
+
+1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
+
 ### View data
 
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
@@ -1088,20 +1108,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
-1. Using [SwaggerUI](https://swagger.io/tools/swagger-ui/).
-   Example:
-
-    ```console
-    docker run \
-      --env URL=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml \
-      --name senzing-swagger-ui \
-      --publish 9180:8080 \
-      --rm \
-      swaggerapi/swagger-ui:v3.23.10
-    ```
-
-   Then visit [http://localhost:9180](http://localhost:9180).
-
 #### View Senzing Entity Search WebApp
 
 1. In a separate terminal window, port forward to local machine using
@@ -1118,6 +1124,21 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
+
+#### View SwaggerUI
+
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui 9180:8080
+    ```
+
+   Then visit [http://localhost:9180](http://localhost:9180).
 
 #### View Senzing Configurator
 
