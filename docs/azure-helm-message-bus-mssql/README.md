@@ -438,8 +438,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
     ```console
     az aks get-credentials \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --name ${SENZING_AZURE_AKS_NAME} \
-        > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
+        --name ${SENZING_AZURE_AKS_NAME}
     ```
 
 ### View Kubernetes
