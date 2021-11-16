@@ -1,0 +1,30 @@
+main:
+
+  args:
+    - "-d"
+    - ${DATABASE_DATABASE}
+    - "-e"
+    - "-i"
+    - /data/senzing-g2/resources/schema/g2core-schema-mssql-create.sql
+    - "-o"
+    - "/dev/stdout"
+    - "-P"
+    - ${DATABASE_PASSWORD}
+    - "-S"
+    - ${DATABASE_HOST}
+    - "-U"
+    - ${DATABASE_USERNAME}
+
+  command: ["/opt/mssql-tools/bin/sqlcmd"]
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_MSSQL_TOOLS}
+
+  mssql:
+    storageClaim: senzing-persistent-volume-claim
