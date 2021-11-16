@@ -442,6 +442,31 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
         > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
     ```
 
+### View Kubernetes
+
+The [Kubernetes dashboard](https://github.com/kubernetes/dashboard)
+can be used to view Kubernetes in the Azure Kubernetes Service (AKS).
+
+1. Deploy the Kubernetes dashboard.
+   Example:
+
+    ```console
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
+    ```
+
+1. In a new terminal window, proxy to the Kubernetes dashboard.
+   Example:
+
+    ```console
+    kubectl proxy
+    ```
+
+1. Kubernetes dashboard will be viewable at
+   [localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
+
+1. References:
+    1. [Deploy and Access the Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
 ### Create custom helm values files
 
 :thinking: In this step, Helm template files are populated with actual values.
