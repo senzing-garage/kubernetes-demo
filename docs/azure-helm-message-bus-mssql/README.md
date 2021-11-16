@@ -811,18 +811,18 @@ will be used later to:
 
 ### Initialize database
 
-1. [mssql-tools](https://github.com/Senzing/charts/tree/master/charts/mssql-tools)
+1. [microsoft-mssql-tools](https://github.com/Senzing/charts/tree/master/charts/microsoft-mssql-tools)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-mssql-tools \
-      senzing/mssql-tools \
+      ${DEMO_PREFIX}-microsoft-mssql-tools \
+      senzing/microsoft-mssql-tools \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/mssql-tools.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_MSSQL_TOOLS:-""}
+      --values ${HELM_VALUES_DIR}/microsoft-mssql-tools.yaml \
+      --version ${SENZING_HELM_VERSION_MICROSOFT_MSSQL_TOOLS:-""}
     ```
 
 1. View in [Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases).
@@ -995,7 +995,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
       senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
-      --version ${SENZING_HELM_VERSION_SWAGGERAPI_SWAGGER_UI:-""}
+      --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
     ```
 
 1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
@@ -1169,7 +1169,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-mssql-tools
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-microsoft-mssql-tools
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum

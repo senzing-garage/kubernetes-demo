@@ -793,7 +793,7 @@ will be used later to:
       senzing/confluentinc-cp-kafka \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/confluentinc-cp-kafka.yaml \
-      --version ${SENZING_HELM_VERSION_CONFLUENTINC_CP_KAFKA:-""}
+      --version ${SENZING_HELM_VERSION_SENZING_CONFLUENTINC_CP_KAFKA:-""}
     ```
 
 1. Wait for pods to run using
@@ -971,7 +971,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
       senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
-      --version ${SENZING_HELM_VERSION_SWAGGERAPI_SWAGGER_UI:-""}
+      --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
     ```
 
 1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
