@@ -446,23 +446,6 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
 The [Kubernetes dashboard](https://github.com/kubernetes/dashboard)
 can be used to view Kubernetes in the Azure Kubernetes Service (AKS).
 
-1. Deploy the Kubernetes dashboard.
-   Example:
-
-    ```console
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
-    ```
-
-1. In a new terminal window, proxy to the Kubernetes dashboard.
-   Example:
-
-    ```console
-    kubectl proxy
-    ```
-
-1. Kubernetes dashboard will be viewable at
-   [localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
-
 1. References:
     1. [Access the Kubernetes web dashboard in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard)
     1. [Deploy and Access the Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
@@ -1082,7 +1065,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
     ```
 
 1. Make HTTP calls via `curl`.
