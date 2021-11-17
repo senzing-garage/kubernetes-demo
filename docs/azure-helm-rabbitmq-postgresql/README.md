@@ -1139,6 +1139,15 @@ Delete Kubernetes artifacts using
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
+1. :pencil2: Delete `kubectl config` values.
+   Example:
+
+    ```console
+    kubectl config delete-cluster  "${DEMO_PREFIX}Aks"
+    kubectl config delete-context  "${DEMO_PREFIX}Aks"
+    kubectl config delete-user     "clusterUser_${DEMO_PREFIX}ResourceGroup_${DEMO_PREFIX}Aks"
+    ```
+
 ### Delete Azure Kubernetes Service Cluster
 
 1. Delete the Azure Kubernetes Service cluster using
