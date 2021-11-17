@@ -5,4 +5,4 @@ image:
   tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_PHPMYADMIN}
 
 db:
-  host: ${DEMO_PREFIX}-mysql
+  host: ${DEMO_PREFIX}-bitnami-mysql

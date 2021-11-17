@@ -1,0 +1,15 @@
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
+
+  senzing:
+    inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
+    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
+    rabbitmqPassword: passw0rd
+    rabbitmqQueue: senzing-rabbitmq-queue
+    rabbitmqUsername: user
+    recordMax: 50000
+    recordMonitor: 1000
+    subcommand: json-to-rabbitmq

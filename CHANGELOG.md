@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2021-11-18
+
+### Added in 1.4.1
+
+- Helm deployment of SwaggerUI
+
+### Changed in 1.4.1
+
+- Migrate `helm-values-templates` files to work with Senzing Helm Charts 1.1.0
+- Renamed files in `helm-values-templates` to be more consistent
+
 ## [1.4.0] - 2021-11-03
 
 ### Added in 1.4.0

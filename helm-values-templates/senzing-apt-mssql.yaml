@@ -1,25 +1,25 @@
-image:
-  registry: ${DOCKER_REGISTRY_URL}
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_APT}
+main:
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
-
-mssql:
-  acceptEula: "${MSSQL_ACCEPT_EULA}"
-
-securityContext:
-  enabled: true
-  runAsUser: 0
-  runAsGroup: 0
-  fsGroup: 0
-
-senzing:
-  acceptEula: "${SENZING_ACCEPT_EULA}"
-  aptParameters:
+  args:
     - -y
     - install
     - senzingapi
     - msodbcsql17
-  mountOptMicrosoft: true
-  persistentVolumeClaim: senzing-persistent-volume-claim
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_APT}
+
+  mssql:
+    acceptEula: "${MSSQL_ACCEPT_EULA}"
+
+  senzing:
+    acceptEula: "${SENZING_ACCEPT_EULA}"
+    mountOptMicrosoft: true
+    persistentVolumeClaim: senzing-persistent-volume-claim

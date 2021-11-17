@@ -1,0 +1,11 @@
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_REDOER}
+
+  senzing:
+    databaseUrl: "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
+    mountOptIbm:  true
+    persistentVolumeClaim: senzing-persistent-volume-claim
+    subcommand: redo

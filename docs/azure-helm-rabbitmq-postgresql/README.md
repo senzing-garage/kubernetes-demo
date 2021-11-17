@@ -62,14 +62,17 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
+        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
     1. [View data](#view-data)
         1. [View Azure Resource Group](#view-azure-resource-group)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
         1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
+        1. [View Kubernetes services](#view-kubernetes-services)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View SwaggerUI](#view-swaggerui)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
@@ -278,9 +281,18 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```console
     az aks get-credentials \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --name ${SENZING_AZURE_AKS_NAME} \
-        > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
+        --name ${SENZING_AZURE_AKS_NAME}
     ```
+
+### View Kubernetes
+
+The [Kubernetes dashboard](https://github.com/kubernetes/dashboard)
+can be used to view Kubernetes in the Azure Kubernetes Service (AKS).
+
+1. References:
+    1. [Access the Kubernetes web dashboard in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard)
+    1. [Deploy and Access the Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+    1. [Access the Kubernetes Dashboard in Azure Stack Hub](https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-solution-template-kubernetes-dashboard?view=azs-2102)
 
 ### Create custom helm values files
 
@@ -505,7 +517,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       ${DEMO_PREFIX}-senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt-mssql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_APT:-""}
     ```
 
@@ -650,10 +662,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql \
+      ${DEMO_PREFIX}-bitnami-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
     ```
 
@@ -676,17 +688,17 @@ will be used later to:
 
 ### Initialize database
 
-1. The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
+1. The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-postgresql-client \
-      senzing/postgresql-client \
+      ${DEMO_PREFIX}-senzing-postgresql-client \
+      senzing/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/postgresql-client.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
@@ -715,10 +727,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-rabbitmq \
+      ${DEMO_PREFIX}-bitnami-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
     ```
 
@@ -749,7 +761,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -767,7 +779,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -795,7 +807,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/stream-loader-rabbitmq-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -843,7 +855,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -877,9 +889,29 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/redoer-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
+
+#### Install SwaggerUI Helm chart
+
+The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
+for viewing the Senzing REST OpenAPI specification in a web browser.
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-swaggerapi-swagger-ui \
+      senzing/swaggerapi-swagger-ui \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
+    ```
+
+1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
 
 #### Install configurator Helm chart
 
@@ -894,7 +926,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/configurator-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
@@ -926,12 +958,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-rabbitmq 15672:15672
+      svc/${DEMO_PREFIX}-bitnami-rabbitmq 15672:15672
     ```
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/rabbitmq.yaml` for Username and password.
+        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
 
@@ -943,12 +975,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 8081:80
+      svc/${DEMO_PREFIX}-phppgadmin 9171:80
     ```
 
-1. PostgreSQL will be viewable at [localhost:8081](http://localhost:8081).
+1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
-       1. See `helm-values/postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select "G2" database to explore.
     1. The records received from the queue can be viewed in the following Senzing tables:
@@ -977,6 +1009,19 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
 
+#### View Kubernetes services
+
+The Senzing API Server, Senzing Entity Search WebApp, SwaggerUI, and Senzing Configurator
+can be reached via the Kubernetes Services.
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
+1. Click the **Name** of the Kubernetes cluster.
+1. In **Kubernetes resources**, click "Services and ingresses".
+1. To condense the list, in **Filter by namespace**, choose the appropriate namespace.
+   (Format: ${DEMO_PREFIX}-namespace).
+1. Services can be reached by clicking on the appropriate **External IP** value.
+
 #### View Senzing API Server
 
 1. In a separate terminal window, port forward to local machine using
@@ -987,7 +1032,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1000,20 +1045,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     curl -X GET ${SENZING_API_SERVICE}/license
     curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
-
-1. Using [SwaggerUI](https://swagger.io/tools/swagger-ui/).
-   Example:
-
-    ```console
-    docker run \
-      --env URL=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml \
-      --name senzing-swagger-ui \
-      --publish 9180:8080 \
-      --rm \
-      swaggerapi/swagger-ui:v3.23.10
-    ```
-
-   Then visit [http://localhost:9180](http://localhost:9180).
 
 #### View Senzing Entity Search WebApp
 
@@ -1032,6 +1063,21 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
+#### View SwaggerUI
+
+1. In a separate terminal window, port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui 9180:80
+    ```
+
+   Then visit [http://localhost:9180](http://localhost:9180).
+
 #### View Senzing Configurator
 
 1. If the Senzing configurator was deployed,
@@ -1043,7 +1089,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:8253
+      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
 1. Make HTTP calls via `curl`.
@@ -1068,18 +1114,20 @@ Delete Kubernetes artifacts using
 
     ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-swaggerapi-swagger-ui
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-rabbitmq
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql-client
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-postgresql
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
@@ -1089,6 +1137,15 @@ Delete Kubernetes artifacts using
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
+    ```
+
+1. :pencil2: Delete `kubectl config` values.
+   Example:
+
+    ```console
+    kubectl config delete-cluster  "${DEMO_PREFIX}Aks"
+    kubectl config delete-context  "${DEMO_PREFIX}Aks"
+    kubectl config delete-user     "clusterUser_${DEMO_PREFIX}ResourceGroup_${DEMO_PREFIX}Aks"
     ```
 
 ### Delete Azure Kubernetes Service Cluster
