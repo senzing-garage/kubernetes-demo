@@ -927,7 +927,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app-azure.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -1065,7 +1065,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:8080
+      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
 1. Make HTTP calls via `curl`.
