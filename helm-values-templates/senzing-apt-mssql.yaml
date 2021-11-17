@@ -1,5 +1,11 @@
 main:
 
+  args:
+    - -y
+    - install
+    - senzingapi
+    - msodbcsql17
+
   containerSecurityContext:
     enabled: true
     privileged: true
@@ -15,10 +21,5 @@ main:
 
   senzing:
     acceptEula: "${SENZING_ACCEPT_EULA}"
-    aptParameters:
-      - -y
-      - install
-      - senzingapi
-      - msodbcsql17
     mountOptMicrosoft: true
     persistentVolumeClaim: senzing-persistent-volume-claim
