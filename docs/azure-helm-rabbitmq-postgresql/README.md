@@ -69,6 +69,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View PostgreSQL](#view-postgresql)
         1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
+        1. [View Kubernetes services](#view-kubernetes-services)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View SwaggerUI](#view-swaggerui)
@@ -280,9 +281,18 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     ```console
     az aks get-credentials \
         --resource-group ${SENZING_AZURE_RESOURCE_GROUP_NAME} \
-        --name ${SENZING_AZURE_AKS_NAME} \
-        > ${SENZING_DEMO_DIR}/az-aks-get-creadentials.json
+        --name ${SENZING_AZURE_AKS_NAME}
     ```
+
+### View Kubernetes
+
+The [Kubernetes dashboard](https://github.com/kubernetes/dashboard)
+can be used to view Kubernetes in the Azure Kubernetes Service (AKS).
+
+1. References:
+    1. [Access the Kubernetes web dashboard in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard)
+    1. [Deploy and Access the Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+    1. [Access the Kubernetes Dashboard in Azure Stack Hub](https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-solution-template-kubernetes-dashboard?view=azs-2102)
 
 ### Create custom helm values files
 
@@ -998,6 +1008,19 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
+
+#### View Kubernetes services
+
+The Senzing API Server, Senzing Entity Search WebApp, SwaggerUI, and Senzing Configurator
+can be reached via the Kubernetes Services.
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
+1. Click the **Name** of the Kubernetes cluster.
+1. In **Kubernetes resources**, click "Services and ingresses".
+1. To condense the list, in **Filter by namespace**, choose the appropriate namespace.
+   (Format: ${DEMO_PREFIX}-namespace).
+1. Services can be reached by clicking on the appropriate **External IP** value.
 
 #### View Senzing API Server
 

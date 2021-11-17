@@ -70,6 +70,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Azure SQL Database](#view-azure-sql-database)
         1. [View Azure Kubernetes Service Cluster](#view-azure-kubernetes-service-cluster)
         1. [View Senzing Console pod](#view-senzing-console-pod)
+        1. [View Kubernetes services](#view-kubernetes-services)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View SwaggerUI](#view-swaggerui)
@@ -1054,6 +1055,19 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
+
+#### View Kubernetes services
+
+The Senzing API Server, Senzing Entity Search WebApp, SwaggerUI, and Senzing Configurator
+can be reached via the Kubernetes Services.
+
+1. View [Kubernetes cluster](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters)
+   in Azure Portal.
+1. Click the **Name** of the Kubernetes cluster.
+1. In **Kubernetes resources**, click "Services and ingresses".
+1. To condense the list, in **Filter by namespace**, choose the appropriate namespace.
+   (Format: ${DEMO_PREFIX}-namespace).
+1. Services can be reached by clicking on the appropriate **External IP** value.
 
 #### View Senzing API Server
 
