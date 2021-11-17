@@ -464,7 +464,9 @@ can be used to view Kubernetes in the Azure Kubernetes Service (AKS).
    [localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
 
 1. References:
+    1. [Access the Kubernetes web dashboard in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard)
     1. [Deploy and Access the Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+    1. [Access the Kubernetes Dashboard in Azure Stack Hub](https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-solution-template-kubernetes-dashboard?view=azs-2102)
 
 ### Create custom helm values files
 
@@ -942,7 +944,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app-azure.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
