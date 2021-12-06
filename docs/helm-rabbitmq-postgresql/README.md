@@ -997,11 +997,11 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```
 
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
+   **Note:** Replace `${DEMO_PREFIX}` with the actual DEMO_PREFIX value.
    Example:
 
     ```console
-    export DEMO_PREFIX=my
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
+    source ~/senzing-rabbitmq-postgresql-demo-${DEMO_PREFIX}/environment.sh
     ```
 
 #### View RabbitMQ
