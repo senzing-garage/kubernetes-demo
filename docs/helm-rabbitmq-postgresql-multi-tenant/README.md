@@ -182,27 +182,9 @@ as a guide, start a minikube cluster.
     minikube dashboard
     ```
 
-### EULA
-
-To use the Senzing code, you must agree to the End User License Agreement (EULA).
-
-1. :warning: This step is intentionally tricky and not simply copy/paste.
-   This ensures that you make a conscious effort to accept the EULA.
-   Example:
-
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
-
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
-
-1. Synthesize environment variables.
-   Example:
-
-    ```console
-    export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
-    ```
-
 1. Retrieve latest docker image version numbers and set their environment variables.
    Example:
 
@@ -315,11 +297,20 @@ _Method #3:_ Pulls docker images from minikube's registry.
 `main` is the owner of the shared database and RabbitMQ.
 Think of `main` as the super-tenant.
 
+#### Set environment variables for main
+
 1. :pencil2: Identify the "super-tenant".
    Example:
 
     ```console
     SENZING_TENANT=main
+    ```
+
+1. Synthesize environment variables.
+   Example:
+
+    ```console
+    export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
     ```
 
 #### Create custom helm values files for main
@@ -531,7 +522,6 @@ Only one method needs to be performed.
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
-
 #### Install RabbitMQ Helm chart
 
 1. Install chart using
@@ -559,8 +549,187 @@ Only one method needs to be performed.
 
 1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
-
 ### Deploy Tenant
+
+A tenant is a share-nothing user of Senzing.
+Each tenant will have:
+
+1. A separate database schema in the single database instance.
+1. Separate queues in the single RabbitMQ instance.
+1. A separate copy of the senzing binary files in its own PV/PVC.
+
+#### Set environment variables for tenant
+
+1. :pencil2: Identify the "tenant".
+   Example:
+
+    ```console
+    SENZING_TENANT=tenant1
+    ```
+
+1. Synthesize environment variables.
+   Example:
+
+    ```console
+    export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
+    ```
+
+#### EULA
+
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   Example:
+
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+
+
+#### Create custom helm values files for tenant
+
+:thinking: In this step, Helm template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
+   Example:
+
+    ```console
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
+    do \
+      envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
+    done
+    ```
+
+1. **Method #2:** Copy and manually modify files method.
+   Example:
+
+    ```console
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
+    mkdir -p ${HELM_VALUES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
+    ```
+
+    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_PREFIX}`
+    1. `${DOCKER_REGISTRY_SECRET}`
+    1. `${DOCKER_REGISTRY_URL}`
+    1. `${SENZING_ACCEPT_EULA}`
+
+#### Create custom kubernetes configuration files for tenant
+
+:thinking: In this step, Kubernetes template files are populated with actual values.
+There are two methods of accomplishing this.
+Only one method needs to be performed.
+
+1. **Method #1:** Quick method using `envsubst`.
+   Example:
+
+    ```console
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+
+    for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
+    do \
+      envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
+    done
+    ```
+
+1. **Method #2:** Copy and manually modify files method.
+   Example:
+
+    ```console
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
+    mkdir -p ${KUBERNETES_DIR}
+
+    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
+    ```
+
+    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
+
+    1. `${DEMO_NAMESPACE}`
+
+#### Save environment variables for main
+
+1. Save environment variables into a file that can be sourced.
+   Example:
+
+    ```console
+    cat <<EOT > ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
+    #!/usr/bin/env bash
+
+    EOT
+
+    env \
+    | grep \
+        --regexp="^DEMO_" \
+        --regexp="^DATABASE_" \
+        --regexp="^DOCKER_" \
+        --regexp="^GIT_" \
+        --regexp="^HELM_" \
+        --regexp="^KUBERNETES_" \
+        --regexp="^SENZING_" \
+    | sort \
+    | awk -F= '{ print "export", $0 }' \
+    >> ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
+
+    chmod +x ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
+    ```
+
+#### Create namespace for tenant
+
+1. Create namespace using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
+   Example:
+
+    ```console
+    kubectl create -f ${KUBERNETES_DIR}/namespace.yaml
+    ```
+
+1. :thinking: **Optional:**
+   Review namespaces using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get namespaces
+    ```
+
+#### Create persistent volume for tenant
+
+1. Create persistent volumes using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
+   Example:
+
+    ```console
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing-multi-tenant.yaml
+    ```
+
+1. Create persistent volume claims using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
+   Example:
+
+    ```console
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-multi-tenant.yaml
+    ```
+
+1. :thinking: **Optional:**
+   Review persistent volumes and claims using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get persistentvolumes \
+      --namespace ${DEMO_NAMESPACE}
+
+    kubectl get persistentvolumeClaims \
+      --namespace ${DEMO_NAMESPACE}
+    ```
 
 #### Deploy Senzing
 
@@ -587,7 +756,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       ${DEMO_PREFIX}-senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-apt-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_APT:-""}
     ```
 
@@ -647,7 +816,7 @@ Example: A personal laptop.
       ${DEMO_PREFIX}-senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-base.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-base-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_BASE:-""}
     ```
 
@@ -749,7 +918,7 @@ This produces the same result as the `apt` installs describe in prior methods.
       ${DEMO_PREFIX}-senzing-yum \
       senzing/senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_YUM:-""}
     ```
 
@@ -788,7 +957,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
     ```
 
@@ -807,7 +976,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-postgresql-client \
       senzing/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-postgresql-client-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
@@ -826,7 +995,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
@@ -844,7 +1013,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
@@ -872,7 +1041,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
@@ -890,7 +1059,7 @@ receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
     ```
 
@@ -920,7 +1089,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
     ```
 
@@ -954,7 +1123,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
     ```
 
@@ -991,7 +1160,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
     ```
 
