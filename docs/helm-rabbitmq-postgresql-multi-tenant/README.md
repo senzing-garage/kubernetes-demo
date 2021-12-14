@@ -315,11 +315,9 @@ Think of `main` as the super-tenant.
 
 #### Create custom helm values files for main
 
-:thinking: In this step, Helm template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
+In this step, Helm template files are populated with actual values.
 
-1. **Method #1:** Quick method using `envsubst`.
+1. Using `envsubst`.
    Example:
 
     ```console
@@ -332,30 +330,11 @@ Only one method needs to be performed.
     done
     ```
 
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
-    ```
-
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_PREFIX}`
-    1. `${DOCKER_REGISTRY_SECRET}`
-    1. `${DOCKER_REGISTRY_URL}`
-    1. `${SENZING_ACCEPT_EULA}`
-
 #### Create custom kubernetes configuration files for main
 
-:thinking: In this step, Kubernetes template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
+In this step, Kubernetes template files are populated with actual values.
 
-1. **Method #1:** Quick method using `envsubst`.
+1. Using `envsubst`.
    Example:
 
     ```console
@@ -367,20 +346,6 @@ Only one method needs to be performed.
       envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
     done
     ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
-    ```
-
-    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_NAMESPACE}`
 
 #### Save environment variables for main
 
@@ -587,11 +552,9 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 #### Create custom helm values files for tenant
 
-:thinking: In this step, Helm template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
+In this step, Helm template files are populated with actual values.
 
-1. **Method #1:** Quick method using `envsubst`.
+1. Using `envsubst`.
    Example:
 
     ```console
@@ -604,30 +567,11 @@ Only one method needs to be performed.
     done
     ```
 
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
-    ```
-
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_PREFIX}`
-    1. `${DOCKER_REGISTRY_SECRET}`
-    1. `${DOCKER_REGISTRY_URL}`
-    1. `${SENZING_ACCEPT_EULA}`
-
 #### Create custom kubernetes configuration files for tenant
 
-:thinking: In this step, Kubernetes template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
+In this step, Kubernetes template files are populated with actual values.
 
-1. **Method #1:** Quick method using `envsubst`.
+1. Using `envsubst`.
    Example:
 
     ```console
@@ -639,20 +583,6 @@ Only one method needs to be performed.
       envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
     done
     ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
-    ```
-
-    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_NAMESPACE}`
 
 #### Save environment variables for main
 
@@ -756,7 +686,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
       ${DEMO_PREFIX}-senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt-multi-tenant.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_APT:-""}
     ```
 
