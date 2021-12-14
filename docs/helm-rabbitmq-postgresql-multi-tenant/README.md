@@ -312,7 +312,10 @@ _Method #3:_ Pulls docker images from minikube's registry.
 
 ### Create main
 
-1. :pencil2: XXX
+`main` is the owner of the shared database and RabbitMQ.
+Think of `main` as the super-tenant.
+
+1. :pencil2: Identify the "super-tenant".
    Example:
 
     ```console
