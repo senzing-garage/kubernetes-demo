@@ -525,6 +525,17 @@ Each tenant will have:
 
 #### Set environment variables for tenant
 
+These steps assume that a fresh environment is used.
+As such, there will be some repetition from earler steps
+
+1. :thinking: Define `DEMO_PREFIX`, again.
+
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    ```
+
 1. :pencil2: Identify the "tenant".
    Example:
 
@@ -532,11 +543,30 @@ Each tenant will have:
     SENZING_TENANT=tenant1
     ```
 
+1. :thinking: Identify Docker registry.
+   Use the same values as in [Identify Docker registry](#identify-docker-registry).
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_URL=docker.io
+    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    ```
+
+1. "Source" variables.
+   Example:
+
+    ```console
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    ```
+
 1. Synthesize environment variables.
    Example:
 
     ```console
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
+    export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
     ```
 
 #### EULA
