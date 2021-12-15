@@ -549,7 +549,6 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
-
 #### Create custom helm values files for tenant
 
 In this step, Helm template files are populated with actual values.
@@ -584,7 +583,7 @@ In this step, Kubernetes template files are populated with actual values.
     done
     ```
 
-#### Save environment variables for main
+#### Save environment variables for tenant
 
 1. Save environment variables into a file that can be sourced.
    Example:
@@ -892,7 +891,6 @@ will be used later to:
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
-
 
 #### Initialize database
 
@@ -1255,14 +1253,33 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 ## Cleanup
 
-### Delete everything in Kubernetes
+### Delete tenant
 
-Delete Kubernetes artifacts using
-[helm uninstall](https://helm.sh/docs/helm/helm_uninstall/),
-[helm repo remove](https://helm.sh/docs/helm/helm_repo_remove/), and
-[kubectl delete](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete).
+1. :pencil2: Set environment variables for tenant.
+   Example:
 
-1. Example:
+    ```console
+    export DEMO_PREFIX=my
+    ```
+
+1. :pencil2: Identify the "tenant".
+   Example:
+
+    ```console
+    SENZING_TENANT=tenant1
+    ```
+
+1. Synthesize environment variables.
+   Example:
+
+    ```console
+    export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
+    ```
+
+1. Delete Kubernetes artifacts using
+   [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) and
+   [kubectl delete](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete).
+   Example:
 
     ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
@@ -1273,31 +1290,71 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
+    kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
+    ```
+
+### Delete main
+
+1. :pencil2: Set environment variables for tenant.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    ```
+
+1. :pencil2: Identify the "tenant".
+   Example:
+
+    ```console
+    SENZING_TENANT=main
+    ```
+
+1. Synthesize environment variables.
+   Example:
+
+    ```console
+    export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
+    ```
+
+1. Delete Kubernetes artifacts using
+   [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) and
+   [kubectl delete](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete).
+   Example:
+
+    ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
-    helm repo remove senzing
-    helm repo remove bitnami
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
+### Delete everything for Helm
+
+1. Delete Kubernetes artifacts using
+   [helm repo remove](https://helm.sh/docs/helm/helm_repo_remove/).
+   Example:
+
+    ```console
+    helm repo remove senzing
+    helm repo remove bitnami
+    ```
+
 ### Delete minikube cluster
 
-Delete minikube artifacts using
-[minikube stop](https://minikube.sigs.k8s.io/docs/commands/stop/) and
-[minikube delete](https://minikube.sigs.k8s.io/docs/commands/delete/)
-
-1. Example:
+1. Delete minikube artifacts using
+   [minikube stop](https://minikube.sigs.k8s.io/docs/commands/stop/) and
+   [minikube delete](https://minikube.sigs.k8s.io/docs/commands/delete/)
+   Example:
 
     ```console
     minikube stop
