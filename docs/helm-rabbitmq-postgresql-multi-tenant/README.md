@@ -702,7 +702,7 @@ In this step, Kubernetes template files are populated with actual values.
    Example:
 
     ```console
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing-multi-tenant.yaml
     ```
 
 1. :thinking: **Optional:**
