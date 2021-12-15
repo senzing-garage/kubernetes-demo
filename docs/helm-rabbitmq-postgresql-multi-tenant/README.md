@@ -579,6 +579,13 @@ As such, there will be some repetition from earler steps
     export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
     ```
 
+1. Create random passwords.
+   Example:
+
+    ```console
+    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
+    ```
+
 #### EULA
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
