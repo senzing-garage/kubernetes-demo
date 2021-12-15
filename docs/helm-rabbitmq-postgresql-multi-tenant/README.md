@@ -868,13 +868,20 @@ This produces the same result as the `apt` installs describe in prior methods.
     minikube ssh
     ```
 
+1. :thinking: Identify the "tenant".
+   Example:
+
+    ```console
+    export SENZING_TENANT=tenant1
+    ```
+
 1. In the `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
    Example:
 
     ```console
-    sudo mkdir -p /mnt/vda1/senzing/senzing-rpms
-    sudo mv /home/docker/senzingdata* /mnt/vda1/senzing/senzing-rpms
-    sudo mv /home/docker/senzingapi* /mnt/vda1/senzing/senzing-rpms
+    sudo mkdir -p /mnt/vda1/senzing/${SENZING_TENANT}/senzing-rpms
+    sudo mv /home/docker/senzingdata* /mnt/vda1/senzing/${SENZING_TENANT}/senzing-rpms
+    sudo mv /home/docker/senzingapi* /mnt/vda1/senzing/${SENZING_TENANT}/senzing-rpms
     exit
     ```
 
