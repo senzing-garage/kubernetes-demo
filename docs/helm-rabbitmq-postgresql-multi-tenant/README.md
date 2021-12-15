@@ -887,7 +887,7 @@ This produces the same result as the `apt` installs describe in prior methods.
       ${DEMO_PREFIX}-senzing-yum \
       senzing/senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall-multi-tenant.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_YUM:-""}
     ```
 
