@@ -540,7 +540,7 @@ As such, there will be some repetition from earler steps
    Example:
 
     ```console
-    SENZING_TENANT=tenant1
+    export SENZING_TENANT=tenant1
     ```
 
 1. :thinking: Identify Docker registry.
