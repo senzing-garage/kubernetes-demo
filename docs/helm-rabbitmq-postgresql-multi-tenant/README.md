@@ -299,17 +299,20 @@ Think of `main` as the super-tenant.
 
 #### Set environment variables for main
 
-1. :pencil2: Identify the "super-tenant".
+1. :pencil2: Identify the tenant administrator.
    Example:
 
     ```console
-    SENZING_TENANT=main
+    export SENZING_TENANT_ADMIN=main
     ```
 
 1. Synthesize environment variables.
    Example:
 
     ```console
+    export DEMO_NAMESPACE_ADMIN=${SENZING_TENANT_ADMIN}-namespace
+
+    export SENZING_TENANT=${SENZING_TENANT_ADMIN}
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
     ```
 
@@ -526,7 +529,14 @@ Each tenant will have:
 #### Set environment variables for tenant
 
 These steps assume that a fresh environment is used.
-As such, there will be some repetition from earler steps
+As such, there will be some repetition from earler steps.
+
+1. :thinking: Identify the tenant administrator, again.
+   Example:
+
+    ```console
+    export SENZING_TENANT_ADMIN=main
+    ```
 
 1. :thinking: Define `DEMO_PREFIX`, again.
 
@@ -576,6 +586,7 @@ As such, there will be some repetition from earler steps
 
     ```console
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
+    export DEMO_NAMESPACE_ADMIN=${SENZING_TENANT_ADMIN}-namespace
     export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
     ```
 
@@ -1348,6 +1359,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
@@ -1387,7 +1399,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml

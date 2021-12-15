@@ -5,9 +5,9 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT}
 
   postgresql:
-    database: G2_${SENZING_TENANT}
+    database: g2_${SENZING_TENANT}
     file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql
-    host: ${DEMO_PREFIX}-bitnami-postgresql
+    host: ${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
     password: postgres
     storageClaim: senzing-persistent-volume-claim
     username: postgres
