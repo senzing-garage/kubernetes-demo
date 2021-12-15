@@ -369,6 +369,7 @@ In this step, Kubernetes template files are populated with actual values.
         --regexp="^GIT_" \
         --regexp="^HELM_" \
         --regexp="^KUBERNETES_" \
+        --regexp="^RABBITMQ_" \
         --regexp="^SENZING_" \
     | sort \
     | awk -F= '{ print "export", $0 }' \
@@ -545,7 +546,7 @@ As such, there will be some repetition from earler steps.
     export SENZING_TENANT_ADMIN=main
     ```
 
-1. :thinking: Define `DEMO_PREFIX`, again.
+1. :thinking: Identify the `DEMO_PREFIX`, again.
 
    Example:
 
@@ -553,13 +554,30 @@ As such, there will be some repetition from earler steps.
     export DEMO_PREFIX=my
     ```
 
-1. :thinking: Identify Docker registry.
+1. :thinking: Identify Docker registry, again.
    Use the same values as in [Identify Docker registry](#identify-docker-registry).
    Example:
 
     ```console
     export DOCKER_REGISTRY_URL=docker.io
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    ```
+
+1. :thinking: To give each tenant unique data, choose a starting line number for the input file.
+   For demonstration, the `TENANTS` list contains 10 tenant identifiers.
+   Example:
+
+    ```console
+    export TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
+
+    export SENZING_RECORD_MIN=1
+    for TENANT in ${TENANTS[@]}; do
+        export SENZING_RECORD_MIN=$((${SENZING_RECORD_MIN} + 10000))
+        if [ ${SENZING_TENANT} = ${TENANT} ]; then
+            break
+        fi
+    done
+    echo ${SENZING_RECORD_MIN}
     ```
 
 1. Identify git repository directory.
@@ -588,6 +606,7 @@ As such, there will be some repetition from earler steps.
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
     export DEMO_NAMESPACE_ADMIN=${SENZING_TENANT_ADMIN}-namespace
     export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
+    export SENZING_RECORD_MAX=$((${SENZING_RECORD_MIN} + 9999))
     ```
 
 1. Create random passwords.
@@ -595,6 +614,7 @@ As such, there will be some repetition from earler steps.
 
     ```console
     export DATABASE_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
+    export RABBITMQ_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
     ```
 
 #### EULA
@@ -654,12 +674,13 @@ In this step, Kubernetes template files are populated with actual values.
 
     env \
     | grep \
-        --regexp="^DEMO_" \
         --regexp="^DATABASE_" \
+        --regexp="^DEMO_" \
         --regexp="^DOCKER_" \
         --regexp="^GIT_" \
         --regexp="^HELM_" \
         --regexp="^KUBERNETES_" \
+        --regexp="^RABBITMQ_" \
         --regexp="^SENZING_" \
     | sort \
     | awk -F= '{ print "export", $0 }' \
@@ -718,9 +739,20 @@ In this step, Kubernetes template files are populated with actual values.
       --namespace ${DEMO_NAMESPACE}
     ```
 
-#### Create database schema for tenant
+#### Create PostgreSQL database user for tenant
 
 1. Run SQL found in ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_database.sql
+
+#### Create RabbitMQ user for tenant
+
+1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
+   create a new user with the following information.
+   Example:
+
+    ```console
+    echo "RabbitMQ username: ${SENZING_TENANT}"
+    echo "RabbitMQ password: ${RABBITMQ_PASSWORD}"
+    ```
 
 #### Deploy Senzing
 
