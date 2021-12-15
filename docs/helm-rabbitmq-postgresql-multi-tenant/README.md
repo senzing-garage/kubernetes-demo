@@ -707,6 +707,10 @@ In this step, Kubernetes template files are populated with actual values.
       --namespace ${DEMO_NAMESPACE}
     ```
 
+#### Create database schema for tenant.
+
+1. Run SQL found in ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_database.sql
+
 #### Deploy Senzing
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
