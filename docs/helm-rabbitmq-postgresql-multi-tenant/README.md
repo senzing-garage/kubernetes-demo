@@ -531,6 +531,13 @@ Each tenant will have:
 These steps assume that a fresh environment is used.
 As such, there will be some repetition from earler steps.
 
+1. :pencil2: Identify the "tenant".
+   Example:
+
+    ```console
+    export SENZING_TENANT=tenant1
+    ```
+
 1. :thinking: Identify the tenant administrator, again.
    Example:
 
@@ -544,13 +551,6 @@ As such, there will be some repetition from earler steps.
 
     ```console
     export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the "tenant".
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
     ```
 
 1. :thinking: Identify Docker registry.
@@ -718,7 +718,7 @@ In this step, Kubernetes template files are populated with actual values.
       --namespace ${DEMO_NAMESPACE}
     ```
 
-#### Create database schema for tenant.
+#### Create database schema for tenant
 
 1. Run SQL found in ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_database.sql
 
