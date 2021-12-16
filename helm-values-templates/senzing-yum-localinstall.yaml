@@ -1,5 +1,7 @@
 main:
 
+  command: ["-y", "localinstall", "/rpms/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME}", "/rpms/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME}"]
+
   containerSecurityContext:
     enabled: true
     privileged: true
@@ -13,4 +15,3 @@ main:
   senzing:
     acceptEula: ${SENZING_ACCEPT_EULA}
     persistentVolumeClaim: senzing-persistent-volume-claim
-    yumParameters: ["-y", "localinstall", "/rpms/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME}", "/rpms/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME}"]
