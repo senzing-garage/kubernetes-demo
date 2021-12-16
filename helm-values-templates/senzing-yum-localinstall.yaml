@@ -1,6 +1,6 @@
 main:
 
-  command: ["-y", "localinstall", "/rpms/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME}", "/rpms/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME}"]
+  args: ["-y", "localinstall", "/rpms/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME}", "/rpms/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME}"]
 
   containerSecurityContext:
     enabled: true
