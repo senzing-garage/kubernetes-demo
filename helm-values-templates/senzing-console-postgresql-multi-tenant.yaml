@@ -14,7 +14,7 @@ main:
         },
         "SQL": {
           "BACKEND": "HYBRID",
-          "CONNECTION": "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql:5432/g2_${SENZING_TENANT}"
+          "CONNECTION": "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
         }
       }
     persistentVolumeClaim: senzing-persistent-volume-claim
