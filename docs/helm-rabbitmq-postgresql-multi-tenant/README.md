@@ -453,7 +453,7 @@ In this step, Kubernetes template files are populated with actual values.
       ${DEMO_PREFIX}-bitnami-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
     ```
 
