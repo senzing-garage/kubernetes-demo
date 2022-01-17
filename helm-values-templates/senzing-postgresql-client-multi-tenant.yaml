@@ -4,6 +4,9 @@ main:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT}
 
+  podSecurityContext:
+    enabled: true
+
   postgresql:
     database: g2_${SENZING_TENANT}
     file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql
@@ -11,3 +14,9 @@ main:
     password: ${DATABASE_PASSWORD}
     storageClaim: senzing-persistent-volume-claim
     username: ${SENZING_TENANT}
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

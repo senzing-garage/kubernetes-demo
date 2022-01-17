@@ -15,5 +15,5 @@ postgresqlPassword: postgres
 rbac:
   create: true
 
-securityContext:
-  enabled: false
+serviceAccount:
+  enabled: true

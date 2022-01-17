@@ -16,3 +16,9 @@ main:
     recordMin: ${SENZING_RECORD_MIN}
     recordMonitor: 1000
     subcommand: json-to-rabbitmq
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

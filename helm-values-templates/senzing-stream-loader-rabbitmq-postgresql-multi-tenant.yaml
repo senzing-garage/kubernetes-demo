@@ -26,3 +26,9 @@ main:
     rabbitmqUsername: ${SENZING_TENANT}
     subcommand: rabbitmq
     threadsPerProcess: 4
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

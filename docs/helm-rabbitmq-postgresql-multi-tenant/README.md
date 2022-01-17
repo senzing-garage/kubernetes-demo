@@ -485,7 +485,7 @@ In this step, Kubernetes template files are populated with actual values.
       ${DEMO_PREFIX}-phppgadmin \
       senzing/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
+      --values ${HELM_VALUES_DIR}/phppgadmin-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-""}
     ```
 

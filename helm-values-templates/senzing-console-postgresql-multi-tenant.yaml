@@ -4,6 +4,9 @@ main:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
 
+  podSecurityContext:
+    enabled: true
+
   senzing:
     engineConfigurationJson: >-
       {
@@ -18,3 +21,9 @@ main:
         }
       }
     persistentVolumeClaim: senzing-persistent-volume-claim
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

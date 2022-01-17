@@ -2,20 +2,22 @@ ingress:
   enabled: true
 
 main:
-  containerSecurityContext:
-    enabled: true
-    privileged: true
-    runAsGroup: 0
-    runAsUser: 0
+
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
+
   phppgadmin:
     serverHost: ${DEMO_PREFIX}-bitnami-postgresql
-  podSecurityContext:
-    enabled: false
 
-rbacEnabled: true
+  podSecurityContext:
+    enabled: true
+
+rbac:
+  create: true
 
 service:
   type: ClusterIP
+
+serviceAccount:
+  enabled: true
