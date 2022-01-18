@@ -741,6 +741,8 @@ In this step, Kubernetes template files are populated with actual values.
 
 #### Create PostgreSQL database user for tenant
 
+Using a database user interface like [phpPgAdmin](#view-postgresql):
+
 1. Create database and user by running SQL found in
    ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_create_database.sql
 
