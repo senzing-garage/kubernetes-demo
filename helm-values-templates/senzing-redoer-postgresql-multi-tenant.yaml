@@ -4,6 +4,9 @@ main:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_REDOER}
 
+  podSecurityContext:
+    enabled: true
+
   senzing:
     databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
     persistentVolumeClaim: senzing-persistent-volume-claim

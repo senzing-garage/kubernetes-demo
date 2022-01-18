@@ -14,7 +14,7 @@ main:
     enabled: true
 
 rbac:
-  create: true
+  enabled: true
 
 service:
   type: ClusterIP

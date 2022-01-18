@@ -1,8 +1,23 @@
+ingress:
+  enabled: true
+
 main:
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI}
 
+  podSecurityContext:
+    enabled: true
+
   swaggerui:
     openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+
+serviceAccount:
+  enabled: true

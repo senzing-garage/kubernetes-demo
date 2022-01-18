@@ -1,12 +1,30 @@
+ingress:
+  enabled: true
+
 main:
 
   autoscaling:
     enabled: true
+    maxReplicas: 2
+    minReplicas: 1
+    targetCPU: 10
+    targetMemory: 10
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP}
 
+  podSecurityContext:
+    enabled: true
+
   senzing:
     apiServerUrl: "http://${DEMO_PREFIX}-senzing-api-server"
 
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+
+serviceAccount:
+  enabled: true
