@@ -12,6 +12,7 @@ main:
 
   podSecurityContext:
     enabled: true
+    runAsNonRoot: false
 
   senzing:
     databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"

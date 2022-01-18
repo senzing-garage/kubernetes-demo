@@ -18,6 +18,7 @@ main:
 
   podSecurityContext:
     enabled: true
+    runAsNonRoot: false
 
   senzing:
     acceptEula: ${SENZING_ACCEPT_EULA}

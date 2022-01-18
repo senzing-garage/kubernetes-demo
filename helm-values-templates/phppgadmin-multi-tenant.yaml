@@ -18,6 +18,7 @@ main:
 
   podSecurityContext:
     enabled: true
+    runAsNonRoot: false
 
 rbac:
   enabled: true
