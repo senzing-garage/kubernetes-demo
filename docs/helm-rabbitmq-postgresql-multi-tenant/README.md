@@ -744,10 +744,10 @@ In this step, Kubernetes template files are populated with actual values.
 Using a database user interface like [phpPgAdmin](#view-postgresql):
 
 1. Create database and user by running SQL found in
-   ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_create_database.sql
+   ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
 
 1. Create schema and permissions by connecting to the database and running SQL found in
-   ${SENZING_DEMO_DIR}/kubernetes/pg_tenant_create_schema.sql
+   ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_schema.sql
 
 #### Create RabbitMQ user for tenant
 
