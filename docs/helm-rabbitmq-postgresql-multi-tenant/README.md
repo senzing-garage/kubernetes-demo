@@ -751,29 +751,11 @@ Using a database user interface like [phpPgAdmin](#view-postgresql):
 
 #### Create RabbitMQ user for tenant
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
    create a new user with the following information.
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
-
     echo "RabbitMQ username: ${SENZING_TENANT}"
     echo "RabbitMQ password: ${RABBITMQ_PASSWORD}"
     ```
