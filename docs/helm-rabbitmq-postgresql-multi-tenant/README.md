@@ -760,6 +760,10 @@ Using a database user interface like [phpPgAdmin](#view-postgresql):
     echo "RabbitMQ password: ${RABBITMQ_PASSWORD}"
     ```
 
+1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
+    1. In "Name" column, click on tenant
+    1. In "Permissions", set permission for Virtual Host: `/`
+
 #### Deploy Senzing
 
 :thinking: This deployment initializes the Persistent Volume with Senzing code and data.
