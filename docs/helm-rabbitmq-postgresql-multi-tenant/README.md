@@ -743,6 +743,8 @@ In this step, Kubernetes template files are populated with actual values.
 
 Using a database user interface like [phpPgAdmin](#view-postgresql):
 
+1. Log on as super user.
+
 1. Create database and user by running SQL found in
    ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
 
