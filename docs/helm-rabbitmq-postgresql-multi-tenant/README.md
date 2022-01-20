@@ -725,6 +725,14 @@ In this step, Kubernetes template files are populated with actual values.
     chmod +x ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
     ```
 
+1. :thinking: **Optional:**
+   These environment variables can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh.
+   Example:
+
+    ```console
+    cat ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
+    ```
+
 #### Create namespace for tenant
 
 1. Create namespace using
