@@ -1403,6 +1403,24 @@ In a separate terminal window:
       svc/${DEMO_PREFIX}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
     ```
 
+In a separate terminal window:
+
+1. :pencil2: Identify the existing demonstration prefix created in the
+   "[Create demo directory](#create-demo-directory)" step.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    ```
+
+1. :pencil2: Identify the existing "tenant" created in the
+   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
+   Example:
+
+    ```console
+    export SENZING_TENANT=tenant1
+    ```
+
 1. Make HTTP calls via `curl`.
    Example:
 
@@ -1526,6 +1544,24 @@ If the Senzing configurator was deployed, in a separate terminal window:
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
       svc/${DEMO_PREFIX}-senzing-configurator ${SENZING_PORT_CONFIGURATOR}:80
+    ```
+
+In a separate terminal window:
+
+1. :pencil2: Identify the existing demonstration prefix created in the
+   "[Create demo directory](#create-demo-directory)" step.
+   Example:
+
+    ```console
+    export DEMO_PREFIX=my
+    ```
+
+1. :pencil2: Identify the existing "tenant" created in the
+   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
+   Example:
+
+    ```console
+    export SENZING_TENANT=tenant1
     ```
 
 1. Make HTTP calls via `curl`.
