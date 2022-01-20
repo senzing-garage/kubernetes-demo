@@ -748,8 +748,13 @@ Using a database user interface like [phpPgAdmin](#view-postgresql):
 1. Create database and user by running SQL found in
    ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
 
+1. **Warning:** For next step, be sure that the newly created database is selected.
+   For instance, in `phpPgAdmin`, select the database before running the SQL.
+
 1. Create schema and permissions by connecting to the database and running SQL found in
    ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_schema.sql
+
+1. Verify that the schema exists for the new tenant database.
 
 #### Create RabbitMQ user for tenant
 
