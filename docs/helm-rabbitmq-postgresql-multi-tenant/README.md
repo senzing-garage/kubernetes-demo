@@ -1425,6 +1425,7 @@ In a separate terminal window:
    Example:
 
     ```console
+    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
     export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_SENZING_API_SERVER}
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
@@ -1568,6 +1569,7 @@ In a separate terminal window:
    Example:
 
     ```console
+    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
     export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_CONFIGURATOR}
 
     curl -X GET ${SENZING_API_SERVICE}/datasources
