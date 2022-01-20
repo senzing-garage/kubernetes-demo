@@ -1422,13 +1422,14 @@ In a separate terminal window:
       svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
     ```
 
-1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
-   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
-   instructions will give a tour of the Senzing web app.
+1. Senzing Entity Search WebApp will be viewable at the following URL:
 
     ```console
     echo "http://localhost/${SENZING_PORT_ENTITY_SEARCH_WEB_APP}
     ```
+
+1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   instructions will give a tour of the Senzing web app.
 
 ##### View SwaggerUI
 
@@ -1463,11 +1464,10 @@ In a separate terminal window:
       svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
     ```
 
-   Then visit [http://localhost:9180](http://localhost:9180).
-
+1. The Swagger-UI will be viewable at the following URL:
 
     ```console
-    echo "http://localhost/${SENZING_PORT_SWAGGERUI}
+    echo "http://localhost/${SENZING_PORT_ENTITY_SEARCH_WEB_APP}
     ```
 
 ##### View Senzing Configurator
