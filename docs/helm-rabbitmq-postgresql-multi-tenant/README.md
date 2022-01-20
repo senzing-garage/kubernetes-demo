@@ -580,6 +580,25 @@ As such, there will be some repetition from earler steps.
     echo ${SENZING_RECORD_MIN}
     ```
 
+1. :thinking: Give each tenant unique ports.
+   Example:
+
+    ```console
+    export TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
+
+    export SENZING_PORT_MIN=8256
+    for TENANT in ${TENANTS[@]}; do
+        if [ ${SENZING_TENANT} = ${TENANT} ]; then
+            export SENZING_PORT_SENZING_API_SERVER=$((${SENZING_PORT_MIN} + 0));
+            export SENZING_PORT_ENTITY_SEARCH_WEB_APP=$((${SENZING_PORT_MIN} + 1));
+            export SENZING_PORT_CONFIGURATOR=$((${SENZING_PORT_MIN} + 2));
+            export SENZING_PORT_SWAGGERUI=$((${SENZING_PORT_MIN} + 3));
+            break
+        fi
+        export SENZING_PORT_MIN=$((${SENZING_PORT_MIN} + 4))
+    done
+    ```
+
 1. Identify git repository directory.
    Example:
 
