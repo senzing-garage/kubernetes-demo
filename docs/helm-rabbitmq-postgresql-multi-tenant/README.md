@@ -171,7 +171,8 @@ as a guide, start a minikube cluster.
 
 ### View minikube cluster
 
-:thinking: **Optional:** View the minikube cluster using the
+:thinking: **Optional:**
+View the minikube cluster using the
 [dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
 
 1. In a separate terminal window, run start minikube dashboard using
@@ -663,6 +664,14 @@ In this step, Helm template files are populated with actual values.
     done
     ```
 
+1. :thinking: **Optional:**
+   These custom values can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
+   Example:
+
+    ```console
+    ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
+    ```
+
 #### Create custom kubernetes configuration files for tenant
 
 In this step, Kubernetes template files are populated with actual values.
@@ -678,6 +687,14 @@ In this step, Kubernetes template files are populated with actual values.
     do \
       envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
     done
+    ```
+
+1. :thinking: **Optional:**
+   These custom values can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
+   Example:
+
+    ```console
+    ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
     ```
 
 #### Save environment variables for tenant
