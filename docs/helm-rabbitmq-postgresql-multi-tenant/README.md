@@ -581,8 +581,6 @@ As such, there will be some repetition from earler steps.
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
-
-
 1. :thinking: To give each tenant unique data, choose a starting line number for the input file.
    Example:
 
@@ -747,7 +745,7 @@ In this step, Kubernetes template files are populated with actual values.
     cat ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
     ```
 
-1. Create "current" link to this tenant.
+1. Create "current" links to this tenant.
    Example:
 
     ```console
@@ -756,6 +754,12 @@ In this step, Kubernetes template files are populated with actual values.
       --relative \
       --symbolic \
       ${SENZING_DEMO_DIR}/${SENZING_TENANT} ${SENZING_DEMO_DIR}/current
+
+    ln \
+      --force \
+      --relative \
+      --symbolic \
+      ${SENZING_DEMO_DIR} ~/senzing-multi-tenant-demo-current
     ```
 
 #### Create namespace for tenant
@@ -1299,20 +1303,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/main/environment.sh
+    source ~/senzing-multi-tenant-demo-current/main/environment.sh
 
     kubectl port-forward \
       --address 0.0.0.0 \
@@ -1328,20 +1324,12 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/main/environment.sh
+    source ~/senzing-multi-tenant-demo-current/main/environment.sh
 
     kubectl port-forward \
       --address 0.0.0.0 \
@@ -1362,28 +1350,12 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Log into Senzing Console pod using
    [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
 
     export CONSOLE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
@@ -1399,28 +1371,12 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
 
     kubectl port-forward \
       --address 0.0.0.0 \
@@ -1430,27 +1386,11 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
     export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_SENZING_API_SERVER}
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
@@ -1462,27 +1402,11 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
-1. Once the port has been forwarded (next step),
+1. Once the port has been forwarded in the next step,
    the Senzing Entity Search WebApp will be viewable at the following URL:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
     echo "http://localhost:${SENZING_PORT_ENTITY_SEARCH_WEB_APP}"
     ```
 
@@ -1491,7 +1415,6 @@ In a separate terminal window:
    Example:
 
     ```console
-
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
@@ -1505,27 +1428,11 @@ In a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
+1. Once the port has been forwarded in the next step,
+   the Swagger UI will be viewable at the following URL:
 
     ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
-1. Once the port has been forwarded (next step),
-   the Senzing Entity Search WebApp will be viewable at the following URL:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
     echo "http://localhost:${SENZING_PORT_SWAGGERUI}"
     ```
 
@@ -1544,28 +1451,12 @@ In a separate terminal window:
 
 If the Senzing configurator was deployed, in a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
 
     kubectl port-forward \
       --address 0.0.0.0 \
@@ -1575,27 +1466,11 @@ If the Senzing configurator was deployed, in a separate terminal window:
 
 In a separate terminal window:
 
-1. :pencil2: Identify the existing demonstration prefix created in the
-   "[Create demo directory](#create-demo-directory)" step.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
-
-1. :pencil2: Identify the existing "tenant" created in the
-   "[Set environment variables for tenant](#set-environment-variables-for-tenant)" step.
-   Example:
-
-    ```console
-    export SENZING_TENANT=tenant1
-    ```
-
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
     export SENZING_CONFIGURATOR_SERVICE=http://localhost:${SENZING_PORT_CONFIGURATOR}
 
     curl -X GET ${SENZING_CONFIGURATOR_SERVICE}/datasources
