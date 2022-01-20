@@ -751,7 +751,8 @@ In this step, Kubernetes template files are populated with actual values.
    Example:
 
     ```console
-    ln -s ${SENZING_DEMO_DIR}/${SENZING_TENANT} ${SENZING_DEMO_DIR}/current
+    cd ${SENZING_DEMO_DIR}
+    ln -s ${SENZING_TENANT} current
     ```
 
 #### Create namespace for tenant
