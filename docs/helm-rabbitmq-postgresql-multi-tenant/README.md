@@ -533,10 +533,27 @@ Each tenant will have:
 These steps assume that a fresh environment is used.
 As such, there will be some repetition from earler steps.
 
+1. :pencil2: Create a list of tenant names.
+   Example:
+
+   ```console
+    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
+   ```
+
+1. :pencil2: Identify the tenant number for this tenant.
+   Example:
+
+    ```console
+    export SENZING_TENANT_NUMBER=0
+    ```
+
 1. :pencil2: Identify the "tenant".
    Example:
 
     ```console
+    export SENZING_TENANT=${SENZING_TENANTS[SENZING_TENANT_NUMBER]}
+    echo "${SENZING_TENANT}"
+
     export SENZING_TENANT=tenant1
     ```
 
@@ -564,12 +581,7 @@ As such, there will be some repetition from earler steps.
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
-1. :pencil2: Create a list of tenant names.
-   Example:
 
-   ```console
-    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
-   ```
 
 1. :thinking: To give each tenant unique data, choose a starting line number for the input file.
    Example:
