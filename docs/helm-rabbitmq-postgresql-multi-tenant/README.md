@@ -1453,23 +1453,24 @@ In a separate terminal window:
     export SENZING_TENANT=tenant1
     ```
 
+1. Once the port has been forwarded (next step),
+   the Senzing Entity Search WebApp will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    echo "http://localhost:${SENZING_PORT_ENTITY_SEARCH_WEB_APP}"
+    ```
+
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
 
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
       svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
-    ```
-
-1. Senzing Entity Search WebApp will be viewable at the following URL:
-
-    ```console
-    echo "http://localhost/${SENZING_PORT_ENTITY_SEARCH_WEB_APP}
     ```
 
 1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
@@ -1495,23 +1496,23 @@ In a separate terminal window:
     export SENZING_TENANT=tenant1
     ```
 
+1. Once the port has been forwarded (next step),
+   the Senzing Entity Search WebApp will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
+    echo "http://localhost:${SENZING_PORT_SWAGGERUI}"
+    ```
+
 1. Port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
 
     ```console
-    source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
-
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
       svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
-    ```
-
-1. The Swagger-UI will be viewable at the following URL:
-
-    ```console
-    echo "http://localhost/${SENZING_PORT_ENTITY_SEARCH_WEB_APP}
     ```
 
 ##### View Senzing Configurator
