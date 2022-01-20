@@ -564,15 +564,19 @@ As such, there will be some repetition from earler steps.
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     ```
 
+1. :pencil2: Create a list of tenant names.
+   Example:
+
+   ```console
+    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
+   ```
+
 1. :thinking: To give each tenant unique data, choose a starting line number for the input file.
-   For demonstration, the `TENANTS` list contains 10 tenant identifiers.
    Example:
 
     ```console
-    export TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
-
     export SENZING_RECORD_MIN=1
-    for TENANT in ${TENANTS[@]}; do
+    for TENANT in ${SENZING_TENANTS[@]}; do
         export SENZING_RECORD_MIN=$((${SENZING_RECORD_MIN} + 10000))
         if [ ${SENZING_TENANT} = ${TENANT} ]; then
             break
@@ -585,10 +589,8 @@ As such, there will be some repetition from earler steps.
    Example:
 
     ```console
-    export TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9" "tenant10")
-
     export SENZING_PORT_MIN=8256
-    for TENANT in ${TENANTS[@]}; do
+    for TENANT in ${SENZING_TENANTS[@]}; do
         if [ ${SENZING_TENANT} = ${TENANT} ]; then
             export SENZING_PORT_SENZING_API_SERVER=$((${SENZING_PORT_MIN} + 0));
             export SENZING_PORT_ENTITY_SEARCH_WEB_APP=$((${SENZING_PORT_MIN} + 1));
