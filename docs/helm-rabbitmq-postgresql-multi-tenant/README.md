@@ -1375,14 +1375,14 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server 8250:80
+      svc/${DEMO_PREFIX}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8250
+    export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_SENZING_API_SERVER}
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
@@ -1419,12 +1419,16 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app 8251:80
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
     ```
 
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
+
+    ```console
+    echo "http://localhost/${SENZING_PORT_ENTITY_SEARCH_WEB_APP}
+    ```
 
 ##### View SwaggerUI
 
@@ -1456,10 +1460,15 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui 9180:80
+      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
     ```
 
    Then visit [http://localhost:9180](http://localhost:9180).
+
+
+    ```console
+    echo "http://localhost/${SENZING_PORT_SWAGGERUI}
+    ```
 
 ##### View Senzing Configurator
 
@@ -1491,14 +1500,14 @@ If the Senzing configurator was deployed, in a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
+      svc/${DEMO_PREFIX}-senzing-configurator ${SENZING_PORT_CONFIGURATOR}:80
     ```
 
 1. Make HTTP calls via `curl`.
    Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8253
+    export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_CONFIGURATOR}
 
     curl -X GET ${SENZING_API_SERVICE}/datasources
     ```
