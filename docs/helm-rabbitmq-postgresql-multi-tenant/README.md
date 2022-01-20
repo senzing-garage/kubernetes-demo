@@ -747,6 +747,13 @@ In this step, Kubernetes template files are populated with actual values.
     cat ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
     ```
 
+1. Create "current" link to this tenant.
+   Example:
+
+    ```console
+    ln -s ${SENZING_DEMO_DIR}/${SENZING_TENANT} ${SENZING_DEMO_DIR}/current
+    ```
+
 #### Create namespace for tenant
 
 1. Create namespace using
@@ -1585,9 +1592,9 @@ In a separate terminal window:
 
     ```console
     source ~/senzing-multi-tenant-demo-${DEMO_PREFIX}/${SENZING_TENANT}/environment.sh
-    export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_CONFIGURATOR}
+    export SENZING_CONFIGURATOR_SERVICE=http://localhost:${SENZING_PORT_CONFIGURATOR}
 
-    curl -X GET ${SENZING_API_SERVICE}/datasources
+    curl -X GET ${SENZING_CONFIGURATOR_SERVICE}/datasources
     ```
 
 ## Cleanup
