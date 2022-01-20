@@ -749,12 +749,15 @@ In this step, Kubernetes template files are populated with actual values.
    Example:
 
     ```console
+
+    rm ${SENZING_DEMO_DIR}/current
     ln \
       --force \
       --relative \
       --symbolic \
       ${SENZING_DEMO_DIR}/${SENZING_TENANT} ${SENZING_DEMO_DIR}/current
 
+    rm ~/senzing-multi-tenant-demo-current
     ln \
       --force \
       --relative \
