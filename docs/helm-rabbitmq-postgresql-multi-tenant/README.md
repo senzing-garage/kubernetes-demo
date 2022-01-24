@@ -1266,7 +1266,7 @@ The Nginx proxy serves all services FIXME:
       bitnami/nginx \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-nginx-multi-tenant.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
+      --version ${SENZING_HELM_VERSION_BITNAMI_NGINX:-""}
     ```
 
 1. Wait for pods to run using
