@@ -1,0 +1,27 @@
+# See https://github.com/bitnami/charts/tree/master/bitnami/nginx
+
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_NGINX}
+
+serverBlock: |-
+  server {
+    listen 0.0.0.0:{{ .Values.containerPorts.http }};
+
+    location / {
+      return 200 "Hello Root!";
+    }
+
+    location /api {
+      return 200 "Hello API server!";
+    }
+
+    location /app {
+      return 200 "Hello App!";
+    }
+
+    location /swaggerui {
+      return 200 "Hello Swagger-UI!";
+    }
+
+  }

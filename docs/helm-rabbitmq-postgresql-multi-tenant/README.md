@@ -366,7 +366,7 @@ In this step, Kubernetes template files are populated with actual values.
     ```console
     ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
     ```
-``
+
 #### Save environment variables for main
 
 1. Save environment variables into a file that can be sourced.
@@ -393,6 +393,14 @@ In this step, Kubernetes template files are populated with actual values.
     >> ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
 
     chmod +x ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
+    ```
+
+1. :thinking: **Optional:**
+   These environment variables can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh.
+   Example:
+
+    ```console
+    cat ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
     ```
 
 #### Create namespace for main
@@ -560,7 +568,7 @@ As such, there will be some repetition from earler steps.
    Example:
 
     ```console
-    export SENZING_TENANT_NUMBER=0
+    export SENZING_TENANT_NUMBER=1
     ```
 
 1. :pencil2: Identify the "tenant".
@@ -762,6 +770,7 @@ In this step, Kubernetes template files are populated with actual values.
     ```
 
 1. Create "current" links to this tenant.
+   This is used to simplify future instructions.
    Example:
 
     ```console
@@ -1242,6 +1251,35 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
+
+#### Install Nginx proxy Helm chart
+
+The Nginx proxy serves all services FIXME:
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-nginx-proxy \
+      bitnami/nginx \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/bitnami-nginx-multi-tenant.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
+    ```
+
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
 #### Optional charts
 
