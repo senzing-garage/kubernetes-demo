@@ -553,7 +553,7 @@ As such, there will be some repetition from earler steps.
    Example:
 
    ```console
-    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
+    export SENZING_TENANTS=("tenant0" "tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
    ```
 
 1. :pencil2: Identify the tenant number for this tenant.
