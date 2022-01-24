@@ -630,9 +630,10 @@ As such, there will be some repetition from earler steps.
             export SENZING_PORT_ENTITY_SEARCH_WEB_APP=$((${SENZING_PORT_MIN} + 1));
             export SENZING_PORT_CONFIGURATOR=$((${SENZING_PORT_MIN} + 2));
             export SENZING_PORT_SWAGGERUI=$((${SENZING_PORT_MIN} + 3));
+            export SENZING_PORT_NGINX_PROXY=$((${SENZING_PORT_MIN} + 4));
             break
         fi
-        export SENZING_PORT_MIN=$((${SENZING_PORT_MIN} + 4))
+        export SENZING_PORT_MIN=$((${SENZING_PORT_MIN} + 5))
     done
     ```
 
@@ -1422,6 +1423,31 @@ In a separate terminal window:
       )
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+    ```
+
+##### View Nginx proxy
+
+In a separate terminal window:
+
+1. Once the port has been forwarded in the next step,
+   the Nginx Proxy will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+    echo "http://localhost:${SENZING_PORT_NGINX_PROXY}"
+    ```
+
+1. Port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-nginx-proxy ${SENZING_PORT_NGINX_PROXY}:80
     ```
 
 ##### View Senzing API Server
