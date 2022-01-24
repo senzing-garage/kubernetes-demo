@@ -25,7 +25,7 @@ serverBlock: |-
       proxy_set_header HOST $http_host;
       proxy_set_header X-NginX-Proxy true;
 
-      proxy_pass http://my-swaggerapi-swagger-ui;
+      proxy_pass http://my-swaggerapi-swagger-ui.tenant2-namespace;
       proxy_redirect off;
     }
 
