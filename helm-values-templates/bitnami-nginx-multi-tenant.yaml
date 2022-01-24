@@ -22,6 +22,13 @@ serverBlock: |-
 
     location /swaggerui {
       return 200 "Hello Swagger-UI!";
+
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header HOST $http_host;
+      proxy_set_header X-NginX-Proxy true;
+
+      proxy_pass http://my-swaggerapi-swagger-ui;
+      proxy_redirect off;
     }
 
   }
