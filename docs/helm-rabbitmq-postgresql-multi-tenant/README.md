@@ -175,7 +175,7 @@ as a guide, start a minikube cluster.
 View the minikube cluster using the
 [dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
 
-1. In a separate terminal window, run start minikube dashboard using
+1. In a separate terminal window, start minikube dashboard using
    [minikube dashboard](https://minikube.sigs.k8s.io/docs/commands/dashboard/).
    Example:
 
@@ -334,6 +334,14 @@ In this step, Helm template files are populated with actual values.
     done
     ```
 
+1. :thinking: **Optional:**
+   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
+   Example:
+
+    ```console
+    ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
+    ```
+
 #### Create custom kubernetes configuration files for main
 
 In this step, Kubernetes template files are populated with actual values.
@@ -351,6 +359,14 @@ In this step, Kubernetes template files are populated with actual values.
     done
     ```
 
+1. :thinking: **Optional:**
+   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
+   Example:
+
+    ```console
+    ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
+    ```
+``
 #### Save environment variables for main
 
 1. Save environment variables into a file that can be sourced.
@@ -677,7 +693,7 @@ In this step, Helm template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These custom values can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
+   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
    Example:
 
     ```console
@@ -702,7 +718,7 @@ In this step, Kubernetes template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These custom values can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
+   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
    Example:
 
     ```console
