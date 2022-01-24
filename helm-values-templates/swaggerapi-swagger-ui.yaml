@@ -11,6 +11,7 @@ main:
     enabled: true
 
   swaggerui:
+    baseUrl: "/swagger"
     openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
 
 rbac:
