@@ -1,0 +1,17 @@
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#ingressclass-v1-networking-k8s-io
+
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: ${DEMO_PREFIX}-external-lb
+spec:
+  controller: example.com/ingress-controller
+  parameters:
+    # The parameters for this IngressClass are specified in an
+    # IngressParameter (API group k8s.example.com) named "external-config",
+    # that's in the "external-configuration" configuration namespace.
+    apiGroup: k8s.example.com
+    kind: IngressParameter
+    name: external-config
+    namespace: ${DEMO_NAMESPACE}
+    scope: Namespace
