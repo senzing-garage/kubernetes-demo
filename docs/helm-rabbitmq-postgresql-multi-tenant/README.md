@@ -114,8 +114,12 @@ describing where we can improve.   Now on with the show...
 ### Prerequisite software
 
 1. [minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md)
+    - Tested with `minikube` version 1.25.1
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
+    - Tested with `kubectl` version 1.23.2
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+    - Tested with `helm` version 3.8.0
+1. Kubernetes version 1.22.0 or higher is required
 
 ### Clone repository
 
@@ -1191,6 +1195,21 @@ pulls messages from message queue and sends them to Senzing.
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
+    ```
+
+#### Install bitnami-nginx-ingress-controller Helm chart
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-nginx-ingress-controller \
+      bitnami/nginx-ingress-controller \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/bitnami-nginx-ingress-controller-multi-tenant.yaml \
+      --version ${SENZING_HELM_VERSION_BITNAMI_NGINX_INGRESS_CONTROLLER:-""}
     ```
 
 #### Install senzing-api-server Helm chart

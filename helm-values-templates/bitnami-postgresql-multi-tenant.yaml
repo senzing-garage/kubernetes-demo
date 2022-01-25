@@ -1,3 +1,5 @@
+# See https://github.com/bitnami/charts/tree/master/bitnami/postgresql#parameters
+
 image:
   registry: ${DOCKER_REGISTRY_URL}
   tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL}

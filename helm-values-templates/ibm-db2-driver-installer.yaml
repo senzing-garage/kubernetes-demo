@@ -1,3 +1,5 @@
+# See https://github.com/Senzing/charts/tree/master/charts/ibm-db2-driver-installer#parameters
+
 db2:
   license: accept
   persistentVolumeClaim: db2-persistent-volume-claim

@@ -1,3 +1,5 @@
+# See https://github.com/Senzing/charts/tree/master/charts/arey-mysql-client#parameters
+
 main:
 
   args:
