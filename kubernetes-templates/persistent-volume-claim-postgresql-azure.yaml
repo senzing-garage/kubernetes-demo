@@ -1,3 +1,5 @@
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaim-v1-core
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
