@@ -173,6 +173,22 @@ as a guide, start a minikube cluster.
     minikube start --cpus 4 --memory 8192 --disk-size=50g
     ```
 
+### minikube addons
+
+1. Add Kubernetes IngressController.
+   Example:
+
+    ```console
+    minikube addons enable ingress
+    ```
+
+1. View addons.
+   Example:
+
+    ```console
+    kubectl get pod --namespace kube-system
+    ```
+
 ### View minikube cluster
 
 :thinking: **Optional:**

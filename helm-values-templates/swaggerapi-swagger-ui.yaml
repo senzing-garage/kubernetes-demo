@@ -2,6 +2,7 @@
 
 ingress:
   enabled: true
+  hostname: dockter.com
 
 main:
 
