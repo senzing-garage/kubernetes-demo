@@ -1353,7 +1353,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
       ${DEMO_PREFIX}-swaggerapi-swagger-ui \
       senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
+      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
     ```
 

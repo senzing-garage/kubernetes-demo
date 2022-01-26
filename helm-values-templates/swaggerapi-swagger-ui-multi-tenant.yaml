@@ -2,7 +2,7 @@
 
 ingress:
   enabled: true
-  host: ${SENZING_TENANT}.local
+  hostname: ${SENZING_TENANT}.local
   path: /swagger
 
 main:
