@@ -1,0 +1,26 @@
+# See https://github.com/Senzing/charts/tree/master/charts/senzing-installer#parameters
+
+main:
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_INSTALLER}
+
+  podSecurityContext:
+    enabled: true
+    runAsNonRoot: false
+
+  senzing:
+    persistentVolumeClaim: senzing-persistent-volume-claim
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true
