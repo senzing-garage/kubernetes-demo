@@ -121,6 +121,7 @@ describing where we can improve.   Now on with the show...
 On a non-airgapped system:
 
 1. :pencil2: Make a directory on a non-airgapped system for artifacts to be transferred to air-gapped system.
+   This will also be the name of the `.zip` file created.
    Example:
 
     ```console
