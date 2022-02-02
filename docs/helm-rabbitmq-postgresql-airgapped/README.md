@@ -331,7 +331,6 @@ On a non-airgapped system:
    Example:
 
     ```console
-
     zip \
      -b ${SENZING_AIRGAPPED_DIR} \
      senzing-airgap-artifacts.zip
