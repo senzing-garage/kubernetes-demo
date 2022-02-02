@@ -120,13 +120,19 @@ describing where we can improve.   Now on with the show...
 
 On a non-airgapped system:
 
-1. :pencil2: Make a directory on a non-airgapped system for artifacts to be transferred to air-gapped system.
-   This will also be the name of the `.zip` file created.
+1. :pencil2: Choose a name that will be used for the new `.zip` file
+   and for the working directory use to construct the `.zip` file.
    Example:
 
     ```console
-    export SENZING_AIRGAPPED_DIR=~/my-senzing-airgapped
+    export SENZING_AIRGAPPED_FILENAME=my-senzing-airgapped
+    ```
 
+1. Make a directory on a non-airgapped system for artifacts to be transferred to air-gapped system.
+   Example:
+
+    ```console
+    export SENZING_AIRGAPPED_DIR=~/${SENZING_AIRGAPPED_FILENAME}
     mkdir ${SENZING_AIRGAPPED_DIR}
     ```
 
@@ -334,15 +340,14 @@ On a non-airgapped system:
    The file size will be between 4-5 GB.
    Example:
 
-
     ```console
     cd ${SENZING_AIRGAPPED_DIR}
-    zip -r ~/${SENZING_AIRGAPPED_DIR}.zip *
+    zip -r ~/${SENZING_AIRGAPPED_FILENAME}.zip *
     ```
 
     ```console
     zip \
-     -r ~/${SENZING_AIRGAPPED_DIR}.zip \
+     -r ~/${SENZING_AIRGAPPED_FILENAME}.zip \
      ${SENZING_AIRGAPPED_DIR}
     ```
 
