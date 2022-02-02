@@ -305,10 +305,12 @@ On a non-airgapped system:
    Example:
 
     ```console
+    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
+
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
         docker save ${DOCKER_IMAGE} \
-         --output ${SENZING_AIRGAPPED_DIR}\${DOCKER_IMAGE}
+         --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}
     done
     ```
 
@@ -329,6 +331,7 @@ On a non-airgapped system:
    Example:
 
     ```console
+
     zip \
      -b ${SENZING_AIRGAPPED_DIR} \
      senzing-airgap-artifacts.zip
