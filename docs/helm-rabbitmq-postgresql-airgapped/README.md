@@ -329,13 +329,13 @@ On a non-airgapped system:
 
 #### Package artifacts
 
-1. XXX
+1. Compress directory into single `zip` file.
    Example:
 
     ```console
     zip \
-     -b ${SENZING_AIRGAPPED_DIR} \
-     ~/senzing-airgap-artifacts.zip
+     -r ~/senzing-airgap-artifacts.zip \
+     ${SENZING_AIRGAPPED_DIR}
     ```
 
 ## ARCHIVE
