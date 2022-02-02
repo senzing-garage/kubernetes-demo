@@ -293,6 +293,11 @@ On a non-airgapped system:
 
 #### Transfer Docker images
 
+There are two method of transferring the docker images to the air-gapped system.
+The first option being the ability to `docker push` to a private docker registry used by the air-gapped system.
+The second option is to package the docker images in the `.zip` file and later load them on the air-gapped system.
+Only one of the two options need be followed.
+
 1. :thinking: **Optional:**
    If the "air-gapped" private Docker registry *can* be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
@@ -344,12 +349,6 @@ On a non-airgapped system:
     ```console
     cd ${SENZING_AIRGAPPED_WORK_DIR}
     zip -r ~/${SENZING_AIRGAPPED_FILENAME}.zip *
-    ```
-
-    ```console
-    zip \
-     -r ~/${SENZING_AIRGAPPED_WORK_DIR}.zip \
-     ${SENZING_AIRGAPPED_DIR}
     ```
 
 ## Tranfer to air-gapped system
