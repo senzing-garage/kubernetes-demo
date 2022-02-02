@@ -133,7 +133,7 @@ On a non-airgapped system:
 
 On a non-airgapped system:
 
-1. Download zipped versions of Helm charts.
+1. Download Bitnami Helm charts.
    Example:
 
     ```console
@@ -141,18 +141,54 @@ On a non-airgapped system:
       --output ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip \
       https://codeload.github.com/bitnami/charts/zip/refs/heads/master
 
+    unzip \
+      -d ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp \
+      ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
+
+    mv ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp/charts-master \
+       ${SENZING_AIRGAPPED_DIR}/bitnami-charts
+
+    rmdir ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp
+    rm    ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
+    ```
+
+1. Download zipped versions of Helm charts.
+   Example:
+
+    ```console
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip \
       https://codeload.github.com/Senzing/charts/zip/refs/heads/master
+
+    unzip \
+      -d ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
+
+    mv ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp/charts-master \
+       ${SENZING_AIRGAPPED_DIR}/senzing-charts
+
+    rmdir ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp
+    rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
     ```
+
 
 1. Download Senzing's Kubernetes Demo repository.
    Example:
 
     ```console
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/senzing-kubernetes-demo.zip \
+      --output ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip \
       https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/master
+
+    unzip \
+      -d ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp \
+      ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
+
+    mv ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp/kubernetes-demo-master \
+       ${SENZING_AIRGAPPED_DIR}/kubernetes-demo
+
+    rmdir ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp
+    rm    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
     ```
 
 #### Download version metadata
@@ -178,8 +214,6 @@ On a non-airgapped system:
     ```
 
 #### Create senzing/installer docker image
-
-
 
 On a non-airgapped system:
 
