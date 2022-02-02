@@ -335,7 +335,7 @@ On a non-airgapped system:
     ```console
     zip \
      -b ${SENZING_AIRGAPPED_DIR} \
-     senzing-airgap-artifacts.zip
+     ~/senzing-airgap-artifacts.zip
     ```
 
 ## ARCHIVE
