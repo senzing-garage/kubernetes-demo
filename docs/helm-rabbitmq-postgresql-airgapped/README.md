@@ -111,7 +111,7 @@ describing where we can improve.   Now on with the show...
 
 ## Prerequisites
 
-### Prerequisite software
+### Prerequisite software on air-gapped system
 
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
@@ -329,29 +329,31 @@ On a non-airgapped system:
 
 #### Package artifacts
 
-1. Compress directory into single `zip` file.
+1. Compress directory into single `.zip` file.
+   The file size will be between 4-5 GB.
    Example:
 
     ```console
     zip \
-     -r ~/senzing-airgap-artifacts.zip \
+     -r ~/${SENZING_AIRGAPPED_DIR}.zip \
      ${SENZING_AIRGAPPED_DIR}
     ```
 
-## ARCHIVE
+## Tranfer to air-gapped system
 
-The Git repository has files that will be used in the `helm install --values` parameter.
+1. Transfer `senzing-airgap-artifacts.zip` to air-gapped system.
+   For the demonstration, it is assumed that it will be placed at `~/senzing-airgap-artifacts.zip`.
 
-1. Using these environment variable values:
+## Air-Gapped system
+
+1. Decompress `senzing-airgap-artifacts.zip`.
+   Example:
 
     ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=kubernetes-demo
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+    unzip ~/senzing-airgap-artifacts.zip
     ```
 
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+## ARCHIVE
 
 ## Demonstrate
 
@@ -377,42 +379,6 @@ The Git repository has files that will be used in the `helm install --values` pa
     mkdir -p ${SENZING_DEMO_DIR}
     ```
 
-### Start minikube cluster
-
-Using [Get Started with Bitnami Charts using Minikube](https://docs.bitnami.com/kubernetes/get-started-kubernetes/#overview)
-as a guide, start a minikube cluster.
-
-1. Start cluster using
-   [minikube start](https://minikube.sigs.k8s.io/docs/commands/start/).
-   Example:
-
-    ```console
-    minikube start --cpus 4 --memory 8192 --disk-size=50g
-    ```
-
-### View minikube cluster
-
-:thinking: **Optional:** View the minikube cluster using the
-[dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
-
-1. Run command in a new terminal using
-   [minikube dashboard](https://minikube.sigs.k8s.io/docs/commands/dashboard/).
-   Example:
-
-    ```console
-    minikube dashboard
-    ```
-
-### EULA
-
-To use the Senzing code, you must agree to the End User License Agreement (EULA).
-
-1. :warning: This step is intentionally tricky and not simply copy/paste.
-   This ensures that you make a conscious effort to accept the EULA.
-   Example:
-
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
-
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -428,21 +394,14 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
-    ```
-
-1. Retrieve stable Helm Chart version numbers and set their environment variables.
-   Example:
-
-    ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
+    source ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    source ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh
     ```
 
 ### Identify Docker registry
