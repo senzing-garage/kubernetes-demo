@@ -212,6 +212,17 @@ On a non-airgapped system:
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
     ```
 
+#### Download Governor
+
+1. Get Governor.
+   Example:
+
+    ```console
+    curl -X GET \
+      --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
+      https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
+    ```
+
 #### Create senzing/installer docker image
 
 On a non-airgapped system:
@@ -312,19 +323,8 @@ On a non-airgapped system:
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
         docker save ${DOCKER_IMAGE} \
-         --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}
+         --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
     done
-    ```
-
-#### Download Governor
-
-1. Get Governor.
-   Example:
-
-    ```console
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
-      https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
 
 #### Package artifacts
