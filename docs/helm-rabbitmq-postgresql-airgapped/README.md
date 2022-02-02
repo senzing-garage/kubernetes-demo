@@ -171,7 +171,6 @@ On a non-airgapped system:
     rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
     ```
 
-
 1. Download Senzing's Kubernetes Demo repository.
    Example:
 
@@ -276,7 +275,7 @@ On a non-airgapped system:
 #### Transfer Docker images
 
 1. :thinking: **Optional:**
-   If the "air-gapped" private Docker registry can be accessed from the non-airgapped system, use
+   If the "air-gapped" private Docker registry *can* be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
    to transfer the docker images.
 
@@ -293,7 +292,6 @@ On a non-airgapped system:
         ```console
         for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
         do
-            docker pull ${DOCKER_IMAGE}
             docker tag  ${DOCKER_IMAGE} ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
             docker push                 ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
             docker rmi                  ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
@@ -323,6 +321,17 @@ On a non-airgapped system:
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
+    ```
+
+#### Package artifacts
+
+1. XXX
+   Example:
+
+    ```console
+    zip \
+     -b ${SENZING_AIRGAPPED_DIR} \
+     senzing-airgap-artifacts.zip
     ```
 
 ## ARCHIVE
