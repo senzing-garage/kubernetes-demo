@@ -118,9 +118,9 @@ describing where we can improve.   Now on with the show...
 
 ### Non-airgapped system
 
-On a non-air-gapped system.
+On a non-airgapped system:
 
-1. :pencil2: Make a directory for artifacts.
+1. :pencil2: Make a directory on a non-airgapped system for artifacts to be transferred to air-gapped system.
    Example:
 
     ```console
@@ -128,6 +128,10 @@ On a non-air-gapped system.
 
     mkdir ${SENZING_AIRGAPPED_DIR}
     ```
+
+#### Download git repositories
+
+On a non-airgapped system:
 
 1. Download zipped versions of Helm charts.
    Example:
@@ -151,47 +155,62 @@ On a non-air-gapped system.
       https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/master
     ```
 
-1. Make `senzing/installer`.
-   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+#### Download version metadata
 
-    1. :warning: This step is intentionally tricky and not simply copy/paste.
-    This ensures that you make a conscious effort to accept the EULA.
-    Example:
+On a non-airgapped system:
 
-        <code>export SENZING_ACCEPT_EULA="&lt;the value from [this link](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)&gt;"</code>
-
-### Environment variables
-
-1. :pencil2: Specify Senzing version desired.
-   See [Senzing API Version History](https://senzing.com/releases/).
+1. Download current Senzing versions.
    Example:
 
     ```console
-    export SENZING_API_VERSION="2.8.4"
-    export SENZING_API_BUILD="21311"
+    curl -X GET \
+      --output ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh \
+      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
     ```
 
-   To find the `SENZING_API_BUILD` for a particular Senzing API version, you can use `apt` or `yum` or email [support@senzing.com](mailto:support@senzing.com).
+1. Download current Senzing docker versions
+   Example:
 
-### Build image
+    ```console
+    curl -X GET \
+      --output ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh \
+      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
+    ```
+
+#### Create senzing/installer docker image
+
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+On a non-airgapped system:
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+This ensures that you make a conscious effort to accept the EULA.
+Example:
+
+    <code>export SENZING_ACCEPT_EULA="&lt;the value from [this link](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)&gt;"</code>
+
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Run the `docker build` command.
    Example:
 
     ```console
+    source ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh
+
     sudo docker build \
         --build-arg SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
-        --build-arg SENZING_APT_INSTALL_PACKAGE="senzingapi=${SENZING_API_VERSION}-${SENZING_API_BUILD}" \
-        --tag senzing/installer:${SENZING_API_VERSION} \
+        --build-arg SENZING_APT_INSTALL_PACKAGE="senzingapi=${SENZING_VERSION_SENZINGAPI_BUILD}" \
+        --tag senzing/installer:${SENZING_VERSION_SENZINGAPI} \
         https://github.com/Senzing/docker-installer.git
     ```
 
+#### Download Docker images
 
 1. Identify docker images.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    source ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh
 
     export DOCKER_IMAGES=(
         "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL:-latest}"
@@ -199,7 +218,7 @@ On a non-air-gapped system.
         "senzing/configurator:${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR:-latest}"
         "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP:-latest}"
         "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER:-latest}"
-        "senzing/installer:latest"
+        "senzing/installer:${SENZING_VERSION_SENZINGAPI}"
         "senzing/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN:-latest}"
         "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT:-latest}"
         "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER:-latest}"
@@ -219,6 +238,8 @@ On a non-air-gapped system.
         sudo docker pull ${DOCKER_IMAGE}
     done
     ```
+
+#### Transfer Docker images
 
 1. :thinking: **Optional:**
    If the "air-gapped" private Docker registry can be accessed from the non-airgapped system, use
@@ -259,6 +280,8 @@ On a non-air-gapped system.
     done
     ```
 
+#### Download Governor
+
 1. Get Governor.
    Example:
 
@@ -267,9 +290,6 @@ On a non-air-gapped system.
       --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
-
-
-
 
 ## ARCHIVE
 
