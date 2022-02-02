@@ -194,7 +194,7 @@ On a non-air-gapped system.
     ```console
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
-        sudo docker pull ${REPOSITORY_SOURCE}/${DOCKER_IMAGE}
+        sudo docker pull ${DOCKER_IMAGE}
     done
     ```
 
@@ -236,6 +236,16 @@ On a non-air-gapped system.
          --output ${SENZING_AIRGAPPED_DIR}\${DOCKER_IMAGE}
     done
     ```
+
+1. Get Governor.
+   Example:
+
+    ```console
+    curl -X GET \
+      --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
+      https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
+    ```
+
 
 ## ARCHIVE
 
