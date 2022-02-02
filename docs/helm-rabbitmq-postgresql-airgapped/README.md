@@ -1,4 +1,4 @@
-# kubernetes-demo-helm-rabbitmq-postgresql
+# kubernetes-demo-helm-rabbitmq-postgresql-airgapped
 
 ## Synopsis
 
@@ -179,15 +179,15 @@ On a non-airgapped system:
 
 #### Create senzing/installer docker image
 
-To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
 
 On a non-airgapped system:
 
-1. :warning: This step is intentionally tricky and not simply copy/paste.
-This ensures that you make a conscious effort to accept the EULA.
-Example:
-
-    <code>export SENZING_ACCEPT_EULA="&lt;the value from [this link](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)&gt;"</code>
+1. :warning:
+   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+   This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   Example:
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
