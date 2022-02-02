@@ -152,7 +152,39 @@ On a non-air-gapped system.
     ```
 
 1. Make `senzing/installer`.
+   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+    1. :warning: This step is intentionally tricky and not simply copy/paste.
+    This ensures that you make a conscious effort to accept the EULA.
+    Example:
+
+        <code>export SENZING_ACCEPT_EULA="&lt;the value from [this link](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)&gt;"</code>
+
+### Environment variables
+
+1. :pencil2: Specify Senzing version desired.
+   See [Senzing API Version History](https://senzing.com/releases/).
    Example:
+
+    ```console
+    export SENZING_API_VERSION="2.8.4"
+    export SENZING_API_BUILD="21311"
+    ```
+
+   To find the `SENZING_API_BUILD` for a particular Senzing API version, you can use `apt` or `yum` or email [support@senzing.com](mailto:support@senzing.com).
+
+### Build image
+
+1. Run the `docker build` command.
+   Example:
+
+    ```console
+    sudo docker build \
+        --build-arg SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
+        --build-arg SENZING_APT_INSTALL_PACKAGE="senzingapi=${SENZING_API_VERSION}-${SENZING_API_BUILD}" \
+        --tag senzing/installer:${SENZING_API_VERSION} \
+        https://github.com/Senzing/docker-installer.git
+    ```
 
 
 1. Identify docker images.
