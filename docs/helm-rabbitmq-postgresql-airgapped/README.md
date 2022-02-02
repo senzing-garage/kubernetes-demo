@@ -306,6 +306,8 @@ On a non-airgapped system:
 
     ```console
     mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
+    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/bitnami
+    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/senzing
 
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
