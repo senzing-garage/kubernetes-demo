@@ -132,8 +132,9 @@ On a non-airgapped system:
    Example:
 
     ```console
-    export SENZING_AIRGAPPED_DIR=~/${SENZING_AIRGAPPED_FILENAME}
-    mkdir ${SENZING_AIRGAPPED_DIR}
+    export SENZING_AIRGAPPED_WORK_DIR=~/${SENZING_AIRGAPPED_FILENAME}
+    export SENZING_AIRGAPPED_DIR=${SENZING_AIRGAPPED_WORK_DIR}/${SENZING_AIRGAPPED_FILENAME}
+    mkdir -p ${SENZING_AIRGAPPED_DIR}
     ```
 
 #### Download git repositories
@@ -341,13 +342,13 @@ On a non-airgapped system:
    Example:
 
     ```console
-    cd ${SENZING_AIRGAPPED_DIR}
+    cd ${SENZING_AIRGAPPED_WORK_DIR}
     zip -r ~/${SENZING_AIRGAPPED_FILENAME}.zip *
     ```
 
     ```console
     zip \
-     -r ~/${SENZING_AIRGAPPED_FILENAME}.zip \
+     -r ~/${SENZING_AIRGAPPED_WORK_DIR}.zip \
      ${SENZING_AIRGAPPED_DIR}
     ```
 
