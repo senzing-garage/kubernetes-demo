@@ -334,6 +334,12 @@ On a non-airgapped system:
    The file size will be between 4-5 GB.
    Example:
 
+
+    ```console
+    cd ${SENZING_AIRGAPPED_DIR}
+    zip -r ~/${SENZING_AIRGAPPED_DIR}.zip *
+    ```
+
     ```console
     zip \
      -r ~/${SENZING_AIRGAPPED_DIR}.zip \
