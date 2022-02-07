@@ -239,7 +239,7 @@ On a non-airgapped system:
    Example:
 
     ```console
-    export SENZING_LICENSE_FILE=~/Download/g2.lic
+    export SENZING_LICENSE_FILE=~/Downloads/g2.lic
     ```
 
 1. Copy license into directory for air-gapped artifacts.
