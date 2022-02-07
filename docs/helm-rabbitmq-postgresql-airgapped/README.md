@@ -203,7 +203,7 @@ On a non-airgapped system:
     rm -rf .*
     rm -rf !("charts")
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-    rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-apt"|"senzing-base"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"senzing-yum"|"swaggerapi-swagger-ui"|)
+    rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"swaggerapi-swagger-ui"|)
     popd
     popd
 
@@ -340,6 +340,7 @@ On a non-airgapped system:
         "senzing/senzing-console:${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE:-latest}" \
         "senzing/stream-loader:${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER:-latest}" \
         "senzing/stream-producer:${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER:-latest}" \
+        "swaggerapi/swagger-ui:${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI:-latest}" \
     )
     ```
 
