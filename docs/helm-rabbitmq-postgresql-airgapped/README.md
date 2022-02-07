@@ -422,14 +422,19 @@ Only one of the two options need be followed.
 
 ## Air-Gapped system
 
-1. Decompress `senzing-airgap-artifacts.zip`.
+1. Decompress `senzing-airgap-artifacts.zip` into "home" directory.
    Example:
 
     ```console
-    unzip ~/senzing-airgap-artifacts.zip
+    unzip -d ~ ~/senzing-airgap-artifacts.zip
     ```
 
-## ARCHIVE
+1. Identify the artifact directory.
+   Example:
+
+    ```console
+    export SENZING_AIRGAPPED_DIR=~/senzing-airgap-artifacts
+    ```
 
 ## Demonstrate
 
@@ -457,8 +462,6 @@ Only one of the two options need be followed.
 
 ### Set environment variables
 
-1. Set environment variables listed in "[Clone repository](#clone-repository)".
-
 1. Synthesize environment variables.
    Example:
 
@@ -482,24 +485,11 @@ Only one of the two options need be followed.
 
 ### Identify Docker registry
 
+FIXME: Start here.
+
 :thinking: There are 3 options when it comes to using a docker registry.  Choose one:
 
-1. [Use public registry](#use-public-registry)
 1. [Use private registry](#use-private-registry)
-1. [Use minikube registry](#use-minikube-registry)
-
-#### Use public registry
-
-*Method #1:* Pulls docker images from public internet registry.
-
-1. Use the default public `docker.io` registry which pulls images from
-   [hub.docker.com](https://hub.docker.com/).
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=docker.io
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ```
 
 #### Use private registry
 
@@ -514,6 +504,7 @@ Only one of the two options need be followed.
     export SENZING_SUDO=sudo
     ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
     ```
+
 
 #### Use minikube registry
 
