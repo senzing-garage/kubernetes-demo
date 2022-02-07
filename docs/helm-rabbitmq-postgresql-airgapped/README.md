@@ -202,12 +202,19 @@ On a non-airgapped system:
 
 On a non-airgapped system:
 
+1. Create directory.
+   Example:
+
+    ```console
+    mkdir ${SENZING_AIRGAPPED_DIR}/bin
+    ```
+
 1. Download current Senzing versions.
    Example:
 
     ```console
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh \
+      --output ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
     ```
 
@@ -216,7 +223,7 @@ On a non-airgapped system:
 
     ```console
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh \
+      --output ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh \
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
     ```
 
@@ -268,7 +275,7 @@ On a non-airgapped system:
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
 
     sudo docker build \
         --build-arg SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
@@ -283,7 +290,7 @@ On a non-airgapped system:
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
 
     export DOCKER_IMAGES=( \
         "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL:-latest}" \
@@ -427,14 +434,14 @@ Only one of the two options need be followed.
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/docker-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/senzing-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
     ```
 
 ### Identify Docker registry
