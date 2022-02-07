@@ -395,6 +395,7 @@ Only one of the two options need be followed.
     mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
     mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/bitnami
     mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/senzing
+    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/swaggerapi
 
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
