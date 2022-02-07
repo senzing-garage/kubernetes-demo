@@ -226,8 +226,10 @@ On a non-airgapped system:
    Example:
 
     ```console
+    mkdir ${SENZING_AIRGAPPED_DIR}/python
+
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/senzing_governor.py \
+      --output ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py \
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
 
