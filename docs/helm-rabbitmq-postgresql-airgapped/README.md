@@ -171,7 +171,7 @@ On a non-airgapped system:
     popd
     popd
 
-    for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
+    for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/* ; do
         echo "Processing: ${CHART_DIR}"
         helm dependency update ${CHART_DIR}
     done
