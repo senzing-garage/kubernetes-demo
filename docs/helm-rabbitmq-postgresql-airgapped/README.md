@@ -180,7 +180,6 @@ On a non-airgapped system:
 
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
     rm -rf !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
-    rm *
     popd
 
     for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
