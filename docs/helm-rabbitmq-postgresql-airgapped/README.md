@@ -231,6 +231,25 @@ On a non-airgapped system:
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
 
+#### Add Senzing license
+
+On a non-airgapped system:
+
+1. :pencil2: Locate your Senzing license (usually `g2.lic`).
+   Example:
+
+    ```console
+    export SENZING_LICENSE_FILE=~/Download/g2.lic
+    ```
+
+1. Copy license into directory for air-gapped artifacts.
+   Example:
+
+    ```console
+    mkdir ${SENZING_AIRGAPPED_DIR}/etc
+    cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/g2.lic
+    ```
+
 #### Create senzing/installer docker image
 
 On a non-airgapped system:
