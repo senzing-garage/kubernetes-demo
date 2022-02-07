@@ -145,7 +145,7 @@ On a non-airgapped system:
 
 On a non-airgapped system:
 
-1. Download Bitnami Helm charts.
+1. Download Bitnami Helm charts, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -179,7 +179,7 @@ On a non-airgapped system:
     done
     ```
 
-1. Download Senzing Helm charts.
+1. Download Senzing Helm charts, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -202,6 +202,24 @@ On a non-airgapped system:
     rm .*
     rm -rf .*
     rm -rf !("charts")
+    pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
+    rm -rf !( \
+      "phppgadmin" | \
+      "senzing-api-server" | \
+      "senzing-apt" | \
+      "senzing-base" | \
+      "senzing-configurator" | \
+      "senzing-console" | \
+      "senzing-entity-search-web-app" | \
+      "senzing-init-container" | \
+      "senzing-postgresql-client" | \
+      "senzing-redoer" | \
+      "senzing-stream-loader" | \
+      "senzing-stream-producer" | \
+      "senzing-yum" | \
+      "swaggerapi-swagger-ui" \
+    )
+    popd
     popd
 
     for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
