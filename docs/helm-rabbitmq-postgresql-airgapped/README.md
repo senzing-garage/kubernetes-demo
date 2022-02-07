@@ -166,6 +166,7 @@ On a non-airgapped system:
     pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
     rm *
     rm .*
+    rm -rf .*
     rm -rf !("bitnami")
     pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
     rm -rf !("postgresql"|"rabbitmq")
@@ -199,6 +200,7 @@ On a non-airgapped system:
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
     rm *
     rm .*
+    rm -rf .*
     rm -rf !("charts")
     popd
 
