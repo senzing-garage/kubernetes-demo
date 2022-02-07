@@ -178,8 +178,11 @@ On a non-airgapped system:
     rmdir ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp
     rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
 
+    pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
     rm -rf !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
     rm !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
+    popd
+
     for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
         echo "Processing: ${CHART_DIR}"
         helm dependency update ${CHART_DIR}
