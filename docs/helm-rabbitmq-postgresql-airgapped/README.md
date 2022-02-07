@@ -203,8 +203,7 @@ On a non-airgapped system:
     rm -rf .*
     rm -rf !("charts")
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-    rm -rf !( \
-      "phppgadmin" | \
+    rm -rf !("phppgadmin" | \
       "senzing-api-server" | \
       "senzing-apt" | \
       "senzing-base" | \
