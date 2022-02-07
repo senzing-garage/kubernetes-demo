@@ -179,7 +179,8 @@ On a non-airgapped system:
     rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
 
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
-    rm -rf !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
+    rm *
+    rm -rf !("charts")
     popd
 
     for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
