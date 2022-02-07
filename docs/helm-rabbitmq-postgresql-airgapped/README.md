@@ -203,21 +203,7 @@ On a non-airgapped system:
     rm -rf .*
     rm -rf !("charts")
     pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-    rm -rf !("phppgadmin" | \
-      "senzing-api-server" | \
-      "senzing-apt" | \
-      "senzing-base" | \
-      "senzing-configurator" | \
-      "senzing-console" | \
-      "senzing-entity-search-web-app" | \
-      "senzing-init-container" | \
-      "senzing-postgresql-client" | \
-      "senzing-redoer" | \
-      "senzing-stream-loader" | \
-      "senzing-stream-producer" | \
-      "senzing-yum" | \
-      "swaggerapi-swagger-ui" \
-    )
+    rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-apt"|"senzing-base"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"senzing-yum"|"swaggerapi-swagger-ui"|)
     popd
     popd
 
