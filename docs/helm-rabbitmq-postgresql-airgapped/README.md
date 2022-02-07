@@ -111,6 +111,10 @@ describing where we can improve.   Now on with the show...
 
 ## Prerequisites
 
+### Prerequisite software on non-airgapped system
+
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+
 ### Prerequisite software on air-gapped system
 
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
@@ -158,6 +162,19 @@ On a non-airgapped system:
 
     rmdir ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp
     rm    ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
+
+    pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
+    rm *
+    rm -rf !("bitnami")
+    pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
+    rm -rf !("postgresql"|"rabbitmq")
+    popd
+    popd
+
+    for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
+        echo "Processing: ${CHART_DIR}"
+        helm dependency update ${CHART_DIR}
+    done
     ```
 
 1. Download Senzing Helm charts.
