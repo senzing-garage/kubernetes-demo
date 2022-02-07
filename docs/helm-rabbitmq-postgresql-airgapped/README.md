@@ -178,14 +178,12 @@ On a non-airgapped system:
     rmdir ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp
     rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
 
-    rm -rf ${SENZING_AIRGAPPED_DIR}/senzing-charts/docs
-    rm -rf ${SENZING_AIRGAPPED_DIR}/senzing-charts/template
-
+    rm -rf !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
+    rm !(${SENZING_AIRGAPPED_DIR}/senzing-charts/charts)
     for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
         echo "Processing: ${CHART_DIR}"
         helm dependency update ${CHART_DIR}
     done
-
     ```
 
 1. Download Senzing's Kubernetes Demo repository.
