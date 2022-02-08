@@ -421,14 +421,14 @@ The following steps are performed on the air-gapped system.
    Example:
 
     ```console
-    unzip -d ~ ~/senzing-airgap-artifacts.zip
+    unzip -d ~ ~/my-senzing-airgapped.zip
     ```
 
 1. Identify the artifact directory.
    Example:
 
     ```console
-    export SENZING_AIRGAPPED_DIR=~/senzing-airgap-artifacts
+    export SENZING_AIRGAPPED_DIR=~/my-senzing-airgapped
     ```
 
 ### Create demo directory
@@ -663,6 +663,14 @@ will be used later to:
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
+
+### Install Senzing license
+
+FIXME:
+
+### Install Senzing Governor
+
+FIXME:
 
 ### Install Postgresql Helm chart
 
