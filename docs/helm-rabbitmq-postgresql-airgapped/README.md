@@ -120,7 +120,7 @@ describing where we can improve.   Now on with the show...
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
-### Non-airgapped system
+## Non-airgapped system
 
 On a non-airgapped system:
 
@@ -141,7 +141,7 @@ On a non-airgapped system:
     mkdir -p ${SENZING_AIRGAPPED_DIR}
     ```
 
-#### Download git repositories
+### Download git repositories
 
 On a non-airgapped system:
 
@@ -232,7 +232,7 @@ On a non-airgapped system:
     rm    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
     ```
 
-#### Download version metadata
+### Download version metadata
 
 On a non-airgapped system:
 
@@ -261,7 +261,7 @@ On a non-airgapped system:
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
     ```
 
-#### Download Governor
+### Download Governor
 
 1. Get Governor.
    Example:
@@ -274,7 +274,7 @@ On a non-airgapped system:
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
 
-#### Add Senzing license
+### Add Senzing license
 
 On a non-airgapped system:
 
@@ -293,7 +293,7 @@ On a non-airgapped system:
     cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/g2.lic
     ```
 
-#### Create senzing/installer docker image
+### Create senzing/installer docker image
 
 On a non-airgapped system:
 
@@ -318,30 +318,14 @@ On a non-airgapped system:
         https://github.com/Senzing/docker-installer.git
     ```
 
-#### Download Docker images
+### Download Docker images
 
 1. Identify docker images.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
-
-    export DOCKER_IMAGES=( \
-        "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL:-latest}" \
-        "bitnami/rabbitmq:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_RABBITMQ:-latest}" \
-        "senzing/configurator:${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR:-latest}" \
-        "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP:-latest}" \
-        "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER:-latest}" \
-        "senzing/installer:${SENZING_VERSION_SENZINGAPI}" \
-        "senzing/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN:-latest}" \
-        "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT:-latest}" \
-        "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER:-latest}" \
-        "senzing/senzing-api-server:${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER:-latest}" \
-        "senzing/senzing-console:${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE:-latest}" \
-        "senzing/stream-loader:${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER:-latest}" \
-        "senzing/stream-producer:${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER:-latest}" \
-        "swaggerapi/swagger-ui:${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI:-latest}" \
-    )
+    source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
     ```
 
 1. Pull docker images.
@@ -354,7 +338,7 @@ On a non-airgapped system:
     done
     ```
 
-#### Transfer Docker images
+### Transfer Docker images
 
 There are two method of transferring the docker images to the air-gapped system.
 The first option being the ability to `docker push` to a private docker registry used by the air-gapped system.
@@ -377,12 +361,7 @@ Only one of the two options need be followed.
        Example:
 
         ```console
-        for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
-        do
-            docker tag  ${DOCKER_IMAGE} ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
-            docker push                 ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
-            docker rmi                  ${REPOSITORY_TARGET}/${DOCKER_IMAGE}
-        done
+        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh
         ```
 
 1. :thinking: **Optional:**
@@ -404,7 +383,7 @@ Only one of the two options need be followed.
     done
     ```
 
-#### Package artifacts
+### Package artifacts
 
 1. Compress directory into single `.zip` file.
    The file size will be between 4-5 GB.
@@ -418,9 +397,14 @@ Only one of the two options need be followed.
 ## Tranfer to air-gapped system
 
 1. Transfer `senzing-airgap-artifacts.zip` to air-gapped system.
-   For the demonstration, it is assumed that it will be placed at `~/senzing-airgap-artifacts.zip`.
+   For the demonstration, it is assumed that it will be placed at `~/senzing-airgap-artifacts.zip`
+   on the air-gapped system.
 
 ## Air-Gapped system
+
+The following steps are performed on the air-gapped system.
+
+### Decompress file
 
 1. Decompress `senzing-airgap-artifacts.zip` into "home" directory.
    Example:
@@ -435,8 +419,6 @@ Only one of the two options need be followed.
     ```console
     export SENZING_AIRGAPPED_DIR=~/senzing-airgap-artifacts
     ```
-
-## Demonstrate
 
 ### Create demo directory
 
@@ -483,113 +465,51 @@ Only one of the two options need be followed.
     source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
     ```
 
-### Identify Docker registry
+1. Identify location of `kubernetes-demo` repository.
+   Example:
 
-FIXME: Start here.
+    ```console
+    export GIT_REPOSITORY_DIR=${SENZING_AIRGAPPED_DIR}/kubernetes-demo
+    ```
 
-:thinking: There are 3 options when it comes to using a docker registry.  Choose one:
+### Load docker images
 
-1. [Use private registry](#use-private-registry)
+1. Load Docker image files into local docker repository.
+   Example:
 
-#### Use private registry
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-load.sh
+    ```
 
-*Method #2:* Pulls docker images from a private registry.
-
-1. :pencil2: Specify a private registry.
+1. :pencil2: Identify private Docker registry.
    Example:
 
     ```console
     export DOCKER_REGISTRY_URL=my.example.com:5000
+    ```
+
+1. :pencil2: Identify Docker registry secret.
+   Example:
+
+    ```console
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    ```
+
+1. :thinking: **Optional:**
+   If `sudo` is needed to run docker commands.
+   Example:
+
+    ```console
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
     ```
 
-
-#### Use minikube registry
-
-*Method #3:* Pulls docker images from minikube's registry.
-
-1. Use minikube's docker registry using
-   [minkube addons enable](https://minikube.sigs.k8s.io/docs/commands/addons/#minikube-addons-enable) and
-   [minikube image load](https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-load).
+1. Push Docker images to private docker registry.
    Example:
 
     ```console
-    minikube addons enable registry
-    export DOCKER_REGISTRY_URL=docker.io
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
+    source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh
     ```
-
-### Create custom helm values files
-
-:thinking: In this step, Helm template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
-
-1. **Method #1:** Quick method using `envsubst`.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
-    do \
-      envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
-    done
-    ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
-    mkdir -p ${HELM_VALUES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/helm-values-templates/* ${HELM_VALUES_DIR}
-    ```
-
-    :pencil2: Edit files in ${HELM_VALUES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_PREFIX}`
-    1. `${DOCKER_REGISTRY_SECRET}`
-    1. `${DOCKER_REGISTRY_URL}`
-    1. `${SENZING_ACCEPT_EULA}`
-
-### Create custom kubernetes configuration files
-
-:thinking: In this step, Kubernetes template files are populated with actual values.
-There are two methods of accomplishing this.
-Only one method needs to be performed.
-
-1. **Method #1:** Quick method using `envsubst`.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    for file in ${GIT_REPOSITORY_DIR}/kubernetes-templates/*; \
-    do \
-      envsubst < "${file}" > "${KUBERNETES_DIR}/$(basename ${file})";
-    done
-    ```
-
-1. **Method #2:** Copy and manually modify files method.
-   Example:
-
-    ```console
-    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
-    mkdir -p ${KUBERNETES_DIR}
-
-    cp ${GIT_REPOSITORY_DIR}/kubernetes-templates/* ${KUBERNETES_DIR}
-    ```
-
-    :pencil2: Edit files in ${KUBERNETES_DIR} replacing the following variables with actual values.
-
-    1. `${DEMO_NAMESPACE}`
 
 ### Save environment variables
 
@@ -597,25 +517,27 @@ Only one method needs to be performed.
    Example:
 
     ```console
-    cat <<EOT > ${SENZING_DEMO_DIR}/environment.sh
-    #!/usr/bin/env bash
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/save-environment-variables.sh
+    ```
 
-    EOT
+### Create custom helm values files
 
-    env \
-    | grep \
-        --regexp="^DEMO_" \
-        --regexp="^DATABASE_" \
-        --regexp="^DOCKER_" \
-        --regexp="^GIT_" \
-        --regexp="^HELM_" \
-        --regexp="^KUBERNETES_" \
-        --regexp="^SENZING_" \
-    | sort \
-    | awk -F= '{ print "export", $0 }' \
-    >> ${SENZING_DEMO_DIR}/environment.sh
+1. Helm template files are instantiated with actual values using `envsubst`.
+   Example:
 
-    chmod +x ${SENZING_DEMO_DIR}/environment.sh
+    ```console
+    export HELM_VALUES_DIR=${SENZING_DEMO_DIR}/helm-values
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/make-helm-values-files.sh
+    ```
+
+### Create custom kubernetes configuration files
+
+1. Kubernetes manifest files are instantiated with actual values using `envsubst`.
+   Example:
+
+    ```console
+    SENZING_DEMO_DIR
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/make-kubernetes-manifest-files.sh
     ```
 
 ### Create namespace
@@ -672,56 +594,7 @@ Only one method needs to be performed.
       --namespace ${DEMO_NAMESPACE}
     ```
 
-### Add helm repositories
-
-1. Add Bitnami repository using
-   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
-   Example:
-
-    ```console
-    helm repo add bitnami https://charts.bitnami.com/bitnami
-    ```
-
-1. Add Senzing repository using
-   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
-   Example:
-
-    ```console
-    helm repo add senzing https://hub.senzing.com/charts/
-    ```
-
-1. Update repositories using
-   [helm repo update](https://helm.sh/docs/helm/helm_repo_update/).
-   Example:
-
-    ```console
-    helm repo update
-    ```
-
-1. :thinking: **Optional:**
-   Review repositories using
-   [helm repo list](https://helm.sh/docs/helm/helm_repo_list/).
-   Example:
-
-    ```console
-    helm repo list
-    ```
-
 ### Deploy Senzing
-
-:thinking: This deployment initializes the Persistent Volume with Senzing code and data.
-
-There are 3 options when it comes to initializing the Persistent Volume with Senzing code and data.
-Choose one:
-
-1. [Root container method](#root-container-method) - requires a root container
-1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
-1. [yum localinstall method](#yum-localinstall-method) - Uses existing Senzing RPMs, so no downloading during installation.
-
-#### Root container method
-
-*Method #1:* This method is simpler, but requires a root container.
-This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -729,11 +602,10 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-apt \
-      senzing/senzing-apt \
+      ${DEMO_PREFIX}-senzing-installer \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_APT:-""}
+      --values ${HELM_VALUES_DIR}/senzing-installer.yaml
     ```
 
 1. Wait until Job has completed using
@@ -753,168 +625,6 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
     my-senzing-apt-8n2ql       0/1     Completed   0          2m44s
     ```
 
-#### Non-root container method
-
-*Method #2:* This method can be done on kubernetes with a non-root container.
-The following instructions are done on a non-kubernetes machine which allows root docker containers.
-Example: A personal laptop.
-
-1. Set environment variables.
-   Example:
-
-    ```console
-    export SENZING_DATA_DIR=${SENZING_DEMO_DIR}/data
-    export SENZING_G2_DIR=${SENZING_DEMO_DIR}/g2
-    ```
-
-1. Run docker container to download and extract Senzing binaries to
-   `SENZING_DATA_DIR` and `SENZING_G2_DIR`.
-   Example:
-
-    ```console
-    sudo docker run \
-      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
-      --interactive \
-      --rm \
-      --tty \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      senzing/apt
-    ```
-
-1. Install chart with non-root container using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   This pod will be the recipient of `kubectl cp` commands.
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-base \
-      senzing/senzing-base \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-base.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_BASE:-""}
-    ```
-
-1. Wait for pod to run using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Identify Senzing Base pod name.
-   Example:
-
-    ```console
-    export SENZING_BASE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-base, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-base" \
-      )
-    ```
-
-1. Copy files from local machine to Senzing Base pod using
-   [kubectl cp](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp).
-   Example:
-
-    ```console
-    kubectl cp ${SENZING_DATA_DIR} ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/data
-    kubectl cp ${SENZING_G2_DIR}   ${DEMO_NAMESPACE}/${SENZING_BASE_POD_NAME}:/opt/senzing/g2
-    ```
-
-#### yum localinstall method
-
-*Method #3:* This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
-The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
-This produces the same result as the `apt` installs describe in prior methods.
-*Note:*  The environment variables were "sourced" in
-[Set environment variables](#set-environment-variables).
-
-1. :pencil2: Identify a directory to store downloaded files.
-   Example:
-
-    ```console
-    export DOWNLOAD_DIR=~/Downloads
-    ```
-
-1. Download Senzing RPMs.
-   Example:
-
-    ```console
-    docker run \
-      --rm \
-      --volume ${DOWNLOAD_DIR}:/download \
-      senzing/yumdownloader \
-        senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
-        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
-    ```
-
-1. Copy files into minikube.
-   Example:
-
-    ```console
-    scp -i $(minikube ssh-key) \
-        ${DOWNLOAD_DIR}/${SENZING_VERSION_SENZINGAPI_RPM_FILENAME} \
-        docker@$(minikube ip):/home/docker
-
-    scp -i $(minikube ssh-key) \
-        ${DOWNLOAD_DIR}/${SENZING_VERSION_SENZINGDATA_RPM_FILENAME} \
-        docker@$(minikube ip):/home/docker
-    ```
-
-1. Log into `minikube` instance using
-   [minikube ssh](https://minikube.sigs.k8s.io/docs/commands/ssh/).
-   Example:
-
-    ```console
-    minikube ssh
-    ```
-
-1. In the `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
-   Example:
-
-    ```console
-    sudo mkdir -p /mnt/vda1/senzing/senzing-rpms
-    sudo mv /home/docker/senzingdata* /mnt/vda1/senzing/senzing-rpms
-    sudo mv /home/docker/senzingapi* /mnt/vda1/senzing/senzing-rpms
-    exit
-    ```
-
-1. Install chart to perform `yum localinstall` using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-yum \
-      senzing/senzing-yum \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_YUM:-""}
-    ```
-
-1. Wait until Job has completed using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of completion:
-
-    ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-yum-8n2ql       0/1     Completed   0          2m44s
-    ```
-
 ### Install senzing-console Helm chart
 
 The [senzing-console](https://github.com/Senzing/docker-senzing-console)
@@ -931,10 +641,9 @@ will be used later to:
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-console \
-      senzing/senzing-console \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
@@ -1426,11 +1135,10 @@ Delete Kubernetes artifacts using
 
 ### Delete minikube cluster
 
-Delete minikube artifacts using
-[minikube stop](https://minikube.sigs.k8s.io/docs/commands/stop/) and
-[minikube delete](https://minikube.sigs.k8s.io/docs/commands/delete/)
-
-1. Example:
+1. Delete minikube artifacts using
+   [minikube stop](https://minikube.sigs.k8s.io/docs/commands/stop/) and
+   [minikube delete](https://minikube.sigs.k8s.io/docs/commands/delete/)
+   Example:
 
     ```console
     minikube stop

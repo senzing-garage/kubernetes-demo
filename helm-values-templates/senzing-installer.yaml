@@ -1,0 +1,5 @@
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_VERSION_SENZINGAPI}
