@@ -449,7 +449,7 @@ The following steps are performed on the air-gapped system.
    Example:
 
     ```console
-    export SENZING_DEMO_DIR=~/senzing-rabbitmq-postgresql-demo-${DEMO_PREFIX}
+    export SENZING_DEMO_DIR=${SENZING_AIRGAPPED_DIR}-${DEMO_PREFIX}
     mkdir -p ${SENZING_DEMO_DIR}
     ```
 
