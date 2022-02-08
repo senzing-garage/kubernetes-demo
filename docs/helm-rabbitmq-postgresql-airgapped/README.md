@@ -496,14 +496,15 @@ The following steps are performed on the air-gapped system.
    Example:
 
     ```console
-    export DOCKER_REGISTRY_URL=my.example.com:5000
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
     ```
 
-1. :pencil2: Identify Docker registry secret.
+1. :thinking: **Optional:**
+ : Identify Docker registry secret.
    Example:
 
     ```console
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
+    export DOCKER_REGISTRY_SECRET=${DEMO_PREFIX}-registry-secret
     ```
 
 1. :thinking: **Optional:**
@@ -571,6 +572,10 @@ The following steps are performed on the air-gapped system.
     ```
 
 ### Create persistent volume
+
+:thinking: **Optional:**
+These steps for creating persistent volumes (PV) and Persistent Vlo
+
 
 1. Create persistent volumes using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).

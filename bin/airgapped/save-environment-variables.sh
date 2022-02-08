@@ -7,7 +7,7 @@
 cat <<EOT > ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
 #!/usr/bin/env bash
 
-export GIT_REPOSITORY_DIR=${SENZING_AIRGAPPED_DIR}/kubernetes-demo
+export GIT_REPOSITORY_DIR=\${SENZING_AIRGAPPED_DIR}/kubernetes-demo
 EOT
 
 # Append "export" statements to file.
@@ -21,4 +21,4 @@ env \
 
 # Make file executable.
 
-chmod +x ${SENZING_AIRGAPPED_DIR}/environment.sh
+chmod +x ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
