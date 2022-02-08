@@ -354,7 +354,7 @@ Only one of the two options need be followed.
        Example:
 
         ```console
-        export REPOSITORY_TARGET=my.docker-registry.com:5000
+        export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
         ```
 
     1. Tag and push docker images to private Docker registry
@@ -381,6 +381,15 @@ Only one of the two options need be followed.
         docker save ${DOCKER_IMAGE} \
          --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
     done
+    ```
+
+### Save environment variables for air-gapped environment
+
+1. Tag and push docker images to private Docker registry
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/save-environment-variables.sh
     ```
 
 ### Package artifacts
@@ -469,7 +478,7 @@ The following steps are performed on the air-gapped system.
    Example:
 
     ```console
-    export GIT_REPOSITORY_DIR=${SENZING_AIRGAPPED_DIR}/kubernetes-demo
+    source ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
     ```
 
 ### Load docker images
@@ -536,7 +545,7 @@ The following steps are performed on the air-gapped system.
    Example:
 
     ```console
-    SENZING_DEMO_DIR
+    export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/make-kubernetes-manifest-files.sh
     ```
 
