@@ -574,8 +574,10 @@ The following steps are performed on the air-gapped system.
 ### Create persistent volume
 
 :thinking: **Optional:**
-These steps for creating persistent volumes (PV) and Persistent Vlo
-
+These steps for creating Persistent Volumes (PV) and Persistent Volume Claims (PVC)
+for a demonstration environment.
+They are not sufficient for a production environment.
+If PVs and PVCs already exist, this step may be skipped.
 
 1. Create persistent volumes using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
