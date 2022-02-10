@@ -658,10 +658,10 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-console \
+      ${DEMO_PREFIX}-senzing-console-privileged \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql-privileged.yaml
     ```
 
 1. For the next steps, capture the pod name in `CONSOLE_POD_NAME` using
@@ -672,8 +672,8 @@ will be used later to:
     export CONSOLE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      --selector "app.kubernetes.io/name=senzing-console-privileged, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console-privileged" \
       )
     ```
 
