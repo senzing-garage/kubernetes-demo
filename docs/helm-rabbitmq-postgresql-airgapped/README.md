@@ -664,15 +664,37 @@ will be used later to:
       --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
     ```
 
+
+1. For the next steps, capture the pod name in `CONSOLE_POD_NAME` using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+    ```
+
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
 ### Install Senzing license
 
-FIXME:
+1. Copy the Senzing license to `/etc/opt/senzing`.
+
+    ```console
+    kubectl cp ${SENZING_AIRGAPPED_DIR}/etc/g2.lic ${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
+    ```
 
 ### Install Senzing Governor
 
-FIXME:
+1. Copy the Postgresql governor to `/opt/senzing/g2/python`.
+
+    ```console
+    kubectl cp ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py ${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
+    ```
 
 ### Install Postgresql Helm chart
 
@@ -695,7 +717,7 @@ FIXME:
     ```console
     helm install \
       ${DEMO_PREFIX}-bitnami-postgresql \
-      bitnami/postgresql \
+      ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
@@ -728,7 +750,7 @@ FIXME:
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-postgresql-client \
-      senzing/senzing-postgresql-client \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
@@ -743,7 +765,7 @@ FIXME:
     ```console
     helm install \
       ${DEMO_PREFIX}-phppgadmin \
-      senzing/phppgadmin \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-""}
@@ -760,7 +782,7 @@ FIXME:
     ```console
     helm install \
       ${DEMO_PREFIX}-bitnami-rabbitmq \
-      bitnami/rabbitmq \
+      ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
@@ -791,7 +813,7 @@ pulls JSON lines from a file and pushes them to message queue using
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-stream-producer \
-      senzing/senzing-stream-producer \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
@@ -809,7 +831,7 @@ creates files from templates and initializes the G2 database.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-init-container \
-      senzing/senzing-init-container \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
@@ -837,7 +859,7 @@ pulls messages from message queue and sends them to Senzing.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-stream-loader \
-      senzing/senzing-stream-loader \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
@@ -855,7 +877,7 @@ receives HTTP requests to read and modify Senzing data.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-api-server \
-      senzing/senzing-api-server \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
@@ -885,7 +907,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
-      senzing/senzing-entity-search-web-app \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
@@ -919,7 +941,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-redoer \
-      senzing/senzing-redoer \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
@@ -937,7 +959,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
     ```console
     helm install \
       ${DEMO_PREFIX}-swaggerapi-swagger-ui \
-      senzing/swaggerapi-swagger-ui \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
@@ -956,7 +978,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-configurator \
-      senzing/senzing-configurator \
+      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
