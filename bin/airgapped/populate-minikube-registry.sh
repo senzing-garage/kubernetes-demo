@@ -2,7 +2,7 @@
 
 # Instantiate "DOCKER_IMAGES", a list of docker images to be installed into the minikube registry.
 
-source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/airgapped/docker-images.sh
+source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
 
 # Process each docker image.
 
