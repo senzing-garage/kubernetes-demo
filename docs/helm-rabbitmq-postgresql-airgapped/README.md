@@ -643,7 +643,7 @@ If PVs and PVCs already exist, this step may be skipped.
     my-senzing-apt-8n2ql       0/1     Completed   0          2m44s
     ```
 
-### Install senzing-console Helm chart
+### Install senzing-console-privileged Helm chart
 
 The [senzing-console](https://github.com/Senzing/docker-senzing-console)
 will be used later to:
@@ -672,7 +672,7 @@ will be used later to:
     export CONSOLE_POD_NAME=$(kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console-privileged, \
+      --selector "app.kubernetes.io/name=senzing-console, \
                   app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console-privileged" \
       )
     ```
