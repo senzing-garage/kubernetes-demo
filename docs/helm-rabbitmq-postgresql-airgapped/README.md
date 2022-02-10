@@ -664,7 +664,6 @@ will be used later to:
       --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
     ```
 
-
 1. For the next steps, capture the pod name in `CONSOLE_POD_NAME` using
    [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
@@ -685,7 +684,7 @@ will be used later to:
 1. Copy the Senzing license to `/etc/opt/senzing`.
 
     ```console
-    kubectl cp ${SENZING_AIRGAPPED_DIR}/etc/g2.lic ${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
+    kubectl cp ${SENZING_AIRGAPPED_DIR}/etc/g2.lic ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
     ```
 
 ### Install Senzing Governor
@@ -693,7 +692,7 @@ will be used later to:
 1. Copy the Postgresql governor to `/opt/senzing/g2/python`.
 
     ```console
-    kubectl cp ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py ${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
+    kubectl cp ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
     ```
 
 ### Install Postgresql Helm chart
