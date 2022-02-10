@@ -1,16 +1,15 @@
+auth:
+  database: G2
+  password: senzing
+  postgresPassword: postgres
+  username: senzing
+
 image:
+  pullSecrets:
+    - ${DOCKER_REGISTRY_SECRET}
   registry: ${DOCKER_REGISTRY_URL}
   tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL}
 
-imagePullSecrets:
-  - name: ${DOCKER_REGISTRY_SECRET}
-
-persistence:
-  enabled: false
-  existingClaim: postgresql-persistent-volume-claim
-
-postgresqlDatabase: G2
-postgresqlPassword: postgres
-
-securityContext:
-  enabled: false
+primary:
+  persistence:
+    existingClaim: postgresql-persistent-volume-claim
