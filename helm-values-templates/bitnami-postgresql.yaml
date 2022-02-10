@@ -12,4 +12,4 @@ image:
 
 primary:
   persistence:
-    existingClaim: postgresql-persistent-volume-claim
+    enabled: False
