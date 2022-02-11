@@ -353,6 +353,7 @@ On a non-airgapped system:
     ```console
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
+        echo ${DOCKER_IMAGE}
         sudo docker pull ${DOCKER_IMAGE}
     done
     ```
@@ -399,6 +400,7 @@ Only one of the two options need be followed.
 
     for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
     do
+        echo ${DOCKER_IMAGE}
         docker save ${DOCKER_IMAGE} \
          --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
     done
