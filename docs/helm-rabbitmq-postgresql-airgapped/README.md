@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Using `minikube`, bring up a Senzing stack on Kubernetes
+Bringng up a Senzing stack on Kubernetes in an air-gapped environment
 using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
@@ -35,8 +35,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Clone repository](#clone-repository)
 1. [Demonstrate](#demonstrate)
     1. [Create demo directory](#create-demo-directory)
-    1. [Start minikube cluster](#start-minikube-cluster)
-    1. [View minikube cluster](#view-minikube-cluster)
     1. [EULA](#eula)
     1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
@@ -71,7 +69,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
-    1. [Delete minikube cluster](#delete-minikube-cluster)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -639,8 +636,8 @@ If PVs and PVCs already exist, this step may be skipped.
 1. Example of completion:
 
     ```console
-    NAME                       READY   STATUS      RESTARTS   AGE
-    my-senzing-apt-8n2ql       0/1     Completed   0          2m44s
+    NAME                         READY   STATUS      RESTARTS   AGE
+    my-senzing-installer-8n2ql   0/1     Completed   0          2m44s
     ```
 
 ### Install senzing-console-privileged Helm chart
@@ -990,15 +987,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
 
-1. Because some of the Kubernetes Services use LoadBalancer,
-   a `minikube` tunnel is needed for
-   [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
-   Example:
-
-    ```console
-    minikube tunnel
-    ```
-
 1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
    **Note:** Replace `${DEMO_PREFIX}` with the actual DEMO_PREFIX value.
    Example:
@@ -1167,8 +1155,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
     helm repo remove senzing
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
@@ -1178,18 +1165,6 @@ Delete Kubernetes artifacts using
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
-    ```
-
-### Delete minikube cluster
-
-1. Delete minikube artifacts using
-   [minikube stop](https://minikube.sigs.k8s.io/docs/commands/stop/) and
-   [minikube delete](https://minikube.sigs.k8s.io/docs/commands/delete/)
-   Example:
-
-    ```console
-    minikube stop
-    minikube delete
     ```
 
 ## Errors
