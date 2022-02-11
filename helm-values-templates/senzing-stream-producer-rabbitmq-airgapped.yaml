@@ -11,6 +11,6 @@ main:
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user
-    recordMax: 50000
+    recordMax: 10000
     recordMonitor: 1000
     subcommand: json-to-rabbitmq
