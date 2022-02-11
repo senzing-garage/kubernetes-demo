@@ -6,6 +6,7 @@ main:
 
   senzing:
     inputUrl: "file:////var/opt/senzing/loadtest-dataset.json"
+    persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
