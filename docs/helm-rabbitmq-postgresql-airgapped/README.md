@@ -117,6 +117,14 @@ describing where we can improve.   Now on with the show...
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 
+### Prerequisites on kubernetes
+
+1. Persistent Volume Claims:
+    1. PostgreSql
+    1. Senzing
+        1. 50GB
+        1. Read-Write-Many
+
 ## Non-airgapped system
 
 On a non-airgapped system:
@@ -269,6 +277,19 @@ On a non-airgapped system:
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py \
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
+    ```
+
+### Download Sample data
+
+1. Get sample data.
+   Example:
+
+    ```console
+    mkdir ${SENZING_AIRGAPPED_DIR}/data
+
+    curl -X GET \
+      --output ${SENZING_AIRGAPPED_DIR}/data/loadtest-dataset-1M.json \
+      https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json
     ```
 
 ### Add Senzing license
@@ -690,6 +711,14 @@ will be used later to:
 
     ```console
     kubectl cp ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
+    ```
+
+### Install sample data Governor
+
+1. Copy the sample data to `/var/opt/senzing/data`.
+
+    ```console
+    kubectl cp ${SENZING_AIRGAPPED_DIR}/data/loadtest-dataset-1M.json ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/senzing/data/loadtest-dataset-1M.json
     ```
 
 ### Install Postgresql Helm chart
@@ -1156,8 +1185,6 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console-privileged
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
-    helm repo remove senzing
-    helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
