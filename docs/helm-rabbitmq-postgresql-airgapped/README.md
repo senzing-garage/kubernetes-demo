@@ -992,7 +992,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
    Example:
 
     ```console
-    source ~/senzing-rabbitmq-postgresql-demo-${DEMO_PREFIX}/environment.sh
+    source ${SENZING_DEMO_DIR}/environment.sh
     ```
 
 #### View RabbitMQ
@@ -1045,7 +1045,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console-privileged" \
       )
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
@@ -1154,7 +1154,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console-privileged
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
     helm repo remove senzing
     helm repo remove bitnami
