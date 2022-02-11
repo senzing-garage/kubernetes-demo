@@ -288,8 +288,9 @@ On a non-airgapped system:
     mkdir -p ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data
 
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset-1M.json \
-      https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json
+      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset.json \
+      --range 0-4300000
+      https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset.json
     ```
 
 ### Add Senzing license
