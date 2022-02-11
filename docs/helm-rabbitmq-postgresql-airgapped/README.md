@@ -272,23 +272,23 @@ On a non-airgapped system:
    Example:
 
     ```console
-    mkdir ${SENZING_AIRGAPPED_DIR}/python
+    mkdir -p ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python
 
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py \
+      --output ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python/senzing_governor.py \
       https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
     ```
 
-### Download Sample data
+### Download sample data
 
 1. Get sample data.
    Example:
 
     ```console
-    mkdir ${SENZING_AIRGAPPED_DIR}/data
+    mkdir -p ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data
 
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/data/loadtest-dataset-1M.json \
+      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset-1M.json \
       https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json
     ```
 
@@ -307,8 +307,8 @@ On a non-airgapped system:
    Example:
 
     ```console
-    mkdir ${SENZING_AIRGAPPED_DIR}/etc
-    cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/g2.lic
+    mkdir -p ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing
+    cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing/g2.lic
     ```
 
 ### Create senzing/installer docker image
@@ -702,7 +702,9 @@ will be used later to:
 1. Copy the Senzing license to `/etc/opt/senzing`.
 
     ```console
-    kubectl cp ${SENZING_AIRGAPPED_DIR}/etc/g2.lic ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
+    kubectl cp \
+      ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing/g2.lic \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
     ```
 
 ### Install Senzing Governor
@@ -710,15 +712,19 @@ will be used later to:
 1. Copy the Postgresql governor to `/opt/senzing/g2/python`.
 
     ```console
-    kubectl cp ${SENZING_AIRGAPPED_DIR}/python/senzing_governor.py ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
+    kubectl cp \
+      ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python/senzing_governor.py \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/opt/senzing/g2/python/senzing_governor.py
     ```
 
-### Install sample data Governor
+### Install sample data
 
 1. Copy the sample data to `/var/opt/senzing/data`.
 
     ```console
-    kubectl cp ${SENZING_AIRGAPPED_DIR}/data/loadtest-dataset-1M.json ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/senzing/data/loadtest-dataset-1M.json
+    kubectl cp \
+      ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset-1M.json \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/opt/senzing/data/loadtest-dataset-1M.json
     ```
 
 ### Install Postgresql Helm chart
