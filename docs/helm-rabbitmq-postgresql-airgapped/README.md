@@ -840,7 +840,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
