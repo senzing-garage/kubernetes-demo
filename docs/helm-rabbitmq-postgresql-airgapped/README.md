@@ -289,7 +289,7 @@ On a non-airgapped system:
 
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset.json \
-      --range 0-4300000
+      --range 0-4300000 \
       https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset.json
     ```
 
