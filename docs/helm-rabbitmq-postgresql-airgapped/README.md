@@ -288,7 +288,7 @@ On a non-airgapped system:
     mkdir -p ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data
 
     curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset.json \
+      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/loadtest-dataset.json \
       --range 0-4300000 \
       https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json
     ```
@@ -724,8 +724,8 @@ will be used later to:
 
     ```console
     kubectl cp \
-      ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data/loadtest-dataset-1M.json \
-      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/opt/senzing/data/loadtest-dataset-1M.json
+      ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/loadtest-dataset.json \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/opt/senzing/loadtest-dataset.json
     ```
 
 ### Install Postgresql Helm chart
