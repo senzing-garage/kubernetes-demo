@@ -5,7 +5,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
 
   senzing:
-    inputUrl: "file:////var/opt/senzing/loadtest-dataset.json"
+    inputUrl: "file:///var/opt/senzing/loadtest-dataset.json"
     persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
