@@ -753,8 +753,7 @@ will be used later to:
       ${DEMO_PREFIX}-bitnami-postgresql \
       ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-""}
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml
     ```
 
 1. Wait for pod to run using
@@ -786,8 +785,7 @@ will be used later to:
       ${DEMO_PREFIX}-senzing-postgresql-client \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
+      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml
     ```
 
 ### Install phpPgAdmin Helm Chart
@@ -801,8 +799,7 @@ will be used later to:
       ${DEMO_PREFIX}-phppgadmin \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-""}
+      --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
@@ -818,8 +815,7 @@ will be used later to:
       ${DEMO_PREFIX}-bitnami-rabbitmq \
       ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
-      --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml
     ```
 
 1. Wait for pods to run using
@@ -849,8 +845,7 @@ pulls JSON lines from a file and pushes them to message queue using
       ${DEMO_PREFIX}-senzing-stream-producer \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml
     ```
 
 ### Install init-container Helm chart
@@ -867,8 +862,7 @@ creates files from templates and initializes the G2 database.
       ${DEMO_PREFIX}-senzing-init-container \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
+      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml
     ```
 
 1. Wait for pods to run using
@@ -895,8 +889,7 @@ pulls messages from message queue and sends them to Senzing.
       ${DEMO_PREFIX}-senzing-stream-loader \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
+      --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml
     ```
 
 ### Install senzing-api-server Helm chart
@@ -913,8 +906,7 @@ receives HTTP requests to read and modify Senzing data.
       ${DEMO_PREFIX}-senzing-api-server \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
     ```
 
 1. Wait for pods to run using
@@ -943,8 +935,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml
     ```
 
 1. Wait until Deployment has completed using
@@ -977,8 +968,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       ${DEMO_PREFIX}-senzing-redoer \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
+      --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml
     ```
 
 #### Install SwaggerUI Helm chart
@@ -995,8 +985,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
       ${DEMO_PREFIX}-swaggerapi-swagger-ui \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_SWAGGERAPI_SWAGGER_UI:-""}
+      --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml
     ```
 
 1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
@@ -1014,8 +1003,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
       ${DEMO_PREFIX}-senzing-configurator \
       ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
+      --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml
     ```
 
 1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
