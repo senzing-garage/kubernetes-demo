@@ -1,0 +1,26 @@
+main:
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
+
+  senzing:
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "HYBRID",
+          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
+        }
+      }
+    persistentVolumeClaim: senzing-persistent-volume-claim
