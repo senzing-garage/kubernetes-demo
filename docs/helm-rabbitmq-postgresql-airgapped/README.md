@@ -50,6 +50,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Decompress file](#decompress-file)
     1. [Create demo directory](#create-demo-directory)
     1. [Set environment variables](#set-environment-variables)
+    1. [Load Docker images](#load-docker-images)
+    1. [Save environment variables](#save-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
@@ -518,7 +520,7 @@ The following steps are performed on the air-gapped system.
     source ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
     ```
 
-### Load docker images
+### Load Docker images
 
 1. Load Docker image files into local docker repository.
    Example:
