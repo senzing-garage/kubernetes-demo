@@ -31,21 +31,34 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Related artifacts](#related-artifacts)
 1. [Expectations](#expectations)
 1. [Prerequisites](#prerequisites)
-    1. [Prerequisite software](#prerequisite-software)
-    1. [Clone repository](#clone-repository)
-1. [Demonstrate](#demonstrate)
+    1. [Prerequisite software on non-airgapped system](#prerequisite-software-on-non-airgapped-system)
+    1. [Prerequisite software on air-apped system](#prerequisite-software-on-air-gapped-system)
+    1. [Prerequisites on kubernetes](#prerequisites-on-kubernetes)
+1. [On non-airgapped system](#on-non-airgapped-system)
+    1. [Download git repositories](#download-git-repositories)
+    1. [Download version metadata](#download-version-metadata)
+    1. [Download Governor](#download-governor)
+    1. [Download sample data](#download-sample-data)
+    1. [Add Senzing license](#add-senzing-license)
+    1. [Create senzing/installer docker image](#create-senzing/installer-docker-image)
+    1. [Download Docker images](#download-docker-images)
+    1. [Transfer Docker images](#transfer-docker-images)
+    1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
+    1. [Package artifacts](#package-artifacts)
+1. [Transfer to air-gapped system](#transfer-to-air-gapped-system)
+1. [On Air-gapped system](#on-air-gapped-system)
+    1. [Decompress file](#decompress-file)
     1. [Create demo directory](#create-demo-directory)
-    1. [EULA](#eula)
     1. [Set environment variables](#set-environment-variables)
-    1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
-    1. [Save environment variables](#save-environment-variables)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
-    1. [Add helm repositories](#add-helm-repositories)
     1. [Deploy Senzing](#deploy-senzing)
-    1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
+    1. [Install senzing-console-privileged Helm chart](#install-senzing-console-privileged-helm-chart)
+    1. [Install Senzing license](#install-senzing-license)
+    1. [Install Senzing Governor](#install-senzing-governor)
+    1. [Install sample data](#install-sample-data)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
     1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
@@ -56,17 +69,18 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
-        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
-        1. [Install configurator Helm chart](#install-configurator-helm-chart)
-        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
+        1.[Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
+        1.[Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
+        1.[Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
-        1. [View RabbitMQ](#view-rabbitmq)
-        1. [View PostgreSQL](#view-postgresql)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
-        1. [View Senzing API Server](#view-senzing-api-server)
-        1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
-        1. [View SwaggerUI](#view-swaggerui)
-        1. [View Senzing Configurator](#view-senzing-configurator)
+        1.[View RabbitMQ](#view-rabbitmq)
+        1.[View PostgreSQL](#view-postgresql)
+        1.[View Senzing Console pod](#view-senzing-console-pod)
+        1.[View Senzing API Server](#view-senzing-api-server)
+        1.[View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1.[View SwaggerUI](#view-swaggerui)
+        1.[View Senzing Configurator](#view-senzing-configurator)
+    1. []()
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
 1. [Errors](#errors)
@@ -125,7 +139,7 @@ describing where we can improve.   Now on with the show...
         1. 50GB
         1. Read-Write-Many
 
-## Non-airgapped system
+## On non-airgapped system
 
 On a non-airgapped system:
 
@@ -426,13 +440,13 @@ Only one of the two options need be followed.
     zip -r ~/${SENZING_AIRGAPPED_FILENAME}.zip *
     ```
 
-## Tranfer to air-gapped system
+## Transfer to air-gapped system
 
 1. Transfer `senzing-airgap-artifacts.zip` to air-gapped system.
    For the demonstration, it is assumed that it will be placed at `~/senzing-airgap-artifacts.zip`
    on the air-gapped system.
 
-## Air-Gapped system
+## On air-gapped system
 
 The following steps are performed on the air-gapped system.
 
@@ -788,7 +802,7 @@ will be used later to:
       --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml
     ```
 
-### Install phpPgAdmin Helm Chart
+### Install phpPgAdmin Helm chart
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
