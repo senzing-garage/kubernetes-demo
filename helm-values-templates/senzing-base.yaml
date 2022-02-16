@@ -1,3 +1,5 @@
+# See https://github.com/Senzing/charts/tree/master/charts/senzing-base#parameters
+
 main:
 
   args:
@@ -6,15 +8,21 @@ main:
   command:
     - sleep
 
-  containerSecurityContext:
-    enabled: true
-    privileged: true
-    runAsGroup: 0
-    runAsUser: 0
-
   image:
     registry: ${DOCKER_REGISTRY_URL}
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_BASE}
 
+  podSecurityContext:
+    enabled: true
+
   senzing:
     persistentVolumeClaim: senzing-persistent-volume-claim
+
+  podSecurityContext:
+    enabled: true
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

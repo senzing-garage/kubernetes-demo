@@ -1,0 +1,31 @@
+# See https://github.com/Senzing/charts/tree/master/charts/senzing-console#parameters
+
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
+
+  podSecurityContext:
+    enabled: true
+
+  senzing:
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "HYBRID",
+          "CONNECTION": "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432:g2_${SENZING_TENANT}"
+        }
+      }
+    persistentVolumeClaim: senzing-persistent-volume-claim
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true

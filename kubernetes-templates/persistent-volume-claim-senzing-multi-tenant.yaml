@@ -1,0 +1,19 @@
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaim-v1-core
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    cattle.io/creator: norman
+  name: senzing-persistent-volume-claim
+  namespace: ${DEMO_NAMESPACE}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: manual
+  volumeName: senzing-persistent-volume-${SENZING_TENANT}

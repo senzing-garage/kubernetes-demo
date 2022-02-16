@@ -1,0 +1,28 @@
+# See https://github.com/Senzing/charts/tree/master/charts/swaggerapi-swagger-ui#parameters
+
+ingress:
+  enabled: true
+  hostname: ${SENZING_TENANT}.local
+  path: /swagger
+
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI}
+
+  podSecurityContext:
+    enabled: true
+
+  swaggerui:
+    baseUrl: "/swagger"
+    openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+
+serviceAccount:
+  enabled: true

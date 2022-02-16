@@ -1,0 +1,32 @@
+# See https://github.com/bitnami/charts/tree/master/bitnami/nginx#parameters
+
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_NGINX}
+
+serverBlock: |-
+  server {
+    listen 0.0.0.0:{{ .Values.containerPorts.http }};
+
+    location / {
+      return 200 "Hello Root!";
+    }
+
+    location /api {
+      return 200 "Hello API server!";
+    }
+
+    location /app {
+      return 200 "Hello App!";
+    }
+
+    location /swagger {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header HOST $http_host;
+      proxy_set_header X-NginX-Proxy true;
+
+      proxy_pass http://my-swaggerapi-swagger-ui.tenant2-namespace;
+      proxy_redirect off;
+    }
+
+  }

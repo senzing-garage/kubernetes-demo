@@ -1,3 +1,5 @@
+# See https://github.com/Senzing/charts/tree/master/charts/microsoft-mssql-tools#parameters
+
 main:
 
   args:

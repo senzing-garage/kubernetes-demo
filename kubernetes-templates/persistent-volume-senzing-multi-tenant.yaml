@@ -1,0 +1,18 @@
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolume-v1-core
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: senzing-persistent-volume-${SENZING_TENANT}
+  labels:
+    type: local
+  namespace: ${DEMO_NAMESPACE}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /mnt/vda1/senzing/${SENZING_TENANT}
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual

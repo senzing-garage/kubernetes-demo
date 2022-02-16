@@ -1,0 +1,32 @@
+# See https://github.com/Senzing/charts/tree/master/charts/phppgadmin#parameters
+
+ingress:
+  enabled: true
+
+main:
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
+
+  phppgadmin:
+    serverHost: ${DEMO_PREFIX}-bitnami-postgresql
+
+  podSecurityContext:
+    enabled: true
+    runAsNonRoot: false
+
+rbac:
+  enabled: true
+
+service:
+  type: ClusterIP
+
+serviceAccount:
+  enabled: true

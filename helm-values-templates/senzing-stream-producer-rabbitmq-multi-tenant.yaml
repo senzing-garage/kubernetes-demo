@@ -1,0 +1,29 @@
+# See https://github.com/Senzing/charts/tree/master/charts/senzing-stream-producer#parameters
+
+main:
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
+
+  podSecurityContext:
+    enabled: true
+
+  senzing:
+    inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
+    rabbitmqExchange: senzing-rabbitmq-exchange-${SENZING_TENANT}
+    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
+    rabbitmqPassword: ${RABBITMQ_PASSWORD}
+    rabbitmqQueue: senzing-rabbitmq-queue-${SENZING_TENANT}
+    rabbitmqRoutingKey: senzing.records.${SENZING_TENANT}
+    rabbitmqUsername: ${SENZING_TENANT}
+    recordMax: ${SENZING_RECORD_MAX}
+    recordMin: ${SENZING_RECORD_MIN}
+    recordMonitor: 1000
+    subcommand: json-to-rabbitmq
+
+rbac:
+  enabled: true
+
+serviceAccount:
+  enabled: true
