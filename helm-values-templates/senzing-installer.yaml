@@ -1,0 +1,14 @@
+main:
+
+  containerSecurityContext:
+    enabled: true
+    privileged: true
+    runAsGroup: 0
+    runAsUser: 0
+
+  image:
+    registry: ${DOCKER_REGISTRY_URL}
+    tag: ${SENZING_VERSION_SENZINGAPI}
+
+  senzing:
+    persistentVolumeClaim: senzing-persistent-volume-claim
