@@ -40,7 +40,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Download Governor](#download-governor)
     1. [Download sample data](#download-sample-data)
     1. [Add Senzing license](#add-senzing-license)
-    1. [Create senzing/installer docker image](#create-senzing/installer-docker-image)
+    1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Download Docker images](#download-docker-images)
     1. [Transfer Docker images](#transfer-docker-images)
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
@@ -131,12 +131,13 @@ describing where we can improve.   Now on with the show...
 
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. Kubernetes
 
 ### Prerequisites on kubernetes
 
 1. Persistent Volume Claims:
-    1. PostgreSql
-    1. Senzing
+    1. PostgreSql - `postgresql-persistent-volume-claim`
+    1. Senzing - `senzing-persistent-volume-claim`
         1. 50GB
         1. Read-Write-Many
 
