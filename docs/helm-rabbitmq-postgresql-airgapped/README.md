@@ -695,6 +695,9 @@ If PVs and PVCs already exist, this step may be skipped.
 
 ### Deploy Senzing
 
+Copy Senzing's `g2` and `data` directories on to the Persistent Volume Claim (PVC)
+at `/opt/senzing/g2` and `/opt/senzing/data`.
+
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
