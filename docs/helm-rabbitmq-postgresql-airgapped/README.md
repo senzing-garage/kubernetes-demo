@@ -860,6 +860,9 @@ The `helm-values/*.yaml` files would then be updated to have the
 
 ### Install phpPgAdmin Helm chart
 
+[phpPgAdmin](https://github.com/phppgadmin/phppgadmin)
+is a web-based user interface for viewing the PostgreSQL database.
+
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
