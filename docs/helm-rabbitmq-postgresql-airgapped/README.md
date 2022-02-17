@@ -805,8 +805,7 @@ The `helm-values/*.yaml` files would then be updated to have the
 The
 [binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
-[bitnami/postgresql](https://hub.docker.com/r/bitnami/postgresql)
-Docker image.
+[bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
 1. Create Configmap for `pg_hba.conf` using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
@@ -888,8 +887,7 @@ is a web-based user interface for viewing the PostgreSQL database.
 The
 [binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
 provisions an instance of the
-[bitnami/rabbitmq](https://hub.docker.com/r/bitnami/rabbitmq)
-Docker image.
+[bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
