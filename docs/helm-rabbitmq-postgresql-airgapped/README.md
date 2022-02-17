@@ -802,6 +802,12 @@ a separate PostgreSQL database would be provisioned and maintained.
 The `helm-values/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
 
+The
+[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+provisions an instance of the
+[bitnami/postgresql](https://hub.docker.com/r/bitnami/postgresql)
+Docker image.
+
 1. Create Configmap for `pg_hba.conf` using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
@@ -878,6 +884,12 @@ is a web-based user interface for viewing the PostgreSQL database.
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install RabbitMQ Helm chart
+
+The
+[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
+provisions an instance of the
+[bitnami/rabbitmq](https://hub.docker.com/r/bitnami/rabbitmq)
+Docker image.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -1151,6 +1163,9 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```
 
 #### View Senzing API Server
+
+The [Senzing API server](https://github.com/Senzing/senzing-api-server)
+receives HTTP requests to read and modify Senzing data.
 
 1. In a separate terminal window, port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
