@@ -273,6 +273,7 @@ On the non-airgapped system:
     ```
 
 1. Download current Senzing versions.
+   This file will be used in future `source` commmands.
    Example:
 
     ```console
@@ -282,6 +283,7 @@ On the non-airgapped system:
     ```
 
 1. Download current Senzing docker versions.
+   This file will be used in future `source` commmands.
    Example:
 
     ```console
@@ -376,7 +378,7 @@ These steps download the Docker images to the
 local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
-1. Identify docker images.
+1. Using the `source` command, identify docker images.
    Example:
 
     ```console
@@ -453,7 +455,7 @@ Only one of the two options need be followed.
 On the non-airgapped system:
 
 1. Create a `${SENZING_AIRGAPPED_DIR}/bin/environment.sh` file
-   that can be sourced on the air-gapped machine.
+   that can be used by the `source` command on the air-gapped machine.
    Example:
 
     ```console
@@ -532,21 +534,21 @@ The following steps are performed on the air-gapped system.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Set environment variables that identify Docker image versions.
+1. Using the `source` command, set environment variables that identify Docker image versions.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
     ```
 
-1. Set environment variables that identify Senzing versions.
+1. Using the `source` command, set environment variables that identify Senzing versions.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
     ```
 
-1. Identify location of `kubernetes-demo` repository.
+1. Using the `source` command, identify location of `kubernetes-demo` repository.
    Example:
 
     ```console
@@ -557,7 +559,7 @@ The following steps are performed on the air-gapped system.
 
 :thinking: **Optional:**
 If the
-[Package saved Docker images](#package-saved-Docker-images)
+[Package saved Docker images](#package-saved-docker-images)
 option was chosen
 (i.e. not the
 [Use private Docker registry](#use-private-docker-registry)
@@ -1093,11 +1095,12 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 ### View data
 
-1. Username and password for the following sites are the values seen in the corresponding "values" YAML file located in
+1. Username and password for the following sites are the values seen in
+   the corresponding "values" YAML file located in
    [helm-values-templates](../helm-values-templates).
 
-1. :pencil2: When using a separate terminal window in each of the examples below, set environment variables.
-   **Note:** Replace `${DEMO_PREFIX}` with the actual DEMO_PREFIX value.
+1. :pencil2: When using a separate terminal window in each of the examples below,
+   set environment variables.
    Example:
 
     ```console
