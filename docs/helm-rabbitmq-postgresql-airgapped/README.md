@@ -402,6 +402,8 @@ The second option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
 Only one of the two options need be followed.
 
+#### Use private Docker registry
+
 1. :thinking: **Optional:**
    *Option 1* -
    If the "air-gapped" private Docker registry **can** be accessed from the non-airgapped system, use
@@ -422,11 +424,13 @@ Only one of the two options need be followed.
         ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh
         ```
 
+#### Package saved Docker images
+
 1. :thinking: **Optional:**
    *Option 2* -
    If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
    [docker save](https://docs.docker.com/engine/reference/commandline/save/)
-   to transfer the docker images.
+   to create files that can be transferred to the air-gapped system.
    Example:
 
     ```console
@@ -501,7 +505,8 @@ The following steps are performed on the air-gapped system.
    This will be used in a local directory name
    as well as a prefix to kubernetes object.
 
-   :warning:  Must be all lowercase.
+   :warning:  Because it's used in names for kubernetes resources,
+   it must be all lowercase.
 
    Example:
 
@@ -526,14 +531,14 @@ The following steps are performed on the air-gapped system.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Retrieve latest docker image version numbers and set their environment variables.
+1. Set environment variables that identify Docker image versions.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
     ```
 
-1. Retrieve latest Senzing version numbers and set their environment variables.
+1. Set environment variables that identify Senzing versions.
    Example:
 
     ```console
@@ -548,6 +553,16 @@ The following steps are performed on the air-gapped system.
     ```
 
 ### Load Docker images
+
+:thinking: **Optional:**
+If the
+[Package saved Docker images](#package-saved-Docker-images)
+option was chosen
+(i.e. not the
+[Use private Docker registry](#use-private-docker-registry)
+option),
+then the docker images need to be loaded into
+an air-gapped private Docker registry.
 
 1. Load Docker image files into local docker repository.
    Example:
@@ -598,7 +613,8 @@ The following steps are performed on the air-gapped system.
 
 ### Create custom helm values files
 
-1. Helm template files are instantiated with actual values using `envsubst`.
+1. Helm template files are instantiated
+   with actual values using `envsubst` on template files.
    Example:
 
     ```console
@@ -608,7 +624,8 @@ The following steps are performed on the air-gapped system.
 
 ### Create custom kubernetes configuration files
 
-1. Kubernetes manifest files are instantiated with actual values using `envsubst`.
+1. Kubernetes manifest files are instantiated
+   with actual values using `envsubst` on template files.
    Example:
 
     ```console
