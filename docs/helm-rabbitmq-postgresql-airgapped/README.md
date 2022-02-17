@@ -796,6 +796,12 @@ will be used later to:
 
 ### Install Postgresql Helm chart
 
+:thinking: This step installs a PostgreSQL database container.
+It is not a production-ready database and is only used for demonstration purposes.  In a production environment,
+a separate PostgreSQL database would be provisioned and maintained.
+The `helm-values/*.yaml` files would then be updated to have the
+`SENZING_DATABASE_URL` point to the production database.
+
 1. Create Configmap for `pg_hba.conf` using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
