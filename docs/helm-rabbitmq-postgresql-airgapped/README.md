@@ -138,6 +138,7 @@ describing where we can improve.   Now on with the show...
 
 1. Persistent Volume Claims:
     1. PostgreSql - `postgresql-persistent-volume-claim`
+    1. RabbitMQ = `rabbitmq-persistent-volume-claim`
     1. Senzing - `senzing-persistent-volume-claim`
         1. 50GB
         1. Read-Write-Many
@@ -695,7 +696,7 @@ If PVs and PVCs already exist, this step may be skipped.
 
 ### Deploy Senzing
 
-Copy Senzing's `g2` and `data` directories on to the Persistent Volume Claim (PVC)
+Copy Senzing's `g2` and `data` directories onto the Persistent Volume Claim (PVC)
 at `/opt/senzing/g2` and `/opt/senzing/data`.
 
 1. Install chart using
@@ -765,7 +766,7 @@ will be used later to:
 
 ### Install Senzing license
 
-1. Copy the Senzing license to `/etc/opt/senzing`.
+1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`.
 
     ```console
     kubectl cp \
@@ -775,7 +776,7 @@ will be used later to:
 
 ### Install Senzing Governor
 
-1. Copy the Postgresql governor to `/opt/senzing/g2/python`.
+1. Copy the Postgresql governor to `/opt/senzing/g2/python/senzing_governor.py`.
 
     ```console
     kubectl cp \
@@ -785,7 +786,7 @@ will be used later to:
 
 ### Install sample data
 
-1. Copy the sample data to `/var/opt/senzing/data`.
+1. Copy the sample data to `/var/opt/senzing/loadtest-dataset.json`.
 
     ```console
     kubectl cp \
