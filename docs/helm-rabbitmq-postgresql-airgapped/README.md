@@ -35,7 +35,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Prerequisite software on air-apped system](#prerequisite-software-on-air-gapped-system)
     1. [Prerequisites on kubernetes](#prerequisites-on-kubernetes)
 1. [On non-airgapped system](#on-non-airgapped-system)
-    1. [Create working directory](#create-working-directory)
+    1. [Create artifact directory](#create-artifact-directory)
     1. [Download git repositories](#download-git-repositories)
     1. [Download version metadata](#download-version-metadata)
     1. [Download Governor](#download-governor)
@@ -49,7 +49,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Transfer to air-gapped system](#transfer-to-air-gapped-system)
 1. [On Air-gapped system](#on-air-gapped-system)
     1. [Decompress file](#decompress-file)
-    1. [Create demo directory](#create-demo-directory)
+    1. [Create deployment directory](#create-deployment-directory)
     1. [Set environment variables](#set-environment-variables)
     1. [Load Docker images](#load-docker-images)
     1. [Save environment variables](#save-environment-variables)
@@ -148,8 +148,10 @@ describing where we can improve.   Now on with the show...
 On a non-airgapped system,
 aggregate all of the files needed on an air-gapped system.
 
-### Create working directory
+### Create artifact directory
 
+All artifacts to be compressed into a single file will
+be placed in a new directory.
 On the non-airgapped system:
 
 1. :pencil2: Choose a name that will be used for the new `.zip` file
@@ -172,6 +174,8 @@ On the non-airgapped system:
 
 ### Download git repositories
 
+Helm Charts and helper scripts need to be added to the
+artifact directory.
 On the non-airgapped system:
 
 1. Download Bitnami Helm charts git repository, dependencies, and eliminate unnecessary files.
@@ -263,6 +267,8 @@ On the non-airgapped system:
 
 ### Download version metadata
 
+Metadata concerning versions of Docker images and Senzing binaries
+need to be added to the artifact directory.
 On the non-airgapped system:
 
 1. Create directory used to store executable scripts and binary files.
@@ -294,6 +300,9 @@ On the non-airgapped system:
 
 ### Download Governor
 
+The Senzing PostgreSQL
+[Governor](https://github.com/Senzing/governor-postgresql-transaction-id)
+needs to be added to the artifact directory.
 On the non-airgapped system:
 
 1. Get Senzing Governor for PostgreSQL.
@@ -309,6 +318,8 @@ On the non-airgapped system:
 
 ### Download sample data
 
+To demonstrate populating Senzing,
+sample data will be added to the artifact directory.
 On the non-airgapped system:
 
 1. Get sample data.
@@ -328,6 +339,10 @@ On the non-airgapped system:
 
 ### Add Senzing license
 
+To ingest more than the default number of allowed records, a
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+should be added to the artifact directory.
+is required.
 On the non-airgapped system:
 
 1. :pencil2: Locate your Senzing license (usually `g2.lic`).
@@ -347,6 +362,9 @@ On the non-airgapped system:
 
 ### Create senzing/installer docker image
 
+To install the Senzing binaries on the Kubernetes PV/PVC
+on the air-gapped system, a Docker image needs to be created
+locally which contains the contents of the Senzing `g2` and `data` folders.
 On the non-airgapped system:
 
 1. :warning:
@@ -452,6 +470,10 @@ Only one of the two options need be followed.
 
 ### Save environment variables for air-gapped environment
 
+To "reuse" environment variables on the air-gapped system,
+the environment variables set on the non-airgapped system
+need to be captured in a file that can be used by the
+`source` command on the air-gapped system.
 On the non-airgapped system:
 
 1. Create a `${SENZING_AIRGAPPED_DIR}/bin/environment.sh` file
@@ -478,15 +500,19 @@ On the non-airgapped system:
 
 ## Transfer to air-gapped system
 
-1. Transfer `senzing-airgap-artifacts.zip` to air-gapped system.
-   For the demonstration, it is assumed that it will be placed at `~/senzing-airgap-artifacts.zip`
-   on the air-gapped system.
+Transfer `senzing-airgap-artifacts.zip` to air-gapped system.
+
+1. For the demonstration, it is assumed that it will be placed at
+   `~/senzing-airgap-artifacts.zip` on the air-gapped system.
 
 ## On air-gapped system
 
 The following steps are performed on the air-gapped system.
 
 ### Decompress file
+
+The contents of the single file need to be extracted into a
+new directory on the air-gapped machine.
 
 1. Decompress `senzing-airgap-artifacts.zip` into "home" directory.
    Example:
@@ -502,7 +528,11 @@ The following steps are performed on the air-gapped system.
     export SENZING_AIRGAPPED_DIR=~/my-senzing-airgapped
     ```
 
-### Create demo directory
+### Create deployment directory
+
+A additional "deployment directory" needs to be created to store modified artifacts.
+In this demonstration, the contents of `${SENZING_AIRGAPPED_DIR}`
+will be considered **read-only** so that they can be reused.
 
 1. :pencil2: Create unique prefix.
    This will be used in a local directory name
@@ -518,6 +548,8 @@ The following steps are performed on the air-gapped system.
     ```
 
 1. Make a directory for the demo.
+   **Note:** Oddly, the "prefix" will be used as a "suffix" for the new deployment directory.
+   It will be used as a prefix in other contexts.
    Example:
 
     ```console
