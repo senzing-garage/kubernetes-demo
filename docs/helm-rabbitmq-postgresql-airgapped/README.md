@@ -35,6 +35,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Prerequisite software on air-apped system](#prerequisite-software-on-air-gapped-system)
     1. [Prerequisites on kubernetes](#prerequisites-on-kubernetes)
 1. [On non-airgapped system](#on-non-airgapped-system)
+    1. [Create working directory](#create-working-directory)
     1. [Download git repositories](#download-git-repositories)
     1. [Download version metadata](#download-version-metadata)
     1. [Download Governor](#download-governor)
@@ -143,7 +144,12 @@ describing where we can improve.   Now on with the show...
 
 ## On non-airgapped system
 
-On a non-airgapped system:
+On a non-airgapped system,
+aggregate all of the files needed on an air-gapped system.
+
+### Create working directory
+
+On the non-airgapped system:
 
 1. :pencil2: Choose a name that will be used for the new `.zip` file
    and for the working directory use to construct the `.zip` file.
@@ -153,7 +159,8 @@ On a non-airgapped system:
     export SENZING_AIRGAPPED_FILENAME=my-senzing-airgapped
     ```
 
-1. Make a directory on a non-airgapped system for artifacts to be transferred to air-gapped system.
+1. Make a directory On the non-airgapped system that will be used to
+   aggregate artifacts to be transferred to air-gapped system.
    Example:
 
     ```console
@@ -164,7 +171,7 @@ On a non-airgapped system:
 
 ### Download git repositories
 
-On a non-airgapped system:
+On the non-airgapped system:
 
 1. Download Bitnami Helm charts, dependencies, and eliminate unnecessary files.
    Example:
@@ -255,9 +262,9 @@ On a non-airgapped system:
 
 ### Download version metadata
 
-On a non-airgapped system:
+On the non-airgapped system:
 
-1. Create directory.
+1. Create directory used to store executable scripts and binary files.
    Example:
 
     ```console
@@ -273,7 +280,7 @@ On a non-airgapped system:
       https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
     ```
 
-1. Download current Senzing docker versions
+1. Download current Senzing docker versions.
    Example:
 
     ```console
@@ -284,7 +291,9 @@ On a non-airgapped system:
 
 ### Download Governor
 
-1. Get Governor.
+On the non-airgapped system:
+
+1. Get Senzing Governor for PostgreSQL.
    Example:
 
     ```console
@@ -297,7 +306,12 @@ On a non-airgapped system:
 
 ### Download sample data
 
+On the non-airgapped system:
+
 1. Get sample data.
+   **Note:**
+   Only 10,000 records will be downloaded from file.
+   The byte `--range`  will download slightly more than 10K lines.
    Example:
 
     ```console
@@ -311,7 +325,7 @@ On a non-airgapped system:
 
 ### Add Senzing license
 
-On a non-airgapped system:
+On the non-airgapped system:
 
 1. :pencil2: Locate your Senzing license (usually `g2.lic`).
    Example:
@@ -330,7 +344,7 @@ On a non-airgapped system:
 
 ### Create senzing/installer docker image
 
-On a non-airgapped system:
+On the non-airgapped system:
 
 1. :warning:
    To use the Senzing code, you must agree to the End User License Agreement (EULA).
@@ -341,6 +355,8 @@ On a non-airgapped system:
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Run the `docker build` command.
+   **Note:**
+   This will take a while as the senzing binary packages will be downloaded.
    Example:
 
     ```console
@@ -354,6 +370,10 @@ On a non-airgapped system:
     ```
 
 ### Download Docker images
+
+These steps download the Docker images to the
+Docker registry on the local, non-airgapped machine.
+On the non-airgapped system:
 
 1. Identify docker images.
    Example:
@@ -424,7 +444,10 @@ Only one of the two options need be followed.
 
 ### Save environment variables for air-gapped environment
 
-1. Tag and push docker images to private Docker registry
+On the non-airgapped system:
+
+1. Create a `${SENZING_AIRGAPPED_DIR}/bin/environment.sh` file
+   that can be sourced on the air-gapped machine.
    Example:
 
     ```console
@@ -432,6 +455,9 @@ Only one of the two options need be followed.
     ```
 
 ### Package artifacts
+
+Create a single file that can be transferred to the air-gapped machine.
+On the non-airgapped system:
 
 1. Compress directory into single `.zip` file.
    The file size will be between 4-5 GB.
