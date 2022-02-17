@@ -159,7 +159,7 @@ On the non-airgapped system:
     export SENZING_AIRGAPPED_FILENAME=my-senzing-airgapped
     ```
 
-1. Make a directory On the non-airgapped system that will be used to
+1. Make a directory on the non-airgapped system that will be used to
    aggregate artifacts to be transferred to air-gapped system.
    Example:
 
@@ -173,7 +173,7 @@ On the non-airgapped system:
 
 On the non-airgapped system:
 
-1. Download Bitnami Helm charts, dependencies, and eliminate unnecessary files.
+1. Download Bitnami Helm charts git repository, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -207,7 +207,7 @@ On the non-airgapped system:
     done
     ```
 
-1. Download Senzing Helm charts, dependencies, and eliminate unnecessary files.
+1. Download Senzing Helm charts git repository, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -241,7 +241,7 @@ On the non-airgapped system:
     done
     ```
 
-1. Download Senzing's Kubernetes Demo repository.
+1. Download Senzing's Kubernetes Demo git repository.
    Example:
 
     ```console
@@ -372,7 +372,7 @@ On the non-airgapped system:
 ### Download Docker images
 
 These steps download the Docker images to the
-Docker registry on the local, non-airgapped machine.
+local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
 1. Identify docker images.
@@ -398,12 +398,13 @@ On the non-airgapped system:
 
 There are two method of transferring the docker images to the air-gapped system.
 The first option being the ability to `docker push` to a private docker registry used by the air-gapped system.
-The second option is to package the docker images in the `.zip` file and later load them on the air-gapped system.
+The second option is to package the docker images in the final `.zip` file
+and later load them on the air-gapped system.
 Only one of the two options need be followed.
 
 1. :thinking: **Optional:**
    *Option 1* -
-   If the "air-gapped" private Docker registry *can* be accessed from the non-airgapped system, use
+   If the "air-gapped" private Docker registry **can** be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
    to transfer the docker images.
 
@@ -423,7 +424,7 @@ Only one of the two options need be followed.
 
 1. :thinking: **Optional:**
    *Option 2* -
-   If the "air-gapped" private Docker registry *cannot* be accessed from the non-airgapped system, use
+   If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
    [docker save](https://docs.docker.com/engine/reference/commandline/save/)
    to transfer the docker images.
    Example:
