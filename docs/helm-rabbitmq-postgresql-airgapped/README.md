@@ -267,7 +267,7 @@ On the non-airgapped system:
 
 ### Download version metadata
 
-Metadata concerning versions of Docker images and Senzing binaries
+Metadata identifying versions of Docker images and Senzing binaries
 need to be added to the artifact directory.
 On the non-airgapped system:
 
@@ -342,7 +342,6 @@ On the non-airgapped system:
 To ingest more than the default number of allowed records, a
 [Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
 should be added to the artifact directory.
-is required.
 On the non-airgapped system:
 
 1. :pencil2: Locate your Senzing license (usually `g2.lic`).
@@ -396,7 +395,7 @@ These steps download the Docker images to the
 local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
-1. Using the `source` command, identify docker images.
+1. Using the `source` command, identify versioned docker images.
    Example:
 
     ```console
