@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+# -----------------------------------------------------------------------------
+# Bitnami Helm Charts
+# -----------------------------------------------------------------------------
+
 # Download entire git repository as zip file.
 
 curl -X GET \
   --output ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip \
   https://codeload.github.com/bitnami/charts/zip/refs/heads/master
 
-# Decompress zip file
+# Decompress zip file.
 
 unzip \
   -d ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp \
@@ -28,9 +32,9 @@ pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
 rm *
 rm .*
 rm -rf .*
-rm -rf !("bitnami")
+rm -rf '!("bitnami")'
 pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
-rm -rf !("postgresql"|"rabbitmq")
+rm -rf '!("postgresql"|"rabbitmq")'
 popd
 popd
 
@@ -51,7 +55,7 @@ curl -X GET \
   --output ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip \
   https://codeload.github.com/Senzing/charts/zip/refs/heads/master
 
-# Decompress zip file
+# Decompress zip file.
 
 unzip \
   -d ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp \
@@ -73,9 +77,9 @@ pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
 rm *
 rm .*
 rm -rf .*
-rm -rf !("charts")
+rm -rf '!("charts")'
 pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"swaggerapi-swagger-ui"|)
+rm -rf '!("phppgadmin"|"senzing-api-server"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"swaggerapi-swagger-ui"|)'
 popd
 popd
 
