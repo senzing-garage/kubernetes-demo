@@ -33,7 +33,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software on non-airgapped system](#prerequisite-software-on-non-airgapped-system)
     1. [Prerequisite software on air-apped system](#prerequisite-software-on-air-gapped-system)
-    1. [Prerequisites on kubernetes](#prerequisites-on-kubernetes)
+    1. [Prerequisites on Kubernetes](#prerequisites-on-kubernetes)
 1. [On non-airgapped system](#on-non-airgapped-system)
     1. [Create artifact directory](#create-artifact-directory)
     1. [Download git repositories](#download-git-repositories)
@@ -54,7 +54,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Load Docker images](#load-docker-images)
     1. [Save environment variables](#save-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
-    1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
+    1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Deploy Senzing](#deploy-senzing)
@@ -134,7 +134,7 @@ describing where we can improve.   Now on with the show...
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
 1. Kubernetes
 
-### Prerequisites on kubernetes
+### Prerequisites on Kubernetes
 
 1. Persistent Volume Claims:
     1. PostgreSql - `postgresql-persistent-volume-claim`
@@ -549,9 +549,9 @@ will be considered **read-only** so that they can be reused.
 
 1. :pencil2: Create a unique prefix.
    This will be used in a local directory name
-   as well as a prefix to kubernetes object.
+   as well as a prefix to Kubernetes object.
 
-   :warning:  Because it's used in kubernetes resource names,
+   :warning:  Because it's used in Kubernetes resource names,
    it must be all lowercase.
 
    Example:
@@ -571,6 +571,8 @@ will be considered **read-only** so that they can be reused.
     ```
 
 ### Set environment variables
+
+Environment variables will be used by shell scripts.
 
 1. Synthesize environment variables.
    Example:
@@ -655,6 +657,8 @@ an air-gapped private Docker registry.
 
 ### Save environment variables
 
+Environment variables will be needed in new terminal windows.
+
 1. Save environment variables into a file that can be sourced.
    Example:
 
@@ -663,6 +667,10 @@ an air-gapped private Docker registry.
     ```
 
 ### Create custom helm values files
+
+For final customization of the Helm Charts,
+various files need to be created for use in the
+`--values` parameter of `helm install`.
 
 1. Helm template files are instantiated with actual values
    into `${HELM_VALUES_DIR}` directory
@@ -682,7 +690,9 @@ an air-gapped private Docker registry.
     ls ${HELM_VALUES_DIR}
     ```
 
-### Create custom kubernetes configuration files
+### Create custom Kubernetes configuration files
+
+Create Kubernetes manifest files for use with `kubectl create`.
 
 1. Kubernetes manifest files are instantiated with actual values
    into `{KUBERNETES_DIR}` directory
@@ -705,7 +715,7 @@ an air-gapped private Docker registry.
 ### Create namespace
 
 A new
-[kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
+[Kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 is created to isolate this demonstration from other applications running on Kubernetes.
 
 1. Create Kubernetes namespace using
