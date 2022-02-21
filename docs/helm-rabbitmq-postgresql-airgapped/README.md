@@ -1374,8 +1374,7 @@ The following commands remove the Senzing Demo application from Kubernetes.
 ### Delete everything in Kubernetes
 
 Delete Kubernetes artifacts using
-[helm uninstall](https://helm.sh/docs/helm/helm_uninstall/),
-[helm repo remove](https://helm.sh/docs/helm/helm_repo_remove/), and
+[helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) and
 [kubectl delete](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#delete).
 
 1. Example:
