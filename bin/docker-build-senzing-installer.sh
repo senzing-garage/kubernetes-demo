@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-
-# Build docker image for installing Senzing}"
-# References:
-#  -  https://docs.docker.com/engine/reference/commandline/build
-
+# Build docker image for installing Senzing.
+# Reference: https://docs.docker.com/engine/reference/commandline/build
 
 ${SENZING_SUDO} docker build \
     --build-arg SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
