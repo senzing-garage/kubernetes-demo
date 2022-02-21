@@ -236,6 +236,7 @@ On the non-airgapped system:
 
 ### Add Senzing license
 
+:thinking: **Optional:**
 To ingest more than the default number of allowed records, a
 [Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
 should be added to the artifact directory.
