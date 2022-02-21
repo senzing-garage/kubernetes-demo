@@ -850,7 +850,12 @@ will be used later to:
 
 ### Install Senzing license
 
+To ingest more than the default number of allowed records, a
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+is needed in the `/etc/opt/senzing` directory.
+
 1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`.
+   Example:
 
     ```console
     kubectl cp \
@@ -860,7 +865,12 @@ will be used later to:
 
 ### Install Senzing Governor
 
+The Senzing PostgreSQL
+[Governor](https://github.com/Senzing/governor-postgresql-transaction-id)
+needs to be added to a directory in the `PYTHONPATH`.
+
 1. Copy the Postgresql governor to `/opt/senzing/g2/python/senzing_governor.py`.
+   Example:
 
     ```console
     kubectl cp \
@@ -870,7 +880,12 @@ will be used later to:
 
 ### Install sample data
 
+To demonstrate populating Senzing,
+sample data will be sent to the queue using the Senzing
+[stream-producer](https://github.com/Senzing/stream-producer).
+
 1. Copy the sample data to `/var/opt/senzing/loadtest-dataset.json`.
+   Example:
 
     ```console
     kubectl cp \
@@ -882,13 +897,15 @@ will be used later to:
 
 :thinking: This step installs a PostgreSQL database container.
 It is not a production-ready database and is only used for demonstration purposes.
-It also is a **limiting** factor in the speed at which Senzing can operate.
+The choice of databases is a **limiting** factor in the speed at which Senzing can operate.
+This database choice is _at least_ an order of magnitude slower than a production database.
+
 In a production environment,
 a separate PostgreSQL database would be provisioned and maintained.
 The `helm-values/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
 
-The
+For this demonstration, the
 [binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
@@ -1195,6 +1212,10 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View RabbitMQ
 
+The
+[RabbitMQ Management UI](https://www.rabbitmq.com/management.html#usage-ui)
+is used to view the state of the queues.
+
 1. In a separate terminal window, port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
@@ -1211,6 +1232,9 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
+
+[phpPgAdmin](https://github.com/phppgadmin/phppgadmin)
+is a web-based user interface for viewing the PostgreSQL database.
 
 1. In a separate terminal window, port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
@@ -1233,6 +1257,13 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
         1. G2 > OBS_ENT
 
 #### View Senzing Console pod
+
+The [senzing-console](https://github.com/Senzing/docker-senzing-console)
+is used to:
+
+- Inspect mounted volumes
+- Debug issues
+- Run command-line tools
 
 1. In a separate terminal window, log into Senzing Console pod using
    [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
@@ -1278,6 +1309,9 @@ receives HTTP requests to read and modify Senzing data.
 
 #### View Senzing Entity Search WebApp
 
+The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
+is a light-weight WebApp demonstrating Senzing search capabilities.
+
 1. In a separate terminal window, port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
@@ -1310,6 +1344,8 @@ receives HTTP requests to read and modify Senzing data.
 
 #### View Senzing Configurator
 
+The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
+
 1. If the Senzing configurator was deployed,
    in a separate terminal window port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
@@ -1332,6 +1368,8 @@ receives HTTP requests to read and modify Senzing data.
     ```
 
 ## Cleanup
+
+The following commands remove the Senzing Demo application from Kubernetes.
 
 ### Delete everything in Kubernetes
 
