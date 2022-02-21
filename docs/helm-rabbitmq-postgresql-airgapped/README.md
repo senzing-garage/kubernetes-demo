@@ -530,11 +530,11 @@ new directory on the air-gapped machine.
 
 ### Create deployment directory
 
-A additional "deployment directory" needs to be created to store modified artifacts.
+An additional "deployment directory" needs to be created to store modified artifacts.
 In this demonstration, the contents of `${SENZING_AIRGAPPED_DIR}`
 will be considered **read-only** so that they can be reused.
 
-1. :pencil2: Create unique prefix.
+1. :pencil2: Create a unique prefix.
    This will be used in a local directory name
    as well as a prefix to kubernetes object.
 
@@ -566,7 +566,7 @@ will be considered **read-only** so that they can be reused.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Set environment variables that identify Docker image versions.
+1. Set environment variables that identify Docker image versions
    using the `source` command.
    Example:
 
