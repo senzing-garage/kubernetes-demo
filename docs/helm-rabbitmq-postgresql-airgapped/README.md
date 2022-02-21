@@ -527,14 +527,14 @@ The following steps are performed on the air-gapped system.
 The contents of the single file need to be extracted into a
 new directory on the air-gapped machine.
 
-1. Decompress `senzing-airgap-artifacts.zip` into "home" directory.
+1. :pencil2: Decompress `senzing-airgap-artifacts.zip` into "home" directory.
    Example:
 
     ```console
     unzip -d ~ ~/my-senzing-airgapped.zip
     ```
 
-1. Identify the artifact directory.
+1. :pencil2: Identify the artifact directory.
    Example:
 
     ```console
