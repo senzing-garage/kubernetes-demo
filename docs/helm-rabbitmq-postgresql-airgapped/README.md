@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Bringng up a Senzing stack on Kubernetes in an air-gapped environment
+Bring up a Senzing stack on Kubernetes in an air-gapped environment
 using Helm, RabbitMQ, and a PostgreSQL database.
 
 ## Overview
@@ -12,13 +12,13 @@ PostgreSQL as the underlying database.
 
 The instructions show how to set up a system that:
 
-1. Reads JSON lines from a file on the internet and sends each JSON line to a message queue via the Senzing
+1. Reads JSON lines from a file and sends each JSON line to a message queue using the Senzing
    [stream-producer](https://github.com/Senzing/stream-producer).
     1. In this implementation, the queue is RabbitMQ.
-1. Reads messages from the queue and inserts into Senzing via the Senzing
+1. Reads messages from the queue and inserts into Senzing using the Senzing
    [stream-loader](https://github.com/Senzing/stream-loader).
     1. In this implementation, Senzing keeps its data in a PostgreSQL database.
-1. Reads information from Senzing via [Senzing API Server](https://github.com/Senzing/senzing-api-server) server.
+1. Reads information from Senzing using the [Senzing API Server](https://github.com/Senzing/senzing-api-server) server.
 1. Views resolved entities in a [web app](https://github.com/Senzing/entity-search-web-app).
 
 The following diagram shows the relationship of the Helm charts, docker containers, and code in this Kubernetes demonstration.
@@ -913,7 +913,7 @@ is a web-based user interface for viewing the PostgreSQL database.
       --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
 
-1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
+1. To view PostgreSQL using phpPgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install RabbitMQ Helm chart
 
@@ -1210,7 +1210,7 @@ receives HTTP requests to read and modify Senzing data.
       svc/${DEMO_PREFIX}-senzing-api-server 8250:80
     ```
 
-1. Make HTTP calls via `curl`.
+1. Make HTTP calls using `curl`.
    Example:
 
     ```console
@@ -1267,7 +1267,7 @@ receives HTTP requests to read and modify Senzing data.
       svc/${DEMO_PREFIX}-senzing-configurator 8253:80
     ```
 
-1. Make HTTP calls via `curl`.
+1. Make HTTP calls using `curl`.
    Example:
 
     ```console
