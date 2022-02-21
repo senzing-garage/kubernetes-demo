@@ -815,11 +815,10 @@ The actual location on the PVC may vary.
 ### Install senzing-console-privileged Helm chart
 
 The [senzing-console](https://github.com/Senzing/docker-senzing-console)
-will be used later to:
-
-- Inspect mounted volumes
-- Debug issues
-- Run command-line tools
+will be used later to
+inspect mounted volumes,
+debug issues, or
+run command-line tools.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
