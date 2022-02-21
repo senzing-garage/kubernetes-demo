@@ -1329,6 +1329,9 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 
 #### View SwaggerUI
 
+The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
+for viewing the Senzing REST OpenAPI specification in a web browser.
+
 1. In a separate terminal window, port forward to local machine using
    [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
    Example:
