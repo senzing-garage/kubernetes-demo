@@ -3,7 +3,9 @@
 ## Synopsis
 
 Bring up a Senzing stack on Kubernetes in an air-gapped environment
-using Helm, RabbitMQ, and a PostgreSQL database.
+using Helm.
+A containerized RabbitMQ, and a PostgreSQL database are deployed as
+[backing services](https://12factor.net/backing-services).
 
 ## Overview
 
