@@ -10,7 +10,7 @@ for demonstration purposes.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using
+These instructions illustrate a reference implementation of Senzing using
 PostgreSQL as the underlying database.
 
 The instructions show how to set up a system that:
@@ -40,9 +40,8 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [On non-airgapped system](#on-non-airgapped-system)
     1. [Create artifact directory](#create-artifact-directory)
     1. [Download git repositories](#download-git-repositories)
-    1. [Download version metadata](#download-version-metadata)
-    1. [Download Governor](#download-governor)
-    1. [Download sample data](#download-sample-data)
+    1. [Download Helm Chart repositories](#download-helm-chart-repositories)
+    1. [Download Senzing files](#download-senzing-files)
     1. [Add Senzing license](#add-senzing-license)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Download Docker images](#download-docker-images)
