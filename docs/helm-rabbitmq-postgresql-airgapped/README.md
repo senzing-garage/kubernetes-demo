@@ -215,7 +215,7 @@ On the non-airgapped system:
    Example:
 
     ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-bitnami-charts.sh
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-helm-charts.sh
     ```
 
 ### Download Senzing files
@@ -272,7 +272,7 @@ On the non-airgapped system:
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Run the `docker build` command using
-   [docker-build-senzing-installer.sh](../../bin/airgapped/docker-build-senzing-installer.sh).
+   [docker-build-senzing-installer.sh](../../bin/docker-build-senzing-installer.sh).
    **Note:**
    This will take a while as the Senzing binary packages will be downloaded.
    Example:
