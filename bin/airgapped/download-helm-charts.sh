@@ -14,6 +14,7 @@ curl -X GET \
 
 unzip \
   -d ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp \
+  -q \
   ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
 
 # Fiddle with directory structure.
@@ -32,6 +33,16 @@ pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
 rm *
 rm .*
 rm -rf .*
+
+
+
+
+find ${SENZING_AIRGAPPED_DIR}/bitnami-charts -type f -not -name 'bitnami' -print0 | xargs -0 -I {} rm {}
+popd
+exit
+
+
+
 rm -rf '!("bitnami")'
 pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
 rm -rf '!("postgresql"|"rabbitmq")'
