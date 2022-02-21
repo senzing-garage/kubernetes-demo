@@ -1259,11 +1259,7 @@ is a web-based user interface for viewing the PostgreSQL database.
 #### View Senzing Console pod
 
 The [senzing-console](https://github.com/Senzing/docker-senzing-console)
-is used to:
-
-- Inspect mounted volumes
-- Debug issues
-- Run command-line tools
+is used to inspect mounted volumes, debug issues, or run command-line tools.
 
 1. In a separate terminal window, log into Senzing Console pod using
    [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
