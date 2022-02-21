@@ -323,7 +323,8 @@ Only one of the two options need be followed.
         export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
         ```
 
-    1. Tag and push docker images to private Docker registry
+    1. Tag and push docker images to private Docker registry using
+       [docker-tag-and-push.sh](../../bin/docker-tag-and-push.sh).
        Example:
 
         ```console
@@ -335,7 +336,7 @@ Only one of the two options need be followed.
 1. :thinking: **Optional:**
    *Option 2* -
    If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
-   [docker save](https://docs.docker.com/engine/reference/commandline/save/)
+   [docker-save.sh](../../bin/docker-save.sh)
    to create files that can be transferred to the air-gapped system.
    Example:
 
@@ -351,7 +352,9 @@ need to be captured in a file that can be used by the
 `source` command on the air-gapped system.
 On the non-airgapped system:
 
-1. Create a `${SENZING_AIRGAPPED_DIR}/bin/environment.sh` file
+1. Use
+   [save-environment-variables.sh](../../bin/airgapped/save-environment-variables.sh)
+   to create a `${SENZING_AIRGAPPED_DIR}/bin/environment.sh` file
    that can be used by the `source` command on the air-gapped machine.
    Example:
 
