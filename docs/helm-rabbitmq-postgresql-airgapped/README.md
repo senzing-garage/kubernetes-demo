@@ -897,7 +897,7 @@ sample data will be sent to the queue using the Senzing
 
 :thinking: This step installs a PostgreSQL database container.
 It is not a production-ready database and is only used for demonstration purposes.
-The choice of databases is a **limiting** factor in the speed at which Senzing can operate.
+The choice of databases is a **limiting factor** in the speed at which Senzing can operate.
 This database choice is *at least* an order of magnitude slower than a
 well-tuned production database.
 
