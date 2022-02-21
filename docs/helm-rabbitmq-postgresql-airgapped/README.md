@@ -395,7 +395,8 @@ These steps download the Docker images to the
 local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
-1. Using the `source` command, identify versioned docker images.
+1. Identify versioned docker images
+   using the `source` command.
    Example:
 
     ```console
