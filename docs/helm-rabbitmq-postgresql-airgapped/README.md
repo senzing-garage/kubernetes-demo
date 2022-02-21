@@ -158,7 +158,7 @@ artifacts that will be compressed into a single file.
 On the non-airgapped system:
 
 1. :pencil2: Choose a name that will be used for the new `.zip` file
-   and for the working directory use to construct the `.zip` file.
+   and for a new working directory used to construct the `.zip` file.
    Example:
 
     ```console
@@ -183,78 +183,6 @@ artifact directory.
 On the non-airgapped system:
 
 1. Download
-   [Bitnami Helm charts](https://github.com/bitnami/charts/)
-   git repository, dependencies, and eliminate unnecessary files.
-   Example:
-
-    ```console
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip \
-      https://codeload.github.com/bitnami/charts/zip/refs/heads/master
-
-    unzip \
-      -d ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp \
-      ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
-
-    mv ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp/charts-master \
-       ${SENZING_AIRGAPPED_DIR}/bitnami-charts
-
-    rmdir ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp
-    rm    ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
-
-    pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
-    rm *
-    rm .*
-    rm -rf .*
-    rm -rf !("bitnami")
-    pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
-    rm -rf !("postgresql"|"rabbitmq")
-    popd
-    popd
-
-    for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/* ; do
-        echo "Processing: ${CHART_DIR}"
-        helm dependency update ${CHART_DIR}
-    done
-    ```
-
-1. Download
-   [Senzing Helm charts](https://github.com/Senzing/charts)
-   git repository, dependencies, and eliminate unnecessary files.
-   Example:
-
-    ```console
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip \
-      https://codeload.github.com/Senzing/charts/zip/refs/heads/master
-
-    unzip \
-      -d ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
-
-    mv ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp/charts-master \
-       ${SENZING_AIRGAPPED_DIR}/senzing-charts
-
-    rmdir ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp
-    rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
-
-    pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
-    rm *
-    rm .*
-    rm -rf .*
-    rm -rf !("charts")
-    pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-    rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"swaggerapi-swagger-ui"|)
-    popd
-    popd
-
-    for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
-        echo "Processing: ${CHART_DIR}"
-        helm dependency update ${CHART_DIR}
-    done
-    ```
-
-1. Download
    [Senzing's Kubernetes Demo](https://github.com/Senzing/kubernetes-demo)
    git repository.
    Example:
@@ -273,6 +201,25 @@ On the non-airgapped system:
 
     rmdir ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp
     rm    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
+    ```
+
+1. Download
+   [Bitnami Helm charts](https://github.com/bitnami/charts/)
+   git repository, dependencies, and eliminate unnecessary files using
+   [download-bitnami-charts.sh](../../bin/airgapped/download-bitnami-charts.sh)
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-bitnami-charts.sh
+    ```
+
+1. Download
+   [Senzing Helm charts](https://github.com/Senzing/charts)
+   git repository, dependencies, and eliminate unnecessary files.
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-senzing-charts.sh
     ```
 
 ### Download version metadata
