@@ -538,7 +538,7 @@ will be considered **read-only** so that they can be reused.
    This will be used in a local directory name
    as well as a prefix to kubernetes object.
 
-   :warning:  Because it's used in names for kubernetes resources,
+   :warning:  Because it's used in kubernetes resource names,
    it must be all lowercase.
 
    Example:
@@ -651,8 +651,9 @@ an air-gapped private Docker registry.
 
 ### Create custom helm values files
 
-1. Helm template files are instantiated
-   with actual values using `envsubst` on template files.
+1. Helm template files are instantiated with actual values
+   into `${HELM_VALUES_DIR}` directory
+   using `envsubst` on template files.
    Example:
 
     ```console
@@ -660,15 +661,32 @@ an air-gapped private Docker registry.
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/make-helm-values-files.sh
     ```
 
+1. :thinking: **Optional:**
+   List newly generated files.
+   Example:
+
+    ```console
+    ls ${HELM_VALUES_DIR}
+    ```
+
 ### Create custom kubernetes configuration files
 
-1. Kubernetes manifest files are instantiated
-   with actual values using `envsubst` on template files.
+1. Kubernetes manifest files are instantiated with actual values
+   into `{KUBERNETES_DIR}` directory
+   using `envsubst` on template files.
    Example:
 
     ```console
     export KUBERNETES_DIR=${SENZING_DEMO_DIR}/kubernetes
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/make-kubernetes-manifest-files.sh
+    ```
+
+1. :thinking: **Optional:**
+   List newly generated files.
+   Example:
+
+    ```console
+    ls ${KUBERNETES_DIR}
     ```
 
 ### Create namespace
