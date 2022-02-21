@@ -2,8 +2,8 @@
 
 ## Synopsis
 
-Bring up a Senzing stack on Kubernetes in an air-gapped environment
-using `kubectl` and Helm Charts.
+Bring up a reference implementation Senzing stack on Kubernetes
+in an air-gapped environment using `kubectl` and Helm Charts.
 A containerized RabbitMQ, and a PostgreSQL database are deployed as
 [backing services](https://12factor.net/backing-services)
 for demonstration purposes.
