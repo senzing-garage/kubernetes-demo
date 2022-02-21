@@ -203,24 +203,19 @@ On the non-airgapped system:
     rm    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
     ```
 
+### Download Helm Chart repositories
+
 1. Download
    [Bitnami Helm charts](https://github.com/bitnami/charts/)
-   git repository, dependencies, and eliminate unnecessary files using
-   [download-bitnami-charts.sh](../../bin/airgapped/download-bitnami-charts.sh).
+   and
+   [Senzing Helm charts](https://github.com/Senzing/charts)
+   git repositories.
+   Then fetch dependencies and eliminate unnecessary files using
+   [download-helm-charts.sh](../../bin/airgapped/download-helm-charts.sh).
    Example:
 
     ```console
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-bitnami-charts.sh
-    ```
-
-1. Download
-   [Senzing Helm charts](https://github.com/Senzing/charts)
-   git repository, dependencies, and eliminate unnecessary files using
-   [download-senzing-charts.sh](../../bin/airgapped/download-senzing-charts.sh).
-   Example:
-
-    ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-senzing-charts.sh
     ```
 
 ### Download Senzing files
@@ -276,20 +271,15 @@ On the non-airgapped system:
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
-1. Run the `docker build` command.
-
+1. Run the `docker build` command using
+   [docker-build-senzing-installer.sh](../../bin/airgapped/docker-build-senzing-installer.sh).
    **Note:**
    This will take a while as the Senzing binary packages will be downloaded.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
-
-    sudo docker build \
-        --build-arg SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
-        --build-arg SENZING_APT_INSTALL_PACKAGE="senzingapi=${SENZING_VERSION_SENZINGAPI_BUILD}" \
-        --tag senzing/installer:${SENZING_VERSION_SENZINGAPI} \
-        https://github.com/Senzing/docker-installer.git
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-build-senzing-installer.sh
     ```
 
 ### Download Docker images
@@ -299,23 +289,14 @@ local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
 1. Identify versioned docker images
-   using the `source` command.
+   using the `source` command and pull docker images using
+   [docker-pull.sh](../../bin/docker-pull.sh).
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
     source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
-    ```
-
-1. Pull docker images.
-   Example:
-
-    ```console
-    for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
-    do
-        echo ${DOCKER_IMAGE}
-        sudo docker pull ${DOCKER_IMAGE}
-    done
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-pull.sh
     ```
 
 ### Transfer Docker images
@@ -359,17 +340,7 @@ Only one of the two options need be followed.
    Example:
 
     ```console
-    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
-    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/bitnami
-    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/senzing
-    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/swaggerapi
-
-    for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
-    do
-        echo ${DOCKER_IMAGE}
-        docker save ${DOCKER_IMAGE} \
-         --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
-    done
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-save.sh
     ```
 
 ### Save environment variables for air-gapped environment

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Load docker compressed files into local Docker repository
-# Using "docker load" command.
-# Reference: https://docs.docker.com/engine/reference/commandline/load/
+# Load docker tar files into local Docker repository
+# using "docker load" command.
+# Reference: https://docs.docker.com/engine/reference/commandline/load
 
 # Identify subdirectories for each repository.
 
@@ -14,16 +14,12 @@ DOCKER_REGISTRIES=(
 
 # For each Docker registry:
 
-for DOCKER_REGISTRY in ${DOCKER_REGISTRIES[@]};
-do
+for DOCKER_REGISTRY in ${DOCKER_REGISTRIES[@]}; do
 
-    # For each image in the Docker registry:
+    # For each image in the Docker registry, load image into local Docker registry.
 
     for DOCKER_IMAGE in ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_REGISTRY}/* ; do
-        echo "Processing: ${DOCKER_IMAGE}"
-
-        # Load images into local repository.
-
-        docker load --input ${DOCKER_IMAGE}
+        echo "${DOCKER_IMAGE}"
+        ${SENZING_SUDO} docker load --input ${DOCKER_IMAGE}
     done
 done
