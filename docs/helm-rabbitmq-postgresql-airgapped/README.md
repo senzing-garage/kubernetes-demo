@@ -430,7 +430,8 @@ On the non-airgapped system:
 ### Transfer Docker images
 
 There are two method of transferring the docker images to the air-gapped system.
-The first option being the ability to `docker push` to a private docker registry used by the air-gapped system.
+The first option requires the ability to `docker push` to a private docker registry
+used by the air-gapped system.
 The second option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
 Only one of the two options need be followed.
