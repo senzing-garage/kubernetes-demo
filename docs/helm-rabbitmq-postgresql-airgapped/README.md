@@ -898,7 +898,7 @@ sample data will be sent to the queue using the Senzing
 :thinking: This step installs a PostgreSQL database container.
 It is not a production-ready database and is only used for demonstration purposes.
 The choice of databases is a **limiting** factor in the speed at which Senzing can operate.
-This database choice is _at least_ an order of magnitude slower than a production database.
+This database choice is *at least* an order of magnitude slower than a production database.
 
 In a production environment,
 a separate PostgreSQL database would be provisioned and maintained.
@@ -1198,17 +1198,17 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 ### View data
 
-1. Username and password for the following sites are the values seen in
-   the corresponding "values" YAML file located in
-   [helm-values-templates](../helm-values-templates).
-
 1. :pencil2: When using a separate terminal window in each of the examples below,
-   set environment variables.
+   set environment variables using the `source` command.
    Example:
 
     ```console
     source ${SENZING_DEMO_DIR}/environment.sh
     ```
+
+1. Username and password for the following sites are the values seen in
+   the corresponding "values" YAML file located in the
+   `${HELM_VALUES_DIR}` directory.
 
 #### View RabbitMQ
 
