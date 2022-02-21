@@ -337,7 +337,7 @@ Only one of the two options need be followed.
 1. :thinking: **Optional:**
    *Option 2* -
    If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
-   [docker-save.sh](../../bin/docker-save.sh)
+   [docker-save.sh](../../bin/airgapped/docker-save.sh)
    to create files that can be transferred to the air-gapped system.
    Example:
 
