@@ -854,7 +854,9 @@ will be used later to:
 ### Install Postgresql Helm chart
 
 :thinking: This step installs a PostgreSQL database container.
-It is not a production-ready database and is only used for demonstration purposes.  In a production environment,
+It is not a production-ready database and is only used for demonstration purposes.
+It also is a **limiting** factor in the speed at which Senzing can operate.
+In a production environment,
 a separate PostgreSQL database would be provisioned and maintained.
 The `helm-values/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
@@ -907,8 +909,10 @@ provisions an instance of the
 
 ### Initialize database
 
-1. The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
-   is used to create tables in the database (i.e. the schema) used by Senzing using
+The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+is used to create tables in the database (i.e. the schema) used by Senzing.
+
+1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
