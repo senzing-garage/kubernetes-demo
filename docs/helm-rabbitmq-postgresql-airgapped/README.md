@@ -753,6 +753,8 @@ If PVs and PVCs already exist, this step may be skipped.
 
 Copy Senzing's `g2` and `data` directories onto the Persistent Volume Claim (PVC)
 at `/opt/senzing/g2` and `/opt/senzing/data`.
+These paths are relative to inside the containers via PVC mounts.
+The actual location on the PVC may vary.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
