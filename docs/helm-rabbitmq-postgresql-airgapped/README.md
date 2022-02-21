@@ -547,7 +547,7 @@ will be considered **read-only** so that they can be reused.
     ```
 
 1. Make a directory for the demo.
-   **Note:** Oddly, the "prefix" will be used as a "suffix" for the new deployment directory.
+   Oddly, the "prefix" will be used as a "suffix" for the new deployment directory.
    It will be used as a prefix in other contexts.
    Example:
 
@@ -565,21 +565,24 @@ will be considered **read-only** so that they can be reused.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Using the `source` command, set environment variables that identify Docker image versions.
+1. Set environment variables that identify Docker image versions.
+   using the `source` command.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
     ```
 
-1. Using the `source` command, set environment variables that identify Senzing versions.
+1. Set environment variables that identify Senzing versions
+   using the `source` command.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
     ```
 
-1. Using the `source` command, identify location of `kubernetes-demo` repository.
+1. Identify location of `kubernetes-demo` repository
+   using the `source` command.
    Example:
 
     ```console
