@@ -691,7 +691,7 @@ an air-gapped private Docker registry.
 
 ### Create namespace
 
-1. Create namespace using
+1. Create Kubernetes namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
@@ -712,7 +712,7 @@ an air-gapped private Docker registry.
 
 :thinking: **Optional:**
 These steps for creating Persistent Volumes (PV) and Persistent Volume Claims (PVC)
-for a demonstration environment.
+are for a demonstration environment.
 They are not sufficient for a production environment.
 If PVs and PVCs already exist, this step may be skipped.
 
