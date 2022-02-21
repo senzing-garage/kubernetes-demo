@@ -150,8 +150,8 @@ aggregate all of the files needed on an air-gapped system.
 
 ### Create artifact directory
 
-All artifacts to be compressed into a single file will
-be placed in a new directory.
+A new directory is created to place all
+artifacts that will be compressed into a single file.
 On the non-airgapped system:
 
 1. :pencil2: Choose a name that will be used for the new `.zip` file
@@ -376,7 +376,7 @@ On the non-airgapped system:
 
 1. Run the `docker build` command.
    **Note:**
-   This will take a while as the senzing binary packages will be downloaded.
+   This will take a while as the Senzing binary packages will be downloaded.
    Example:
 
     ```console
