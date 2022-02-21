@@ -17,6 +17,7 @@ do
     # Push images into minikube registry.
     # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-load
 
+    echo ${DOCKER_IMAGE}
     minikube image load ${DOCKER_IMAGE}
 done
 

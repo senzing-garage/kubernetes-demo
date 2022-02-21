@@ -206,7 +206,7 @@ On the non-airgapped system:
 1. Download
    [Bitnami Helm charts](https://github.com/bitnami/charts/)
    git repository, dependencies, and eliminate unnecessary files using
-   [download-bitnami-charts.sh](../../bin/airgapped/download-bitnami-charts.sh)
+   [download-bitnami-charts.sh](../../bin/airgapped/download-bitnami-charts.sh).
    Example:
 
     ```console
@@ -215,87 +215,28 @@ On the non-airgapped system:
 
 1. Download
    [Senzing Helm charts](https://github.com/Senzing/charts)
-   git repository, dependencies, and eliminate unnecessary files.
+   git repository, dependencies, and eliminate unnecessary files using
+   [download-senzing-charts.sh](../../bin/airgapped/download-senzing-charts.sh).
    Example:
 
     ```console
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-senzing-charts.sh
     ```
 
-### Download version metadata
+### Download Senzing files
 
-Metadata identifying versions of
-[Docker images](https://github.com/Senzing/knowledge-base/blob/master/lists/docker-versions-latest.sh)
-and
-[Senzing binaries](https://github.com/Senzing/knowledge-base/blob/master/lists/senzing-versions-latest.sh)
-need to be added to the artifact directory.
+Download files that assist with
+Docker image versioning,
+PostgreSQL governance, and
+sample data.
 On the non-airgapped system:
 
-1. Create directory used to store executable scripts and binary files.
+1. Download Senzing files using
+   [download-senzing-files.sh](../../bin/airgapped/download-senzing-files.sh).
    Example:
 
     ```console
-    mkdir ${SENZING_AIRGAPPED_DIR}/bin
-    ```
-
-1. Download current Senzing versions.
-   This file will be used in future `source` commmands.
-   Example:
-
-    ```console
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh \
-      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh
-    ```
-
-1. Download current Senzing docker versions.
-   This file will be used in future `source` commmands.
-   Example:
-
-    ```console
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh \
-      https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
-    ```
-
-### Download Governor
-
-The Senzing PostgreSQL
-[Governor](https://github.com/Senzing/governor-postgresql-transaction-id)
-needs to be added to the artifact directory.
-On the non-airgapped system:
-
-1. Download Senzing Governor for PostgreSQL.
-   Example:
-
-    ```console
-    mkdir -p ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python
-
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python/senzing_governor.py \
-      https://raw.githubusercontent.com/Senzing/governor-postgresql-transaction-id/master/senzing_governor.py
-    ```
-
-### Download sample data
-
-To demonstrate populating Senzing,
-sample data will be added to the artifact directory.
-On the non-airgapped system:
-
-1. Get sample data.
-
-   **Note:**
-   Only 10,000 records will be downloaded from file.
-   The byte `--range`  will download slightly more than 10K lines.
-   Example:
-
-    ```console
-    mkdir -p ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/data
-
-    curl -X GET \
-      --output ${SENZING_AIRGAPPED_DIR}/var/opt/senzing/loadtest-dataset.json \
-      --range 0-4300000 \
-      https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-senzing-files.sh
     ```
 
 ### Add Senzing license
