@@ -174,7 +174,8 @@ On the non-airgapped system:
 
 ### Download git repositories
 
-Helm Charts and helper scripts need to be added to the
+[Helm Charts](https://helm.sh/)
+and helper scripts need to be added to the
 artifact directory.
 On the non-airgapped system:
 
@@ -267,7 +268,10 @@ On the non-airgapped system:
 
 ### Download version metadata
 
-Metadata identifying versions of Docker images and Senzing binaries
+Metadata identifying versions of
+[Docker images](https://github.com/Senzing/knowledge-base/blob/master/lists/docker-versions-latest.sh)
+and
+[Senzing binaries](https://github.com/Senzing/knowledge-base/blob/master/lists/senzing-versions-latest.sh)
 need to be added to the artifact directory.
 On the non-airgapped system:
 
@@ -690,6 +694,10 @@ an air-gapped private Docker registry.
     ```
 
 ### Create namespace
+
+A new
+[kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
+is created to isolate this demonstration from other applications running on Kubernetes.
 
 1. Create Kubernetes namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
