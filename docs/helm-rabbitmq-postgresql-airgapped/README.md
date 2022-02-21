@@ -179,7 +179,9 @@ and helper scripts need to be added to the
 artifact directory.
 On the non-airgapped system:
 
-1. Download Bitnami Helm charts git repository, dependencies, and eliminate unnecessary files.
+1. Download
+   [Bitnami Helm charts](https://github.com/bitnami/charts/)
+   git repository, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -213,7 +215,9 @@ On the non-airgapped system:
     done
     ```
 
-1. Download Senzing Helm charts git repository, dependencies, and eliminate unnecessary files.
+1. Download
+   [Senzing Helm charts](https://github.com/Senzing/charts)
+   git repository, dependencies, and eliminate unnecessary files.
    Example:
 
     ```console
@@ -247,7 +251,9 @@ On the non-airgapped system:
     done
     ```
 
-1. Download Senzing's Kubernetes Demo git repository.
+1. Download
+   [Senzing's Kubernetes Demo](https://github.com/Senzing/kubernetes-demo)
+   git repository.
    Example:
 
     ```console
@@ -309,7 +315,7 @@ The Senzing PostgreSQL
 needs to be added to the artifact directory.
 On the non-airgapped system:
 
-1. Get Senzing Governor for PostgreSQL.
+1. Download Senzing Governor for PostgreSQL.
    Example:
 
     ```console
@@ -327,6 +333,7 @@ sample data will be added to the artifact directory.
 On the non-airgapped system:
 
 1. Get sample data.
+
    **Note:**
    Only 10,000 records will be downloaded from file.
    The byte `--range`  will download slightly more than 10K lines.
@@ -348,7 +355,7 @@ To ingest more than the default number of allowed records, a
 should be added to the artifact directory.
 On the non-airgapped system:
 
-1. :pencil2: Locate your Senzing license (usually `g2.lic`).
+1. :pencil2: Locate your Senzing license file (usually `g2.lic`).
    Example:
 
     ```console
@@ -379,6 +386,7 @@ On the non-airgapped system:
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Run the `docker build` command.
+
    **Note:**
    This will take a while as the Senzing binary packages will be downloaded.
    Example:
