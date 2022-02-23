@@ -4,6 +4,20 @@
 # using "docker load" command.
 # Reference: https://docs.docker.com/engine/reference/commandline/load
 
+# Test environment variables.
+
+ERRORS=0
+
+if [[ -z "${SENZING_AIRGAPPED_DIR}" ]]; then
+    ERRORS=$((${ERRORS} + 1))
+    echo "Error: SENZING_AIRGAPPED_DIR must be set"
+fi
+
+if [[ ${ERRORS} > 0 ]]; then
+    echo "No processing done. ${ERRORS} errors found."
+    exit 1
+fi
+
 # Identify subdirectories for each repository.
 
 DOCKER_REGISTRIES=(

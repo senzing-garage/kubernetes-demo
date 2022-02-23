@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Test environment variables.
+
+ERRORS=0
+
+if [[ -z "${SENZING_AIRGAPPED_DIR}" ]]; then
+    ERRORS=$((${ERRORS} + 1))
+    echo "Error: SENZING_AIRGAPPED_DIR must be set"
+fi
+
+if [[ ${ERRORS} > 0 ]]; then
+    echo "No processing done. ${ERRORS} errors found."
+    exit 1
+fi
+
 # Enable the exclamation point ("!") to "exclude".
 
 shopt -s extglob
@@ -34,6 +48,16 @@ rm    ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
 # Remove extraneous sub-directories.
 
 pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
+if [[ $?!= 0 ]]; then
+    echo "Error: ${SENZING_AIRGAPPED_DIR}/bitnami-charts directory does not exist."
+    exit
+fi
+
+
+echo "FIXME: Shouldn't be here"
+exit
+
+
 rm *
 rm .*
 rm -rf .*
