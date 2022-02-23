@@ -17,7 +17,7 @@ if [ ! -f "${SENZING_AIRGAPPED_DIR}/kubernetes-demo/helm-values-templates/senzin
 fi
 
 if [[ ${ERRORS} > 0 ]]; then
-    echo "No processing done. ${ERRORS} errors found."
+    echo "Error: No processing done. ${ERRORS} errors found."
     exit 1
 fi
 

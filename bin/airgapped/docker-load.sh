@@ -13,8 +13,15 @@ if [[ -z "${SENZING_AIRGAPPED_DIR}" ]]; then
     echo "Error: SENZING_AIRGAPPED_DIR must be set"
 fi
 
+if [ ! -f "${SENZING_AIRGAPPED_DIR}/kubernetes-demo/helm-values-templates/senzing-stream-producer-rabbitmq.yaml" ]; then
+    ERRORS=$((${ERRORS} + 1))
+    echo "Error: SENZING_AIRGAPPED_DIR may not be set correctly."
+    echo "       Current value: ${SENZING_AIRGAPPED_DIR}"
+    echo "Error: Could not find ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/helm-values-templates/senzing-stream-producer-rabbitmq.yaml"
+fi
+
 if [[ ${ERRORS} > 0 ]]; then
-    echo "No processing done. ${ERRORS} errors found."
+    echo "Error: No processing done. ${ERRORS} errors found."
     exit 1
 fi
 
