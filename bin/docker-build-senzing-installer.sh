@@ -23,7 +23,7 @@ if [[ -z "${SENZING_VERSION_SENZINGAPI}" ]]; then
 fi
 
 if [[ ${ERRORS} > 0 ]]; then
-    echo "No processing done. ${ERRORS} errors found."
+    echo "Error: No processing done. ${ERRORS} errors found."
     exit 1
 fi
 

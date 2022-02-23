@@ -17,7 +17,7 @@ if [[ -z "${GIT_REPOSITORY_DIR}" ]]; then
 fi
 
 if [[ ${ERRORS} > 0 ]]; then
-    echo "No processing done. ${ERRORS} errors found."
+    echo "Error: No processing done. ${ERRORS} errors found."
     exit 1
 fi
 
@@ -25,7 +25,7 @@ fi
 
 mkdir -p ${HELM_VALUES_DIR}
 
-for file in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml; \
-do \
-  envsubst < "${file}" > "${HELM_VALUES_DIR}/$(basename ${file})";
+for FILE in ${GIT_REPOSITORY_DIR}/helm-values-templates/*.yaml
+do
+  envsubst < "${FILE}" > "${HELM_VALUES_DIR}/$(basename ${FILE})"
 done
