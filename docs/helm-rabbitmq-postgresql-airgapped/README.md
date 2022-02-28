@@ -202,21 +202,6 @@ On the non-airgapped system:
     rm    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
     ```
 
-### Download Helm Chart repositories
-
-1. Download
-   [Bitnami Helm charts](https://github.com/bitnami/charts/)
-   and
-   [Senzing Helm charts](https://github.com/Senzing/charts)
-   git repositories.
-   Then fetch dependencies and eliminate unnecessary files using
-   [download-helm-charts.sh](../../bin/airgapped/download-helm-charts.sh).
-   Example:
-
-    ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-helm-charts.sh
-    ```
-
 ### Download Senzing files
 
 Download files that assist with
@@ -231,6 +216,32 @@ On the non-airgapped system:
 
     ```console
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-senzing-files.sh
+    ```
+
+### Set non-airgapped environment variables
+
+1. Set environment variables that will be used in subsequent shell scripts.
+   Example:
+
+    ```console
+    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/helm-versions-latest.sh
+    ```
+
+### Download Helm Chart repositories
+
+1. Download
+   [Bitnami Helm charts](https://github.com/bitnami/charts/)
+   and
+   [Senzing Helm charts](https://github.com/Senzing/charts)
+   git repositories.
+   Then fetch dependencies and eliminate unnecessary files using
+   [download-helm-charts.sh](../../bin/airgapped/download-helm-charts.sh).
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-helm-charts.sh
     ```
 
 ### Add Senzing license
@@ -278,28 +289,7 @@ On the non-airgapped system:
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-build-senzing-installer.sh
-    ```
-
-### Identify Docker image versions
-
-Set environment variables that specify Docker image versions.
-On the non-airgapped system:
-
-1. Identify docker image versions.
-   Example:
-
-    ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
-    ```
-
-1. :thinking: **Optional:**
-   View versions.
-   Example:
-
-    ```console
-    env | grep "SENZING_DOCKER_IMAGE_VERSION_" | sort
     ```
 
 ### Transfer Docker images

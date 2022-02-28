@@ -35,6 +35,10 @@ curl -X GET \
     --output ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh \
     https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh
 
+curl -X GET \
+    --output ${SENZING_AIRGAPPED_DIR}/bin/helm-versions-latest.sh \
+    https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-latest.sh
+
 # Download Python file for PostgreSQL governor.
 
 mkdir -p ${SENZING_AIRGAPPED_DIR}/opt/senzing/g2/python

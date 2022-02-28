@@ -21,124 +21,39 @@ if [[ ${ERRORS} > 0 ]]; then
     exit 1
 fi
 
-# Enable the exclamation point ("!") to "exclude".
+# Get Helm Chart metadata.
 
-shopt -s extglob
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add senzing https://hub.senzing.com/charts/
+helm repo update
 
-# -----------------------------------------------------------------------------
-# Bitnami Helm Charts
-# -----------------------------------------------------------------------------
+# List Helm charts.
+# Format: chart;version
 
-# Download entire git repository as zip file.
+HELM_CHARTS=(
+    "bitnami/postgresql;${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL}"
+)
 
-curl -X GET \
-  --output ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip \
-  https://codeload.github.com/bitnami/charts/zip/refs/heads/master
+# Process Helm Charts.
 
-# Decompress zip file.
+for HELM_CHART in ${HELM_CHARTS[@]};
+do
 
-unzip \
-  -d ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp \
-  -q \
-  ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
+    # Get metadata.
 
-# Fiddle with directory structure.
+    IFS=";" read -r -a HELM_CHART_DATA <<< "${HELM_CHART}"
+    HELM_CHART_NAME="${HELM_CHART_DATA[0]}"
+    HELM_CHART_VERSION="${HELM_CHART_DATA[1]}"
 
-mv ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp/charts-master \
-   ${SENZING_AIRGAPPED_DIR}/bitnami-charts
+    echo "Processing ${HELM_CHART_NAME}:${HELM_CHART_VERSION}"
 
-# Remove extraneous files.
+    # Get requested version of submodule.
 
-rmdir ${SENZING_AIRGAPPED_DIR}/bitnami-charts-tmp
-rm    ${SENZING_AIRGAPPED_DIR}/bitnami-charts.zip
+    helm pull \
+        ${HELM_CHART_NAME} \
+        --destination ${SENZING_AIRGAPPED_DIR}/helm-charts \
+        --untar \
+        --version ${HELM_CHART_VERSION}
 
-# Remove extraneous sub-directories.
-
-pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts
-returnCode=$?
-if [[ ${returnCode} -ne 0 ]]; then
-    echo "Error: ${SENZING_AIRGAPPED_DIR}/bitnami-charts directory does not exist."
-    exit 1
-fi
-
-rm *
-rm .*
-rm -rf .*
-rm -rf !("bitnami")
-
-pushd ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami
-returnCode=$?
-if [[ ${returnCode} -ne 0 ]]; then
-    echo "Error: ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami directory does not exist."
-    exit 1
-fi
-
-rm -rf !("postgresql"|"rabbitmq")
-popd
-popd
-
-# Get Helm dependencies.
-
-for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/* ; do
-    echo "Processing: ${CHART_DIR}"
-    helm dependency update ${CHART_DIR}
 done
 
-# -----------------------------------------------------------------------------
-# Senzing Helm Charts
-# -----------------------------------------------------------------------------
-
-# Download entire git repository as zip file.
-
-curl -X GET \
-  --output ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip \
-  https://codeload.github.com/Senzing/charts/zip/refs/heads/master
-
-# Decompress zip file.
-
-unzip \
-  -d ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp \
-  ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
-
-# Fiddle with directory structure.
-
-mv ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp/charts-master \
-   ${SENZING_AIRGAPPED_DIR}/senzing-charts
-
-# Remove extraneous files.
-
-rmdir ${SENZING_AIRGAPPED_DIR}/senzing-charts-tmp
-rm    ${SENZING_AIRGAPPED_DIR}/senzing-charts.zip
-
-# Remove extraneous sub-directories.
-
-pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts
-returnCode=$?
-if [[ ${returnCode} -ne 0 ]]; then
-    echo "Error: ${SENZING_AIRGAPPED_DIR}/senzing-charts directory does not exist."
-    exit 1
-fi
-
-rm *
-rm .*
-rm -rf .*
-rm -rf !("charts")
-
-pushd ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts
-returnCode=$?
-if [[ ${returnCode} -ne 0 ]]; then
-    echo "Error: ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts directory does not exist."
-    exit 1
-fi
-
-rm -rf !("phppgadmin"|"senzing-api-server"|"senzing-configurator"|"senzing-console"|"senzing-entity-search-web-app"|"senzing-init-container"|"senzing-installer"|"senzing-postgresql-client"|"senzing-redoer"|"senzing-stream-loader"|"senzing-stream-producer"|"swaggerapi-swagger-ui"|)
-
-popd
-popd
-
-# Get Helm dependencies.
-
-for CHART_DIR in ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/* ; do
-    echo "Processing: ${CHART_DIR}"
-    helm dependency update ${CHART_DIR}
-done
