@@ -27,12 +27,9 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add senzing https://hub.senzing.com/charts/
 helm repo update
 
-# List Helm charts.
-# Format: chart;version
+# Instantiate "HELM_CHARTS", a list of helm charts to be saved.
 
-HELM_CHARTS=(
-    "bitnami/postgresql;${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL}"
-)
+source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/helm-charts.sh
 
 # Process Helm Charts.
 
@@ -45,7 +42,7 @@ do
     HELM_CHART_NAME="${HELM_CHART_DATA[0]}"
     HELM_CHART_VERSION="${HELM_CHART_DATA[1]}"
 
-    echo "Processing ${HELM_CHART_NAME}:${HELM_CHART_VERSION}"
+    echo "Helm pull ${HELM_CHART_NAME}:${HELM_CHART_VERSION}"
 
     # Get requested version of submodule.
 
@@ -56,4 +53,3 @@ do
         --version ${HELM_CHART_VERSION}
 
 done
-

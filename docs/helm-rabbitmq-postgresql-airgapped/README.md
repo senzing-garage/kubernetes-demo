@@ -39,7 +39,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Prerequisites on Kubernetes](#prerequisites-on-kubernetes)
 1. [On non-airgapped system](#on-non-airgapped-system)
     1. [Create artifact directory](#create-artifact-directory)
-    1. [Download git repositories](#download-git-repositories)
+    1. [Download git repository](#download-git-repository)
     1. [Download Helm Chart repositories](#download-helm-chart-repositories)
     1. [Download Senzing files](#download-senzing-files)
     1. [Add Senzing license](#add-senzing-license)
@@ -174,11 +174,11 @@ On the non-airgapped system:
     mkdir -p ${SENZING_AIRGAPPED_DIR}
     ```
 
-### Download git repositories
+### Download git repository
 
-[Helm Charts](https://helm.sh/)
-and helper scripts need to be added to the
-artifact directory.
+Helper scripts are in the
+[kubernetes-demo](https://github.com/Senzing/kubernetes-demo)
+GitHub repository.
 On the non-airgapped system:
 
 1. Download
@@ -647,7 +647,7 @@ The actual location on the PVC may vary.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-installer \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-installer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-installer.yaml
     ```
@@ -684,7 +684,7 @@ run command-line tools.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-console-privileged \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-console \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-console-postgresql-privileged.yaml
     ```
@@ -786,7 +786,7 @@ provisions an instance of the
     ```console
     helm install \
       ${DEMO_PREFIX}-bitnami-postgresql \
-      ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/postgresql \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml
     ```
@@ -820,7 +820,7 @@ is used to create tables in the database (i.e. the schema) used by Senzing.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-postgresql-client \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-postgresql-client \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml
     ```
@@ -837,7 +837,7 @@ is a web-based user interface for viewing the PostgreSQL database.
     ```console
     helm install \
       ${DEMO_PREFIX}-phppgadmin \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/phppgadmin \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/phppgadmin.yaml
     ```
@@ -858,7 +858,7 @@ provisions an instance of the
     ```console
     helm install \
       ${DEMO_PREFIX}-bitnami-rabbitmq \
-      ${SENZING_AIRGAPPED_DIR}/bitnami-charts/bitnami/rabbitmq \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml
     ```
@@ -888,7 +888,7 @@ pulls JSON lines from a file and pushes them to message queue using
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-stream-producer \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-producer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml
     ```
@@ -905,7 +905,7 @@ creates files from templates and initializes the G2 database.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-init-container \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-init-container \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml
     ```
@@ -932,7 +932,7 @@ pulls messages from message queue and sends them to Senzing.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-stream-loader \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-stream-loader \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql.yaml
     ```
@@ -949,7 +949,7 @@ receives HTTP requests to read and modify Senzing data.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-api-server \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-api-server \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml
     ```
@@ -978,7 +978,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-entity-search-web-app \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-entity-search-web-app \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml
     ```
@@ -1011,7 +1011,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-redoer \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-redoer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql.yaml
     ```
@@ -1028,7 +1028,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
     ```console
     helm install \
       ${DEMO_PREFIX}-swaggerapi-swagger-ui \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/swaggerapi-swagger-ui \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui.yaml
     ```
@@ -1046,7 +1046,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-configurator \
-      ${SENZING_AIRGAPPED_DIR}/senzing-charts/charts/senzing-configurator \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql.yaml
     ```
