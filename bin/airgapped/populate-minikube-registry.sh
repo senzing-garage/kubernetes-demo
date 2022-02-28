@@ -6,7 +6,7 @@ source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
 
 # Process each docker image.
 
-for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
+for DOCKER_IMAGE in ${DOCKER_IMAGES[@]}
 do
 
     # Pull images from DockerHub (docker.io)

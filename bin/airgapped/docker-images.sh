@@ -2,7 +2,7 @@
 
 # List all of the docker images to be installed into the Docker registry.
 
-export DOCKER_IMAGES=(
+DOCKER_IMAGES=(
     "bitnami/bitnami-shell:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_SHELL:-latest}"
     "bitnami/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_PHPPGADMIN:-latest}"
     "bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL:-latest}"

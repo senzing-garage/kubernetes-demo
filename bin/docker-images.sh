@@ -2,7 +2,7 @@
 
 # List all of the docker images to be installed into the minikube registry.
 
-export DOCKER_IMAGES=(
+DOCKER_IMAGES=(
     "arey/mysql-client:${SENZING_DOCKER_IMAGE_VERSION_AREY_MYSQL_CLIENT:-latest}"
     "bitnami/kafka:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_KAFKA:-latest}"
     "bitnami/mysql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL:-latest}"

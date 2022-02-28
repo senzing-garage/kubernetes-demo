@@ -288,15 +288,11 @@ These steps download the Docker images to the
 local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
-1. Identify versioned docker images
-   using the `source` command and pull docker images using
-   [docker-pull.sh](../../bin/docker-pull.sh).
+1. Identify docker image versions.
    Example:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
-    source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-pull.sh
     ```
 
 ### Transfer Docker images
