@@ -44,7 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Download Senzing files](#download-senzing-files)
     1. [Add Senzing license](#add-senzing-license)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
-    1. [Download Docker images](#download-docker-images)
+    1. [Identify Docker image versions](#identify-docker-image-versions)
     1. [Transfer Docker images](#transfer-docker-images)
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
     1. [Package artifacts](#package-artifacts)
