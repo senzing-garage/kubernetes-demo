@@ -597,7 +597,11 @@ As such, there will be some repetition from earler steps.
     ```console
     export SENZING_TENANT=${SENZING_TENANTS[SENZING_TENANT_NUMBER]}
     echo "${SENZING_TENANT}"
+    ```
 
+    or
+
+    ```console
     export SENZING_TENANT=tenant1
     ```
 
