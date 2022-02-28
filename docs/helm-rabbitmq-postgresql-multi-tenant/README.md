@@ -578,10 +578,12 @@ These steps assume that a fresh environment is used.
 As such, there will be some repetition from earler steps.
 
 1. :pencil2: Create a list of tenant names.
+
+  We'll use this list to make some of the other steps easier.  This is particularly useful in a test/demo environment.
    Example:
 
    ```console
-    export SENZING_TENANTS=("tenant0" "tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
+    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
    ```
 
 1. :pencil2: Identify the tenant number for this tenant.
@@ -591,7 +593,7 @@ As such, there will be some repetition from earler steps.
     export SENZING_TENANT_NUMBER=1
     ```
 
-1. :pencil2: Identify the "tenant".
+1. :pencil2: Identify the "tenant" we are installing by setting the `SENZING_TENANT` environment variable.
    Example:
 
     ```console
@@ -642,6 +644,10 @@ As such, there will be some repetition from earler steps.
     done
     echo ${SENZING_RECORD_MIN}
     ```
+
+    The result of this command is to set the `SENZING_RECORD_MIN` to a unique number so that when
+    we import test data each tenant will have its own set of data.  If you are using your own data
+    and it is different for each tenant, you can omit this step.
 
 1. :thinking: Give each tenant unique ports.
    Example:
