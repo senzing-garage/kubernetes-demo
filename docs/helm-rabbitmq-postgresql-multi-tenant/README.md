@@ -1090,12 +1090,10 @@ _Note:_  The environment variables were "sourced" in
 
 1. :thinking: Identify the "tenant".
 
-  This should already be completed, but it's a good idea to double check.
-   Example:
+  This may seem redundate, but you are now inside of minikube and as such need
+  to set this environment variable.
 
-    ```console
-    echo $SENZING_TENANT
-    ```
+   Example:
 
     If it's not set to what you expect, then you'll need to set it:
 
