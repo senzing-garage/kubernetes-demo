@@ -828,6 +828,10 @@ In this step, Kubernetes template files are populated with actual values.
       ${SENZING_DEMO_DIR} ~/senzing-multi-tenant-demo-current
     ```
 
+    Note: By sourcing the `environment.sh`, created in the previous step, you can
+    re-run the creation of the "current" links to perform the steps below or updates
+    to previously created tenants.
+
 #### Create namespace for tenant
 
 1. Create namespace using
