@@ -284,6 +284,7 @@ On the non-airgapped system:
 
 ### Identify Docker image versions
 
+Set environment variables that specify Docker image versions.
 On the non-airgapped system:
 
 1. Identify docker image versions.
@@ -291,6 +292,14 @@ On the non-airgapped system:
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
+    ```
+
+1. :thinking: **Optional:**
+   View versions.
+   Example:
+
+    ```console
+    env | grep "SENZING_DOCKER_IMAGE_VERSION_" | sort
     ```
 
 ### Transfer Docker images
