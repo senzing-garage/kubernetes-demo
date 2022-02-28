@@ -911,11 +911,12 @@ Using a database user interface like [phpPgAdmin](#view-postgresql):
     ```
 
 1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
-    1. In "Username" field, create a username "tenant1"
+    1. In "Username" field, create a username "tenant1" (or your current tenant name)
     1. In "Password" fields, put the randomly generated password from the ${RABBITMQ_PASSWORD} environment variable.
+    1. Click "Add user"
 
 1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
-    1. In "Name" column, click on tenant1
+    1. In "Name" column, click on tenant1 (or your current tenant name)
     1. In "Permissions", set permission for Virtual Host: `/`
     1. Click "Set permission"
 
