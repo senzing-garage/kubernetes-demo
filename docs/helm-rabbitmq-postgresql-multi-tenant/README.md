@@ -697,6 +697,9 @@ As such, there will be some repetition from earler steps.
     ```
 
 1. Create random passwords.
+
+  Or set them in each environment variable as you see fit.
+
    Example:
 
     ```console
@@ -767,6 +770,10 @@ In this step, Kubernetes template files are populated with actual values.
 #### Save environment variables for tenant
 
 1. Save environment variables into a file that can be sourced.
+
+  This is important so that you can easily return to the state of this tenant's
+  environment for testing or updates.
+
    Example:
 
     ```console
