@@ -1089,7 +1089,15 @@ _Note:_  The environment variables were "sourced" in
     ```
 
 1. :thinking: Identify the "tenant".
+
+  This should already be completed, but it's a good idea to double check.
    Example:
+
+    ```console
+    echo $SENZING_TENANT
+    ```
+
+    If it's not set to what you expect, then you'll need to set it:
 
     ```console
     export SENZING_TENANT=tenant1
