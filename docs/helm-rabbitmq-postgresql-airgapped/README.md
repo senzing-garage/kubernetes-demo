@@ -513,7 +513,7 @@ an air-gapped private Docker registry.
 
     ```console
     source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-tag-and-push.sh
     ```
 
 ### Save environment variables
