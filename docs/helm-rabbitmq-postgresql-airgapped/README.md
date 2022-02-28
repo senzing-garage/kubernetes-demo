@@ -324,7 +324,7 @@ Only one of the two options need be followed.
        Example:
 
         ```console
-        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh
+        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-tag-and-push.sh
         ```
 
 #### Package saved Docker images
