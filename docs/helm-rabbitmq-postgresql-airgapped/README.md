@@ -282,10 +282,8 @@ On the non-airgapped system:
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-build-senzing-installer.sh
     ```
 
-### Download Docker images
+### Identify Docker image versions
 
-These steps download the Docker images to the
-local Docker registry on the non-airgapped machine.
 On the non-airgapped system:
 
 1. Identify docker image versions.
@@ -324,7 +322,7 @@ Only one of the two options need be followed.
        Example:
 
         ```console
-        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-tag-and-push.sh
+        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-pull-tag-and-push.sh
         ```
 
 #### Package saved Docker images
