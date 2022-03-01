@@ -38,10 +38,8 @@ The following table indicates the instructions for variations in components.
     | Kafka             | PostgreSQL         | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |
     | Azure Message Bus | Azure SQL Database | [:page_facing_up:](docs/azure-helm-message-bus-mssql/README.md) |
 
-1. Variations:
-    1. [Instructions](docs/helm-rabbitmq-postgresql-airgapped/README.md) demonstrating PostgreSQL and RabbitMQ in an air-gapped Kubernetes environment.
-    1. [Instructions](docs/helm-rabbitmq-postgresql-multi-tenant/README.md) demonstrating Kubernetes namespace-based multi-tenancy on Kubernetes.
-    1. [Instructions](docs/azure-helm-message-bus-mssql/README.md) demonstrating Microsoft MS-SQL and Message bus on Azure Kubernetes Service (AKS).
-    1. [Instructions](docs/azure-helm-rabbitmq-postgresql/README.md) demonstrating PostgreSQL and RabbitMQ on Azure Kubernetes Service (AKS).
-
-
+1. Instructions demonstrating:
+    1. [PostgreSQL and RabbitMQ in an air-gapped Kubernetes environment](docs/helm-rabbitmq-postgresql-airgapped/README.md)
+    1. [Kubernetes namespace-based multi-tenancy on Kubernetes](docs/helm-rabbitmq-postgresql-multi-tenant/README.md)
+    1. [Microsoft MS-SQL and Message bus on Azure Kubernetes Service (AKS)](docs/azure-helm-message-bus-mssql/README.md)
+    1. [PostgreSQL and RabbitMQ on Azure Kubernetes Service (AKS)](docs/azure-helm-rabbitmq-postgresql/README.md)
