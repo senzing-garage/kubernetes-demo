@@ -646,7 +646,7 @@ The actual location on the PVC may vary.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-installer \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-installer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/installer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-installer.yaml
     ```
