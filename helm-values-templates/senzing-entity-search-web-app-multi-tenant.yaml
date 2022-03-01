@@ -2,9 +2,10 @@
 
 ingress:
   enabled: true
+  hostname: ${SENZING_TENANT}.local
+  path: /
 
 main:
-
   autoscaling:
     enabled: true
     maxReplicas: 2
