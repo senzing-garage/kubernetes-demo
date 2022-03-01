@@ -513,7 +513,8 @@ an air-gapped private Docker registry.
 
 ### Save environment variables
 
-Environment variables will be needed in new terminal windows.
+Environment variables will be needed in new terminal windows using
+[save-environment-variables.sh](../../bin/airgapped/save-environment-variables.sh).
 
 1. Save environment variables into a file that can be sourced.
    Example:
@@ -529,8 +530,9 @@ various files need to be created for use in the
 `--values` parameter of `helm install`.
 
 1. Helm template files are instantiated with actual values
-   into `${HELM_VALUES_DIR}` directory
-   using `envsubst` on template files.
+   into `${HELM_VALUES_DIR}` directory by using
+   [make-helm-values-files.sh](../../bin/make-helm-values-files.sh).
+
    Example:
 
     ```console
@@ -551,8 +553,8 @@ various files need to be created for use in the
 Create Kubernetes manifest files for use with `kubectl create`.
 
 1. Kubernetes manifest files are instantiated with actual values
-   into `{KUBERNETES_DIR}` directory
-   using `envsubst` on template files.
+   into `{KUBERNETES_DIR}` directory by using
+   [make-kubernetes-manifest-files.sh](../../bin/make-kubernetes-manifest-files.sh).
    Example:
 
     ```console
