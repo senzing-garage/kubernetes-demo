@@ -24,11 +24,9 @@ The following table indicates the instructions for variations in components.
     1. Queue
         1. RabbitMQ
         1. Kafka
-        1. Azure Message Bus
     1. Database
         1. PostgreSQL
         1. MySQL
-        1. Azure SQL Database
 1. Reference implementations of the docker formation:
 
     | Queue             | Database           | Instructions   |
@@ -36,10 +34,9 @@ The following table indicates the instructions for variations in components.
     | RabbitMQ          | PostgreSQL         | [:page_facing_up:](docs/helm-rabbitmq-postgresql/README.md) |
     | RabbitMQ          | MySQL              | [:page_facing_up:](docs/helm-rabbitmq-mysql/README.md) |
     | Kafka             | PostgreSQL         | [:page_facing_up:](docs/helm-kafka-postgresql/README.md) |
-    | Azure Message Bus | Azure SQL Database | [:page_facing_up:](docs/azure-helm-message-bus-mssql/README.md) |
 
 1. Instructions demonstrating:
     1. [PostgreSQL and RabbitMQ in an air-gapped Kubernetes environment](docs/helm-rabbitmq-postgresql-airgapped/README.md)
     1. [Kubernetes namespace-based multi-tenancy on Kubernetes](docs/helm-rabbitmq-postgresql-multi-tenant/README.md)
-    1. [Microsoft MS-SQL and Message bus on Azure Kubernetes Service (AKS)](docs/azure-helm-message-bus-mssql/README.md)
+    1. [Microsoft Azure SQL Database and Azure Message bus on Azure Kubernetes Service (AKS)](docs/azure-helm-message-bus-mssql/README.md)
     1. [PostgreSQL and RabbitMQ on Azure Kubernetes Service (AKS)](docs/azure-helm-rabbitmq-postgresql/README.md)
