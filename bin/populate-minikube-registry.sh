@@ -7,7 +7,7 @@ source ${SCRIPT_DIR}/docker-images.sh
 
 # Process each docker image.
 
-for DOCKER_IMAGE in ${DOCKER_IMAGES[@]};
+for DOCKER_IMAGE in ${DOCKER_IMAGES[@]}
 do
 
     # Pull images from DockerHub (docker.io)
@@ -17,6 +17,7 @@ do
     # Push images into minikube registry.
     # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-load
 
+    echo ${DOCKER_IMAGE}
     minikube image load ${DOCKER_IMAGE}
 done
 

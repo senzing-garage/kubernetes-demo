@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Load docker tar files into local Docker repository
-# using "docker load" command.
-# Reference: https://docs.docker.com/engine/reference/commandline/load
+# Save Docker images listed in "${DOCKER_IMAGES}" into tar files
+# using "docker save" command.
+# Reference: https://docs.docker.com/engine/reference/commandline/save
 
 # Test environment variables.
 
@@ -25,6 +25,10 @@ if [[ ${ERRORS} > 0 ]]; then
     exit 1
 fi
 
+# Instantiate "DOCKER_IMAGES", a list of docker images to be saved.
+
+source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
+
 # Identify subdirectories for each repository.
 
 DOCKER_REGISTRIES=(
@@ -33,14 +37,18 @@ DOCKER_REGISTRIES=(
     "swaggerapi"
 )
 
-# For each Docker registry:
+# Make directories where files will be saved.
 
+mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
 for DOCKER_REGISTRY in ${DOCKER_REGISTRIES[@]}; do
+    mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_REGISTRY}
+done
 
-    # For each image in the Docker registry, load image into local Docker registry.
+# For each Docker image, pull the image and run "docker save".
 
-    for DOCKER_IMAGE in ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_REGISTRY}/* ; do
-        echo "${DOCKER_IMAGE}"
-        ${SENZING_SUDO} docker load --input ${DOCKER_IMAGE}
-    done
+for DOCKER_IMAGE in ${DOCKER_IMAGES[@]}; do
+    echo "${DOCKER_IMAGE}"
+    ${SENZING_SUDO} docker pull ${DOCKER_IMAGE}
+    ${SENZING_SUDO} docker save ${DOCKER_IMAGE} \
+        --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
 done
