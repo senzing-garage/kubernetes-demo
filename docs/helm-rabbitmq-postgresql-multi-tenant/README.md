@@ -1246,7 +1246,7 @@ pulls messages from message queue and sends them to Senzing.
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
-#### Install bitnami-nginx-ingress-controller Helm chart
+#### FIXME:  Install bitnami-nginx-ingress-controller Helm chart
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
