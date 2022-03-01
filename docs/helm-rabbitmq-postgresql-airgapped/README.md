@@ -235,8 +235,7 @@ On the non-airgapped system:
    [Bitnami Helm charts](https://github.com/bitnami/charts/)
    and
    [Senzing Helm charts](https://github.com/Senzing/charts)
-   git repositories.
-   Then fetch dependencies and eliminate unnecessary files using
+   git repositories using
    [download-helm-charts.sh](../../bin/airgapped/download-helm-charts.sh).
    Example:
 
