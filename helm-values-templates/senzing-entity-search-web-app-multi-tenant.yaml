@@ -2,7 +2,7 @@
 
 ingress:
   enabled: true
-  hostname: ${SENZING_TENANT}.local
+  hostname: ${SENZING_TENANT}-entity-search-web-app
   path: /
 
 main:
@@ -21,7 +21,7 @@ main:
     enabled: true
 
   senzing:
-    apiServerUrl: "http://${DEMO_PREFIX}-senzing-api-server"
+    apiServerUrl: "http://${SENZING_TENANT}-senzing-api-server"
 
 rbac:
   enabled: true

@@ -1272,7 +1272,7 @@ receives HTTP requests to read and modify Senzing data.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-api-server \
+      ${SENZING_TENANT}-senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql-multi-tenant.yaml \
@@ -1302,7 +1302,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-entity-search-web-app \
+      ${SENZING_TENANT}-senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app-multi-tenant.yaml \
@@ -1532,7 +1532,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
+      svc/${SENZING_TENANT}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
     ```
 
 In a separate terminal window:
@@ -1569,7 +1569,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
+      svc/${SENZING_TENANT}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
     ```
 
 1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
