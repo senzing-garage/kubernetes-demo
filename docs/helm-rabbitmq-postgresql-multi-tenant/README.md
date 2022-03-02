@@ -583,21 +583,21 @@ As such, there will be some repetition from earler steps.
    Example:
 
    ```console
-    export SENZING_TENANTS=("tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
+    export SENZING_TENANTS=("tenant0" "tenant1" "tenant2" "tenant3" "tenant4" "tenant5" "tenant6" "tenant7" "tenant8" "tenant9")
    ```
 
 1. :pencil2: Identify the tenant number for this tenant.
    Example:
 
     ```console
-    export SENZING_TENANT_NUMBER=1
+    export SENZING_TENANT_NUMBER=0
     ```
 
 1. :pencil2: Identify the "tenant" we are installing by setting the `SENZING_TENANT` environment variable.
    Example:
 
     ```console
-    export SENZING_TENANT=${SENZING_TENANTS[SENZING_TENANT_NUMBER]}
+    export SENZING_TENANT=${SENZING_TENANTS[@]:${SENZING_TENANT_NUMBER}:1}
     echo "${SENZING_TENANT}"
     ```
 
@@ -703,8 +703,10 @@ As such, there will be some repetition from earler steps.
    Example:
 
     ```console
-    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
-    export RABBITMQ_PASSWORD=$(< /dev/urandom tr -dc [:alnum:] | head -c${1:-20};echo;)
+    export DATABASE_PASSWORD=$(< /dev/urandom tr -dc '[:alnum:]' | head -c 20)
+    export RABBITMQ_PASSWORD=$(< /dev/urandom tr -dc '[:alnum:]' | head -c 20)
+    echo DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    echo RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
     ```
 
 #### EULA
