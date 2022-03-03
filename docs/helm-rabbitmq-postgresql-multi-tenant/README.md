@@ -696,11 +696,8 @@ As such, there will be some repetition from earler steps.
     export SENZING_RECORD_MAX=$((${SENZING_RECORD_MIN} + 9999))
     ```
 
-1. Create random passwords.
-
-  Or set them in each environment variable as you see fit.
-
-   Example:
+1. Create random passwords.  Or set them in each environment variable as you see fit.
+    Example:
 
     ```console
     export DATABASE_PASSWORD=$(< /dev/urandom tr -dc '[:alnum:]' | head -c 20)
