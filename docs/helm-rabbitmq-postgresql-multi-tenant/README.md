@@ -768,12 +768,9 @@ In this step, Kubernetes template files are populated with actual values.
 
 #### Save environment variables for tenant
 
-1. Save environment variables into a file that can be sourced.
-
-  This is important so that you can easily return to the state of this tenant's
+1. Save environment variables into a file that can be sourced.  This is important so that you can easily return to the state of this tenant's
   environment for testing or updates.
-
-   Example:
+  Example:
 
     ```console
     cat <<EOT > ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh
