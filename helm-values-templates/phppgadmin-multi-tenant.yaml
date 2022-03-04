@@ -18,6 +18,8 @@ main:
 
   phppgadmin:
     serverHost: ${DEMO_PREFIX}-bitnami-postgresql
+    environment:
+      - PHPPGADMIN_URL_PREFIX=/phppgadmin
 
   podSecurityContext:
     enabled: true
