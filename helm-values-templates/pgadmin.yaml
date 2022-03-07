@@ -1,0 +1,41 @@
+# See https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4#configuration
+
+env:
+  email: postgres@postgres.com
+  password: password
+
+image:
+  registry: ${DOCKER_REGISTRY_URL}
+  repository: dpage/pgadmin4
+  tag: ${SENZING_DOCKER_IMAGE_VERSION_DPAGE_PGADMIN4}
+
+ingress:
+  enabled: false
+
+persistentVolume:
+  enabled: false
+
+serverDefinitions:
+  enabled: true
+  servers:
+    g2:
+      Name: senzing
+      Group: Servers
+      Port: 5432
+      Username: postgres
+      Host: ${DEMO_PREFIX}-bitnami-postgresql
+      SSLMode: prefer
+      MaintenanceDB: postgres
+
+variables:
+  - name: PGADMIN_CONFIG_DEFAULT_SERVER
+    value: '"0.0.0.0"'
+  - name: PGADMIN_CONFIG_LOGIN_BANNER
+    value: |-
+      "<h4>Senzing demonstration</h4>
+      Although pgAdmin can be configured for security,
+      <br/>the following credentials are used for demonstration.
+      <ul>
+        <li><b>Username:</b> postgres@postgres.com</li>
+        <li><b>Password:</b> password</li>
+      </ul>"

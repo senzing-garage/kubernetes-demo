@@ -435,6 +435,14 @@ Only one method needs to be performed.
     helm repo add bitnami https://charts.bitnami.com/bitnami
     ```
 
+1. Add Helm repository for `pgAdmin` using
+   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
+   Example:
+
+    ```console
+    helm repo add runix https://helm.runix.net
+    ```
+
 1. Add Senzing repository using
    [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
    Example:
@@ -752,7 +760,7 @@ will be used later to:
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
-### Install phpPgAdmin Helm Chart
+### Install pgAdmin Helm Chart
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -760,11 +768,11 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-phppgadmin \
-      senzing/phppgadmin \
+      ${DEMO_PREFIX}-pgadmin \
+      runix/pgadmin4 \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-""}
+      --values ${HELM_VALUES_DIR}/pgadmin.yaml \
+      --version ${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-""}
     ```
 
 1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
@@ -1167,6 +1175,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
+    helm repo remove runix
     helm repo remove bitnami
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
