@@ -3,6 +3,18 @@
 env:
   email: postgres@postgres.com
   password: password
+  variables:
+    - name: PGADMIN_CONFIG_DEFAULT_SERVER
+      value: '"0.0.0.0"'
+    - name: PGADMIN_CONFIG_LOGIN_BANNER
+      value: |-
+        "<h4>Senzing demonstration</h4>
+        Although pgAdmin can be configured for security,
+        <br/>the following credentials are used for demonstration.
+         <ul>
+          <li><b>Username:</b> postgres@postgres.com</li>
+          <li><b>Password:</b> password</li>
+        </ul>"
 
 image:
   registry: ${DOCKER_REGISTRY_URL}
@@ -26,16 +38,3 @@ serverDefinitions:
       Host: ${DEMO_PREFIX}-bitnami-postgresql
       SSLMode: prefer
       MaintenanceDB: postgres
-
-variables:
-  - name: PGADMIN_CONFIG_DEFAULT_SERVER
-    value: '"0.0.0.0"'
-  - name: PGADMIN_CONFIG_LOGIN_BANNER
-    value: |-
-      "<h4>Senzing demonstration</h4>
-      Although pgAdmin can be configured for security,
-      <br/>the following credentials are used for demonstration.
-      <ul>
-        <li><b>Username:</b> postgres@postgres.com</li>
-        <li><b>Password:</b> password</li>
-      </ul>"
