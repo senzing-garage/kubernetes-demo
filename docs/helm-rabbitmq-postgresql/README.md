@@ -274,7 +274,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     minikube addons enable registry
     export DOCKER_REGISTRY_URL=docker.io
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
+    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh docker-images-for-helm-rabbitmq-postgresql
     ```
 
 ### Create custom helm values files
