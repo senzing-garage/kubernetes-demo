@@ -482,7 +482,7 @@ well-tuned production database.
 
 In a production environment,
 a separate PostgreSQL database would be provisioned and maintained.
-The `helm-values/*.yaml` files would then be updated to have the
+The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
@@ -1101,11 +1101,11 @@ is used to view the state of the queues.
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
+        1. See `${SENZING_DEMO_DIR}/helm-values/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
 
-[phpPgAdmin](https://github.com/phppgadmin/phppgadmin)
+[pgAdmin](https://github.com/phppgadmin/phppgadmin)
 is a web-based user interface for viewing the PostgreSQL database.
 
 1. In a separate terminal window, port forward to local machine using
@@ -1121,7 +1121,7 @@ is a web-based user interface for viewing the PostgreSQL database.
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
-       1. See `helm-values/pgpadmin.yaml` for **pgadmin** email and password
+       1. See `${SENZING_DEMO_DIR}/helm-values/pgpadmin.yaml` for **pgadmin** email and password
           (`env.email` and `env.password`)
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select:
