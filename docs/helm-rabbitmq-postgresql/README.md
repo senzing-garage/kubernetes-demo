@@ -135,7 +135,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
-
 ### Create demo directory
 
 1. :pencil2: Create a unique prefix.
@@ -237,7 +236,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 #### Use public registry
 
-_Method #1:_ Pulls docker images from public internet registry.
+**Method #1:** Pulls docker images from public internet registry.
 
 1. Use the default public `docker.io` registry which pulls images from
    [hub.docker.com](https://hub.docker.com/).
@@ -250,7 +249,7 @@ _Method #1:_ Pulls docker images from public internet registry.
 
 #### Use private registry
 
-_Method #2:_ Pulls docker images from a private registry.
+**Method #2:** Pulls docker images from a private registry.
 
 1. :pencil2: Specify a private registry.
    Example:
@@ -264,7 +263,7 @@ _Method #2:_ Pulls docker images from a private registry.
 
 #### Use minikube registry
 
-_Method #3:_ Pulls docker images from minikube's registry.
+**Method #3:** Pulls docker images from minikube's registry.
 
 1. Use minikube's docker registry using
    [minkube addons enable](https://minikube.sigs.k8s.io/docs/commands/addons/#minikube-addons-enable) and
@@ -283,7 +282,6 @@ _Method #3:_ Pulls docker images from minikube's registry.
 For final customization of the Helm Charts,
 various files need to be created for use in the
 `--values` parameter of `helm install`.
-
 
 :thinking: In this step, Helm template files are populated with actual values.
 There are two methods of accomplishing this.
@@ -601,7 +599,7 @@ Choose one:
 
 #### Root container method
 
-_Method #1:_ This method is simpler, but requires a root container.
+**Method #1:** This method is simpler, but requires a root container.
 This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
 1. Install chart using
@@ -636,7 +634,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
 #### Non-root container method
 
-_Method #2:_ This method can be done on kubernetes with a non-root container.
+**Method #2:** This method can be done on kubernetes with a non-root container.
 The following instructions are done on a non-kubernetes machine which allows root docker containers.
 Example: A personal laptop.
 
@@ -710,10 +708,10 @@ Example: A personal laptop.
 
 #### yum localinstall method
 
-_Method #3:_ This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
+**Method #3:** This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 This produces the same result as the `apt` installs describe in prior methods.
-*Note:*  The environment variables were "sourced" in
+**Note:**  The environment variables were "sourced" in
 [Set environment variables](#set-environment-variables).
 
 1. :pencil2: Identify a directory to store downloaded files.
@@ -826,7 +824,7 @@ run command-line tools.
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console-privileged" \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
       )
     ```
 
@@ -843,7 +841,7 @@ is needed in the `/etc/opt/senzing` directory.
 
     ```console
     kubectl cp \
-      /path/to/local//g2.lic \
+      /path/to/local/g2.lic \
       ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
     ```
 
@@ -865,23 +863,14 @@ is used to create tables in the database (i.e. the schema) used by Senzing.
       --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
     ```
 
-### Install stream-producer Helm chart
-
-The [stream producer](https://github.com/Senzing/stream-producer)
-pulls JSON lines from a file and pushes them to message queue using
-[helm install](https://helm.sh/docs/helm/helm_install/).
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
+1. Wait for pod to complete
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
     ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-stream-producer \
-      senzing/senzing-stream-producer \
+    kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
+      --watch
     ```
 
 ### Install init-container Helm chart
@@ -902,7 +891,7 @@ creates files from templates and initializes the G2 database.
       --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
     ```
 
-1. Wait for pods to run using
+1. Wait for pod to complete
    [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
@@ -910,6 +899,25 @@ creates files from templates and initializes the G2 database.
     kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --watch
+    ```
+
+### Install stream-producer Helm chart
+
+The [stream producer](https://github.com/Senzing/stream-producer)
+pulls JSON lines from a file and pushes them to message queue using
+[helm install](https://helm.sh/docs/helm/helm_install/).
+
+1. Install chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-stream-producer \
+      senzing/senzing-stream-producer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_STREAM_PRODUCER:-""}
     ```
 
 ### Install stream-loader Helm chart
@@ -1053,7 +1061,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 ### View data
 
-
 1. Because some of the Kubernetes Services use LoadBalancer,
    a `minikube` tunnel is needed for
    [LoadBalancer access](https://minikube.sigs.k8s.io/docs/handbook/accessing/#loadbalancer-access).
@@ -1109,17 +1116,19 @@ is a web-based user interface for viewing the PostgreSQL database.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 9171:80
+      svc/${DEMO_PREFIX}-pgadmin-pgadmin4 9171:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
-       1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. See `helm-values/pgpadmin.yaml` for **pgadmin** email and password
+          (`env.email` and `env.password`)
        1. Default: username: `postgres`  password: `postgres`
-    1. On left-hand navigation, select "G2" database to explore.
+    1. On left-hand navigation, select:
+        1. Servers > senzing > databases > G2 > schemas > tables
     1. The records received from the queue can be viewed in the following Senzing tables:
-        1. G2 > DSRC_RECORD
-        1. G2 > OBS_ENT
+        1. DSRC_RECORD
+        1. OBS_ENT
 
 #### View Senzing Console pod
 
