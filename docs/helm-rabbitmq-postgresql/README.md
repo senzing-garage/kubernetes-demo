@@ -36,7 +36,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-1. [Demonstrate](#demonstrate)
     1. [Create demo directory](#create-demo-directory)
     1. [Start minikube cluster](#start-minikube-cluster)
     1. [View minikube cluster](#view-minikube-cluster)
@@ -49,21 +48,23 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
+    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
+1. [Demonstrate](#demonstrate)
     1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install Senzing license](#install-senzing-license)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
-    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
-        1. [Install configurator Helm chart](#install-configurator-helm-chart)
         1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
+        1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
@@ -547,7 +548,7 @@ provisions an instance of the
       --version ${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-""}
     ```
 
-1. To view PostgreSQL via phpPgAdmin, see [View PostgreSQL](#view-postgresql).
+1. To view PostgreSQL via pgAdmin, see [View PostgreSQL](#view-postgresql).
 
 ### Install RabbitMQ Helm chart
 
@@ -836,18 +837,26 @@ To ingest more than the default number of allowed records, a
 [Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
 is needed in the `/etc/opt/senzing` directory.
 
-1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`.
+1. :pencil2: Identify location of license on local system.
+   Example:
+
+    ```console
+    export SENZING_G2_LICENSE_PATH=/path/to/local/g2.lic
+    ```
+
+1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`
+   on pod's mounted volumes.
    Example:
 
     ```console
     kubectl cp \
-      /path/to/local/g2.lic \
+      ${SENZING_G2_LICENSE_PATH} \
       ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
     ```
 
 ### Initialize database
 
-The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
 1. Install chart using
@@ -904,8 +913,7 @@ creates files from templates and initializes the G2 database.
 ### Install stream-producer Helm chart
 
 The [stream producer](https://github.com/Senzing/stream-producer)
-pulls JSON lines from a file and pushes them to message queue using
-[helm install](https://helm.sh/docs/helm/helm_install/).
+pulls JSON lines from a file and pushes them to a message queue.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -923,7 +931,7 @@ pulls JSON lines from a file and pushes them to message queue using
 ### Install stream-loader Helm chart
 
 The [stream loader](https://github.com/Senzing/stream-loader)
-pulls messages from message queue and sends them to Senzing.
+pulls messages from a message queue and sends them to Senzing.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -1105,7 +1113,7 @@ is used to view the state of the queues.
 
 #### View PostgreSQL
 
-[pgAdmin](https://github.com/phppgadmin/phppgadmin)
+[pgAdmin](https://www.pgadmin.org/)
 is a web-based user interface for viewing the PostgreSQL database.
 
 1. In a separate terminal window, port forward to local machine using
@@ -1125,7 +1133,7 @@ is a web-based user interface for viewing the PostgreSQL database.
           (`env.email` and `env.password`)
        1. Default: username: `postgres`  password: `postgres`
     1. On left-hand navigation, select:
-        1. Servers > senzing > databases > G2 > schemas > tables
+        1. Servers > senzing > databases > G2 > schemas > public > tables
     1. The records received from the queue can be viewed in the following Senzing tables:
         1. DSRC_RECORD
         1. OBS_ENT
