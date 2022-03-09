@@ -683,6 +683,22 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
+1. Log into `minikube` instance using
+   [minikube ssh](https://minikube.sigs.k8s.io/docs/commands/ssh/).
+   Example:
+
+    ```console
+    minikube ssh
+    ```
+
+1. In the `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
+   Example:
+
+    ```console
+    sudo mkdir -p /mnt/vda1/senzing/senzing-rpms
+    exit
+    ```
+
 1. Install
    [senzing/senzing-installer](https://github.com/Senzing/charts/tree/master/charts/senzing-installer)
    chart using
@@ -1381,6 +1397,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
