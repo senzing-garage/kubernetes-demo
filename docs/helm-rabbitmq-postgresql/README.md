@@ -40,6 +40,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Start minikube cluster](#start-minikube-cluster)
     1. [View minikube cluster](#view-minikube-cluster)
     1. [EULA](#eula)
+    1. [Create senzing/installer docker image](#create-senzing-installer-docker-image)
     1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
@@ -185,16 +186,6 @@ as a guide, start a minikube cluster.
     minikube dashboard
     ```
 
-### EULA
-
-To use the Senzing code, you must agree to the End User License Agreement (EULA).
-
-1. :warning: This step is intentionally tricky and not simply copy/paste.
-   This ensures that you make a conscious effort to accept the EULA.
-   Example:
-
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
-
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
@@ -225,6 +216,32 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    ```
+
+### EULA
+
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
+
+1. :warning: This step is intentionally tricky and not simply copy/paste.
+   This ensures that you make a conscious effort to accept the EULA.
+   Example:
+
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+
+### Create senzing/installer docker image
+
+:thinking: **Optional:**
+One method of installing the Senzing binaries on the Kubernetes PV/PVC
+is to make a Docker image that contains the contents of the Senzing `g2` and `data` folders.
+
+1. Run the `docker build` command using
+   [docker-build-senzing-installer.sh](../../bin/docker-build-senzing-installer.sh).
+   **Note:**
+   This will take a while as the Senzing binary packages will be downloaded.
+   Example:
+
+    ```console
+    ${GIT_REPOSITORY_DIR}/bin/docker-build-senzing-installer.sh
     ```
 
 ### Identify Docker registry
@@ -259,7 +276,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export DOCKER_REGISTRY_URL=my.example.com:5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
+    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh docker-images-for-helm-rabbitmq-postgresql
     ```
 
 #### Use minikube registry

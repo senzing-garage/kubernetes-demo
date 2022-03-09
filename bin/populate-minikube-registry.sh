@@ -10,7 +10,7 @@ if [ $# -eq 0 ]; then
     DOCKER_IMAGE_LIST="docker-images"
 fi
 
-# Read list of Docker images.
+# Instantiate "DOCKER_IMAGES", a list of docker images manipulated.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 source ${SCRIPT_DIR}/${DOCKER_IMAGE_LIST}.sh
