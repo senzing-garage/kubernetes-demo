@@ -40,7 +40,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Start minikube cluster](#start-minikube-cluster)
     1. [View minikube cluster](#view-minikube-cluster)
     1. [EULA](#eula)
-    1. [Create senzing/installer docker image](#create-senzing-installer-docker-image)
+    1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
