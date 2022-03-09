@@ -695,7 +695,7 @@ The actual location on the PVC may vary.
    Example:
 
     ```console
-    sudo mkdir -p /mnt/vda1/senzing/senzing-rpms
+    sudo mkdir -p /mnt/vda1/senzing
     exit
     ```
 
