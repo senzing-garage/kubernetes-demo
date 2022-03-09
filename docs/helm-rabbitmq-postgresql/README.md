@@ -621,7 +621,7 @@ Choose one:
 1. [senzing/installer container method](#senzing-installer-container-method) - uses
    [senzing/installer](https://github.com/Senzing/docker-installer)
    container optionally built in
-   [Create senzing/installer docker image](#create-senzing-installer-docker-image)
+   [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
    step.
 1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
 1. [yum localinstall method](#yum-localinstall-method) - Uses existing Senzing RPMs, so no downloading during installation.
@@ -670,7 +670,7 @@ the container to mounted volumes.
 This method requires:
 
 1. The `senzing/installer` image built in the
-   [Create senzing/installer docker image](#create-senzing-installer-docker-image)
+   [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
    step.
 1. Registry choice of
    "[Use private registry](#use-private-registry)"
