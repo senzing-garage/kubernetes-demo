@@ -614,10 +614,15 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
-There are 3 options when it comes to initializing the Persistent Volume with Senzing code and data.
+There are 4options when it comes to initializing the Persistent Volume with Senzing code and data.
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
+1. [senzing/installer container method](#senzing-installer-container-method) - uses
+   [senzing/installer](https://github.com/Senzing/docker-installer)
+   container optionally built in
+   [Create senzing/installer docker image](#create-senzing-installer-docker-image)
+   step.
 1. [Non-root container method](#non-root-container-method) - can be done on kubernetes with a non-root container
 1. [yum localinstall method](#yum-localinstall-method) - Uses existing Senzing RPMs, so no downloading during installation.
 
@@ -658,9 +663,61 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
     my-senzing-apt-8n2ql       0/1     Completed   0          2m44s
     ```
 
+#### senzing/installer container method
+
+**Method #2:** This method uses a docker container to copy Senzing binaries that are "baked-in"
+the container to mounted volumes.
+This method requires:
+
+1. The `senzing/installer` image built in the
+   [Create senzing/installer docker image](#create-senzing-installer-docker-image)
+   step.
+1. Registry choice of
+   "[Use private registry](#use-private-registry)"
+   or
+   "[Use minikube registry](#use-minikube-registry)".
+   That is, the image is not available on the public DockerHub registry.
+
+Copy Senzing's `g2` and `data` directories onto the Persistent Volume Claim (PVC)
+at `/opt/senzing/g2` and `/opt/senzing/data`.
+These paths are relative to inside the containers via PVC mounts.
+The actual location on the PVC may vary.
+
+1. Install
+   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/master/charts/senzing-installer)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-installer \
+      senzing/senzing-installer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-installer.yaml\
+      --version ${SENZING_HELM_VERSION_SENZING_INSTALLER:-""}
+    ```
+
+1. Wait until Job has completed using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of completion:
+
+    ```console
+    NAME                         READY   STATUS      RESTARTS   AGE
+    my-senzing-installer-8n2ql   0/1     Completed   0          2m44s
+    ```
+
 #### Non-root container method
 
-**Method #2:** This method can be done on kubernetes with a non-root container.
+**Method #3:** This method can be done on kubernetes with a non-root container.
 The following instructions are done on a non-kubernetes machine which allows root docker containers.
 Example: A personal laptop.
 
@@ -736,7 +793,7 @@ Example: A personal laptop.
 
 #### yum localinstall method
 
-**Method #3:** This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
+**Method #4:** This method inserts the Senzing RPMs into the minikube environment for a `yum localinstall`.
 The advantage of this method is that the Senzing RPMs are not downloaded from the internet during installation.
 This produces the same result as the `apt` installs describe in prior methods.
 **Note:**  The environment variables were "sourced" in
