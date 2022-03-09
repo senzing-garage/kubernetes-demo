@@ -691,7 +691,7 @@ The actual location on the PVC may vary.
     minikube ssh
     ```
 
-1. In the `minikube` instance, move files to `/mnt/vda1/senzing/senzing-rpms`.
+1. In the `minikube` instance, create `/mnt/vda1/senzing`.
    Example:
 
     ```console
