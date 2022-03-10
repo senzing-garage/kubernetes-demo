@@ -5,7 +5,7 @@
 HELM_CHARTS=(
     "bitnami/postgresql;${SENZING_HELM_VERSION_BITNAMI_POSTGRESQL:-latest}"
     "bitnami/rabbitmq;${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-latest}"
-    "senzing/phppgadmin;${SENZING_HELM_VERSION_SENZING_PHPPGADMIN:-latest}"
+    "runix/pgadmin4;${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-latest}"
     "senzing/senzing-api-server;${SENZING_HELM_VERSION_SENZING_API_SERVER:-latest}"
     "senzing/senzing-configurator;${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-latest}"
     "senzing/senzing-console;${SENZING_HELM_VERSION_SENZING_CONSOLE:-latest}"
