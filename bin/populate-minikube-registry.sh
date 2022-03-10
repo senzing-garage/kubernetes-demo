@@ -2,8 +2,18 @@
 
 # Instantiate "DOCKER_IMAGES", a list of docker images to be installed into the minikube registry.
 
+DOCKER_IMAGE_LIST=$1
+
+# If no parameters passed, use defaults.
+
+if [ $# -eq 0 ]; then
+    DOCKER_IMAGE_LIST="docker-images"
+fi
+
+# Instantiate "DOCKER_IMAGES", a list of docker images manipulated.
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
-source ${SCRIPT_DIR}/docker-images.sh
+source ${SCRIPT_DIR}/${DOCKER_IMAGE_LIST}.sh
 
 # Process each docker image.
 
