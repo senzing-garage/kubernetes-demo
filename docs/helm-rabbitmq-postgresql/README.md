@@ -222,7 +222,9 @@ as a guide, start a minikube cluster.
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
 
-1. :warning: This step is intentionally tricky and not simply copy/paste.
+1. :warning:
+   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+   This step is intentionally tricky and not simply copy/paste.
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
@@ -389,7 +391,7 @@ A new
 [Kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 is created to isolate this demonstration from other applications running on Kubernetes.
 
-1. Create namespace using
+1. Create Kubernetes namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
@@ -554,6 +556,9 @@ provisions an instance of the
 
 ### Install pgAdmin Helm Chart
 
+[pgAdmin](https://www.pgadmin.org/)
+is a web-based user interface for viewing the PostgreSQL database.
+
 1. Install
    [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4)
    chart using
@@ -614,7 +619,7 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
-There are 4options when it comes to initializing the Persistent Volume with Senzing code and data.
+There are 4 options when it comes to initializing the Persistent Volume with Senzing code and data.
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
