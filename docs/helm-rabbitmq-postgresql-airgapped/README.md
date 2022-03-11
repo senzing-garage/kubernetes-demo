@@ -304,6 +304,9 @@ The second option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
 Only one of the two options need be followed.
 
+1. [Use private Docker registry](#use-private-docker-registry)
+1. [Package saved Docker images](#package-saved-docker-images)
+
 #### Use private Docker registry
 
 1. :thinking: **Optional:**
