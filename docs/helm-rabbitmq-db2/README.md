@@ -254,7 +254,7 @@ _Method #2:_ Pulls docker images from a private registry.
     export DOCKER_REGISTRY_URL=my.example.com:5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
+    ${GIT_REPOSITORY_DIR}/bin/docker-pull-tag-and-push.sh
     ```
 
 #### Use minikube registry

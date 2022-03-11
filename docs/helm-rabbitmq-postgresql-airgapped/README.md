@@ -320,11 +320,11 @@ Only one of the two options need be followed.
         ```
 
     1. Tag and push docker images to private Docker registry using
-       [docker-tag-and-push.sh](../../bin/docker-tag-and-push.sh).
+       [docker-pull-tag-and-push.sh](../../bin/docker-pull-tag-and-push.sh).
        Example:
 
         ```console
-        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-pull-tag-and-push.sh
+        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-pull-tag-and-push.sh airgapped/docker-images
         ```
 
 #### Package saved Docker images
@@ -514,7 +514,7 @@ an air-gapped private Docker registry.
    Example:
 
     ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-tag-and-push.sh
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh airgapped/docker-images
     ```
 
 ### Save environment variables
