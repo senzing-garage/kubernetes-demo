@@ -44,6 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Set non-airgapped environment variables](#set-non-airgapped-environment-variables)
     1. [Download Helm Chart repositories](#download-helm-chart-repositories)
     1. [Add Senzing license](#add-senzing-license)
+    1. [EULA](#eula)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Transfer Docker images](#transfer-docker-images)
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
@@ -53,23 +54,24 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Decompress file](#decompress-file)
     1. [Create deployment directory](#create-deployment-directory)
     1. [Set environment variables](#set-environment-variables)
+    1. [Identify Docker registry](#identify-docker-registry)
     1. [Load Docker images](#load-docker-images)
     1. [Save environment variables](#save-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
+    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
+    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console-privileged Helm chart](#install-senzing-console-privileged-helm-chart)
     1. [Install Senzing license](#install-senzing-license)
     1. [Install Senzing Governor](#install-senzing-governor)
     1. [Install sample data](#install-sample-data)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
-    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
@@ -757,8 +759,6 @@ provisions an instance of the
     ```
 
 1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
-
-## Demonstrate
 
 ### Deploy Senzing
 
