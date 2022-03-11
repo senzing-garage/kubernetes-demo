@@ -304,13 +304,26 @@ The second option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
 Only one of the two options need be followed.
 
-1. [Use private Docker registry](#use-private-docker-registry)
 1. [Package saved Docker images](#package-saved-docker-images)
+1. [Use private Docker registry](#use-private-docker-registry)
+
+#### Package saved Docker images
+
+1. :thinking: **Optional:**
+   *Option 1 -
+   If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
+   [docker-save.sh](../../bin/airgapped/docker-save.sh)
+   to create files that can be transferred to the air-gapped system.
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-save.sh
+    ```
 
 #### Use private Docker registry
 
 1. :thinking: **Optional:**
-   *Option 1* -
+   *Option 2 -
    If the "air-gapped" private Docker registry **can** be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
    to transfer the docker images.
@@ -329,19 +342,6 @@ Only one of the two options need be followed.
         ```console
         ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-pull-tag-and-push.sh airgapped/docker-images
         ```
-
-#### Package saved Docker images
-
-1. :thinking: **Optional:**
-   *Option 2* -
-   If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
-   [docker-save.sh](../../bin/airgapped/docker-save.sh)
-   to create files that can be transferred to the air-gapped system.
-   Example:
-
-    ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-save.sh
-    ```
 
 ### Save environment variables for air-gapped environment
 
