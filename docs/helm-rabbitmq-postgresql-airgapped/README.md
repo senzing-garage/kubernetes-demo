@@ -713,7 +713,7 @@ is a web-based user interface for viewing the PostgreSQL database.
     ```console
     helm install \
       ${DEMO_PREFIX}-pgadmin \
-      runix/pgadmin4 \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/pgadmin4 \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/pgadmin.yaml \
       --version ${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-""}
