@@ -715,8 +715,7 @@ is a web-based user interface for viewing the PostgreSQL database.
       ${DEMO_PREFIX}-pgadmin \
       ${SENZING_AIRGAPPED_DIR}/helm-charts/pgadmin4 \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/pgadmin.yaml \
-      --version ${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-""}
+      --values ${HELM_VALUES_DIR}/pgadmin.yaml
     ```
 
 1. To view PostgreSQL via pgAdmin, see [View PostgreSQL](#view-postgresql).
