@@ -466,6 +466,23 @@ Environment variables will be used by shell scripts.
     source ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
     ```
 
+### Identify Docker registry
+
+1. :pencil2: Identify private Docker registry.
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
+    ```
+
+1. :thinking: **Optional:**
+ : Identify Docker registry secret.
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_SECRET=${DEMO_PREFIX}-registry-secret
+    ```
+
 ### Load Docker images
 
 :thinking: **Optional:**
@@ -483,21 +500,6 @@ an air-gapped private Docker registry.
 
     ```console
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-load.sh
-    ```
-
-1. :pencil2: Identify private Docker registry.
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
-    ```
-
-1. :thinking: **Optional:**
- : Identify Docker registry secret.
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_SECRET=${DEMO_PREFIX}-registry-secret
     ```
 
 1. :thinking: **Optional:**
@@ -771,7 +773,7 @@ The actual location on the PVC may vary.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-installer \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/installer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-installer.yaml
     ```
