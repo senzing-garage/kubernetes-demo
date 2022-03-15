@@ -3,7 +3,7 @@
 main:
 
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPU: 10

@@ -2,6 +2,20 @@
 
 # Save environment variable values into a file that can be "sourced" later.
 
+# Test environment variables.
+
+ERRORS=0
+
+if [[ -z "${SENZING_DEMO_DIR}" ]]; then
+    ERRORS=$((${ERRORS} + 1))
+    echo "Error: SENZING_DEMO_DIR must be set"
+fi
+
+if [[ ${ERRORS} > 0 ]]; then
+    echo "Error: No processing done. ${ERRORS} errors found."
+    exit 1
+fi
+
 # Create a stub file.
 
 cat <<EOT > ${SENZING_DEMO_DIR}/environment.sh

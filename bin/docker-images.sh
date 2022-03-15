@@ -2,7 +2,7 @@
 
 # List all of the docker images to be installed into the minikube registry.
 
-export DOCKER_IMAGES=(
+DOCKER_IMAGES=(
     "arey/mysql-client:${SENZING_DOCKER_IMAGE_VERSION_AREY_MYSQL_CLIENT:-latest}"
     "bitnami/kafka:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_KAFKA:-latest}"
     "bitnami/mysql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_MYSQL:-latest}"
@@ -13,6 +13,7 @@ export DOCKER_IMAGES=(
     "bitnami/zookeeper:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_ZOOKEEPER:-latest}"
     "coleifer/sqlite-web:${SENZING_DOCKER_IMAGE_VERSION_SQLITE_WEB:-latest}"
     "confluentinc/cp-kafka:${SENZING_DOCKER_IMAGE_VERSION_CONFLUENTINC_CP_KAFKA:-latest}"
+    "dpage/pgadmin4:${SENZING_DOCKER_IMAGE_VERSION_DPAGE_PGADMIN4:-latest}"
     "obsidiandynamics/kafdrop:${SENZING_DOCKER_IMAGE_VERSION_OBSIDIANDYNAMICS_KAFDROP:-latest}"
     "senzing/apt:${SENZING_DOCKER_IMAGE_VERSION_APT:-latest}"
     "senzing/configurator:${SENZING_DOCKER_IMAGE_VERSION_CONFIGURATOR:-latest}"
@@ -20,7 +21,7 @@ export DOCKER_IMAGES=(
     "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP:-latest}"
     "senzing/ibm-db2:${SENZING_DOCKER_IMAGE_VERSION_IBM_DB2:-latest}"
     "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER:-latest}"
-    "senzing/phppgadmin:${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN:-latest}"
+    "senzing/installer:${SENZING_VERSION_SENZINGAPI:-latest}"
     "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT:-latest}"
     "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER:-latest}"
     "senzing/resolver:${SENZING_DOCKER_IMAGE_VERSION_RESOLVER:-latest}"
@@ -31,4 +32,5 @@ export DOCKER_IMAGES=(
     "senzing/stream-loader:${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER:-latest}"
     "senzing/stream-producer:${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER:-latest}"
     "senzing/yum:${SENZING_DOCKER_IMAGE_VERSION_YUM:-latest}"
+    "swaggerapi/swagger-ui:${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI:-latest}"
 )
