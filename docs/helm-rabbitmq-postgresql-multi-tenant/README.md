@@ -182,6 +182,13 @@ as a guide, start a minikube cluster.
     minikube addons enable ingress
     ```
 
+1. Add Kubernetes Metrics server.
+   Example:
+
+    ```console
+    minikube addons enable metrics-server
+    ```
+
 1. View addons.
    Example:
 
@@ -1242,21 +1249,6 @@ pulls messages from message queue and sends them to Senzing.
       --version ${SENZING_HELM_VERSION_SENZING_STREAM_LOADER:-""}
     ```
 
-#### FIXME:  Install bitnami-nginx-ingress-controller Helm chart
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-nginx-ingress-controller \
-      bitnami/nginx-ingress-controller \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-nginx-ingress-controller-multi-tenant.yaml \
-      --version ${SENZING_HELM_VERSION_BITNAMI_NGINX_INGRESS_CONTROLLER:-""}
-    ```
-
 #### Install senzing-api-server Helm chart
 
 The [Senzing API server](https://github.com/Senzing/senzing-api-server)
@@ -1284,6 +1276,8 @@ receives HTTP requests to read and modify Senzing data.
       --namespace ${DEMO_NAMESPACE} \
       --watch
     ```
+## TODO:  add info about adding to /etc/hosts
+
 
 1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
@@ -1316,35 +1310,6 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
-
-#### Install Nginx proxy Helm chart
-
-The Nginx proxy serves all services FIXME:
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-nginx-proxy \
-      bitnami/nginx \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-nginx-multi-tenant.yaml \
-      --version ${SENZING_HELM_VERSION_BITNAMI_NGINX:-""}
-    ```
-
-1. Wait for pods to run using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
 #### Optional charts
 

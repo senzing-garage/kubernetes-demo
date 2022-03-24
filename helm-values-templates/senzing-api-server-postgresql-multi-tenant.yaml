@@ -2,8 +2,8 @@
 
 ingress:
   enabled: true
-  hostname: ${SENZING_TENANT}-senzing-api-server
-  path: /
+  hostname: ${SENZING_TENANT}.local
+  path: /api
 
 main:
   autoscaling:
@@ -35,6 +35,7 @@ main:
         }
       }
     persistentVolumeClaim: senzing-persistent-volume-claim
+    urlBasePath: /api
 
 rbac:
   enabled: true

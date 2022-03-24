@@ -2,8 +2,8 @@
 
 ingress:
   enabled: true
-  hostname: senzing.local
-  path: /phppgadmin
+  hostname: pgadmin.senzing.local
+  path: /
 
 main:
   containerSecurityContext:
