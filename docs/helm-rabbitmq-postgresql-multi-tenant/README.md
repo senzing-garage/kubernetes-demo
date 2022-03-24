@@ -1344,7 +1344,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-swaggerapi-swagger-ui \
+      ${SENZING_TENANT}-swaggerapi-swagger-ui \
       senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui-multi-tenant.yaml \
