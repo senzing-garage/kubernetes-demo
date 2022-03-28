@@ -140,23 +140,12 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 ### Create demo directory
 
-1. :pencil2: Create unique prefix.
-   This will be used in a local directory name
-   as well as a prefix to kubernetes object.
-
-   :warning:  Must be all lowercase.
-
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
 
 1. Make a directory for the demo.
    Example:
 
     ```console
-    export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
+    export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo
     mkdir -p ${SENZING_DEMO_DIR}
     ```
 
@@ -489,7 +478,7 @@ In this step, Kubernetes template files are populated with actual values.
    Example:
 
     ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
+    kubectl create configmap pg-hba \
       --namespace ${DEMO_NAMESPACE} \
       --from-file=${KUBERNETES_DIR}/pg_hba.conf
     ```
@@ -502,7 +491,7 @@ In this step, Kubernetes template files are populated with actual values.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-bitnami-postgresql \
+      bitnami-postgresql \
       bitnami/postgresql \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-postgresql-multi-tenant.yaml \
@@ -534,7 +523,7 @@ In this step, Kubernetes template files are populated with actual values.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-phppgadmin \
+      phppgadmin \
       senzing/phppgadmin \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/phppgadmin-multi-tenant.yaml \
@@ -551,7 +540,7 @@ In this step, Kubernetes template files are populated with actual values.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-bitnami-rabbitmq \
+      bitnami-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
@@ -619,14 +608,6 @@ As such, there will be some repetition from earler steps.
 
     ```console
     export SENZING_TENANT_ADMIN=main
-    ```
-
-1. :thinking: Identify the `DEMO_PREFIX`, again.
-
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
     ```
 
 1. :thinking: Identify Docker registry, again.
@@ -699,7 +680,7 @@ As such, there will be some repetition from earler steps.
     ```console
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
     export DEMO_NAMESPACE_ADMIN=${SENZING_TENANT_ADMIN}-namespace
-    export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo-${DEMO_PREFIX}
+    export SENZING_DEMO_DIR=~/senzing-multi-tenant-demo
     export SENZING_RECORD_MAX=$((${SENZING_RECORD_MIN} + 9999))
     ```
 
@@ -945,7 +926,7 @@ This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) comma
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-apt \
+      senzing-apt \
       senzing/senzing-apt \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-apt.yaml \
@@ -1005,7 +986,7 @@ Example: A personal laptop.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-base \
+      senzing-base \
       senzing/senzing-base \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-base-multi-tenant.yaml \
@@ -1030,7 +1011,7 @@ Example: A personal laptop.
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=senzing-base, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-base" \
+                  app.kubernetes.io/instance=senzing-base" \
       )
     ```
 
@@ -1120,7 +1101,7 @@ _Note:_  The environment variables were "sourced" in
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-yum \
+      senzing-yum \
       senzing/senzing-yum \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-yum-localinstall.yaml \
@@ -1159,7 +1140,7 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-console \
+      senzing-console \
       senzing/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-console-postgresql-multi-tenant.yaml \
@@ -1177,7 +1158,7 @@ will be used later to:
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-postgresql-client \
+      senzing-postgresql-client \
       senzing/senzing-postgresql-client \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-postgresql-client-multi-tenant.yaml \
@@ -1196,7 +1177,7 @@ pulls JSON lines from a file and pushes them to message queue using
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-stream-producer \
+      senzing-stream-producer \
       senzing/senzing-stream-producer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-multi-tenant.yaml \
@@ -1214,7 +1195,7 @@ creates files from templates and initializes the G2 database.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-init-container \
+      senzing-init-container \
       senzing/senzing-init-container \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql-multi-tenant.yaml \
@@ -1242,7 +1223,7 @@ pulls messages from message queue and sends them to Senzing.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-stream-loader \
+      senzing-stream-loader \
       senzing/senzing-stream-loader \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-stream-loader-rabbitmq-postgresql-multi-tenant.yaml \
@@ -1260,7 +1241,7 @@ receives HTTP requests to read and modify Senzing data.
 
     ```console
     helm install \
-      ${SENZING_TENANT}-senzing-api-server \
+      senzing-api-server \
       senzing/senzing-api-server \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql-multi-tenant.yaml \
@@ -1292,7 +1273,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 
     ```console
     helm install \
-      ${SENZING_TENANT}-senzing-entity-search-web-app \
+      senzing-entity-search-web-app \
       senzing/senzing-entity-search-web-app \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app-multi-tenant.yaml \
@@ -1314,7 +1295,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 #### Optional charts
 
 These charts are not necessary for the demonstration,
-but may be valuable in a production environment.
+but may be valuable when you extend them for your own purposes.
 
 ##### Install senzing-redoer Helm chart
 
@@ -1326,7 +1307,7 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-redoer \
+      senzing-redoer \
       senzing/senzing-redoer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-redoer-postgresql-multi-tenant.yaml \
@@ -1344,7 +1325,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
     ```console
     helm install \
-      ${SENZING_TENANT}-swaggerapi-swagger-ui \
+      swaggerapi-swagger-ui \
       senzing/swaggerapi-swagger-ui \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/swaggerapi-swagger-ui-multi-tenant.yaml \
@@ -1355,7 +1336,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
 ##### Install configurator Helm chart
 
-The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
+The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.  This is used to automate configuration of Senzing datasources.
 
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
@@ -1363,7 +1344,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-configurator \
+      senzing-configurator \
       senzing/senzing-configurator \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-configurator-postgresql-multi-tenant.yaml \
@@ -1400,7 +1381,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-bitnami-rabbitmq 15672:15672
+      svc/bitnami-rabbitmq 15672:15672
     ```
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
@@ -1421,7 +1402,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 9171:80
+      svc/phppgadmin 9171:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
@@ -1448,115 +1429,10 @@ In a separate terminal window:
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+                  app.kubernetes.io/instance=senzing-console" \
       )
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-    ```
-
-##### View Nginx proxy
-
-In a separate terminal window:
-
-1. Once the port has been forwarded in the next step,
-   the Nginx Proxy will be viewable at the following URL:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-    echo "http://localhost:${SENZING_PORT_NGINX_PROXY}"
-    ```
-
-1. Port forward to local machine using
-   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
-   Example:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-nginx-proxy ${SENZING_PORT_NGINX_PROXY}:80
-    ```
-
-##### View Senzing API Server
-
-In a separate terminal window:
-
-1. Port forward to local machine using
-   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
-   Example:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${SENZING_TENANT}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
-    ```
-
-In a separate terminal window:
-
-1. Make HTTP calls via `curl`.
-   Example:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-    export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_SENZING_API_SERVER}
-
-    curl -X GET ${SENZING_API_SERVICE}/heartbeat
-    curl -X GET ${SENZING_API_SERVICE}/license
-    curl -X GET ${SENZING_API_SERVICE}/entities/1
-    ```
-
-##### View Senzing Entity Search WebApp
-
-In a separate terminal window:
-
-1. Once the port has been forwarded in the next step,
-   the Senzing Entity Search WebApp will be viewable at the following URL:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-    echo "http://localhost:${SENZING_PORT_ENTITY_SEARCH_WEB_APP}"
-    ```
-
-1. Port forward to local machine using
-   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${SENZING_TENANT}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
-    ```
-
-1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
-   instructions will give a tour of the Senzing web app.
-
-##### View SwaggerUI
-
-In a separate terminal window:
-
-1. Once the port has been forwarded in the next step,
-   the Swagger UI will be viewable at the following URL:
-
-    ```console
-    source ~/senzing-multi-tenant-demo-current/current/environment.sh
-    echo "http://localhost:${SENZING_PORT_SWAGGERUI}"
-    ```
-
-1. Port forward to local machine using
-   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
     ```
 
 ##### View Senzing Configurator
@@ -1573,7 +1449,7 @@ If the Senzing configurator was deployed, in a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator ${SENZING_PORT_CONFIGURATOR}:80
+      svc/senzing-configurator ${SENZING_PORT_CONFIGURATOR}:80
     ```
 
 In a separate terminal window:
@@ -1591,13 +1467,6 @@ In a separate terminal window:
 ## Cleanup
 
 ### Delete tenant
-
-1. :pencil2: Set environment variables for tenant.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
 
 1. :pencil2: Identify the "tenant".
    Example:
@@ -1619,31 +1488,24 @@ In a separate terminal window:
    Example:
 
     ```console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-swaggerapi-swagger-ui
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-api-server
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-loader
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-configurator
+    helm uninstall --namespace ${DEMO_NAMESPACE} swaggerapi-swagger-ui
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-redoer
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-entity-search-web-app
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-api-server
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-stream-loader
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-init-container
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-stream-producer
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-postgresql-client
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-console
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-apt
+    helm uninstall --namespace ${DEMO_NAMESPACE} senzing-yum
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
     ```
 
 ### Delete main
-
-1. :pencil2: Set environment variables for tenant.
-   Example:
-
-    ```console
-    export DEMO_PREFIX=my
-    ```
 
 1. :pencil2: Identify the "tenant".
    Example:
@@ -1665,9 +1527,9 @@ In a separate terminal window:
    Example:
 
     ```console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
+    helm uninstall --namespace ${DEMO_NAMESPACE} bitnami-rabbitmq
+    helm uninstall --namespace ${DEMO_NAMESPACE} phppgadmin
+    helm uninstall --namespace ${DEMO_NAMESPACE} bitnami-postgresql
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml

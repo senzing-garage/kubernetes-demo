@@ -1,7 +1,7 @@
 # See https://github.com/Senzing/charts/tree/master/charts/senzing-configurator#parameters
 
 ingress:
-  enabled: true
+  enabled: false
 
 main:
 
