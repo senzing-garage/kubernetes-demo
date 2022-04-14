@@ -1,4 +1,4 @@
-# See https://github.com/bitnami/charts/tree/master/bitnami/nginx#parameters
+# See https://github.com/bitnami/charts/tree/main/bitnami/nginx#parameters
 
 image:
   registry: ${DOCKER_REGISTRY_URL}

@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/senzing-entity-search-web-app#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app#parameters
 
 ingress:
   enabled: true
