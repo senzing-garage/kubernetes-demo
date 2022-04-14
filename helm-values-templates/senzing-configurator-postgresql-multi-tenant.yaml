@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/senzing-configurator#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-configurator#parameters
 
 ingress:
   enabled: true

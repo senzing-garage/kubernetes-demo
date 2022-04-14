@@ -94,7 +94,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
@@ -120,20 +120,20 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require 20 GB free disk space.
 - **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software on non-airgapped system
 
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 
 ### Prerequisite software on air-gapped system
 
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 1. Kubernetes
 
 ### Prerequisites on Kubernetes
@@ -189,13 +189,13 @@ On the non-airgapped system:
     ```console
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip \
-      https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/master
+      https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/main
 
     unzip \
       -d ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp \
       ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
 
-    mv ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp/kubernetes-demo-master \
+    mv ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp/kubernetes-demo-main \
        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo
 
     rmdir ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp
@@ -247,7 +247,7 @@ On the non-airgapped system:
 
 :thinking: **Optional:**
 To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
 should be added to the artifact directory.
 On the non-airgapped system:
 
@@ -279,7 +279,7 @@ On the non-airgapped system:
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Run the `docker build` command using
    [docker-build-senzing-installer.sh](../../bin/docker-build-senzing-installer.sh).
@@ -708,7 +708,7 @@ run command-line tools.
 ### Install Senzing license
 
 To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
 is needed in the `/etc/opt/senzing` directory.
 
 1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`.
@@ -764,7 +764,7 @@ The `helm-values/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -811,7 +811,7 @@ provisions an instance of the
 
 ### Initialize database
 
-The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+The [PostgreSQL Client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
 1. Install chart using
@@ -848,7 +848,7 @@ is a web-based user interface for viewing the PostgreSQL database.
 ### Install RabbitMQ Helm chart
 
 The
-[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
+[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
 provisions an instance of the
 [bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
 
@@ -1178,7 +1178,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
-   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
 #### View SwaggerUI

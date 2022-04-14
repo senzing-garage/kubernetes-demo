@@ -52,4 +52,9 @@ do
         --untar \
         --version ${HELM_CHART_VERSION}
 
+    helm pull \
+        ${HELM_CHART_NAME} \
+        --destination ${SENZING_AIRGAPPED_DIR}/helm-charts \
+        --version ${HELM_CHART_VERSION}
+
 done

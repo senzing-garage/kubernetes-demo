@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/senzing-api-server#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-api-server#parameters
 
 ingress:
   enabled: true
