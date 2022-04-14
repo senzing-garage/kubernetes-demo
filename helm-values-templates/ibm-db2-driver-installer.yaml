@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/ibm-db2-driver-installer#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/ibm-db2-driver-installer#parameters
 
 db2:
   license: accept

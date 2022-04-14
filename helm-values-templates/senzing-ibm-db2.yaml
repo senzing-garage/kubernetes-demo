@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/senzing-ibm-db2#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-ibm-db2#parameters
 
 db2:
   license: accept

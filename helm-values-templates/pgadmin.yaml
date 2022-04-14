@@ -1,4 +1,4 @@
-# See https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4#configuration
+# See https://github.com/rowanruseler/helm-charts/tree/main/charts/pgadmin4#configuration
 
 env:
   email: postgres@postgres.com
