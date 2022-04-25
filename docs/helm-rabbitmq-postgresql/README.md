@@ -44,7 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
-    1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
+    1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Save environment variables](#save-environment-variables)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
@@ -64,7 +64,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
-        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
+        1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
@@ -1214,8 +1214,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```
 
 1. Username and password for the following sites are the values seen in
-   the corresponding "values" YAML file located in
-   [helm-values-templates](../../helm-values-templates).
+   the corresponding "values" YAML file located in the
+   [helm-values-templates](../../helm-values-templates) directory.
 
 #### View RabbitMQ
 

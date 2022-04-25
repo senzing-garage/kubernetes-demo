@@ -655,7 +655,7 @@ well-tuned production database.
 
 In a production environment,
 a separate PostgreSQL database would be provisioned and maintained.
-The `helm-values/*.yaml` files would then be updated to have the
+The `${HELM_VALUES_DIR}/*.yaml` files would then be updated to have the
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
@@ -807,7 +807,7 @@ debug issues, or
 run command-line tools.
 
 1. Install
-   [senzing/senzing-console](https://github.com/Senzing/charts/tree/master/charts/senzing-console)
+   [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -883,11 +883,10 @@ sample data will be sent to the queue using the Senzing
 ### Initialize database
 
 The [PostgreSQL Client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
-
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
 1. Install
-   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -916,7 +915,7 @@ The [init-container](https://github.com/Senzing/docker-init-container)
 creates files from templates and initializes the G2 database.
 
 1. Install
-   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/master/charts/senzing-init-container)
+   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/main/charts/senzing-init-container)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -945,7 +944,7 @@ The [stream producer](https://github.com/Senzing/stream-producer)
 pulls JSON lines from a file and pushes them to a message queue.
 
 1. Install
-   [senzing/senzing-stream-producer](https://github.com/Senzing/charts/tree/master/charts/senzing-stream-producer)
+   [senzing/senzing-stream-producer](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-producer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -964,7 +963,7 @@ The [stream loader](https://github.com/Senzing/stream-loader)
 pulls messages from a message queue and sends them to Senzing.
 
 1. Install
-   [senzing/senzing-stream-loader](https://github.com/Senzing/charts/tree/master/charts/senzing-stream-loader)
+   [senzing/senzing-stream-loader](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-loader)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -983,7 +982,7 @@ The [Senzing API server](https://github.com/Senzing/senzing-api-server)
 receives HTTP requests to read and modify Senzing data.
 
 1. Install
-   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/master/charts/senzing-api-server)
+   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/main/charts/senzing-api-server)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1014,7 +1013,7 @@ The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-
 is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install
-   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/master/charts/senzing-entity-search-web-app)
+   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1049,7 +1048,7 @@ but may be valuable in a production environment.
 The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
 1. Install
-   [senzing/senzing-redoer](https://github.com/Senzing/charts/tree/master/charts/senzing-redoer)
+   [senzing/senzing-redoer](https://github.com/Senzing/charts/tree/main/charts/senzing-redoer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1068,7 +1067,7 @@ The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
 for viewing the Senzing REST OpenAPI specification in a web browser.
 
 1. Install
-   [senzing/swaggerapi-swagger-ui](https://github.com/Senzing/charts/tree/master/charts/swaggerapi-swagger-ui)
+   [senzing/swaggerapi-swagger-ui](https://github.com/Senzing/charts/tree/main/charts/swaggerapi-swagger-ui)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1088,7 +1087,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
 1. Install
-   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/master/charts/senzing-configurator)
+   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/main/charts/senzing-configurator)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1136,7 +1135,7 @@ is used to view the state of the queues.
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
+        1. See `{HELM_VALUES_DIR}/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
 
