@@ -1215,7 +1215,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 1. Username and password for the following sites are the values seen in
    the corresponding "values" YAML file located in
-   [helm-values-templates](../helm-values-templates).
+   [helm-values-templates](../../helm-values-templates).
 
 #### View RabbitMQ
 
