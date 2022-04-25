@@ -1232,7 +1232,6 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
 
 #### View Kafka
 
-
 1. In a separate terminal window, run the test client.
    Example:
 
