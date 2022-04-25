@@ -506,7 +506,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -523,7 +523,7 @@ provisions an instance of the
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
 1. Install
-   [bitnami/postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+   [bitnami/postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -560,7 +560,7 @@ provisions an instance of the
 is a web-based user interface for viewing the PostgreSQL database.
 
 1. Install
-   [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/main/charts/pgadmin4)
+   [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -579,12 +579,12 @@ is a web-based user interface for viewing the PostgreSQL database.
 ### Install RabbitMQ Helm chart
 
 The
-[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
+[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
 provisions an instance of the
 [bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
 
 1. Install
-   [bitnami/rabbitmq](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
+   [bitnami/rabbitmq](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:

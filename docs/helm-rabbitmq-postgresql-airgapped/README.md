@@ -768,7 +768,7 @@ These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
 1. Install
-   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/master/charts/senzing-installer)
+   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/main/charts/senzing-installer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -880,65 +880,6 @@ sample data will be sent to the queue using the Senzing
       ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/opt/senzing/loadtest-dataset.json
     ```
 
-### Install Postgresql Helm chart
-
-:thinking: This step installs a PostgreSQL database container.
-It is not a production-ready database and is only used for demonstration purposes.
-The choice of databases is a **limiting factor** in the speed at which Senzing can operate.
-This database choice is *at least* an order of magnitude slower than a
-well-tuned production database.
-
-In a production environment,
-a separate PostgreSQL database would be provisioned and maintained.
-The `helm-values/*.yaml` files would then be updated to have the
-`SENZING_DATABASE_URL` point to the production database.
-
-For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
-provisions an instance of the
-[bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
-
-1. Create Configmap for `pg_hba.conf` using
-   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
-   Example:
-
-    ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
-      --namespace ${DEMO_NAMESPACE} \
-      --from-file=${KUBERNETES_DIR}/pg_hba.conf
-    ```
-
-    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-bitnami-postgresql \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/postgresql \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml
-    ```
-
-1. Wait for pod to run using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pod running:
-
-    ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-bitnami-postgresql-6bf64cbbdf-25gtb  1/1     Running     0          10m
-    ```
-
 ### Initialize database
 
 The [PostgreSQL Client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
@@ -971,15 +912,8 @@ is used to create tables in the database (i.e. the schema) used by Senzing.
 
 ### Install init-container Helm chart
 
-<<<<<<< HEAD
 The [init-container](https://github.com/Senzing/docker-init-container)
 creates files from templates and initializes the G2 database.
-=======
-The
-[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
-provisions an instance of the
-[bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
->>>>>>> origin/main
 
 1. Install
    [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/master/charts/senzing-init-container)
