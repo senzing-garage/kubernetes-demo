@@ -24,6 +24,7 @@ fi
 # Get Helm Chart metadata.
 
 helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add runix https://helm.runix.net
 helm repo add senzing https://hub.senzing.com/charts/
 helm repo update
 

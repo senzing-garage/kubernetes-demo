@@ -33,6 +33,7 @@ source ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-images.sh
 
 DOCKER_REGISTRIES=(
     "bitnami"
+    "dpage"
     "senzing"
     "swaggerapi"
 )

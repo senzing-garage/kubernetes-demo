@@ -39,12 +39,12 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create demo directory](#create-demo-directory)
     1. [Start minikube cluster](#start-minikube-cluster)
     1. [View minikube cluster](#view-minikube-cluster)
+    1. [Set environment variables](#set-environment-variables)
     1. [EULA](#eula)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
-    1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
-    1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
+    1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Save environment variables](#save-environment-variables)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
@@ -64,7 +64,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
-        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
+        1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
@@ -222,7 +222,9 @@ as a guide, start a minikube cluster.
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
 
-1. :warning: This step is intentionally tricky and not simply copy/paste.
+1. :warning:
+   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+   This step is intentionally tricky and not simply copy/paste.
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
@@ -276,7 +278,7 @@ is to make a Docker image that contains the contents of the Senzing `g2` and `da
     export DOCKER_REGISTRY_URL=my.example.com:5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh docker-images-for-helm-rabbitmq-postgresql
+    ${GIT_REPOSITORY_DIR}/bin/docker-pull-tag-and-push.sh docker-images-for-helm-rabbitmq-postgresql
     ```
 
 #### Use minikube registry
@@ -389,7 +391,7 @@ A new
 [Kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 is created to isolate this demonstration from other applications running on Kubernetes.
 
-1. Create namespace using
+1. Create Kubernetes namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
@@ -504,7 +506,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -521,7 +523,7 @@ provisions an instance of the
     Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
 
 1. Install
-   [bitnami/postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+   [bitnami/postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -554,8 +556,11 @@ provisions an instance of the
 
 ### Install pgAdmin Helm Chart
 
+[pgAdmin](https://www.pgadmin.org/)
+is a web-based user interface for viewing the PostgreSQL database.
+
 1. Install
-   [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/main/charts/pgadmin4)
+   [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -574,12 +579,12 @@ provisions an instance of the
 ### Install RabbitMQ Helm chart
 
 The
-[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
+[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
 provisions an instance of the
 [bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
 
 1. Install
-   [bitnami/rabbitmq](https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq)
+   [bitnami/rabbitmq](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -614,7 +619,7 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
-There are 4options when it comes to initializing the Persistent Volume with Senzing code and data.
+There are 4 options when it comes to initializing the Persistent Volume with Senzing code and data.
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
@@ -1209,8 +1214,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```
 
 1. Username and password for the following sites are the values seen in
-   the corresponding "values" YAML file located in
-   [helm-values-templates](../helm-values-templates).
+   the corresponding "values" YAML file located in the
+   [helm-values-templates](../../helm-values-templates) directory.
 
 #### View RabbitMQ
 

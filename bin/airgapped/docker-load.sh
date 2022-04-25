@@ -29,6 +29,7 @@ fi
 
 DOCKER_REGISTRIES=(
     "bitnami"
+    "dpage"
     "senzing"
     "swaggerapi"
 )
