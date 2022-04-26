@@ -88,7 +88,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
@@ -114,18 +114,18 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require 20 GB free disk space.
 - **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software
 
-1. [Azure subscription](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/azure-subscription.md)
-1. [Azure Command Line Interface (CLI)](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/azure-cli.md)
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [Azure subscription](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/azure-subscription.md)
+1. [Azure Command Line Interface (CLI)](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/azure-cli.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 
 ### Clone repository
 
@@ -140,7 +140,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Demonstrate
 
@@ -184,7 +184,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End User License Agreement (EULA).
 
@@ -192,7 +192,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export MSSQL_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#mssql_accept_eula">this link</a>&gt;"</pre>
+    <pre>export MSSQL_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#mssql_accept_eula">this link</a>&gt;"</pre>
 
 ### Set environment variables
 
@@ -243,21 +243,21 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-latest.sh)
     ```
 
 1. Retrieve stable Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/senzing-versions-latest.sh)
     ```
 
 ### Identify Docker registry
@@ -797,7 +797,7 @@ will be used later to:
 
 ### Initialize database
 
-1. [microsoft-mssql-tools](https://github.com/Senzing/charts/tree/master/charts/microsoft-mssql-tools)
+1. [microsoft-mssql-tools](https://github.com/Senzing/charts/tree/main/charts/microsoft-mssql-tools)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1107,7 +1107,7 @@ can be reached via the Kubernetes Services.
     ```
 
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
-   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
 #### View SwaggerUI

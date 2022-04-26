@@ -79,7 +79,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
@@ -105,19 +105,19 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require 20 GB free disk space.
 - **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software
 
-1. [minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md)
+1. [minikube](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-minikube.md)
     - Tested with `minikube` version 1.25.1
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
     - Tested with `kubectl` version 1.23.2
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
     - Tested with `helm` version 3.8.0
 1. Kubernetes version 1.22.0 or higher is required
 
@@ -134,7 +134,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ## Demonstrate
 
@@ -206,21 +206,21 @@ View the minikube cluster using the
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-latest.sh)
     ```
 
 1. Retrieve stable Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/senzing-versions-latest.sh)
     ```
 
 ### Identify Docker registry
@@ -255,7 +255,7 @@ _Method #2:_ Pulls docker images from a private registry.
     export DOCKER_REGISTRY_URL=my.example.com:5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh
+    ${GIT_REPOSITORY_DIR}/bin/docker-pull-tag-and-push.sh
     ```
 
 #### Use minikube registry
@@ -669,9 +669,9 @@ As such, there will be some repetition from earler steps.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/senzing-versions-latest.sh)
     ```
 
 1. Synthesize environment variables.
@@ -702,7 +702,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 #### Create custom helm values files for tenant
 
@@ -1151,7 +1151,7 @@ will be used later to:
 
 #### Initialize database
 
-1. The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+1. The [PostgreSQL Client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
    is used to create tables in the database (i.e. the schema) used by Senzing using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1435,6 +1435,114 @@ In a separate terminal window:
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
 
+<<<<<<< HEAD
+=======
+##### View Nginx proxy
+
+In a separate terminal window:
+
+1. Once the port has been forwarded in the next step,
+   the Nginx Proxy will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+    echo "http://localhost:${SENZING_PORT_NGINX_PROXY}"
+    ```
+
+1. Port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-nginx-proxy ${SENZING_PORT_NGINX_PROXY}:80
+    ```
+
+##### View Senzing API Server
+
+In a separate terminal window:
+
+1. Port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
+    ```
+
+In a separate terminal window:
+
+1. Make HTTP calls via `curl`.
+   Example:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+    export SENZING_API_SERVICE=http://localhost:${SENZING_PORT_SENZING_API_SERVER}
+
+    curl -X GET ${SENZING_API_SERVICE}/heartbeat
+    curl -X GET ${SENZING_API_SERVICE}/license
+    curl -X GET ${SENZING_API_SERVICE}/entities/1
+    ```
+
+##### View Senzing Entity Search WebApp
+
+In a separate terminal window:
+
+1. Once the port has been forwarded in the next step,
+   the Senzing Entity Search WebApp will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+    echo "http://localhost:${SENZING_PORT_ENTITY_SEARCH_WEB_APP}"
+    ```
+
+1. Port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
+    ```
+
+1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
+   instructions will give a tour of the Senzing web app.
+
+##### View SwaggerUI
+
+In a separate terminal window:
+
+1. Once the port has been forwarded in the next step,
+   the Swagger UI will be viewable at the following URL:
+
+    ```console
+    source ~/senzing-multi-tenant-demo-current/current/environment.sh
+    echo "http://localhost:${SENZING_PORT_SWAGGERUI}"
+    ```
+
+1. Port forward to local machine using
+   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
+   Example:
+
+    ```console
+    kubectl port-forward \
+      --address 0.0.0.0 \
+      --namespace ${DEMO_NAMESPACE} \
+      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
+    ```
+
+>>>>>>> origin/main
 ##### View Senzing Configurator
 
 If the Senzing configurator was deployed, in a separate terminal window:

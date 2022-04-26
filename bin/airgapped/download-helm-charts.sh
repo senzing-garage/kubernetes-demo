@@ -24,6 +24,7 @@ fi
 # Get Helm Chart metadata.
 
 helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add runix https://helm.runix.net
 helm repo add senzing https://hub.senzing.com/charts/
 helm repo update
 
@@ -50,6 +51,11 @@ do
         ${HELM_CHART_NAME} \
         --destination ${SENZING_AIRGAPPED_DIR}/helm-charts \
         --untar \
+        --version ${HELM_CHART_VERSION}
+
+    helm pull \
+        ${HELM_CHART_NAME} \
+        --destination ${SENZING_AIRGAPPED_DIR}/helm-charts \
         --version ${HELM_CHART_VERSION}
 
 done

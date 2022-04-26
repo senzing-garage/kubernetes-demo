@@ -39,12 +39,12 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Create demo directory](#create-demo-directory)
     1. [Start minikube cluster](#start-minikube-cluster)
     1. [View minikube cluster](#view-minikube-cluster)
+    1. [Set environment variables](#set-environment-variables)
     1. [EULA](#eula)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
-    1. [Set environment variables](#set-environment-variables)
     1. [Identify Docker registry](#identify-docker-registry)
     1. [Create custom helm values files](#create-custom-helm-values-files)
-    1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
+    1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Save environment variables](#save-environment-variables)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
@@ -64,7 +64,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
-        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
+        1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
@@ -84,7 +84,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
@@ -110,17 +110,17 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require 20 GB free disk space.
 - **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software
 
-1. [minikube](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-minikube.md)
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [minikube](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-minikube.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 
 ### Clone repository
 
@@ -135,7 +135,7 @@ The Git repository has files that will be used in the `helm install --values` pa
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ### Create demo directory
 
@@ -201,32 +201,34 @@ as a guide, start a minikube cluster.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/docker-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-latest.sh)
     ```
 
 1. Retrieve stable Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/helm-versions-stable.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
 1. Retrieve latest Senzing version numbers and set their environment variables.
    Example:
 
     ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/master/lists/senzing-versions-latest.sh)
+    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/senzing-versions-latest.sh)
     ```
 
 ### EULA
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
 
-1. :warning: This step is intentionally tricky and not simply copy/paste.
+1. :warning:
+   To use the Senzing code, you must agree to the End User License Agreement (EULA).
+   This step is intentionally tricky and not simply copy/paste.
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 ### Create senzing/installer docker image
 
@@ -276,7 +278,7 @@ is to make a Docker image that contains the contents of the Senzing `g2` and `da
     export DOCKER_REGISTRY_URL=my.example.com:5000
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
     export SENZING_SUDO=sudo
-    ${GIT_REPOSITORY_DIR}/bin/populate-private-registry.sh docker-images-for-helm-rabbitmq-postgresql
+    ${GIT_REPOSITORY_DIR}/bin/docker-pull-tag-and-push.sh docker-images-for-helm-rabbitmq-postgresql
     ```
 
 #### Use minikube registry
@@ -389,7 +391,7 @@ A new
 [Kubernetes namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 is created to isolate this demonstration from other applications running on Kubernetes.
 
-1. Create namespace using
+1. Create Kubernetes namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
 
@@ -554,6 +556,9 @@ provisions an instance of the
 
 ### Install pgAdmin Helm Chart
 
+[pgAdmin](https://www.pgadmin.org/)
+is a web-based user interface for viewing the PostgreSQL database.
+
 1. Install
    [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4)
    chart using
@@ -614,7 +619,7 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
-There are 4options when it comes to initializing the Persistent Volume with Senzing code and data.
+There are 4 options when it comes to initializing the Persistent Volume with Senzing code and data.
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
@@ -632,7 +637,7 @@ Choose one:
 This method uses a dockerized [apt](https://github.com/Senzing/docker-apt) command.
 
 1. Install
-   [senzing/senzing-apt](https://github.com/Senzing/charts/tree/master/charts/senzing-apt)
+   [senzing/senzing-apt](https://github.com/Senzing/charts/tree/main/charts/senzing-apt)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -700,7 +705,7 @@ The actual location on the PVC may vary.
     ```
 
 1. Install
-   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/master/charts/senzing-installer)
+   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/main/charts/senzing-installer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -761,7 +766,7 @@ Example: A personal laptop.
     ```
 
 1. Install
-   [senzing/senzing-base](https://github.com/Senzing/charts/tree/master/charts/senzing-base)
+   [senzing/senzing-base](https://github.com/Senzing/charts/tree/main/charts/senzing-base)
    chart with non-root container using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    This pod will be the recipient of `kubectl cp` commands.
@@ -866,7 +871,7 @@ This produces the same result as the `apt` installs describe in prior methods.
     ```
 
 1. Install
-   [senzing/senzing-yum](https://github.com/Senzing/charts/tree/master/charts/senzing-yum)
+   [senzing/senzing-yum](https://github.com/Senzing/charts/tree/main/charts/senzing-yum)
    chart to perform `yum localinstall` using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -906,7 +911,7 @@ debug issues, or
 run command-line tools.
 
 1. Install
-   [senzing/senzing-console](https://github.com/Senzing/charts/tree/master/charts/senzing-console)
+   [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -938,7 +943,7 @@ run command-line tools.
 ### Install Senzing license
 
 To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
 is needed in the `/etc/opt/senzing` directory.
 
 1. :pencil2: Identify location of license on local system.
@@ -964,7 +969,7 @@ The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
 1. Install
-   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -994,7 +999,7 @@ The [init-container](https://github.com/Senzing/docker-init-container)
 creates files from templates and initializes the G2 database.
 
 1. Install
-   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/master/charts/senzing-init-container)
+   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/main/charts/senzing-init-container)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1024,7 +1029,7 @@ The [stream producer](https://github.com/Senzing/stream-producer)
 pulls JSON lines from a file and pushes them to a message queue.
 
 1. Install
-   [senzing/senzing-stream-producer](https://github.com/Senzing/charts/tree/master/charts/senzing-stream-producer)
+   [senzing/senzing-stream-producer](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-producer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1044,7 +1049,7 @@ The [stream loader](https://github.com/Senzing/stream-loader)
 pulls messages from a message queue and sends them to Senzing.
 
 1. Install
-   [senzing/senzing-stream-loader](https://github.com/Senzing/charts/tree/master/charts/senzing-stream-loader)
+   [senzing/senzing-stream-loader](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-loader)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1064,7 +1069,7 @@ The [Senzing API server](https://github.com/Senzing/senzing-api-server)
 receives HTTP requests to read and modify Senzing data.
 
 1. Install
-   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/master/charts/senzing-api-server)
+   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/main/charts/senzing-api-server)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1096,7 +1101,7 @@ The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-
 is a light-weight WebApp demonstrating Senzing search capabilities.
 
 1. Install
-   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/master/charts/senzing-entity-search-web-app)
+   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1132,7 +1137,7 @@ but may be valuable in a production environment.
 The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
 1. Install
-   [senzing/senzing-redoer](https://github.com/Senzing/charts/tree/master/charts/senzing-redoer)
+   [senzing/senzing-redoer](https://github.com/Senzing/charts/tree/main/charts/senzing-redoer)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1152,7 +1157,7 @@ The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
 for viewing the Senzing REST OpenAPI specification in a web browser.
 
 1. Install
-   [senzing/swaggerapi-swagger-ui](https://github.com/Senzing/charts/tree/master/charts/swaggerapi-swagger-ui)
+   [senzing/swaggerapi-swagger-ui](https://github.com/Senzing/charts/tree/main/charts/swaggerapi-swagger-ui)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1173,7 +1178,7 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
 1. Install
-   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/master/charts/senzing-configurator)
+   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/main/charts/senzing-configurator)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1209,8 +1214,8 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     ```
 
 1. Username and password for the following sites are the values seen in
-   the corresponding "values" YAML file located in
-   [helm-values-templates](../helm-values-templates).
+   the corresponding "values" YAML file located in the
+   [helm-values-templates](../../helm-values-templates) directory.
 
 #### View RabbitMQ
 
@@ -1324,7 +1329,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
-   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
 #### View SwaggerUI

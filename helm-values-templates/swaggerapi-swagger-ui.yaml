@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/swaggerapi-swagger-ui#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/swaggerapi-swagger-ui#parameters
 
 main:
 
@@ -7,4 +7,4 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI}
 
   swaggerui:
-    openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
+    openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml

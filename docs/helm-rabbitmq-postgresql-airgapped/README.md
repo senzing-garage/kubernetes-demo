@@ -44,6 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Set non-airgapped environment variables](#set-non-airgapped-environment-variables)
     1. [Download Helm Chart repositories](#download-helm-chart-repositories)
     1. [Add Senzing license](#add-senzing-license)
+    1. [EULA](#eula)
     1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Transfer Docker images](#transfer-docker-images)
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
@@ -53,23 +54,24 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Decompress file](#decompress-file)
     1. [Create deployment directory](#create-deployment-directory)
     1. [Set environment variables](#set-environment-variables)
+    1. [Identify Docker registry](#identify-docker-registry)
     1. [Load Docker images](#load-docker-images)
     1. [Save environment variables](#save-environment-variables)
     1. [Create custom helm values files](#create-custom-helm-values-files)
     1. [Create custom Kubernetes configuration files](#create-custom-kubernetes-configuration-files)
     1. [Create namespace](#create-namespace)
     1. [Create persistent volume](#create-persistent-volume)
+    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
+    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
     1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console-privileged Helm chart](#install-senzing-console-privileged-helm-chart)
     1. [Install Senzing license](#install-senzing-license)
     1. [Install Senzing Governor](#install-senzing-governor)
     1. [Install sample data](#install-sample-data)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
-    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
@@ -94,7 +96,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
@@ -120,20 +122,20 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require 20 GB free disk space.
 - **Time:** Budget 4 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/kubernetes.md)
-  - [Helm](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/helm.md)
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Kubernetes](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubernetes.md)
+  - [Helm](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ## Prerequisites
 
 ### Prerequisite software on non-airgapped system
 
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 
 ### Prerequisite software on air-gapped system
 
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-kubectl.md)
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-helm.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 1. Kubernetes
 
 ### Prerequisites on Kubernetes
@@ -189,13 +191,13 @@ On the non-airgapped system:
     ```console
     curl -X GET \
       --output ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip \
-      https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/master
+      https://codeload.github.com/Senzing/kubernetes-demo/zip/refs/heads/main
 
     unzip \
       -d ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp \
       ${SENZING_AIRGAPPED_DIR}/kubernetes-demo.zip
 
-    mv ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp/kubernetes-demo-master \
+    mv ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp/kubernetes-demo-main \
        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo
 
     rmdir ${SENZING_AIRGAPPED_DIR}/kubernetes-demo-tmp
@@ -247,7 +249,7 @@ On the non-airgapped system:
 
 :thinking: **Optional:**
 To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
 should be added to the artifact directory.
 On the non-airgapped system:
 
@@ -266,12 +268,9 @@ On the non-airgapped system:
     cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing/g2.lic
     ```
 
-### Create senzing/installer docker image
+### EULA
 
-To install the Senzing binaries on the Kubernetes PV/PVC
-on the air-gapped system, a Docker image needs to be created
-locally which contains the contents of the Senzing `g2` and `data` folders.
-On the non-airgapped system:
+To use the Senzing code, you must agree to the End User License Agreement (EULA).
 
 1. :warning:
    To use the Senzing code, you must agree to the End User License Agreement (EULA).
@@ -279,7 +278,14 @@ On the non-airgapped system:
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+
+### Create senzing/installer docker image
+
+To install the Senzing binaries on the Kubernetes PV/PVC
+on the air-gapped system, a Docker image needs to be created
+locally which contains the contents of the Senzing `g2` and `data` folders.
+On the non-airgapped system:
 
 1. Run the `docker build` command using
    [docker-build-senzing-installer.sh](../../bin/docker-build-senzing-installer.sh).
@@ -300,10 +306,26 @@ The second option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
 Only one of the two options need be followed.
 
+1. [Package saved Docker images](#package-saved-docker-images)
+1. [Use private Docker registry](#use-private-docker-registry)
+
+#### Package saved Docker images
+
+1. :thinking: **Optional:**
+   *Option 1 -
+   If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
+   [docker-save.sh](../../bin/airgapped/docker-save.sh)
+   to create files that can be transferred to the air-gapped system.
+   Example:
+
+    ```console
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-save.sh
+    ```
+
 #### Use private Docker registry
 
 1. :thinking: **Optional:**
-   *Option 1* -
+   *Option 2 -
    If the "air-gapped" private Docker registry **can** be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
    to transfer the docker images.
@@ -316,25 +338,12 @@ Only one of the two options need be followed.
         ```
 
     1. Tag and push docker images to private Docker registry using
-       [docker-tag-and-push.sh](../../bin/docker-tag-and-push.sh).
+       [docker-pull-tag-and-push.sh](../../bin/docker-pull-tag-and-push.sh).
        Example:
 
         ```console
-        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-pull-tag-and-push.sh
+        ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-pull-tag-and-push.sh airgapped/docker-images
         ```
-
-#### Package saved Docker images
-
-1. :thinking: **Optional:**
-   *Option 2* -
-   If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
-   [docker-save.sh](../../bin/airgapped/docker-save.sh)
-   to create files that can be transferred to the air-gapped system.
-   Example:
-
-    ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-save.sh
-    ```
 
 ### Save environment variables for air-gapped environment
 
@@ -462,6 +471,23 @@ Environment variables will be used by shell scripts.
     source ${SENZING_AIRGAPPED_DIR}/bin/environment.sh
     ```
 
+### Identify Docker registry
+
+1. :pencil2: Identify private Docker registry.
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
+    ```
+
+1. :thinking: **Optional:**
+ : Identify Docker registry secret.
+   Example:
+
+    ```console
+    export DOCKER_REGISTRY_SECRET=${DEMO_PREFIX}-registry-secret
+    ```
+
 ### Load Docker images
 
 :thinking: **Optional:**
@@ -481,21 +507,6 @@ an air-gapped private Docker registry.
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-load.sh
     ```
 
-1. :pencil2: Identify private Docker registry.
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=my.docker-registry.com:5000
-    ```
-
-1. :thinking: **Optional:**
- : Identify Docker registry secret.
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_SECRET=${DEMO_PREFIX}-registry-secret
-    ```
-
 1. :thinking: **Optional:**
    If `sudo` is needed to run docker commands.
    Example:
@@ -508,7 +519,7 @@ an air-gapped private Docker registry.
    Example:
 
     ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/docker-tag-and-push.sh
+    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-tag-and-push.sh airgapped/docker-images
     ```
 
 ### Save environment variables
@@ -634,6 +645,121 @@ If PVs and PVCs already exist, this step may be skipped.
       --namespace ${DEMO_NAMESPACE}
     ```
 
+### Install Postgresql Helm chart
+
+:thinking: This step installs a PostgreSQL database container.
+It is not a production-ready database and is only used for demonstration purposes.
+The choice of databases is a **limiting factor** in the speed at which Senzing can operate.
+This database choice is *at least* an order of magnitude slower than a
+well-tuned production database.
+
+In a production environment,
+a separate PostgreSQL database would be provisioned and maintained.
+The `${HELM_VALUES_DIR}/*.yaml` files would then be updated to have the
+`SENZING_DATABASE_URL` point to the production database.
+
+For this demonstration, the
+[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+provisions an instance of the
+[bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
+
+1. Create Configmap for `pg_hba.conf` using
+   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
+   Example:
+
+    ```console
+    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
+      --namespace ${DEMO_NAMESPACE} \
+      --from-file=${KUBERNETES_DIR}/pg_hba.conf
+    ```
+
+    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
+
+1. Install
+   [bitnami/postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-bitnami-postgresql \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/postgresql \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml
+    ```
+
+1. Wait for pod to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. Example of pod running:
+
+    ```console
+    NAME                                   READY   STATUS      RESTARTS   AGE
+    my-bitnami-postgresql-6bf64cbbdf-25gtb  1/1     Running     0          10m
+    ```
+
+### Install pgAdmin Helm Chart
+
+[pgAdmin](https://www.pgadmin.org/)
+is a web-based user interface for viewing the PostgreSQL database.
+
+1. Install
+   [runix/pgadmin4](https://github.com/rowanruseler/helm-charts/tree/master/charts/pgadmin4)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-pgadmin \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/pgadmin4 \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/pgadmin.yaml
+    ```
+
+1. To view PostgreSQL via pgAdmin, see [View PostgreSQL](#view-postgresql).
+
+### Install RabbitMQ Helm chart
+
+The
+[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
+provisions an instance of the
+[bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
+
+1. Install
+   [bitnami/rabbitmq](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-bitnami-rabbitmq \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/rabbitmq \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml
+    ```
+
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+    ```
+
+1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
+
 ### Deploy Senzing
 
 Copy Senzing's `g2` and `data` directories onto the Persistent Volume Claim (PVC)
@@ -641,14 +767,16 @@ at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-installer](https://github.com/Senzing/charts/tree/main/charts/senzing-installer)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-installer \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/installer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-installer.yaml
     ```
@@ -678,7 +806,9 @@ inspect mounted volumes,
 debug issues, or
 run command-line tools.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -708,7 +838,7 @@ run command-line tools.
 ### Install Senzing license
 
 To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/obtain-senzing-license.md)
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
 is needed in the `/etc/opt/senzing` directory.
 
 1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`.
@@ -750,71 +880,14 @@ sample data will be sent to the queue using the Senzing
       ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/var/opt/senzing/loadtest-dataset.json
     ```
 
-### Install Postgresql Helm chart
-
-:thinking: This step installs a PostgreSQL database container.
-It is not a production-ready database and is only used for demonstration purposes.
-The choice of databases is a **limiting factor** in the speed at which Senzing can operate.
-This database choice is *at least* an order of magnitude slower than a
-well-tuned production database.
-
-In a production environment,
-a separate PostgreSQL database would be provisioned and maintained.
-The `helm-values/*.yaml` files would then be updated to have the
-`SENZING_DATABASE_URL` point to the production database.
-
-For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
-provisions an instance of the
-[bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
-
-1. Create Configmap for `pg_hba.conf` using
-   [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
-   Example:
-
-    ```console
-    kubectl create configmap ${DEMO_PREFIX}-pg-hba \
-      --namespace ${DEMO_NAMESPACE} \
-      --from-file=${KUBERNETES_DIR}/pg_hba.conf
-    ```
-
-    Note: `pg_hba.conf` will be stored in the PersistentVolumeClaim.
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-bitnami-postgresql \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/postgresql \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-postgresql.yaml
-    ```
-
-1. Wait for pod to run using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-    ```
-
-1. Example of pod running:
-
-    ```console
-    NAME                                   READY   STATUS      RESTARTS   AGE
-    my-bitnami-postgresql-6bf64cbbdf-25gtb  1/1     Running     0          10m
-    ```
-
 ### Initialize database
 
-The [PostgreSQL Client](https://github.com/Senzing/charts/tree/master/charts/senzing-postgresql-client)
+The [PostgreSQL Client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -826,45 +899,7 @@ is used to create tables in the database (i.e. the schema) used by Senzing.
       --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml
     ```
 
-### Install phpPgAdmin Helm chart
-
-[phpPgAdmin](https://github.com/phppgadmin/phppgadmin)
-is a web-based user interface for viewing the PostgreSQL database.
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-phppgadmin \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/phppgadmin \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/phppgadmin.yaml
-    ```
-
-1. To view PostgreSQL using phpPgAdmin, see [View PostgreSQL](#view-postgresql).
-
-### Install RabbitMQ Helm chart
-
-The
-[binami/rabbitmq Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq)
-provisions an instance of the
-[bitnami/rabbitmq Docker image](https://hub.docker.com/r/bitnami/rabbitmq).
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-bitnami-rabbitmq \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/rabbitmq \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml
-    ```
-
-1. Wait for pods to run using
+1. Wait for pod to complete
    [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
@@ -874,32 +909,14 @@ provisions an instance of the
       --watch
     ```
 
-1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
-
-### Install stream-producer Helm chart
-
-The [stream producer](https://github.com/Senzing/stream-producer)
-pulls JSON lines from a file and pushes them to message queue using
-[helm install](https://helm.sh/docs/helm/helm_install/).
-
-1. Install chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-stream-producer \
-      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-stream-producer \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml
-    ```
-
 ### Install init-container Helm chart
 
 The [init-container](https://github.com/Senzing/docker-init-container)
 creates files from templates and initializes the G2 database.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/main/charts/senzing-init-container)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -911,7 +928,7 @@ creates files from templates and initializes the G2 database.
       --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml
     ```
 
-1. Wait for pods to run using
+1. Wait for pod to complete
    [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
    Example:
 
@@ -921,12 +938,33 @@ creates files from templates and initializes the G2 database.
       --watch
     ```
 
+### Install stream-producer Helm chart
+
+The [stream producer](https://github.com/Senzing/stream-producer)
+pulls JSON lines from a file and pushes them to a message queue.
+
+1. Install
+   [senzing/senzing-stream-producer](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-producer)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-stream-producer \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-stream-producer \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-stream-producer-rabbitmq-airgapped.yaml
+    ```
+
 ### Install stream-loader Helm chart
 
 The [stream loader](https://github.com/Senzing/stream-loader)
-pulls messages from message queue and sends them to Senzing.
+pulls messages from a message queue and sends them to Senzing.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-stream-loader](https://github.com/Senzing/charts/tree/main/charts/senzing-stream-loader)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -943,7 +981,9 @@ pulls messages from message queue and sends them to Senzing.
 The [Senzing API server](https://github.com/Senzing/senzing-api-server)
 receives HTTP requests to read and modify Senzing data.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/main/charts/senzing-api-server)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -972,7 +1012,9 @@ receives HTTP requests to read and modify Senzing data.
 The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
 is a light-weight WebApp demonstrating Senzing search capabilities.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -1005,7 +1047,9 @@ but may be valuable in a production environment.
 
 The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-redoer](https://github.com/Senzing/charts/tree/main/charts/senzing-redoer)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -1022,7 +1066,9 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
 The [SwaggerUI](https://swagger.io/tools/swagger-ui/) is a micro-service
 for viewing the Senzing REST OpenAPI specification in a web browser.
 
-1. Install chart using
+1. Install
+   [senzing/swaggerapi-swagger-ui](https://github.com/Senzing/charts/tree/main/charts/swaggerapi-swagger-ui)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -1040,7 +1086,9 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
 The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
 
-1. Install chart using
+1. Install
+   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/main/charts/senzing-configurator)
+   chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
 
@@ -1087,11 +1135,11 @@ is used to view the state of the queues.
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
+        1. See `{HELM_VALUES_DIR}/bitnami-rabbitmq.yaml` for Username and password.
 
 #### View PostgreSQL
 
-[phpPgAdmin](https://github.com/phppgadmin/phppgadmin)
+[pgAdmin](https://www.pgadmin.org/)
 is a web-based user interface for viewing the PostgreSQL database.
 
 1. In a separate terminal window, port forward to local machine using
@@ -1102,17 +1150,19 @@ is a web-based user interface for viewing the PostgreSQL database.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-phppgadmin 9171:80
+      svc/${DEMO_PREFIX}-pgadmin-pgadmin4 9171:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
     1. Login
-       1. See `helm-values/bitnami-postgresql.yaml` for postgres password (`postgresqlPassword`).
+       1. See `${SENZING_DEMO_DIR}/helm-values/pgpadmin.yaml` for **pgadmin** email and password
+          (`env.email` and `env.password`)
        1. Default: username: `postgres`  password: `postgres`
-    1. On left-hand navigation, select "G2" database to explore.
+    1. On left-hand navigation, select:
+        1. Servers > senzing > databases > G2 > schemas > public > tables
     1. The records received from the queue can be viewed in the following Senzing tables:
-        1. G2 > DSRC_RECORD
-        1. G2 > OBS_ENT
+        1. DSRC_RECORD
+        1. OBS_ENT
 
 #### View Senzing Console pod
 
@@ -1178,7 +1228,7 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
-   The [demonstration](https://github.com/Senzing/knowledge-base/blob/master/demonstrations/docker-compose-web-app.md)
+   The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
 
 #### View SwaggerUI
@@ -1246,7 +1296,7 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-init-container
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-stream-producer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-rabbitmq
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-phppgadmin
+    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-pgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-postgresql-client
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console-privileged

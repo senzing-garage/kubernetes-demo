@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/phppgadmin#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/phppgadmin#parameters
 
 ingress:
   enabled: true

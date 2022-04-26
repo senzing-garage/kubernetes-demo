@@ -1,4 +1,4 @@
-# See https://github.com/Senzing/charts/tree/master/charts/swaggerapi-swagger-ui#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/swaggerapi-swagger-ui#parameters
 
 ingress:
   enabled: true
@@ -15,8 +15,8 @@ main:
     enabled: true
 
   swaggerui:
-    baseUrl: /swagger
-    openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/master/senzing-rest-api.yaml
+    baseUrl: "/swagger"
+    openApiSpecUrl: https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml
 
 rbac:
   enabled: true
