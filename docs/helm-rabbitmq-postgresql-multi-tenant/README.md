@@ -1086,11 +1086,23 @@ The actual location on the PVC may vary.
     minikube ssh
     ```
 
-1. In the `minikube` instance, create `/mnt/vda1/senzing`.
+1. :thinking: Identify the "tenant".
+
+   This may seem redundate, but you are now inside of minikube and as such need
+   to set this environment variable.
+   If it's not set to what you expect, then you'll need to set it:
+   Example:
+
+    ```console
+    export SENZING_TENANT=tenant0
+    ```
+
+1. In the `minikube` instance, create `/mnt/vda1/senzing/tenantX`.
    Example:
 
     ```console
     sudo mkdir -p /mnt/vda1/senzing
+    sudo mkdir -p /mnt/vda1/senzing/${SENZING_TENANT}
     exit
     ```
 
@@ -1105,7 +1117,7 @@ The actual location on the PVC may vary.
       ${DEMO_PREFIX}-senzing-installer \
       senzing/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-installer.yaml\
+      --values ${HELM_VALUES_DIR}/senzing-installer.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_INSTALLER:-""}
     ```
 
