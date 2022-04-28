@@ -315,7 +315,8 @@ is to make a Docker image that contains the contents of the Senzing `g2` and `da
     minikube addons enable registry
     export DOCKER_REGISTRY_URL=docker.io
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
+    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh \
+        ${GIT_REPOSITORY_DIR}/bin/docker-images-for-multi-tenant.sh
     ```
 
 ## Create main
