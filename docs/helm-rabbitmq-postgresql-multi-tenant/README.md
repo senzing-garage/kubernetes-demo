@@ -1101,7 +1101,6 @@ The actual location on the PVC may vary.
    Example:
 
     ```console
-    sudo mkdir -p /mnt/vda1/senzing
     sudo mkdir -p /mnt/vda1/senzing/${SENZING_TENANT}
     exit
     ```
