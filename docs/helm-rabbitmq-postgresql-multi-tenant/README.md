@@ -195,7 +195,7 @@ as a guide, start a minikube cluster.
     minikube addons enable metrics-server
     ```
 
-1. View addons.
+1. :thinking: **Optional:** View addons.
    Example:
 
     ```console
