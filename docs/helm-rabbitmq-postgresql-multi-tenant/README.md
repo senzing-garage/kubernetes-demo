@@ -1346,7 +1346,7 @@ run command-line tools.
       --namespace ${DEMO_NAMESPACE} \
       --output jsonpath="{.items[0].metadata.name}" \
       --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+                  app.kubernetes.io/instance=senzing-console" \
       )
     ```
 
@@ -1661,7 +1661,7 @@ is a web-based user interface for viewing the PostgreSQL database.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-pgadmin-pgadmin4 9171:80
+      svc/pgadmin-pgadmin4 9171:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
@@ -1711,7 +1711,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
+      svc/senzing-api-server ${SENZING_PORT_SENZING_API_SERVER}:80
     ```
 
 In a separate terminal window:
@@ -1751,7 +1751,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
+      svc/senzing-entity-search-web-app ${SENZING_PORT_ENTITY_SEARCH_WEB_APP}:80
     ```
 
 1. The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
@@ -1780,7 +1780,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
+      svc/swaggerapi-swagger-ui ${SENZING_PORT_SWAGGERUI}:80
     ```
 
    Then visit [http://localhost:9180](http://localhost:9180).
@@ -1837,7 +1837,7 @@ In a separate terminal window:
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-nginx-proxy ${SENZING_PORT_NGINX_PROXY}:80
+      svc/nginx-proxy ${SENZING_PORT_NGINX_PROXY}:80
     ```
 
 ## Cleanup

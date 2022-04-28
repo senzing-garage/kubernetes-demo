@@ -17,7 +17,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
 
   phppgadmin:
-    serverHost: ${DEMO_PREFIX}-bitnami-postgresql
+    serverHost: bitnami-postgresql
     urlPrefix: /phppgadmin
 
   podSecurityContext:

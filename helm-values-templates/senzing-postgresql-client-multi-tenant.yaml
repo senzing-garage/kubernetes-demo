@@ -12,7 +12,7 @@ main:
   postgresql:
     database: g2_${SENZING_TENANT}
     file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql
-    host: ${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
+    host: bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
     password: ${DATABASE_PASSWORD}
     storageClaim: senzing-persistent-volume-claim
     username: ${SENZING_TENANT}

@@ -13,7 +13,7 @@ main:
     enabled: true
 
   senzing:
-    databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@${DEMO_PREFIX}-bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
+    databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@$bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
     persistentVolumeClaim: senzing-persistent-volume-claim
     subcommand: service
 
