@@ -38,31 +38,46 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Clone repository](#clone-repository)
     1. [Create demo directory](#create-demo-directory)
     1. [Start minikube cluster](#start-minikube-cluster)
+    1. [minikube addons](#minikube-addons)
     1. [View minikube cluster](#view-minikube-cluster)
-    1. [EULA](#eula)
     1. [Set environment variables](#set-environment-variables)
+    1. [EULA](#eula)
+    1. [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
     1. [Identify Docker registry](#identify-docker-registry)
-    1. [Create custom helm values files](#create-custom-helm-values-files)
-    1. [Create custom kubernetes configuration files](#create-custom-kubernetes-configuration-files)
-    1. [Save environment variables](#save-environment-variables)
-    1. [Create namespace](#create-namespace)
-    1. [Create persistent volume](#create-persistent-volume)
+1. [Create main](#create-main)
+    1. [Set environment variables for main](#set-environment-variables-for-main)
+    1. [Create custom helm values files for main](#create-custom-helm-values-files-for-main)
+    1. [Create custom Kubernetes configuration files for main](#create-custom-kubernetes-configuration-files-for-main)
+    1. [Save environment variables for main](#save-environment-variables-for-main)
+    1. [Create namespace for main](#create-namespace-for-main)
+    1. [Create persistent volume for main](#create-persistent-volume-for-main)
     1. [Add helm repositories](#add-helm-repositories)
+    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
+    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
+1. [Deploy Tenant](#deploy-tenant)
+    1. [Set environment variables for tenant](#set-environment-variables-for-tenant)
+    1. [EULA for tenant](#eula-for-tenant)
+    1. [Create custom helm values files for tenant](#create-custom-helm-values-files-for-tenant)
+    1. [Create custom kubernetes configuration files for tenant](#create-custom-kubernetes-configuration-files-for-tenant)
+    1. [Save environment variables for tenant](#save-environment-variables-for-tenant)
+    1. [Create namespace for tenant](#create-namespace-for-tenant)
+    1. [Create persistent volume for tenant](#create-persistent-volume-for-tenant)
+    1. [Create PostgreSQL database user for tenant](#create-postgresql-database-user-for-tenant)
+    1. [Create RabbitMQ user for tenant](#create-rabbitmq-user-for-tenant)
     1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
-    1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
+    1. [Install Senzing license](#install-senzing-license)
     1. [Initialize database](#initialize-database)
-    1. [Install phpPgAdmin Helm chart](#install-phppgadmin-helm-chart)
-    1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
+    1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
+        1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
-        1. [Install SwaggerUI Helm Chart](#install-swaggerui-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
@@ -71,8 +86,11 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View SwaggerUI](#view-swaggerui)
         1. [View Senzing Configurator](#view-senzing-configurator)
+        1. [View Nginx proxy](#view-nginx-proxy)
 1. [Cleanup](#cleanup)
-    1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
+    1. [Delete tenant](#delete-tenant)
+    1. [Delete main](#delete-main)
+    1. [Delete everything for Helm](#delete-everything-for-helm)
     1. [Delete minikube cluster](#delete-minikube-cluster)
 1. [Errors](#errors)
 1. [References](#references)
@@ -139,7 +157,6 @@ The Git repository has files that will be used in the `helm install --values` pa
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ### Create demo directory
-
 
 1. Make a directory for the demo.
    Example:
@@ -301,12 +318,12 @@ is to make a Docker image that contains the contents of the Senzing `g2` and `da
     ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh
     ```
 
-### Create main
+## Create main
 
 `main` is the owner of the shared database and RabbitMQ.
 Think of `main` as the super-tenant.
 
-#### Set environment variables for main
+### Set environment variables for main
 
 1. :pencil2: Identify the tenant administrator.
    Example:
@@ -325,7 +342,7 @@ Think of `main` as the super-tenant.
     export DEMO_NAMESPACE=${SENZING_TENANT}-namespace
     ```
 
-#### Create custom helm values files for main
+### Create custom helm values files for main
 
 In this step, Helm template files are populated with actual values.
 
@@ -375,7 +392,7 @@ Create Kubernetes manifest files for use with `kubectl create`.
     ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
     ```
 
-#### Save environment variables for main
+### Save environment variables for main
 
 1. Save environment variables into a file that can be sourced.
    Example:
@@ -634,7 +651,7 @@ provisions an instance of the
 
 1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
-### Deploy Tenant
+## Deploy Tenant
 
 A tenant is a share-nothing user of Senzing.
 Each tenant will have:
@@ -643,7 +660,7 @@ Each tenant will have:
 1. Separate queues in the single RabbitMQ instance.
 1. A separate copy of the senzing binary files in its own PV/PVC.
 
-#### Set environment variables for tenant
+### Set environment variables for tenant
 
 These steps assume that a fresh environment is used.
 As such, there will be some repetition from earler steps.
@@ -769,7 +786,7 @@ As such, there will be some repetition from earler steps.
     echo RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
     ```
 
-#### EULA
+### EULA for tenant
 
 To use the Senzing code, you must agree to the End User License Agreement (EULA).
 
@@ -779,7 +796,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
-#### Create custom helm values files for tenant
+### Create custom helm values files for tenant
 
 In this step, Helm template files are populated with actual values.
 
@@ -804,7 +821,7 @@ In this step, Helm template files are populated with actual values.
     ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values
     ```
 
-#### Create custom kubernetes configuration files for tenant
+### Create custom kubernetes configuration files for tenant
 
 In this step, Kubernetes template files are populated with actual values.
 
@@ -829,7 +846,7 @@ In this step, Kubernetes template files are populated with actual values.
     ls ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes
     ```
 
-#### Save environment variables for tenant
+### Save environment variables for tenant
 
 1. Save environment variables into a file that can be sourced.  This is important so that you can easily return to the state of this tenant's
   environment for testing or updates.
@@ -891,7 +908,7 @@ In this step, Kubernetes template files are populated with actual values.
     re-run the creation of the "current" links to perform the steps below or updates
     to previously created tenants.
 
-#### Create namespace for tenant
+### Create namespace for tenant
 
 1. Create namespace using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
@@ -910,7 +927,7 @@ In this step, Kubernetes template files are populated with actual values.
     kubectl get namespaces
     ```
 
-#### Create persistent volume for tenant
+### Create persistent volume for tenant
 
 1. Create persistent volumes using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
@@ -941,7 +958,7 @@ In this step, Kubernetes template files are populated with actual values.
       --namespace ${DEMO_NAMESPACE}
     ```
 
-#### Create PostgreSQL database user for tenant
+### Create PostgreSQL database user for tenant
 
 Using a database user interface like [phpPgAdmin](#view-postgresql):
 
@@ -958,7 +975,7 @@ Using a database user interface like [phpPgAdmin](#view-postgresql):
 
 1. Verify that the schema exists for the new tenant database.
 
-#### Create RabbitMQ user for tenant
+### Create RabbitMQ user for tenant
 
 1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
    create a new user with the following information.
@@ -1229,12 +1246,10 @@ This produces the same result as the `apt` installs describe in prior methods.
 
 1. :thinking: Identify the "tenant".
 
-  This may seem redundate, but you are now inside of minikube and as such need
-  to set this environment variable.
-
+   This may seem redundate, but you are now inside of minikube and as such need
+   to set this environment variable.
+   If it's not set to what you expect, then you'll need to set it:
    Example:
-
-    If it's not set to what you expect, then you'll need to set it:
 
     ```console
     export SENZING_TENANT=tenant1
@@ -1473,7 +1488,7 @@ receives HTTP requests to read and modify Senzing data.
       --watch
     ```
 
-## TODO:  add info about adding to /etc/hosts
+### TODO:  add info about adding to /etc/hosts
 
 1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
 
@@ -1629,7 +1644,7 @@ is a web-based user interface for viewing the PostgreSQL database.
     kubectl port-forward \
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
-      svc/phppgadmin 9171:80
+      svc/${DEMO_PREFIX}-pgadmin-pgadmin4 9171:80
     ```
 
 1. PostgreSQL will be viewable at [localhost:9171](http://localhost:9171).
@@ -1664,8 +1679,6 @@ is used to inspect mounted volumes, debug issues, or run command-line tools.
 
     kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
     ```
-
-
 
 #### View Senzing API Server
 
