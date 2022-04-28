@@ -1113,7 +1113,7 @@ The actual location on the PVC may vary.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-senzing-installer \
+      senzing-installer \
       senzing/senzing-installer \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/senzing-installer.yaml \
