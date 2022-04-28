@@ -608,7 +608,7 @@ is a web-based user interface for viewing the PostgreSQL database.
 
     ```console
     helm install \
-      ${DEMO_PREFIX}-pgadmin \
+      pgadmin \
       runix/pgadmin4 \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/pgadmin.yaml \
