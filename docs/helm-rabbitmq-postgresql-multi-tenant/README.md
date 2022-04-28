@@ -960,20 +960,26 @@ In this step, Kubernetes template files are populated with actual values.
 
 ### Create PostgreSQL database user for tenant
 
-Using a database user interface like [phpPgAdmin](#view-postgresql):
+Using a database user interface like [pgAdmin](#view-postgresql):
 
 1. Log on as super user.
-
-1. Create database and user by running SQL found in
-   ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
-
-1. **Warning:** For next step, be sure that the newly created database is selected.
-   For instance, in `phpPgAdmin`, select the database before running the SQL.
-
-1. Create schema and permissions by connecting to the database and running SQL found in
+1. Create the database. In `pgadmin`:
+    1. Select Servers > senzing > Databases.
+    1. Right-click and select Create > Database...
+    1. Create the database with the database name seen in
+       ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
+1. To create role and grant connect, in `pgAdmin` select Servers > Senzing > Databases > g2_tenantX
+    1. Right click and select "Query Tool"
+    1. Enter the contents of
+       ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_database.sql
+    1. Since the database is already created,
+       remove the `CREATE DATABASE ...` statement.
+    1. Click the "Execute/Refresh" icon to run the SQL.
+1. In the same query tool, run the contents of
    ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes/pg_tenant_create_schema.sql
-
-1. Verify that the schema exists for the new tenant database.
+1. Verify that the schema exists for the new tenant database. In `pgAdmin`:
+    1. Select Servers > senzing > Databases > g2_tenantX > Schemas
+    1. A `tenantX` schema should be defined.
 
 ### Create RabbitMQ user for tenant
 
