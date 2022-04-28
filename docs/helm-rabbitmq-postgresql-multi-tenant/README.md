@@ -1,4 +1,4 @@
-# kubernetes-demo-helm-rabbitmq-postgresql
+# kubernetes-demo-helm-rabbitmq-postgresql-multi-tenant
 
 ## Synopsis
 
