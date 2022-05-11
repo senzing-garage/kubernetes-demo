@@ -1,5 +1,5 @@
 helm-values/
 kubernetes/
-bin/docker-versions-latest.sh
-bin/senzing-versions-latest.sh
+bin/docker-versions-stable.sh
+bin/senzing-versions-stable.sh
 .history/
