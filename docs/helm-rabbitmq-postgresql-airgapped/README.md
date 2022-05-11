@@ -226,9 +226,9 @@ On the non-airgapped system:
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
-    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
-    source ${SENZING_AIRGAPPED_DIR}/bin/helm-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-stable.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-stable.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/helm-versions-stable.sh
     ```
 
 ### Download Helm Chart repositories
@@ -452,7 +452,7 @@ Environment variables will be used by shell scripts.
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-stable.sh
     ```
 
 1. Set environment variables that identify Senzing versions
@@ -460,7 +460,7 @@ Environment variables will be used by shell scripts.
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-latest.sh
+    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-stable.sh
     ```
 
 1. Identify location of `kubernetes-demo` repository
