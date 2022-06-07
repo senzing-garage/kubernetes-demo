@@ -635,7 +635,7 @@ provisions an instance of the
       bitnami-rabbitmq \
       bitnami/rabbitmq \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq.yaml \
+      --values ${HELM_VALUES_DIR}/bitnami-rabbitmq-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_RABBITMQ:-""}
     ```
 
@@ -1644,7 +1644,7 @@ is used to view the state of the queues.
 
 1. RabbitMQ will be viewable at [localhost:15672](http://localhost:15672).
     1. Login
-        1. See `helm-values/bitnami-rabbitmq.yaml` for Username and password.
+        1. See `helm-values/bitnami-rabbitmq-multi-tenant.yaml` for Username and password.
 
 #### View PostgreSQL
 
@@ -1906,7 +1906,7 @@ The following commands remove the Senzing Demo application from Kubernetes.
 
     ```console
     helm uninstall --namespace ${DEMO_NAMESPACE} bitnami-rabbitmq
-    helm uninstall --namespace ${DEMO_NAMESPACE} phppgadmin
+    helm uninstall --namespace ${DEMO_NAMESPACE} pgadmin
     helm uninstall --namespace ${DEMO_NAMESPACE} bitnami-postgresql
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml

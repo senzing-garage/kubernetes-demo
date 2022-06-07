@@ -14,11 +14,11 @@ main:
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
-    tag: ${SENZING_DOCKER_IMAGE_VERSION_PHPPGADMIN}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_PGADMIN}
 
-  phppgadmin:
+  pgadmin:
     serverHost: bitnami-postgresql
-    urlPrefix: /phppgadmin
+    urlPrefix: /pgadmin
 
   podSecurityContext:
     enabled: true

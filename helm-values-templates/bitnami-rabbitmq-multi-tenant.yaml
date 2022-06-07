@@ -1,5 +1,10 @@
 # See https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq#parameters
 
+ingress:
+  enabled: true
+  hostname: rabbitmq.senzing.local
+  path: /
+  
 auth:
   password: passw0rd
   username: user
