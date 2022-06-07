@@ -998,9 +998,9 @@ Using a database user interface like [pgAdmin](#view-postgresql):
     1. Click "Add user"
 
 1. Using [RabbitMQ management console](#view-rabbitmq), "Admin" tab,
-    1. In "Name" column, select the appropriate "tenantX".
+    1. In "Name" column, click on the appropriate "tenantX".
     1. In "Permissions", set permission for Virtual Host: `/`
-    1. Click "Set permission"
+    1. Click "Set permission" button.
 
 ### Deploy Senzing
 
