@@ -218,7 +218,7 @@ as a guide, start a minikube cluster.
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
-1. Retrieve latest docker image version numbers and set their environment variables.
+1. Retrieve stable docker image version numbers and set their environment variables.
    Example:
 
     ```console
@@ -232,7 +232,7 @@ as a guide, start a minikube cluster.
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
-1. Retrieve latest Senzing version numbers and set their environment variables.
+1. Retrieve stable Senzing version numbers and set their environment variables.
    Example:
 
     ```console
@@ -360,7 +360,7 @@ In this step, Helm template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
+   These custom values files can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values`.
    Example:
 
     ```console
@@ -385,7 +385,7 @@ Create Kubernetes manifest files for use with `kubectl create`.
     ```
 
 1. :thinking: **Optional:**
-   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
+   These custom values files can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes`.
    Example:
 
     ```console
@@ -421,7 +421,7 @@ Create Kubernetes manifest files for use with `kubectl create`.
     ```
 
 1. :thinking: **Optional:**
-   These environment variables can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh.
+   These environment variables can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh`.
    Example:
 
     ```console
@@ -814,7 +814,7 @@ In this step, Helm template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values.
+   These custom values files can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/helm-values`.
    Example:
 
     ```console
@@ -839,7 +839,7 @@ In this step, Kubernetes template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These custom values files can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes.
+   These custom values files can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/kubernetes`.
    Example:
 
     ```console
@@ -876,7 +876,7 @@ In this step, Kubernetes template files are populated with actual values.
     ```
 
 1. :thinking: **Optional:**
-   These environment variables can be seen in ${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh.
+   These environment variables can be seen in `${SENZING_DEMO_DIR}/${SENZING_TENANT}/environment.sh`.
    Example:
 
     ```console
