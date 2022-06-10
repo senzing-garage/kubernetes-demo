@@ -609,7 +609,7 @@ is a web-based user interface for viewing the PostgreSQL database.
     ```console
     helm install \
       pgadmin \
-      runix/pgadmin4 \
+      dpage/pgadmin4 \
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/pgadmin-multi-tenant.yaml \
       --version ${SENZING_HELM_VERSION_RUNIX_PGADMIN4:-""}
