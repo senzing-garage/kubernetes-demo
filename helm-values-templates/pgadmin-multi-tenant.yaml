@@ -22,7 +22,12 @@ image:
   tag: "${SENZING_DOCKER_IMAGE_VERSION_DPAGE_PGADMIN4}"
 
 ingress:
-  enabled: false
+  enabled: true
+  hosts:
+    - host: "pgadmin.senzing.local"
+      paths: 
+        - path: "/"
+          pathType: Prefix
 
 persistentVolume:
   enabled: false
