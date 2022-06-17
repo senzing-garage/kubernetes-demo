@@ -19,7 +19,7 @@ env:
 image:
   registry: ${DOCKER_REGISTRY_URL}
   repository: dpage/pgadmin4
-  tag: ${SENZING_DOCKER_IMAGE_VERSION_DPAGE_PGADMIN4}
+  tag: "${SENZING_DOCKER_IMAGE_VERSION_DPAGE_PGADMIN4}"
 
 ingress:
   enabled: false
