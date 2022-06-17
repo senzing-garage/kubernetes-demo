@@ -1355,7 +1355,7 @@ run command-line tools.
 ### Initialize database
 
 The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
-is used to create tables in the database (i.e. the schema) used by Senzing.
+is used to create tables in the database used by Senzing.
 
 1. Install
    [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
