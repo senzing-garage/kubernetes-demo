@@ -1352,29 +1352,6 @@ run command-line tools.
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
-### Install Senzing license
-
-To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
-is needed in the `/etc/opt/senzing` directory.
-
-1. :pencil2: Identify location of license on local system.
-   Example:
-
-    ```console
-    export SENZING_G2_LICENSE_PATH=/path/to/local/g2.lic
-    ```
-
-1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`
-   on pod's mounted volumes.
-   Example:
-
-    ```console
-    kubectl cp \
-      ${SENZING_G2_LICENSE_PATH} \
-      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
-    ```
-
 ### Initialize database
 
 The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
@@ -1433,6 +1410,29 @@ creates files from templates and initializes the G2 database.
     kubectl get pods \
       --namespace ${DEMO_NAMESPACE} \
       --watch
+    ```
+
+### Install Senzing license
+
+To ingest more than the default number of allowed records, a
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
+is needed in the `/etc/opt/senzing` directory.
+
+1. :pencil2: Identify location of license on local system.
+   Example:
+
+    ```console
+    export SENZING_G2_LICENSE_PATH=/path/to/local/g2.lic
+    ```
+
+1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`
+   on pod's mounted volumes.
+   Example:
+
+    ```console
+    kubectl cp \
+      ${SENZING_G2_LICENSE_PATH} \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
     ```
 
 ### Install stream-producer Helm chart
