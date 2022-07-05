@@ -208,13 +208,6 @@ as a guide, start a minikube cluster.
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
-1. Retrieve latest Senzing version numbers and set their environment variables.
-   Example:
-
-    ```console
-    source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/senzing-versions-stable.sh)
-    ```
-
 ### Identify Docker registry
 
 :thinking: There are 3 options when it comes to using a docker registry.  Choose one:
