@@ -19,7 +19,6 @@ main:
     entityType: GENERIC
     logLevel: info
     monitoringPeriod: 60
-    persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue

@@ -11,5 +11,4 @@ main:
     file: senzing-g2/resources/schema/g2core-schema-postgresql-create.sql
     host: ${DEMO_PREFIX}-bitnami-postgresql
     password: postgres
-    storageClaim: senzing-persistent-volume-claim
     username: postgres
