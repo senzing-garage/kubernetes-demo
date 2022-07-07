@@ -134,7 +134,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
-### Create demo directory
+### Create artifact directory
 
 1. :pencil2: Create a unique prefix.
    This will be used in a local directory name
@@ -194,7 +194,7 @@ as a guide, start a minikube cluster.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Retrieve latest docker image version numbers and set their environment variables.
+1. Retrieve stable docker image version numbers and set their environment variables.
    Example:
 
     ```console
@@ -409,7 +409,7 @@ If PVs and PVCs already exist, this step may be skipped.
       --namespace ${DEMO_NAMESPACE}
     ```
 
-### Add helm repositories
+### Add Helm repositories
 
 1. Add Bitnami repository using
    [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
