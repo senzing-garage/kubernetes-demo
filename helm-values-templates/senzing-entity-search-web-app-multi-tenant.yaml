@@ -2,9 +2,10 @@
 
 ingress:
   enabled: true
+  hostname: ${SENZING_TENANT}.local
+  path: /app
 
 main:
-
   autoscaling:
     enabled: false
     maxReplicas: 2
@@ -20,7 +21,11 @@ main:
     enabled: true
 
   senzing:
-    apiServerUrl: "http://${DEMO_PREFIX}-senzing-api-server"
+    apiServerUrl: "http://${SENZING_TENANT}.local/api"
+    webServerAdminAuthMode: NONE
+    webServerApiPath: /api
+    webServerUrl: http://${SENZING_TENANT}.local:80
+    webServerVirtualPath: /app
 
 rbac:
   enabled: true
