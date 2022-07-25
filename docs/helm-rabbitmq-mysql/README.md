@@ -536,11 +536,11 @@ provisions an instance of the
 
 ### Install phpMyAdmin Helm Chart
 
-[phpMyAdmin](FIXME:)
+[phpMyAdmin](https://www.phpmyadmin.net)
 is a web-based user interface for viewing the MySQL database.
 
 1. Install
-   [bitnami/phpmyadmin](FIXME:)
+   [bitnami/phpmyadmin](https://github.com/bitnami/charts/tree/master/bitnami/phpmyadmin)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -949,7 +949,7 @@ The [MySQL Client](https://github.com/Senzing/charts/tree/main/charts/arey-mysql
 is used to create tables in the database (i.e. the schema) used by Senzing.
 
 1. Install
-   [senzing/arey-msql-client](FIXME:)
+   [senzing/arey-msql-client](https://github.com/Senzing/charts/tree/main/charts/arey-mysql-client)
    chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -1220,7 +1220,7 @@ is used to view the state of the queues.
 
 #### View MySQL
 
-[phpMyAdmin](FIXME:)
+[phpMyAdmin](https://www.phpmyadmin.net)
 is a web-based user interface for viewing the MySQL database.
 
 1. In a separate terminal window, port forward to local machine using
