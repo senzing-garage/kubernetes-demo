@@ -11,7 +11,7 @@ for demonstration purposes.
 ## Overview
 
 These instructions illustrate a reference implementation of Senzing using
-PostgreSQL as the underlying database.
+MySQL as the underlying database.
 
 The instructions show how to set up a system that:
 
@@ -498,7 +498,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/mysql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/mysql)
+[bitnami/mysql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/mysql)
 provisions an instance of the
 [bitnami/mysql Docker image](https://hub.docker.com/r/bitnami/mysql).
 
@@ -537,7 +537,7 @@ provisions an instance of the
 ### Install phpMyAdmin Helm Chart
 
 [phpMyAdmin](FIXME:)
-is a web-based user interface for viewing the PostgreSQL database.
+is a web-based user interface for viewing the MySQL database.
 
 1. Install
    [bitnami/phpmyadmin](FIXME:)
