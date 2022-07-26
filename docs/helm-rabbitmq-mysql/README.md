@@ -603,7 +603,7 @@ There are 4 options when it comes to initializing the Persistent Volume with Sen
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
-1. [senzing/installer container method](#senzing-installer-container-method) - uses
+1. [senzing/installer container method](#senzinginstaller-container-method) - uses
    [senzing/installer](https://github.com/Senzing/docker-installer)
    container optionally built in
    [Create senzing/installer docker image](#create-senzinginstaller-docker-image)

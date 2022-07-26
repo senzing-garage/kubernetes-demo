@@ -2,14 +2,15 @@
 
 ## Synopsis
 
-Using Microsoft Azure Kubernetes Service, bring up a Senzing stack on Kubernetes
-using Helm, Azure Message Bus Queue, and a Azure SQL Database.
+Bring up a reference implementation Senzing stack on Kubernetes
+using Microsoft Azure Kubernetes Service, Azure Message Bus Queue, 
+Azure SQL Database, `kubectl`, and `helm`.
 
 ## Overview
 
-This repository illustrates a reference implementation of Senzing using
+These instructions illustrate a reference implementation of Senzing using
 Microsoft's Azure SQL Database as the underlying database.
-f
+
 The instructions show how to set up a system that:
 
 1. Reads JSON lines from a file on the internet and sends each JSON line to a message queue using the Senzing
@@ -142,15 +143,14 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
-## Demonstrate
-
 ### Create demo directory
 
-1. :pencil2: Create unique prefix.
-   This will be used to create unique names in Azure
-   and will be used in a local directory name.
+1. :pencil2: Create a unique prefix.
+   This will be used in a local directory name
+   as well as a prefix to create unique names in Azure.
 
-   :warning:  Must be all lowercase.
+   :warning:  Because it's used in Kubernetes resource names,
+   it must be all lowercase.
 
    Example:
 

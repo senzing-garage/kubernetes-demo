@@ -56,7 +56,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Deploy Senzing](#deploy-senzing)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
     1. [Install Senzing license](#install-senzing-license)
-    1. [Initialize database](#initialize-database)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -487,6 +486,22 @@ If PVs and PVCs already exist, this step may be skipped.
 
 This step adds the IBM Db2 Client driver code.
 
+1. Log into `minikube` instance using
+   [minikube ssh](https://minikube.sigs.k8s.io/docs/commands/ssh/).
+   Example:
+
+    ```console
+    minikube ssh
+    ```
+
+1. In the `minikube` instance, create `/mnt/vda1/senzing`.
+   Example:
+
+    ```console
+    sudo mkdir -p /mnt/vda1/senzing
+    exit
+    ```
+
 1. Install chart using
    [helm install](https://helm.sh/docs/helm/helm_install/).
    Example:
@@ -581,7 +596,7 @@ There are 4 options when it comes to initializing the Persistent Volume with Sen
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
-1. [senzing/installer container method](#senzing-installer-container-method) - uses
+1. [senzing/installer container method](#senzinginstaller-container-method) - uses
    [senzing/installer](https://github.com/Senzing/docker-installer)
    container optionally built in
    [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
@@ -645,22 +660,6 @@ Copy Senzing's `g2` and `data` directories onto the Persistent Volume Claim (PVC
 at `/opt/senzing/g2` and `/opt/senzing/data`.
 These paths are relative to inside the containers via PVC mounts.
 The actual location on the PVC may vary.
-
-1. Log into `minikube` instance using
-   [minikube ssh](https://minikube.sigs.k8s.io/docs/commands/ssh/).
-   Example:
-
-    ```console
-    minikube ssh
-    ```
-
-1. In the `minikube` instance, create `/mnt/vda1/senzing`.
-   Example:
-
-    ```console
-    sudo mkdir -p /mnt/vda1/senzing
-    exit
-    ```
 
 1. Install
    [senzing/senzing-installer](https://github.com/Senzing/charts/tree/main/charts/senzing-installer)
