@@ -849,7 +849,7 @@ This produces the same result as the `apt` installs describe in prior methods.
       --volume ${DOWNLOAD_DIR}:/download \
       senzing/yumdownloader \
         senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
-        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
+        senzingdata-v3-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.
