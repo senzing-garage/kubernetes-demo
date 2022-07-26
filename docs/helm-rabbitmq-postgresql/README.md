@@ -134,7 +134,7 @@ The Git repository has files that will be used in the `helm install --values` pa
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
-### Create artifact directory
+### Create demo directory
 
 1. :pencil2: Create a unique prefix.
    This will be used in a local directory name
@@ -194,14 +194,14 @@ as a guide, start a minikube cluster.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Retrieve stable docker image version numbers and set their environment variables.
+1. Retrieve docker image version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh)
     ```
 
-1. Retrieve stable Helm Chart version numbers and set their environment variables.
+1. Retrieve Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
@@ -385,6 +385,7 @@ If PVs and PVCs already exist, this step may be skipped.
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     ```
 
 1. Create persistent volume claims using
@@ -394,6 +395,7 @@ If PVs and PVCs already exist, this step may be skipped.
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
+    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     ```
 
 1. :thinking: **Optional:**
@@ -466,7 +468,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+[bitnami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -612,7 +614,26 @@ run command-line tools.
 
 ### Install Senzing license
 
-FIXME:
+To ingest more than the default number of allowed records, a
+[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
+is needed in the `/etc/opt/senzing` directory.
+
+1. :pencil2: Identify location of license on local system.
+   Example:
+
+    ```console
+    export SENZING_G2_LICENSE_PATH=/path/to/local/g2.lic
+    ```
+
+1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`
+   on pod's mounted volumes.
+   Example:
+
+    ```console
+    kubectl cp \
+      ${SENZING_G2_LICENSE_PATH} \
+      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
+    ```
 
 ### Initialize database
 

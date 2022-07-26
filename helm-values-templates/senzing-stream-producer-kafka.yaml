@@ -7,6 +7,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
 
   senzing:
+    defaultDataSource: TEST
     inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
     kafkaBootstrapServerHost: ${DEMO_PREFIX}-bitnami-kafka
     kafkaBootstrapServerPort: 9092

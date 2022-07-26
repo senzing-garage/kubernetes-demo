@@ -219,21 +219,21 @@ as a guide, start a minikube cluster.
 ### Set environment variables
 
 1. Set environment variables listed in "[Clone repository](#clone-repository)".
-1. Retrieve stable docker image version numbers and set their environment variables.
+1. Retrieve docker image version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh)
     ```
 
-1. Retrieve stable Helm Chart version numbers and set their environment variables.
+1. Retrieve Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
-1. Retrieve stable Senzing version numbers and set their environment variables.
+1. Retrieve Senzing version numbers and set their environment variables.
    Example:
 
     ```console
@@ -1238,7 +1238,7 @@ This produces the same result as the `apt` installs describe in prior methods.
       --volume ${DOWNLOAD_DIR}:/download \
       senzing/yumdownloader \
         senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
-        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
+        senzingdata-v3-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.
