@@ -14,9 +14,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}
 
   senzing:
-    dataSource: TEST
     databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
-    entityType: GENERIC
     logLevel: info
     monitoringPeriod: 60
     persistentVolumeClaim: senzing-persistent-volume-claim

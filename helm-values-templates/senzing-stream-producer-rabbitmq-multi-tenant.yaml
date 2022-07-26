@@ -10,6 +10,7 @@ main:
     enabled: true
 
   senzing:
+    defaultDataSource: TEST
     inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
     rabbitmqExchange: senzing-rabbitmq-exchange-${SENZING_TENANT}
     rabbitmqHost: bitnami-rabbitmq.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
