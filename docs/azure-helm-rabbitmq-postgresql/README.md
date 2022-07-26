@@ -157,7 +157,7 @@ The Git repository has files that will be used in the `helm install --values` pa
    Example:
 
     ```console
-    export DEMO_PREFIX=my
+    export DEMO_PREFIX=xyzzy
     ```
 
 1. Make a directory for the demo.
@@ -189,6 +189,10 @@ The Git repository has files that will be used in the `helm install --values` pa
     ```console
     export SENZING_AZURE_LOCATION=eastus
     ```
+
+### Set environment variables
+
+1. Set environment variables listed in "[Clone repository](#clone-repository)".
 
 1. Synthesize environment variables.
    Example:
@@ -533,7 +537,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+[bitnami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -1286,7 +1290,6 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-apt
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-yum
     helm repo remove senzing
     helm repo remove runix
     helm repo remove bitnami

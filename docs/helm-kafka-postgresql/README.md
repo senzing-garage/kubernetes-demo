@@ -505,7 +505,7 @@ The `${SENZING_DEMO_DIR}/helm-values/*.yaml` files would then be updated to have
 `SENZING_DATABASE_URL` point to the production database.
 
 For this demonstration, the
-[binami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
+[bitnami/postgresql Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql)
 provisions an instance of the
 [bitnami/postgresql Docker image](https://hub.docker.com/r/bitnami/postgresql).
 
@@ -636,7 +636,7 @@ There are 4 options when it comes to initializing the Persistent Volume with Sen
 Choose one:
 
 1. [Root container method](#root-container-method) - requires a root container
-1. [senzing/installer container method](#senzing-installer-container-method) - uses
+1. [senzing/installer container method](#senzinginstaller-container-method) - uses
    [senzing/installer](https://github.com/Senzing/docker-installer)
    container optionally built in
    [Create senzing/installer docker image](#create-senzinginstaller-docker-image)
@@ -849,7 +849,7 @@ This produces the same result as the `apt` installs describe in prior methods.
       --volume ${DOWNLOAD_DIR}:/download \
       senzing/yumdownloader \
         senzingapi-${SENZING_VERSION_SENZINGAPI_BUILD} \
-        senzingdata-v2-${SENZING_VERSION_SENZINGDATA_BUILD}
+        senzingdata-v3-${SENZING_VERSION_SENZINGDATA_BUILD}
     ```
 
 1. Copy files into minikube.

@@ -34,6 +34,7 @@ env \
     --regexp="^GIT_" \
     --regexp="^HELM_" \
     --regexp="^KUBERNETES_" \
+    --regexp="^MSSQL_" \
     --regexp="^RABBITMQ_" \
     --regexp="^SENZING_" \
 | sort \
