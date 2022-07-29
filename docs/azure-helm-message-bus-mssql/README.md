@@ -339,7 +339,7 @@ To use the "MICROSOFT ODBC DRIVER 17 FOR SQL SERVER", you must agree to the End 
    Example:
 
     ```console
-    export SENZING_AZURE_CONNECTION_STRING=$(jq --raw-output ".primaryConnectionString" ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json)
+    export SENZING_AZURE_QUEUE_CONNECTION_STRING=$(jq --raw-output ".primaryConnectionString" ${SENZING_DEMO_DIR}/az-servicebus-namespace-authorization-rule-keys-list.json)
     export SENZING_AZURE_QUEUE_NAME=$(jq --raw-output ".name" ${SENZING_DEMO_DIR}/az-servicebus-queue-create.json)
     ```
 

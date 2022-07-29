@@ -14,7 +14,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}
 
   senzing:
-    azureConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
+    azureQueueConnectionString: ${SENZING_AZURE_QUEUE_CONNECTION_STRING}
     azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
     databaseUrl: "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:1433/${DATABASE_DATABASE}"
     logLevel: info
