@@ -7,7 +7,7 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_PRODUCER}
 
   senzing:
-    azureConnectionString: ${SENZING_AZURE_CONNECTION_STRING}
+    azureQueueConnectionString: ${SENZING_AZURE_QUEUE_CONNECTION_STRING}
     azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
     defaultDataSource: TEST
     inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
