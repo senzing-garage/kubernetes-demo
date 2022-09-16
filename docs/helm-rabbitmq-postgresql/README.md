@@ -177,7 +177,7 @@ as a guide, start a minikube cluster.
 :thinking: **Optional:** View the minikube cluster using the
 [dashboard](https://minikube.sigs.k8s.io/docs/handbook/dashboard/).
 
-1. Run command in a new terminal using
+1. Run command in a separate terminal using
    [minikube dashboard](https://minikube.sigs.k8s.io/docs/commands/dashboard/).
    Example:
 
