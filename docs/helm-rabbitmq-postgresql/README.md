@@ -410,7 +410,6 @@ If PVs and PVCs already exist, this step may be skipped.
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
 
     ```
 
@@ -421,7 +420,6 @@ If PVs and PVCs already exist, this step may be skipped.
     ```console
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl create -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
 
     ```
 
