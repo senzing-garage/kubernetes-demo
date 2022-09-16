@@ -628,7 +628,8 @@ provisions an instance of the
 
 ## Demonstrate
 
-1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
+Now that all of the pre-requisites are in place,
+it's time to bring up a system that uses Senzing.
 
 ### Install stream-producer Helm chart
 
@@ -763,6 +764,8 @@ run command-line tools.
       --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
 
     ```
+
+1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
 ### Optional charts
 
