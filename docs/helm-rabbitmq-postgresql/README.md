@@ -728,17 +728,6 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 
     ```
 
-1. Wait until Deployment has completed using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-
-    ```
-
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
 ### Install senzing-console Helm chart
