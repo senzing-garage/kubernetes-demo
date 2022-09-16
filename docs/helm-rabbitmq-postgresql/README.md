@@ -53,7 +53,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
 1. [Demonstrate](#demonstrate)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
-    1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
