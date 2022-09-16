@@ -11,6 +11,18 @@ main:
 
   senzing:
     databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "SQL",
+          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
+        }
+      }
     persistentVolumeClaim: senzing-persistent-volume-claim
     subcommand: redo
 

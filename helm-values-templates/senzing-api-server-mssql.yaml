@@ -19,7 +19,7 @@ main:
           "SUPPORTPATH": "/opt/senzing/data"
         },
         "SQL": {
-          "BACKEND": "HYBRID",
+          "BACKEND": "SQL",
           "CONNECTION": "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_DATABASE}"
         }
       }

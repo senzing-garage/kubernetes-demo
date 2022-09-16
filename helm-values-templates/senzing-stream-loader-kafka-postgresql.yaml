@@ -15,6 +15,18 @@ main:
 
   senzing:
     databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "SQL",
+          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
+        }
+      }
     kafkaBootstrapServerHost: "${DEMO_PREFIX}-bitnami-kafka"
     kafkaBootstrapServerPort: 9092
     kafkaTopic: senzing-kafka-topic

@@ -15,7 +15,7 @@ main:
           "SUPPORTPATH": "/opt/senzing/data"
         },
         "SQL": {
-          "BACKEND": "HYBRID",
+          "BACKEND": "SQL",
           "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
         }
       }

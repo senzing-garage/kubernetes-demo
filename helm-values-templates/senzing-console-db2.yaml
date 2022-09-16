@@ -15,7 +15,7 @@ main:
           "SUPPORTPATH": "/opt/senzing/data"
         },
         "SQL": {
-          "BACKEND": "HYBRID",
+          "BACKEND": "SQL",
           "CONNECTION": "db2://db2inst1:db2inst1@${DEMO_PREFIX}-senzing-ibm-db2:50000/G2"
         }
       }
