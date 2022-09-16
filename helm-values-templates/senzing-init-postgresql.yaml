@@ -19,3 +19,4 @@ main:
           "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
         }
       }
+    subcommand: mandatory
