@@ -440,29 +440,13 @@ The volumes being created are for the PostgreSQL and RabbitMQ backing services.
 
 ### Add Helm repositories
 
-1. Add Bitnami repository using
+1. Add Helm repositories using
    [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
    Example:
 
     ```console
     helm repo add bitnami https://charts.bitnami.com/bitnami
-
-    ```
-
-1. Add Helm repository for `pgAdmin` using
-   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
-   Example:
-
-    ```console
     helm repo add runix https://helm.runix.net
-
-    ```
-
-1. Add Senzing repository using
-   [helm repo add](https://helm.sh/docs/helm/helm_repo_add/).
-   Example:
-
-    ```console
     helm repo add senzing https://hub.senzing.com/charts/
 
     ```
