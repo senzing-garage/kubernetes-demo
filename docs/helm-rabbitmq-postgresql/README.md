@@ -401,6 +401,9 @@ are for a demonstration environment.
 They are not sufficient for a production environment.
 If PVs and PVCs already exist, this step may be skipped.
 
+**Note:**  Senzing does not require Persistent Volumes.
+The volumes being created are for the PostgreSQL and RabbitMQ backing services.
+
 1. Create persistent volumes using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
    Example:
