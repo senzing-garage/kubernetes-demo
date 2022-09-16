@@ -49,11 +49,10 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Add helm repositories](#add-helm-repositories)
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
+    1. [Initialize database](#initialize-database)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
 1. [Demonstrate](#demonstrate)
     1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
-    1. [Install Senzing license](#install-senzing-license)
-    1. [Initialize database](#initialize-database)
     1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
@@ -489,7 +488,7 @@ If PVs and PVCs already exist, this step may be skipped.
 
 :thinking: This step installs a PostgreSQL database container.
 It is not a production-ready database and is only used for demonstration purposes.
-The choice of databases is a **limiting factor** in the speed at which Senzing can operate.
+The choice of database is a **limiting factor** in the speed at which Senzing can operate.
 This database choice is *at least* an order of magnitude slower than a
 well-tuned production database.
 
@@ -573,6 +572,38 @@ is a web-based user interface for viewing the PostgreSQL database.
 
 1. To view PostgreSQL via pgAdmin, see [View PostgreSQL](#view-postgresql).
 
+### Initialize database
+
+The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
+is used to create tables in the database (i.e. the schema) used by Senzing.
+
+1. Install
+   [senzing/senzing-init-postgresql](https://github.com/Senzing/charts/tree/main/charts/senzing-init-postgresql)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-init-postgresql \
+      senzing/senzing-init-postgresql \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-init-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_INIT_POSTGRESQL:-""}
+
+    ```
+
+1. Wait for pod to complete
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+
+    ```
+
 ### Install RabbitMQ Helm chart
 
 The
@@ -650,95 +681,6 @@ run command-line tools.
     ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
-
-### Install Senzing license
-
-To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
-is needed in the `/etc/opt/senzing` directory.
-
-1. :pencil2: Identify location of license on local system.
-   Example:
-
-    ```console
-    export SENZING_G2_LICENSE_PATH=/path/to/local/g2.lic
-
-    ```
-
-1. Copy the Senzing license to `/etc/opt/senzing/g2.lic`
-   on pod's mounted volumes.
-   Example:
-
-    ```console
-    kubectl cp \
-      ${SENZING_G2_LICENSE_PATH} \
-      ${DEMO_NAMESPACE}/${CONSOLE_POD_NAME}:/etc/opt/senzing/g2.lic
-
-    ```
-
-### Initialize database
-
-The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
-is used to create tables in the database (i.e. the schema) used by Senzing.
-
-1. Install
-   [senzing/senzing-postgresql-client](https://github.com/Senzing/charts/tree/main/charts/senzing-postgresql-client)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-postgresql-client \
-      senzing/senzing-postgresql-client \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-postgresql-client.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_POSTGRESQL_CLIENT:-""}
-
-    ```
-
-1. Wait for pod to complete
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-
-    ```
-
-### Install init-container Helm chart
-
-The [init-container](https://github.com/Senzing/docker-init-container)
-creates files from templates and initializes the G2 database.
-
-1. Install
-   [senzing/senzing-init-container](https://github.com/Senzing/charts/tree/main/charts/senzing-init-container)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-init-container \
-      senzing/senzing-init-container \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-init-container-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_INIT_CONTAINER:-""}
-
-    ```
-
-1. Wait for pod to complete
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-
-    ```
 
 ### Install stream-producer Helm chart
 
