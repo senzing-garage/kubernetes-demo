@@ -8,6 +8,4 @@ main:
 
   senzing:
     databaseUrl: "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:1433/${DATABASE_DATABASE}"
-    mountOptMicrosoft:  true
-    persistentVolumeClaim: senzing-persistent-volume-claim
     subcommand: service

@@ -11,16 +11,12 @@ main:
 
   senzing:
     defaultDataSource: TEST
-    inputUrl: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
     rabbitmqExchange: senzing-rabbitmq-exchange-${SENZING_TENANT}
     rabbitmqHost: bitnami-rabbitmq.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
     rabbitmqPassword: ${RABBITMQ_PASSWORD}
     rabbitmqQueue: senzing-rabbitmq-queue-${SENZING_TENANT}
     rabbitmqRoutingKey: senzing.records.${SENZING_TENANT}
     rabbitmqUsername: ${SENZING_TENANT}
-    recordMax: ${SENZING_RECORD_MAX}
-    recordMin: ${SENZING_RECORD_MIN}
-    recordMonitor: 1000
     subcommand: json-to-rabbitmq
 
 rbac:

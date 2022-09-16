@@ -23,5 +23,3 @@ main:
           "CONNECTION": "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_DATABASE}"
         }
       }
-    mountOptMicrosoft: true
-    persistentVolumeClaim: senzing-persistent-volume-claim

@@ -8,5 +8,4 @@ main:
 
   senzing:
     databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/G2"
-    persistentVolumeClaim: senzing-persistent-volume-claim
     subcommand: service

@@ -1,3 +1,5 @@
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-stream-producer#parameters
+
 main:
 
   image:
@@ -6,12 +8,8 @@ main:
 
   senzing:
     defaultDataSource: TEST
-    inputUrl: "file:///var/opt/senzing/loadtest-dataset.json"
-    persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user
-    recordMax: 10000
-    recordMonitor: 1000
     subcommand: json-to-rabbitmq

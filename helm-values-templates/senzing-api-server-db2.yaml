@@ -23,5 +23,3 @@ main:
           "CONNECTION": "db2://db2inst1:db2inst1@G2"
         }
       }
-    mountOptIbm:  true
-    persistentVolumeClaim: senzing-persistent-volume-claim

@@ -7,7 +7,6 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_REDOER}
 
   senzing:
-    databaseUrl: "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432/G2"
     engineConfigurationJson: >-
       {
         "PIPELINE": {

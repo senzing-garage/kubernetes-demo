@@ -17,7 +17,6 @@ main:
     enabled: true
 
   senzing:
-    databaseUrl: "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432/g2_${SENZING_TENANT}"
     engineConfigurationJson: >-
       {
         "PIPELINE": {
@@ -30,9 +29,6 @@ main:
           "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
         }
       }
-    logLevel: info
-    monitoringPeriod: 60
-    persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqExchange: senzing-rabbitmq-exchange-${SENZING_TENANT}
     rabbitmqHost: bitnami-rabbitmq.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local
     rabbitmqPassword: ${RABBITMQ_PASSWORD}
@@ -40,7 +36,6 @@ main:
     rabbitmqRoutingKey: senzing.records.${SENZING_TENANT}
     rabbitmqUsername: ${SENZING_TENANT}
     subcommand: rabbitmq
-    threadsPerProcess: 4
 
 rbac:
   enabled: true
