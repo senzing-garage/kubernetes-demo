@@ -644,43 +644,6 @@ provisions an instance of the
 
 ## Demonstrate
 
-### Install senzing-console Helm chart
-
-The [senzing-console](https://github.com/Senzing/docker-senzing-console)
-will be used later to
-inspect mounted volumes,
-debug issues, or
-run command-line tools.
-
-1. Install
-   [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-console \
-      senzing/senzing-console \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
-
-    ```
-
-1. For the next steps, capture the pod name in `CONSOLE_POD_NAME` using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    ```
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
@@ -793,6 +756,30 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
     ```
 
 1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
+
+### Install senzing-console Helm chart
+
+The [senzing-console](https://github.com/Senzing/docker-senzing-console)
+will be used later to
+inspect mounted volumes,
+debug issues, or
+run command-line tools.
+
+1. Install
+   [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-console \
+      senzing/senzing-console \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
+
+    ```
 
 ### Optional charts
 

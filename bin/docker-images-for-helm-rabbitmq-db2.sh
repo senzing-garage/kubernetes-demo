@@ -10,7 +10,6 @@ DOCKER_IMAGES=(
     "senzing/entity-search-web-app:${SENZING_DOCKER_IMAGE_VERSION_ENTITY_SEARCH_WEB_APP:-latest}"
     "senzing/ibm-db2:${SENZING_DOCKER_IMAGE_VERSION_IBM_DB2:-latest}"
     "senzing/init-container:${SENZING_DOCKER_IMAGE_VERSION_INIT_CONTAINER:-latest}"
-    "senzing/installer:${SENZING_VERSION_SENZINGAPI:-latest}"
     "senzing/postgresql-client:${SENZING_DOCKER_IMAGE_VERSION_POSTGRESQL_CLIENT:-latest}"
     "senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER:-latest}"
     "senzing/senzing-api-server:${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER:-latest}"
