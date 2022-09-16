@@ -446,7 +446,7 @@ The volumes being created are for the PostgreSQL and RabbitMQ backing services.
 
     ```console
     helm repo add bitnami https://charts.bitnami.com/bitnami
-    helm repo add runix https://helm.runix.net
+    helm repo add runix   https://helm.runix.net
     helm repo add senzing https://hub.senzing.com/charts/
 
     ```
@@ -627,7 +627,6 @@ provisions an instance of the
 1. To view RabbitMQ, see [View RabbitMQ](#view-rabbitmq).
 
 ## Demonstrate
-
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
