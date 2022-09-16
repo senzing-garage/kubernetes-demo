@@ -1,10 +1,10 @@
-# See https://github.com/Senzing/charts/tree/main/charts/senzing-init-container#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-init-postgresql#parameters
 
 main:
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
-    tag: ${SENZING_DOCKER_IMAGE_VERSION_INIT_POSTGRES}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_INIT_POSTGRESQL}
 
   senzing:
     engineConfigurationJson: >-
