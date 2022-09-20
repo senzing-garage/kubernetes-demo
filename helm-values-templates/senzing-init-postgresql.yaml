@@ -7,6 +7,10 @@ main:
     tag: ${SENZING_DOCKER_IMAGE_VERSION_INIT_POSTGRESQL}
 
   senzing:
+    configurationModifications: |
+      addDataSource CUSTOMERS
+      addDataSource REFERENCE
+      addDataSource WATCHLIST
     engineConfigurationJson: >-
       {
         "PIPELINE": {
