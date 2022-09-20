@@ -579,17 +579,6 @@ is used to create tables in the database (i.e. the schema) used by Senzing.
 
     ```
 
-1. Wait for pod to complete
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-
-    ```
-
 ### Install RabbitMQ Helm chart
 
 The
