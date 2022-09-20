@@ -30,9 +30,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
 
 ### Contents
 
-1. [Preamble](#preamble)
-1. [Related artifacts](#related-artifacts)
-1. [Expectations](#expectations)
 1. [Prerequisites](#prerequisites)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -52,13 +49,13 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Initialize database](#initialize-database)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
 1. [Demonstrate](#demonstrate)
-    1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
     1. [Install senzing-entity-search-web-app Helm chart](#install-senzing-entity-search-web-app-helm-chart)
+    1. [Install senzing-console Helm chart](#install-senzing-console-helm-chart)
+    1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
     1. [Optional charts](#optional-charts)
-        1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
         1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
         1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
@@ -745,12 +742,7 @@ run command-line tools.
 
 1. To use senzing-console pod, see [View Senzing Console pod](#view-senzing-console-pod).
 
-### Optional charts
-
-These charts are not necessary for the demonstration,
-but may be valuable in a production environment.
-
-#### Install senzing-redoer Helm chart
+### Install senzing-redoer Helm chart
 
 The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from the Senzing database and re-processes.
 
@@ -769,6 +761,11 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
 
     ```
+
+### Optional charts
+
+These charts are not necessary for the demonstration,
+but may be valuable in a production environment.
 
 #### Install SwaggerUI Helm chart
 
