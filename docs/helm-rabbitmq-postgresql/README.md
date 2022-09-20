@@ -617,6 +617,29 @@ provisions an instance of the
 Now that all of the pre-requisites are in place,
 it's time to bring up a system that uses Senzing.
 
+### Install senzing-api-server Helm chart
+
+The [Senzing API server](https://github.com/Senzing/senzing-api-server)
+receives HTTP requests to read and modify Senzing data.
+
+1. Install
+   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/main/charts/senzing-api-server)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-api-server \
+      senzing/senzing-api-server \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
+
+    ```
+
+1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
+
 ### Install stream-producer Helm chart
 
 The [stream producer](https://github.com/Senzing/stream-producer)
@@ -659,70 +682,10 @@ pulls messages from a message queue and sends them to Senzing.
 
     ```
 
-### Install senzing-api-server Helm chart
-
-The [Senzing API server](https://github.com/Senzing/senzing-api-server)
-receives HTTP requests to read and modify Senzing data.
-
-1. Install
-   [senzing/senzing-api-server](https://github.com/Senzing/charts/tree/main/charts/senzing-api-server)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-api-server \
-      senzing/senzing-api-server \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-api-server-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_API_SERVER:-""}
-
-    ```
-
-1. Wait for pods to run using
-   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   Example:
-
-    ```console
-    kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --watch
-
-    ```
-
-1. To view Senzing API server, see [View Senzing API Server](#view-senzing-api-server).
-
-### Install senzing-entity-search-web-app Helm chart
-
-The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
-is a light-weight WebApp demonstrating Senzing search capabilities.
-
-1. Install
-   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-entity-search-web-app \
-      senzing/senzing-entity-search-web-app \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
-
-    ```
-
-1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
-
 ### Install senzing-console Helm chart
 
 The [senzing-console](https://github.com/Senzing/docker-senzing-console)
-will be used later to
-inspect mounted volumes,
-debug issues, or
-run command-line tools.
+will be used later to inspect mounted volumes, debug issues, or run command-line tools.
 
 1. Install
    [senzing/senzing-console](https://github.com/Senzing/charts/tree/main/charts/senzing-console)
@@ -761,6 +724,40 @@ The [redoer](https://github.com/Senzing/redoer) pulls Senzing redo records from 
       --version ${SENZING_HELM_VERSION_SENZING_REDOER:-""}
 
     ```
+
+### Install senzing-entity-search-web-app Helm chart
+
+The [Senzing Entity Search WebApp](https://github.com/Senzing/entity-search-web-app)
+is a light-weight WebApp demonstrating Senzing search capabilities.
+
+1. Install
+   [senzing/senzing-entity-search-web-app](https://github.com/Senzing/charts/tree/main/charts/senzing-entity-search-web-app)
+   chart using
+   [helm install](https://helm.sh/docs/helm/helm_install/).
+   Example:
+
+    ```console
+    helm install \
+      ${DEMO_PREFIX}-senzing-entity-search-web-app \
+      senzing/senzing-entity-search-web-app \
+      --namespace ${DEMO_NAMESPACE} \
+      --values ${HELM_VALUES_DIR}/senzing-entity-search-web-app.yaml \
+      --version ${SENZING_HELM_VERSION_SENZING_ENTITY_SEARCH_WEB_APP:-""}
+
+    ```
+
+1. Wait for pods to run using
+   [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
+   Example:
+
+    ```console
+    kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --watch
+
+    ```
+
+1. To view Senzing Entity Search WebApp, see [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp).
 
 ### Optional charts
 

@@ -614,7 +614,7 @@ provisions an instance of the
 
 1. Wait for pods to run using
    [kubectl get](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get).
-   *Note:* Kafka will crash and restart until Zookeeper is up an running.
+   *Note:* Kafka will crash and restart until Zookeeper is up and running.
    Example:
 
     ```console
