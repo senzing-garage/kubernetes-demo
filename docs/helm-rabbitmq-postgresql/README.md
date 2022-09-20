@@ -61,9 +61,9 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View PostgreSQL](#view-postgresql)
-        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View Senzing API Server](#view-senzing-api-server)
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+        1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View SwaggerUI](#view-swaggerui)
         1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
@@ -887,27 +887,6 @@ is a web-based user interface for viewing the PostgreSQL database.
         1. DSRC_RECORD
         1. OBS_ENT
 
-#### View Senzing Console pod
-
-The [senzing-console](https://github.com/Senzing/docker-senzing-console)
-is used to inspect mounted volumes, debug issues, or run command-line tools.
-
-1. In a separate terminal window, log into Senzing Console pod using
-   [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
-   Example:
-
-    ```console
-    export CONSOLE_POD_NAME=$(kubectl get pods \
-      --namespace ${DEMO_NAMESPACE} \
-      --output jsonpath="{.items[0].metadata.name}" \
-      --selector "app.kubernetes.io/name=senzing-console, \
-                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
-      )
-
-    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
-
-    ```
-
 #### View Senzing API Server
 
 The [Senzing API server](https://github.com/Senzing/senzing-api-server)
@@ -957,6 +936,27 @@ is a light-weight WebApp demonstrating Senzing search capabilities.
 1. Senzing Entity Search WebApp will be viewable at [localhost:8251](http://localhost:8251).
    The [demonstration](https://github.com/Senzing/knowledge-base/blob/main/demonstrations/docker-compose-web-app.md)
    instructions will give a tour of the Senzing web app.
+
+#### View Senzing Console pod
+
+The [senzing-console](https://github.com/Senzing/docker-senzing-console)
+is used to inspect mounted volumes, debug issues, or run command-line tools.
+
+1. In a separate terminal window, log into Senzing Console pod using
+   [kubectl exec](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec).
+   Example:
+
+    ```console
+    export CONSOLE_POD_NAME=$(kubectl get pods \
+      --namespace ${DEMO_NAMESPACE} \
+      --output jsonpath="{.items[0].metadata.name}" \
+      --selector "app.kubernetes.io/name=senzing-console, \
+                  app.kubernetes.io/instance=${DEMO_PREFIX}-senzing-console" \
+      )
+
+    kubectl exec -it --namespace ${DEMO_NAMESPACE} ${CONSOLE_POD_NAME} -- /bin/bash
+
+    ```
 
 #### View SwaggerUI
 
