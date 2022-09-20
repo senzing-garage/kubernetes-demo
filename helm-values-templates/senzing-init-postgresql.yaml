@@ -1,19 +1,16 @@
-# See https://github.com/Senzing/charts/tree/main/charts/senzing-stream-loader#parameters
+# See https://github.com/Senzing/charts/tree/main/charts/senzing-init-postgresql#parameters
 
 main:
 
-  autoscaling:
-    enabled: false
-    maxReplicas: 10
-    minReplicas: 3
-    targetCPU: 10
-    targetMemory: 10
-
   image:
     registry: ${DOCKER_REGISTRY_URL}
-    tag: ${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER}
+    tag: ${SENZING_DOCKER_IMAGE_VERSION_INIT_POSTGRESQL}
 
   senzing:
+    configurationModifications: |
+      addDataSource CUSTOMERS
+      addDataSource REFERENCE
+      addDataSource WATCHLIST
     engineConfigurationJson: >-
       {
         "PIPELINE": {
@@ -26,8 +23,4 @@ main:
           "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
         }
       }
-    rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
-    rabbitmqPassword: passw0rd
-    rabbitmqQueue: senzing-rabbitmq-queue
-    rabbitmqUsername: user
-    subcommand: rabbitmq
+    subcommand: mandatory

@@ -204,21 +204,21 @@ The Git repository has files that will be used in the `helm install --values` pa
     export SENZING_AZURE_RESOURCE_GROUP_NAME="${DEMO_PREFIX}ResourceGroup"
     ```
 
-1. Retrieve latest docker image version numbers and set their environment variables.
+1. Retrieve docker image version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh)
     ```
 
-1. Retrieve stable Helm Chart version numbers and set their environment variables.
+1. Retrieve Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
-1. Retrieve latest Senzing version numbers and set their environment variables.
+1. Retrieve Senzing version numbers and set their environment variables.
    Example:
 
     ```console

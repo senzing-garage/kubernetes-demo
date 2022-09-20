@@ -197,21 +197,21 @@ as a guide, start a minikube cluster.
     export DEMO_NAMESPACE=${DEMO_PREFIX}-namespace
     ```
 
-1. Retrieve latest docker image version numbers and set their environment variables.
+1. Retrieve docker image version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh)
     ```
 
-1. Retrieve stable Helm Chart version numbers and set their environment variables.
+1. Retrieve Helm Chart version numbers and set their environment variables.
    Example:
 
     ```console
     source <(curl -X GET https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/helm-versions-stable.sh)
     ```
 
-1. Retrieve latest Senzing version numbers and set their environment variables.
+1. Retrieve Senzing version numbers and set their environment variables.
    Example:
 
     ```console

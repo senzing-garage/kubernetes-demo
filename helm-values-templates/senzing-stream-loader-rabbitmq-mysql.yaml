@@ -15,12 +15,8 @@ main:
 
   senzing:
     databaseUrl: "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/G2"
-    logLevel: info
-    monitoringPeriod: 60
-    persistentVolumeClaim: senzing-persistent-volume-claim
     rabbitmqHost: ${DEMO_PREFIX}-bitnami-rabbitmq
     rabbitmqPassword: passw0rd
     rabbitmqQueue: senzing-rabbitmq-queue
     rabbitmqUsername: user
     subcommand: rabbitmq
-    threadsPerProcess: 4
