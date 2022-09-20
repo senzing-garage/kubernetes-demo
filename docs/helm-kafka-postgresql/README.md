@@ -400,7 +400,7 @@ They are not sufficient for a production environment.
 If PVs and PVCs already exist, this step may be skipped.
 
 **Note:**  Senzing does not require Persistent Volumes.
-The volumes being created are for the PostgreSQL and RabbitMQ backing services.
+The volumes being created are for the PostgreSQL backing service.
 
 1. Create persistent volumes using
    [kubectl create](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create).
@@ -595,6 +595,7 @@ provisions an instance of the
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/bitnami-kafka.yaml \
       --version ${SENZING_HELM_VERSION_BITNAMI_KAFKA:-""}
+
     ```
 
 ### Install Kafka test client
@@ -608,6 +609,7 @@ provisions an instance of the
       --namespace ${DEMO_NAMESPACE} \
       --values ${HELM_VALUES_DIR}/confluentinc-cp-kafka.yaml \
       --version ${SENZING_HELM_VERSION_SENZING_CONFLUENTINC_CP_KAFKA:-""}
+
     ```
 
 1. Wait for pods to run using
@@ -1012,6 +1014,7 @@ The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-s
     export SENZING_API_SERVICE=http://localhost:8253
 
     curl -X GET ${SENZING_API_SERVICE}/datasources
+
     ```
 
 ## Cleanup
