@@ -113,6 +113,8 @@ describing where we can improve.   Now on with the show...
 1. [minikube](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-minikube.md)
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
+1. Create
+   [MySQL compatible Docker images](https://github.com/Senzing/docker-wrap-image-with-mysql).
 
 ### Clone repository
 
