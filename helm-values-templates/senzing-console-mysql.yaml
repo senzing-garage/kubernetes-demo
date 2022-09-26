@@ -4,6 +4,7 @@ main:
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
+    repository: senzing/senzing-console-mysql
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_CONSOLE}
 
   senzing:

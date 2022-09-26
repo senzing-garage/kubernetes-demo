@@ -254,7 +254,7 @@ as a guide, start a minikube cluster.
     minikube addons enable registry
     export DOCKER_REGISTRY_URL=docker.io
     export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry.sh docker-images-for-helm-rabbitmq-mysql
+    ${GIT_REPOSITORY_DIR}/bin/populate-minikube-registry-without-pull.sh docker-images-for-helm-rabbitmq-mysql
 
     ```
 
