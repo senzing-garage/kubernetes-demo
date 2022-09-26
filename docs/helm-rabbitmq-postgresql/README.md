@@ -557,8 +557,9 @@ is a web-based user interface for viewing the PostgreSQL database.
 
 ### Initialize database
 
-The [PostgreSQL Client](https://github.com/Senzing/postgresql-client)
-is used to create tables in the database (i.e. the schema) used by Senzing.
+[senzing/init-postgresql](https://github.com/Senzing/init-postgresql)
+is used to create Senzing tables in the database (i.e. the schema)
+and insert initial Senzing configuration.
 
 1. Install
    [senzing/senzing-init-postgresql](https://github.com/Senzing/charts/tree/main/charts/senzing-init-postgresql)
