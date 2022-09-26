@@ -221,25 +221,10 @@ as a guide, start a minikube cluster.
 
 ### Identify Docker registry
 
-:thinking: There are 3 options when it comes to using a docker registry.  Choose one:
+:thinking: There are 2 options when it comes to using a docker registry.  Choose one:
 
-1. [Use public registry](#use-public-registry)
 1. [Use private registry](#use-private-registry)
 1. [Use minikube registry](#use-minikube-registry)
-
-#### Use public registry
-
-**Method #1:** Pulls docker images from public internet registry.
-
-1. Use the default public `docker.io` registry which pulls images from
-   [hub.docker.com](https://hub.docker.com/).
-   Example:
-
-    ```console
-    export DOCKER_REGISTRY_URL=docker.io
-    export DOCKER_REGISTRY_SECRET=${DOCKER_REGISTRY_URL}-secret
-
-    ```
 
 #### Use private registry
 
