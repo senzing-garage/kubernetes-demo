@@ -228,7 +228,7 @@ as a guide, start a minikube cluster.
 
 #### Use private registry
 
-**Method #2:** Pulls docker images from a private registry.
+**Method #1:** Pulls docker images from a private registry.
 
 1. :pencil2: Specify a private registry.
    Example:
@@ -243,7 +243,7 @@ as a guide, start a minikube cluster.
 
 #### Use minikube registry
 
-**Method #3:** Pulls docker images from minikube's registry.
+**Method #2:** Pulls docker images from minikube's registry.
 
 1. Use minikube's docker registry using
    [minkube addons enable](https://minikube.sigs.k8s.io/docs/commands/addons/#minikube-addons-enable) and

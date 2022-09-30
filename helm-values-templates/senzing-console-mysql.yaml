@@ -17,6 +17,6 @@ main:
         },
         "SQL": {
           "BACKEND": "SQL",
-          "CONNECTION": "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/G2"
+          "CONNECTION": "mysql://g2:g2@${DEMO_PREFIX}-bitnami-mysql:3306/?schema=G2"
         }
       }
