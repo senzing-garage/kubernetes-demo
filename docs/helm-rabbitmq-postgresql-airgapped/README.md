@@ -44,7 +44,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
     1. [Package artifacts](#package-artifacts)
 1. [Transfer to air-gapped system](#transfer-to-air-gapped-system)
-1. [On Air-gapped system](#on-air-gapped-system)
+1. [On air-gapped system](#on-air-gapped-system)
     1. [Decompress file](#decompress-file)
     1. [Create deployment directory](#create-deployment-directory)
     1. [Set environment variables](#set-environment-variables)
@@ -196,10 +196,7 @@ On the non-airgapped system:
 
 ### Download Senzing files
 
-Download files that assist with
-Docker image versioning,
-PostgreSQL governance, and
-sample data.
+Download files that assist with Docker image versioning.
 On the non-airgapped system:
 
 1. Download Senzing files using
