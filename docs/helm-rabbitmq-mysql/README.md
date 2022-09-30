@@ -57,7 +57,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install senzing-redoer Helm chart](#install-senzing-redoer-helm-chart)
     1. [Optional charts](#optional-charts)
         1. [Install SwaggerUI Helm chart](#install-swaggerui-helm-chart)
-        1. [Install configurator Helm chart](#install-configurator-helm-chart)
     1. [View data](#view-data)
         1. [View RabbitMQ](#view-rabbitmq)
         1. [View MySQL](#view-mysql)
@@ -65,7 +64,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
         1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
         1. [View Senzing Console pod](#view-senzing-console-pod)
         1. [View SwaggerUI](#view-swaggerui)
-        1. [View Senzing Configurator](#view-senzing-configurator)
 1. [Cleanup](#cleanup)
     1. [Delete everything in Kubernetes](#delete-everything-in-kubernetes)
     1. [Delete minikube cluster](#delete-minikube-cluster)
@@ -762,28 +760,6 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
 1. To view SwaggerUI, see [View SwaggerUI](#view-swaggerui).
 
-#### Install configurator Helm chart
-
-The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
-
-1. Install
-   [senzing/senzing-configurator](https://github.com/Senzing/charts/tree/main/charts/senzing-configurator)
-   chart using
-   [helm install](https://helm.sh/docs/helm/helm_install/).
-   Example:
-
-    ```console
-    helm install \
-      ${DEMO_PREFIX}-senzing-configurator \
-      senzing/senzing-configurator \
-      --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-configurator-mysql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_CONFIGURATOR:-""}
-
-    ```
-
-1. To view Senzing Configurator, see [View Senzing Configurator](#view-senzing-configurator).
-
 ### View data
 
 1. Because some of the Kubernetes Services use LoadBalancer,
@@ -945,33 +921,6 @@ for viewing the Senzing REST OpenAPI specification in a web browser.
 
    Then visit [http://localhost:9180](http://localhost:9180).
 
-#### View Senzing Configurator
-
-The [Senzing Configurator](https://github.com/Senzing/configurator) is a micro-service for changing Senzing configuration.
-
-1. If the Senzing configurator was deployed,
-   in a separate terminal window port forward to local machine using
-   [kubectl port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward).
-   Example:
-
-    ```console
-    kubectl port-forward \
-      --address 0.0.0.0 \
-      --namespace ${DEMO_NAMESPACE} \
-      svc/${DEMO_PREFIX}-senzing-configurator 8253:80
-
-    ```
-
-1. Make HTTP calls using `curl`.
-   Example:
-
-    ```console
-    export SENZING_API_SERVICE=http://localhost:8253
-
-    curl -X GET ${SENZING_API_SERVICE}/datasources
-
-    ```
-
 ## Cleanup
 
 The following commands remove the Senzing Demo application from Kubernetes.
@@ -986,7 +935,6 @@ Delete Kubernetes artifacts using
 1. Example:
 
     ```console
-    helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-configurator
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-swaggerapi-swagger-ui
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-redoer
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-entity-search-web-app
