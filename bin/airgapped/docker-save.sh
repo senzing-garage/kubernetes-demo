@@ -40,4 +40,4 @@ done
 
 mkdir ${SENZING_AIRGAPPED_DIR}/docker-images
 ${SENZING_SUDO} docker save ${DOCKER_IMAGES[@]} \
-    --output ${SENZING_AIRGAPPED_DIR}/docker-images/all-images.tar
+    --output ${SENZING_AIRGAPPED_DIR}/docker-images.tar
