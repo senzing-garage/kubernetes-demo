@@ -58,13 +58,7 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Install Postgresql Helm chart](#install-postgresql-helm-chart)
     1. [Install pgAdmin Helm chart](#install-pgadmin-helm-chart)
     1. [Install RabbitMQ Helm chart](#install-rabbitmq-helm-chart)
-    1. [Deploy Senzing](#deploy-senzing)
-    1. [Install senzing-console-privileged Helm chart](#install-senzing-console-privileged-helm-chart)
-    1. [Install Senzing license](#install-senzing-license)
-    1. [Install Senzing Governor](#install-senzing-governor)
-    1. [Install sample data](#install-sample-data)
     1. [Initialize database](#initialize-database)
-    1. [Install init-container Helm chart](#install-init-container-helm-chart)
     1. [Install stream-producer Helm chart](#install-stream-producer-helm-chart)
     1. [Install stream-loader Helm chart](#install-stream-loader-helm-chart)
     1. [Install senzing-api-server Helm chart](#install-senzing-api-server-helm-chart)
@@ -1148,10 +1142,8 @@ Delete Kubernetes artifacts using
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-bitnami-postgresql
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-console-privileged
     helm uninstall --namespace ${DEMO_NAMESPACE} ${DEMO_PREFIX}-senzing-installer
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-claim-rabbitmq.yaml
-    kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-senzing.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-postgresql.yaml
     kubectl delete -f ${KUBERNETES_DIR}/persistent-volume-rabbitmq.yaml
     kubectl delete -f ${KUBERNETES_DIR}/namespace.yaml
