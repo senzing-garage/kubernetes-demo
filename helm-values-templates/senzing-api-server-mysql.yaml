@@ -7,6 +7,7 @@ main:
 
   image:
     registry: ${DOCKER_REGISTRY_URL}
+    repository: senzing/senzing-api-server-mysql
     tag: ${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER}
 
   senzing:
