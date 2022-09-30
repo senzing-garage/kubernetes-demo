@@ -820,6 +820,7 @@ is a web-based user interface for viewing the MySQL database.
       --address 0.0.0.0 \
       --namespace ${DEMO_NAMESPACE} \
       svc/${DEMO_PREFIX}-bitnami-phpmyadmin 9173:80
+
     ```
 
 1. MySQL will be viewable at [localhost:9173](http://localhost:9173).
