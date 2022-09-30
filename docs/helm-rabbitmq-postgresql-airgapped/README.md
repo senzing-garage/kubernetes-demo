@@ -226,7 +226,6 @@ On the non-airgapped system:
    Example:
 
     ```console
-    source ${SENZING_AIRGAPPED_DIR}/bin/senzing-versions-stable.sh
     source ${SENZING_AIRGAPPED_DIR}/bin/docker-versions-stable.sh
     source ${SENZING_AIRGAPPED_DIR}/bin/helm-versions-stable.sh
 
@@ -244,61 +243,6 @@ On the non-airgapped system:
 
     ```console
     ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/airgapped/download-helm-charts.sh
-
-    ```
-
-### Add Senzing license
-
-:thinking: **Optional:**
-To ingest more than the default number of allowed records, a
-[Senzing license](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/obtain-senzing-license.md)
-should be added to the artifact directory.
-On the non-airgapped system:
-
-1. :pencil2: Locate your Senzing license file (usually `g2.lic`).
-   Example:
-
-    ```console
-    export SENZING_LICENSE_FILE=~/Downloads/g2.lic
-
-    ```
-
-1. Copy license into directory for air-gapped artifacts.
-   Example:
-
-    ```console
-    mkdir -p ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing
-    cp ${SENZING_LICENSE_FILE} ${SENZING_AIRGAPPED_DIR}/etc/opt/senzing/g2.lic
-
-    ```
-
-### EULA
-
-To use the Senzing code, you must agree to the End User License Agreement (EULA).
-
-1. :warning:
-   To use the Senzing code, you must agree to the End User License Agreement (EULA).
-   This step is intentionally tricky and not simply copy/paste.
-   This ensures that you make a conscious effort to accept the EULA.
-   Example:
-
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
-
-### Create senzing/installer docker image
-
-To install the Senzing binaries on the Kubernetes PV/PVC
-on the air-gapped system, a Docker image needs to be created
-locally which contains the contents of the Senzing `g2` and `data` folders.
-On the non-airgapped system:
-
-1. Run the `docker build` command using
-   [docker-build-senzing-installer.sh](../../bin/docker-build-senzing-installer.sh).
-   **Note:**
-   This will take a while as the Senzing binary packages will be downloaded.
-   Example:
-
-    ```console
-    ${SENZING_AIRGAPPED_DIR}/kubernetes-demo/bin/docker-build-senzing-installer.sh
 
     ```
 

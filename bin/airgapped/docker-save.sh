@@ -45,11 +45,15 @@ for DOCKER_REGISTRY in ${DOCKER_REGISTRIES[@]}; do
     mkdir ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_REGISTRY}
 done
 
-# For each Docker image, pull the image and run "docker save".
+# For each Docker image, pull the image.
 
 for DOCKER_IMAGE in ${DOCKER_IMAGES[@]}; do
     echo "${DOCKER_IMAGE}"
     ${SENZING_SUDO} docker pull ${DOCKER_IMAGE}
-    ${SENZING_SUDO} docker save ${DOCKER_IMAGE} \
-        --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
 done
+
+
+# Save docker images
+
+#    ${SENZING_SUDO} docker save ${DOCKER_IMAGE} \
+#        --output ${SENZING_AIRGAPPED_DIR}/docker-images/${DOCKER_IMAGE}.tar
