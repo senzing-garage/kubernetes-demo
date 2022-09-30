@@ -318,7 +318,7 @@ Only one method needs to be performed.
 
     ```
 
-### Create custom kubernetes configuration files
+### Create custom Kubernetes configuration files
 
 Create Kubernetes manifest files for use with `kubectl create`.
 
