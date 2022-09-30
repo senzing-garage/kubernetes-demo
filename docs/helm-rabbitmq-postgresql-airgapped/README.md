@@ -43,8 +43,6 @@ The following diagram shows the relationship of the Helm charts, docker containe
     1. [Download Senzing files](#download-senzing-files)
     1. [Set non-airgapped environment variables](#set-non-airgapped-environment-variables)
     1. [Download Helm Chart repositories](#download-helm-chart-repositories)
-    1. [Add Senzing license](#add-senzing-license)
-    1. [EULA](#eula)
     1. [Transfer Docker images](#transfer-docker-images)
     1. [Save environment variables for air-gapped environment](#save-environment-variables-for-air-gapped-environment)
     1. [Package artifacts](#package-artifacts)
@@ -249,10 +247,10 @@ On the non-airgapped system:
 ### Transfer Docker images
 
 There are two method of transferring the docker images to the air-gapped system.
-The first option requires the ability to `docker push` to a private docker registry
-used by the air-gapped system.
-The second option is to package the docker images in the final `.zip` file
+The first option is to package the docker images in the final `.zip` file
 and later load them on the air-gapped system.
+The second option requires the ability to `docker push` to a private docker registry
+used by the air-gapped system.
 Only one of the two options need be followed.
 
 1. [Package saved Docker images](#package-saved-docker-images)
@@ -260,8 +258,7 @@ Only one of the two options need be followed.
 
 #### Package saved Docker images
 
-1. :thinking: **Optional:**
-   *Option 1 -
+1. **Method #1:**
    If the "air-gapped" private Docker registry **cannot** be accessed from the non-airgapped system, use
    [docker-save.sh](../../bin/airgapped/docker-save.sh)
    to create files that can be transferred to the air-gapped system.
@@ -274,8 +271,7 @@ Only one of the two options need be followed.
 
 #### Use private Docker registry
 
-1. :thinking: **Optional:**
-   *Option 2 -
+1. **Method #2:**
    If the "air-gapped" private Docker registry **can** be accessed from the non-airgapped system, use
    [docker push](https://docs.docker.com/engine/reference/commandline/push/)
    to transfer the docker images.
@@ -480,7 +476,6 @@ an air-gapped private Docker registry.
     export SENZING_SUDO=sudo
 
     ```
-
 
 1. Push Docker images to private docker registry.
    Example:
