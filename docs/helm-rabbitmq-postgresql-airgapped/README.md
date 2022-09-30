@@ -114,11 +114,13 @@ describing where we can improve.   Now on with the show...
 1. [DockerHub](https://hub.docker.com/r/senzing)
 1. [Helm Charts](https://github.com/Senzing/charts)
 
-## Prerequisite software on non-airgapped system
+## Prerequisites
+
+### Prerequisite software on non-airgapped system
 
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
 
-## Prerequisite software on air-gapped system
+### Prerequisite software on air-gapped system
 
 1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
 1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
@@ -465,7 +467,6 @@ an air-gapped private Docker registry.
 
     ```
 
-
 ### Create custom helm values files
 
 For final customization of the Helm Charts,
@@ -701,10 +702,9 @@ and insert initial Senzing configuration.
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-init-postgresql \
-      senzing/senzing-init-postgresql \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-init-postgresql \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-init-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_INIT_POSTGRESQL:-""}
+      --values ${HELM_VALUES_DIR}/senzing-init-postgresql.yaml
 
     ```
 
@@ -824,10 +824,9 @@ will be used later to inspect mounted volumes, debug issues, or run command-line
     ```console
     helm install \
       ${DEMO_PREFIX}-senzing-console \
-      senzing/senzing-console \
+      ${SENZING_AIRGAPPED_DIR}/helm-charts/senzing-console \
       --namespace ${DEMO_NAMESPACE} \
-      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml \
-      --version ${SENZING_HELM_VERSION_SENZING_CONSOLE:-""}
+      --values ${HELM_VALUES_DIR}/senzing-console-postgresql.yaml
 
     ```
 
