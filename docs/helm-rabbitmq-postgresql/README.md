@@ -225,6 +225,8 @@ as a guide, start a minikube cluster.
 
     ```console
     export SENZING_LICENSE_BASE64_ENCODED=$(cat /etc/opt/senzing/g2lic_base64.txt)
+
+    echo ${SENZING_LICENSE_BASE64_ENCODED}
     ```
 
 ### Identify Docker registry
