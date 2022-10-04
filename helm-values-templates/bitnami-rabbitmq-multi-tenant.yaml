@@ -4,7 +4,7 @@ ingress:
   enabled: true
   hostname: rabbitmq.senzing.local
   path: /
-  
+
 auth:
   password: passw0rd
   username: user
