@@ -27,7 +27,7 @@ main:
         },
         "SQL": {
           "BACKEND": "SQL",
-          "CONNECTION": "postgresql://postgres:postgres@${DEMO_PREFIX}-bitnami-postgresql:5432:G2"
+          "CONNECTION": "postgresql://${SENZING_TENANT}:${DATABASE_PASSWORD}@bitnami-postgresql.${DEMO_NAMESPACE_ADMIN}.svc.cluster.local:5432:g2_${SENZING_TENANT}"
         }
       }
     rabbitmqExchange: senzing-rabbitmq-exchange-${SENZING_TENANT}
