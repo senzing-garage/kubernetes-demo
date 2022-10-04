@@ -217,9 +217,10 @@ as a guide, start a minikube cluster.
 
     ```
 
-1. :thinking: **Optional**
+1. :thinking: **Optional:**
    To use a license other than the Senzing complimentary 100K record license,
    the `SENZING_LICENSE_BASE64_ENCODED` environment variable needs to be set.
+   *Note:* Modify the path to a file containing the Senzing license in Base64 format.
    Example:
 
     ```console
