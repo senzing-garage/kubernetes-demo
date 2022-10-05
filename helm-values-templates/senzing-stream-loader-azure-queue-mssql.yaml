@@ -16,5 +16,17 @@ main:
   senzing:
     azureQueueConnectionString: ${SENZING_AZURE_QUEUE_CONNECTION_STRING}
     azureQueueName: ${SENZING_AZURE_QUEUE_NAME}
-    databaseUrl: "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:1433/${DATABASE_DATABASE}"
+    engineConfigurationJson: >-
+      {
+        "PIPELINE": {
+          "CONFIGPATH": "/etc/opt/senzing",
+          "LICENSESTRINGBASE64": "${SENZING_LICENSE_BASE64_ENCODED}",
+          "RESOURCEPATH": "/opt/senzing/g2/resources",
+          "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+          "BACKEND": "SQL",
+          "CONNECTION": "mssql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:1433/${DATABASE_DATABASE}"
+        }
+      }
     subcommand: azure-queue

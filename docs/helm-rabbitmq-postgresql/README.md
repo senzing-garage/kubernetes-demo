@@ -217,6 +217,18 @@ as a guide, start a minikube cluster.
 
     ```
 
+1. :thinking: **Optional:**
+   To use a license other than the Senzing complimentary 100K record license,
+   the `SENZING_LICENSE_BASE64_ENCODED` environment variable needs to be set.
+   *Note:* Modify the path to a file containing the Senzing license in Base64 format.
+   Example:
+
+    ```console
+    export SENZING_LICENSE_BASE64_ENCODED=$(cat /etc/opt/senzing/g2lic_base64.txt)
+
+    echo ${SENZING_LICENSE_BASE64_ENCODED}
+    ```
+
 ### Identify Docker registry
 
 :thinking: There are 3 options when it comes to using a docker registry.  Choose one:
