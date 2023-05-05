@@ -120,12 +120,12 @@ describing where we can improve.   Now on with the show...
 
 ### Prerequisite software on non-airgapped system
 
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 
 ### Prerequisite software on air-gapped system
 
-1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-kubectl.md)
-1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-helm.md)
+1. [kubectl](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/kubectl.md)
+1. [Helm 3](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/helm.md)
 1. Kubernetes
 
 ### Prerequisites on Kubernetes
